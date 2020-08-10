@@ -1,0 +1,213 @@
+-- Remove the history from
+rm -rf .git
+
+-- recreate the repos from the current content only
+git init
+git add .
+git commit -m "Initial commit"
+
+-- push to the github remote repos ensuring you overwrite history
+git remote add origin git@github.com:<YOUR ACCOUNT>/<YOUR REPOS>.git
+git push -u --force origin master
+
+-------------------------------------------------------------
+find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+find . -path "*/migrations/*.pyc"  -delete
+
+
+
+--------------------------------------------------
+    publicacion = {
+        "camara_serial": method.routing_key.split('.')[2],
+        "zona": method.routing_key.split('.')[3],
+        "topico=": method.routing_key,
+        "mensaje": body.decode('ascii'),
+        "nro_personas": nro_personas,
+        "fecha_hora": d
+        # "qos=": message.qos,
+        # "retain_flag": message.retain
+    }
+
+
+==============================================
+Django recommends that you deploy static files with a web server other than wsgi.
+
+In settings.py, set:
+STATIC_ROOT = 'static'
+
+Run python manage.py collectstatic, which will copy the Django admin static files to /path/to/project/static/
+
+Configure your static file server. If you use Nginx, you could add this config:
+
+location /static/ {
+    alias /path/to/project/static/;
+    expires modified +1w;
+}
+Reload your web server
+
+You should now have access to the static files.
+
+
+
+======================================================
+sudo fuser -k 8081/tcp
+
+<form class="success" id="form-id" action="{% url "formly_dt_page_create" pk=selected_survey.pk %}" method="post">
+    {% csrf_token %}
+    <a class="nav-link {% if page == selected_page %}active{% endif %}" onclick="document.getElementById('form-id').submit();">Add page</a>
+</form>
+
+project's root directory with a command similar to this:
+gunicorn -c gunicorn/gunicorn-config.py your-project.wsgi
+gunicorn -c gunicorn/gunicorn-config.py core.wsgi
+
+lsof | grep nohup.out
+
+nohup gunicorn -c gunicorn/gunicorn-config.py core.wsgi &
+
+exec gunicorn wsgi:app -u gunicorn -g nginx -m 007 -b gunicorn.sock >> /var/log/$<service_name>.sys.log 2>&1
+
+exec gunicorn wsgi:app -u gunicorn -g nginx -m 007 -b gunicorn.sock >> /var/log/$<service_name>.sys.log 2>&1
+
+===================================================
+
+db.copyDatabase( "test", "records", "db0.example.net", "<username>", "<password>")
+
+db.dropDatabase("SMF_BDControlAforo_V1")
+
+db.copyDatabase( "SMF_BDControlAforo", "SMF_BDControlAforo", "5.196.27.225:27117", "smfactory", "S0ftwar4Mf4ac0ory")
+
+mongodump --archive --db=SMF_BDControlAforo | mongorestore --archive  --nsFrom='test.*' --nsTo='examples.*'
+
+
+db.cloneDatabase("5.196.27.225:27117")
+
+
+===================================================
+
+#user  nginx;
+worker_processes  1;
+
+error_log  /var/log/nginx/error.log;
+error_log  /var/log/nginx/error.log  notice;
+error_log  /var/log/nginx/error.log  info;
+
+#pid        /var/run/nginx.pid;
+
+include /etc/nginx/modules.conf.d/*.conf;
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    #keepalive_timeout  0;
+    keepalive_timeout  65;
+    #tcp_nodelay        on;
+
+    #gzip  on;
+    #gzip_disable "MSIE [1-6]\.(?!.*SV1)";
+
+    server_tokens off;
+
+    include /etc/nginx/conf.d/*.conf;
+}
+
+# override global parameters e.g. worker_rlimit_nofile
+include /etc/nginx/*global_params;
+It worked
+
+
+
+=========================================================
+
+upstream merakimvsense-gunicorn {
+	server unix:/tmp/gunicorn.sock fail_timeout=0;
+}
+
+server {
+
+	listen 80 default;
+	client_max_body_size 4G;
+	server_name your-site.com;
+	keepalive_timeout 70;
+
+	access_log /var/log/nginx/access_log;
+	error_log /var/log/nginx/error_log;
+
+	root /opt/merakimvsense/core;
+
+	location /static/ {
+		autoindex on;
+		alias /opt/merakimvsense/core/static/;
+		expires 1M;
+		access_log off;
+		add_header Cache-Control "public";
+		proxy_ignore_headers "Set-Cookie";
+	}
+
+	location @proxy_merakimvsense {
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		proxy_set_header Host $http_host;
+		proxy_redirect off;
+		proxy_pass merakimvsense-gunicorn;
+	}
+
+	location / {
+		try_files $uri @proxy_merakimvsense;
+	}
+}
+
+
+=======================================
+working  etc/nginx/sites/availables
+=======================================
+upstream merakimvsense-gunicorn {
+	server unix:/tmp/gunicorn.sock fail_timeout=0;
+}
+
+server {
+
+	listen 80 default;
+	client_max_body_size 4G;
+	server_name your-site.com;
+	keepalive_timeout 70;
+
+	access_log /var/log/nginx/access_log;
+	error_log /var/log/nginx/error_log;
+
+	root /opt/merakimvsense/core;
+
+	location /static/ {
+		autoindex on;
+		alias /opt/merakimvsense/core/static/;
+		expires 1M;
+		access_log off;
+		add_header Cache-Control "public";
+		proxy_ignore_headers "Set-Cookie";
+	}
+
+	location @proxy_merakimvsense {
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		proxy_set_header Host $http_host;
+		proxy_redirect off;
+		proxy_pass http://merakimvsense-gunicorn;
+	}
+
+	location / {
+		try_files $uri @proxy_merakimvsense;
+	}
+}

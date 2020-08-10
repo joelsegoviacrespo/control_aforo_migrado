@@ -1,0 +1,148 @@
+{% extends "layouts/base-form.html" %}
+
+{% block title %} Cliente {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content-form-page-header-title %} Clientes {% endblock content-form-page-header-title %}
+{% block content-form-page-header %}
+    <ul class="breadcrumbs">
+        <li class="nav-home">
+            <a href="#">
+                <i class="fas fa-users"></i>
+            </a>
+        </li>
+        <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+        </li>
+        <li class="nav-item">
+            <a href="#">Clientes</a>
+        </li>
+        <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+        </li>
+        <li class="nav-item">
+            <a href="#">Todos</a>
+        </li>
+    </ul>
+{% endblock content-form-page-header %}
+{% block content-form-form-tag-begin %} {% endblock content-form-form-tag-begin %}
+{% block content-form-content %}
+    <div class="card-header m-0 p-2">
+        {% if user.cliente.get_id >= 2 %}
+        <div class="d-flex align-items-center">
+            <h4 class="card-title"></h4>
+            <a href="/cliente/" role="button"
+               class="btn btn-primary ml-auto">
+                <i class="fa fa-plus mr-2" title="Agregar"></i>Agregar
+            </a>
+        </div>
+        {%endif%}
+    </div>
+    <div class="card-body">
+        <div class="table-responsive m-0 p-0 py-3 w-100">
+            <!--table id="add-row" class="display table table-striped table-hover table-bordered table-head-bg-primary table-bordered-bd-primary"-->
+            <table id="add-row" class="display table table-striped table-hover table-head-bg-primary ">
+                <thead>
+                <tr>
+                    <th class="text-center"></th>
+                    {% if user.is_staff  %}
+                    <th>Usuario</th>
+                    {% endif  %}
+                    <th>NIF</th>
+                    <th>Razón social</th>
+                    <th>Dirección</th>
+                    <th>Problación</th>
+                    <th>Provincia</th>
+                    <th>Código postal</th>
+                    <th>Teléfono</th>
+                    <th>Móvil</th>
+                    <th>e-mail</th>
+                    <th>Estado</th>
+                    <th class="text-center"></th>
+                </tr>
+                </thead>
+                <!--tfoot>
+                <tr>
+                    <th>NIF</th>
+                    {% if user.is_staff  %}
+                    <th>Usuario</th>
+                    {% endif  %}
+                    <th>Razón social</th>
+                    <th>Dirección</th>
+                    <th>Problación</th>
+                    <th>Provincia</th>
+                    <th>Código postal</th>
+                    <th>Teléfono</th>
+                    <th>Móvil</th>
+                    <th>e-mail</th>
+                    <th>Estado</th>
+                    <th></th>
+                </tr>
+                </tfoot-->
+                <tbody>
+                {% for cliente in form %}
+                <tr>
+                    <td>
+                        <div class="form-button-action m-0 p-0">
+                            <a href="/cliente/editar/{{ cliente.id }}" role="button"
+                               class="btn btn-link btn-primary btn-sm">
+                                <span class="fa fa-edit" title="Editar"></span>
+                            </a>
+                            <a href="/cliente/eliminar/{{ cliente.id }}" role="button"
+                               class="btn btn-link btn-danger btn-sm">
+                                <span class="fa fa-times" title="Eliminar"></span>
+                            </a>
+                        </div>
+                    </td>
+                    {% if user.is_staff  %}
+                        {% if cliente.user is not None %}
+                            <td class="text-center">{{ cliente.user }}</td>
+                        {% else %}
+                            <td class="text-center">No asignado</td>
+                        {% endif%}
+                    {% endif %}
+                    <td>{{ cliente.nif }}</td>
+                    <td>{{ cliente.razon_social }}</td>
+                    <td>{{ cliente.direccion }}</td>
+                    <td>{{ cliente.poblacion }}</td>
+                    <td>{{ cliente.provincia }}</td>
+                    <td>{{ cliente.codigo_postal }}</td>
+                    <td>{{ cliente.telefono }}</td>
+                    <td>{{ cliente.movil }}</td>
+                    <td>{{ cliente.email }}</td>
+                    <td class="text-center">
+                        {% if cliente.cliente_estado %}<i class="fa fa-check-square text-success"></i>
+                        {% else %}<i class="fa fa-times text-danger"></i>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="form-button-action m-0 p-0">
+                            <a href="/cliente/editar/{{ cliente.id }}" role="button"
+                               class="btn btn-link btn-primary btn-sm">
+                                <span class="fa fa-edit" title="Editar"></span>
+                            </a>
+                            {% if user.is_staff  %}
+                            <a href="/cliente/eliminar/{{ cliente.id }}" role="button"
+                               class="btn btn-link btn-danger btn-sm">
+                                <span class="fa fa-times" title="Eliminar"></span>
+                            </a>
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock content-form-content %}
+{% block content-form-form-tag-end %} {% endblock content-form-form-tag-end %}
+
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}{% endblock javascripts %}
+{% block javascripts-page %}
+    {% include 'includes/scripts_js_datatable.html' %}
+{% endblock javascripts-page %}

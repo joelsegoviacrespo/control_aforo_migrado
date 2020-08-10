@@ -1,0 +1,146 @@
+{% extends "layouts/base-modal.html" %}
+
+{% block title %} Zonas Cámara {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block modal-content-title-dissmiss %}
+onclick="javascript:window.location='/camara_zona/todos'"
+{% endblock modal-content-title-dissmiss %}
+{% block modal-content-form-tag-begin %}
+<form method="POST" class="post-form" action="/camara_zona/">
+    {% endblock modal-content-form-tag-begin %}
+    {% block modal-content-title %}
+    <ul class="ml-0 breadcrumbs">
+        <li class="nav-home">
+            <a href="#">
+                <i class="fas fa-camera"></i>
+            </a>
+        </li>
+        <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+        </li>
+        <li class="nav-item">
+            <a href="#">Zonas Cámara</a>
+        </li>
+        <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+        </li>
+        <li class="nav-item">
+            <a href="#">Agregar</a>
+        </li>
+    </ul>
+    {% endblock modal-content-title %}
+    {% block modal-content %}
+    {% csrf_token %}
+    <div class="card bg-custom-gray p-1">
+        <div class="card-header m-0 py-1">
+            <h5>Datos generales</h5>
+        </div>
+        <div class="card-body bg-light p-1">
+            <div class="form-row col-12">
+                <div class="form-group form-inline col-12 col-sm-2">
+                    <label class="col-form-label mr-3">Activa:</label>
+                    <input type="checkbox" name="camara_zona_estado" id="id_camara_zona_estado"
+                           class="form-control form-control-sm"
+                           value="True" {% if form.camara_zona_estado.value %}checked{% endif %}/>
+                </div>
+                <div class="form-group col-12 col-lg-5">
+                    <label class="col-form-label mr-3">Razón Social:</label>
+                    <br>
+                    <select name="clientes" required id="id_clientes" class="form-control form-control-sm">
+                        <option value="" selected> --------- </option>
+                        {% for id, value in form.fields.clientes.choices %}
+                            <option value="{{ id }}">{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-12 col-lg-5">
+                    <label class="col-form-label mr-3">Nombre Comercial:</label>
+                    <br>
+                    <select name="id_instalacion" required id="id_id_instalacion" class="form-control form-control-sm">
+                        <option value="">--------</option>
+                    </select>
+                </div>
+                <div class="form-group col-12 col-lg-6">
+                    <label class="col-form-label col-form-label-sm">Camara serial:</label>
+                    <input type="text" name="camara_serial" id="id_camara_serial"
+                           class="form-control form-control-sm" required
+                           maxlength="250"
+                           value="{{ form.camara_serial.value }}"/>
+                </div>
+                <div class="form-group col-12 col-lg-6">
+                    <label class="col-form-label col-form-label-sm">Zona número:</label>
+                    <input type="text" name="zona_numero" id="id_zona_numero"
+                           class="form-control form-control-sm" required
+                           maxlength="250"
+                           value="{{ form.zona_numero.value }}"/>
+                </div>
+                <div class="form-group col-12">
+                    <label class="col-form-label col-form-label-sm">Descripción:</label>
+                    <input type="text" name="descripcion" id="id_descripcion"
+                           class="form-control form-control-sm" required
+                           maxlength="200"
+                           value="{{ form.descripcion.value }}"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-row m-0 p-2">
+        <div class="form-group col-12">
+            {% for field in form %}
+            {% if field.errors %}
+            <div class="alert alert-danger my-1">
+                <li>
+                    <strong class="mr-3">{{ field.label | capfirst }}: </strong>
+                    <ul class="errorlist">
+                        {% for error in field.errors %}
+                        <li>{{error|escape}}</li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    {% endblock modal-content %}
+    {% block modal-content-footer %}
+    <button type="submit" class="btn btn-success">Guardar</button>
+    <button type="button" class="btn btn-warning" >Cancelar
+    </button>
+    <button type="button" class="btn btn-danger" data-dismiss="modal"
+            onclick="javascript:window.location='/camara_zona/todos'">Cerrar
+    </button>
+    {% endblock modal-content-footer %}
+    {% block modal-content-form-tag-end %}
+</form>
+{% endblock modal-content-form-tag-end %}
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+<script>
+    $(document).ready(function(){
+        $('select[name=clientes]').change(function(){
+            id_cliente = $(this).val();
+            $('select[name=id_instalacion]').find('option').remove().end();
+            $('select[name=id_instalacion]').append($('<option></option>').val('').html('---------'));
+            if (id_cliente != '') {
+                request_url = '/instalacion/listar_por_id_cliente/' + id_cliente + '';
+                $.ajax({
+                    url: request_url,
+                    success: function(data){
+                        $.each(data, function(index, text){
+                            $('select[name=id_instalacion]').append(
+                                 $('<option></option>').val(index).html(text)
+                             );
+                        });
+                    }
+                });
+            };
+            return false;
+        })
+    });
+</script>
+
+{% endblock javascripts %}

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Mosayk | Advanced Content Solutions | Meraki - MV Sense Camera</title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
+    <link rel="icon" href="../static/assets/img/favicon.ico" type="image/x-icon"/>
+
+    <!-- Fonts and icons -->
+    <script src="../static/assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+		WebFont.load({
+			google: {"families":["Lato:300,400,700,900"]},
+			custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['../static/assets/css/fonts.min.css']},
+			active: function() {
+				sessionStorage.fonts = true;
+			}
+		});
+
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../static/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/assets/css/bootstrap-extras.css">
+
+</head>
+<body style="height: 100% !important; background-color: #000000;">
+<form action="." method="post">{% csrf_token %}
+    {% csrf_token %}
+    <input type="hidden" id="hdn_camara" value="{{form.camara}}">
+    <input type="hidden" id="hdn_zona" value="{{form.zona}}">
+    <input type="hidden" id="hdn_monitor" value="{{form.monitor}}">
+    <div class="d-flex justify-content-start w-20 m-4"
+         style="position: absolute; z-index: 56;">
+        <div class="d-flex align-items-start h-100">
+            <img class="img-responsive w-100 h-100" src="../static/assets/img/design/l001.png" alt="" srcset="">
+        </div>
+    </div>
+    <div class="d-flex justify-content-end h-12 w-100" id="div_barra_cabecera"
+         style="position: absolute; z-index: 60;">
+        <div class="d-flex align-items-center h-100 w-45">
+            <div class="w-100 text-center">
+					<span class="label font-weight-bold text-successful" id="texto_barra_cabecera"
+                          style="font-size:2.6vw;"></span>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-end h-100 w-100"
+         style="position: absolute; z-index: 58;">
+        <div class="d-flex flex-column align-items-center h-100 w-45 m-0 p-5">
+            <div id="circles-1" class="m-auto p-0"></div>
+            <div class="h-40 w-100 text-center mt-0 pt-0">
+                <h1>
+						<span class="label font-weight-bold text-white mt-0"
+                              style="font-size:2.6vw;">Aforo Máximo: <span id="msg_aforo_maximo" class="px-2"></span>
+						</span>
+                </h1>
+                <div class="w-100 my-3 my-sm-4"></div>
+                <span class="label font-weight-bold text-white" id="msg_aforo_casi_lleno"
+                      style="font-size:4vw;"></span>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-start h-12 w-100"
+         style="position: absolute; z-index: 54;">
+        <div class="d-flex align-items-start h-100">
+            <img class="img-responsive w-100 h-100" src="../static/assets/img/design/bsh.png" alt="" srcset="">
+        </div>
+    </div>
+    <div class="d-flex justify-content-start h-100 w-100 border-bottom border-dark shadow-lg"
+         style="position: absolute; z-index: 51;">
+        <div class="d-flex align-items-start h-100">
+            <img class="img-responsive w-75 h-100" src="../static/assets/img/design/f001.jpg" alt="" srcset="">
+        </div>
+    </div>
+    <div class="d-flex justify-content-end h-100 w-100"
+         style="position: absolute; z-index: 53;">
+        <div class="d-flex align-items-end h-100 w-50">
+            <img id="semaforo" class="img-responsive w-100 h-100" src="../static/assets/img/design/shv.png" alt=""
+                 srcset="">
+        </div>
+    </div>
+</form>
+<!--   Core JS Files   -->
+<script src="../static/assets/js/core/jquery.3.2.1.min.js"></script>
+<script src="../static/assets/js/core/popper.min.js"></script>
+<script src="../static/assets/js/core/bootstrap.min.js"></script>
+
+<!-- jQuery UI -->
+<script src="../static/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+<script src="../static/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+
+<!-- jQuery Scrollbar -->
+<script src="../static/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+
+<!-- Chart JS -->
+<script src="../static/assets/js/plugin/chart.js/chart.min.js"></script>
+
+<!-- jQuery Sparkline -->
+<script src="../static/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+
+<!-- Chart Circle -->
+<script src="../static/assets/js/plugin/chart-circle/circles.min.js"></script>
+
+<!-- Atlantis JS -->
+<script src="../static/assets/js/atlantis.min.js"></script>
+
+<script>
+	/*let searchParams = new URLSearchParams(window.location.search)
+	if searchParams.has('m');
+	let param = searchParams.get('sent')
+	*/
+	hzt_verde = "../static/assets/img/design/shv.png";
+	hzt_ambar ="../static/assets/img/design/sha.png";
+	hzt_rojo ="../static/assets/img/design/shr.png";
+
+
+	$(document).ready(function(){
+		id_monitor = $('#hdn_monitor').val();
+		if (id_monitor != '') {
+			request_url = '/monitor/configuracion/' + id_monitor + '';
+			$.ajax({
+				url: request_url,
+				success: function(data){
+					nro_personas = parseInt(data['nro_personas']);
+					aforo_maximo = parseInt(data['aforo_maximo']);
+					color_barra_cabecera = data['color_barra_cabecera'];
+					texto_barra_cabecera = data['texto_barra_cabecera'];
+					logotipo_archivo_nombre = data['logotipo_archivo_nombre'];
+					logotipo_posicion = data['logotipo_posicion'];
+					fondo_imagen_archivo_nombre = data['fondo_imagen_archivo_nombre'];
+					aforo_formato = data['aforo_formato'];
+					aforo_mostrar_maximo = data['aforo_mostrar_maximo'];
+					aforo_mostrar_casi_lleno = data['aforo_mostrar_casi_lleno'];
+					aforo_frase_verde = data['aforo_frase_verde'];
+					aforo_frase_ambar = data['aforo_frase_ambar'];
+					aforo_frase_rojo = data['aforo_frase_rojo'];
+
+
+					switch (color_barra_cabecera)
+					{
+						case "WTH":
+							color_barra_cabecera ="#FFFFFF";
+							break;
+						case "G60":
+							color_barra_cabecera ="#4c4c4c";
+							break;
+						case "G30":
+							color_barra_cabecera ="#999999";
+							break;
+						case "BLK":
+							color_barra_cabecera ="#000000";
+							break;
+					}
+
+					switch (true)
+					{
+					   case (nro_personas < 18):
+					   		sem_color = hzt_verde;
+					   		frase = aforo_frase_verde;
+					   		break;
+					   case (nro_personas < 41):
+					   		sem_color = hzt_ambar;
+					   		frase = aforo_frase_ambar;
+					   		break;
+					   case (nro_personas > 40):
+						   sem_color = hzt_rojo;
+						   frase = aforo_frase_rojo;
+						   break;
+					   default:
+						   sem_color = hzt_verde;
+						   frase = aforo_frase_verde;
+					}
+
+				    $('#semaforo').attr('src',sem_color);
+				    $('#texto_barra_cabecera').html(texto_barra_cabecera);
+
+					if(aforo_mostrar_maximo==false){
+						$("#msg_aforo_maximo").hide().html('');
+					}
+					else{
+						$("#msg_aforo_maximo").show().html(aforo_maximo);
+					}
+					if(aforo_mostrar_casi_lleno==false){
+						$("#msg_aforo_casi_lleno").hide().html('');
+					}
+					else{
+						$("#msg_aforo_casi_lleno").show().html(frase);
+					}
+				    /*color_barra_cabecera*/
+
+				    if (aforo_formato=="PCT"){
+				    	nro_personas_show = ((nro_personas * 100)/aforo_maximo).toFixed(0) + "%";
+				    }
+				    else{
+				    	nro_personas_show = nro_personas;
+				    }
+
+					Circles.create({
+						id:'circles-1',
+						radius:100,
+						value:nro_personas,
+						maxValue:aforo_maximo,
+						width:15,
+						text: nro_personas_show,
+						colors:['#f1f1f1', '#FF9E27'], /*#FF9E27*/
+						duration:400,
+						wrpClass:'circles-wrp',
+						textClass:'circles-text',
+						styleWrapper:true,
+						styleText:true
+					});
+				}
+			});
+		};
+    });
+
+
+    /*
+    $(function(){
+        //prepare Your data array with img urls
+        var dataArray=new Array();
+        dataArray[0]="../static/assets/img/design/shv.png";
+        dataArray[1]="../static/assets/img/design/sha.png";
+        dataArray[2]="../static/assets/img/design/shr.png";
+
+        //start with id=0 after 5 seconds
+        var thisId=0;
+
+        window.setInterval(function(){
+            $('#semaforo').attr('src',dataArray[thisId]);
+            thisId++; //increment data array id
+            console.log(thisId);
+            if (thisId==3) thisId=0; //repeat from start
+        },5000);
+    });*/
+
+
+
+
+</script>
+</body>
+</html>

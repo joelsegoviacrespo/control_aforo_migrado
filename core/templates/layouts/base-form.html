@@ -1,0 +1,20 @@
+{% extends "layouts/base.html" %}
+{% block content %}
+    <div class="page-inner mx-2 mt-1 p-2">
+        <div class="page-header m-1 p-1">
+            <h5 class="page-title">
+                {% block content-form-page-header-title %} {% endblock content-form-page-header-title %}
+            </h5>
+            {% block content-form-page-header %} {% endblock content-form-page-header %}
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+				{% block content-form-form-tag-begin %} {% endblock content-form-form-tag-begin %}
+                {% block content-form-content %} {% endblock content-form-content %}
+				{% block content-form-form-tag-end %} {% endblock content-form-form-tag-end %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+{% block content-modal %}{% endblock content-modal %}
+{% block javascripts-page %}{% endblock javascripts-page %}

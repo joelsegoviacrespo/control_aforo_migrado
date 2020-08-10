@@ -1,0 +1,348 @@
+{% extends "layouts/base-modal.html" %}
+
+{% block title %} Monitor {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block modal-content-title-dissmiss %}
+onclick="javascript:window.location='/monitor/todos'"
+{% endblock modal-content-title-dissmiss %}
+{% block modal-content-form-tag-begin %}
+<form method="POST" class="post-form" action="/monitor/">
+    {% endblock modal-content-form-tag-begin %}
+    {% block modal-content-title %}
+    <ul class="ml-0 breadcrumbs">
+        <li class="nav-home">
+            <a href="#">
+                <i class="fas fa-tv"></i>
+            </a>
+        </li>
+        <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+        </li>
+        <li class="nav-item">
+            <a href="#">Monitor</a>
+        </li>
+        <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+        </li>
+        <li class="nav-item">
+            <a href="#">Agregar</a>
+        </li>
+    </ul>
+    {% endblock modal-content-title %}
+    {% block modal-content %}
+    {% csrf_token %}
+
+    <div class="card bg-custom-gray p-1">
+        <div class="card-header m-0 py-1">
+            <h5>Datos generales</h5>
+        </div>
+        <div class="card-body bg-light p-1">
+            <div class="form-row col-12">
+                <div class="form-group form-inline col-12 col-lg-2">
+                    <label class="col-form-label mr-3">Activo:</label>
+                    <input type="checkbox" name="monitor_estado"
+                           id="id_monitor_estado" class="form-control form-control-sm"
+                           value="True" {% if form.monitor_estado.value %}checked{% endif %}/>
+                </div>
+                <div class="form-group col-12 col-lg-5">
+                    <label class="col-form-label mr-3">Razón Social:</label>
+                    <br>
+                    <select name="clientes" required id="id_clientes" class="form-control form-control-sm">
+                        <option value="" selected> --------- </option>
+                        {% for id, value in form.fields.clientes.choices %}
+                            <option value="{{ id }}">{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-12 col-lg-5">
+                    <label class="col-form-label mr-3">Nombre Comercial:</label>
+                    <br>
+                    <select name="id_instalacion" required id="id_id_instalacion" class="form-control form-control-sm">
+                        <option value="">--------</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-12 col-lg-4">
+                    <label class="col-form-label col-form-label-sm">MAC WiFi:</label>
+                    <input type="text" name="mac_wifi"
+                           maxlength="30" class="form-control form-control-sm" required
+                           value=" {{form.mac_wifi.value }}"
+                           id="id_mac_wifi"/>
+                </div>
+                <div class="form-group col-12 col-lg-6">
+                    <label class="col-form-label col-form-label-sm">Descripción / Ubicación:</label>
+                    <input type="text" name="descripcion"
+                           maxlength="30" class="form-control form-control-sm" required
+                           value=" {{form.descripcion.value }}"
+                           id="id_descripcion"/>
+                </div>
+
+                <div class="form-group col-12 col-lg-7">
+                    <label class="col-form-label col-form-label-sm">Zonas Cámaras:</label>
+                    <select name="id_camara_zona" required id="id_id_camara_zona"
+                            class="form-control form-control-sm">
+                        <option value="">--------</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card bg-custom-gray p-1">
+        <div class="card-header m-0 py-1">
+            <h5>Configuración diseño</h5>
+        </div>
+        <div class="card-body bg-light p-1">
+            <div class="form-row col-12">
+                <div class="form-group col-12 col-lg-4">
+                    <label class="col-form-label col-form-label-sm">Color barra cabecera:</label>
+                    {{form.color_barra_cabecera.value}}
+                    <div class="selectgroup w-95">
+                        <label class="selectgroup-item bg-white">
+                            <input type="radio" name="color_barra_cabecera"
+                                   value="WTH" class="selectgroup-input"
+                                   {%if form.color_barra_cabecera.value == 'WTH' %} checked='checked' {% endif %} />
+                            <span class="selectgroup-button bg-white text-transparent">.
+                            </span>
+                        </label>
+                        <label class="selectgroup-item bg-gray-30">
+                            <input type="radio" name="color_barra_cabecera"
+                                value="G30" class="selectgroup-input"
+                                {%if form.color_barra_cabecera.value == 'G30' %}checked='checked'{% endif %} />
+                            <span class="selectgroup-button bg-gray-30 text-transparent">.
+                            </span>
+                        </label>
+                        <label class="selectgroup-item">
+                            <input type="radio" name="color_barra_cabecera"
+                                   value="G60" class="selectgroup-input"
+                                   {%if form.color_barra_cabecera.value == 'G60' %}checked='checked'{% endif %} />
+                            <span class="selectgroup-button bg-gray-60  text-transparent">.
+                            </span>
+                        </label>
+                        <label class="selectgroup-item bg-black">
+                            <input type="radio" name="color_barra_cabecera"
+                                   value="BLK" class="selectgroup-input"
+                                   {%if form.color_barra_cabecera.value == 'BLK' %}checked='checked'{% endif %} />
+                            <span class="selectgroup-button bg-black text-transparent">.
+                            </span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group col-12 col-lg-4">
+                    <label class="col-form-label">Texto barra cabecera:</label>
+                    <input type="text"
+                           name="texto_barra_cabecera"
+                           id="id-texto_barra_cabecera"
+                           maxlength="300" class="form-control form-control-sm" required
+                           value=" {{form.texto_barra_cabecera.value }}"/>
+                </div>
+                <div class="form-group col-12 col-lg-4">
+                    <label class="col-form-label col-form-label-sm">Imagén de fondo:</label>
+                    <!--input type="file" name="fondo_imagen"
+                                       class="form-control form-control-sm"
+                                       value=" {{form.fondo_imagen.value }}"
+                                       id="id_fondo_imagen"/-->
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input form-control-sm"
+                               name="fondo_imagen" id="id_fondo_imagen"
+                               value=" {{form.fondo_imagen.value }}" accept="image/*">
+                        <label class="custom-file-label col-form-label-sm" for="id_fondo_imagen">Elija un
+                            archivo</label>
+                    </div>
+                </div>
+                <div class="form-group col-12 col-lg-4">
+                    <label class="col-form-label col-form-label-sm">Logotipo posición:</label>
+                    {{form.logotipo_posicion.value}}
+                    <div class="selectgroup w-100">
+                        <label class="selectgroup-item">
+                            <input type="radio" name="logotipo_posicion"
+                                   {% ifequal form.logotipo_posicion.value "RGH" %} checked='checked' {% endifequal %}
+                            value="RGH" class="selectgroup-input" />
+                            <span class="selectgroup-button selectgroup-button-icon">
+                                <i class="fas fa-align-right"></i>
+                            </span>
+                        </label>
+                        <label class="selectgroup-item">
+                            <input type="radio" name="logotipo_posicion"
+                                   {% ifequal form.logotipo_posicion.value "CTR" %}checked='checked'{% endifequal %}
+                            value="CTR" class="selectgroup-input" />
+                            <span class="selectgroup-button selectgroup-button-icon">
+                                <i class="fas fa-align-center"></i>
+                            </span>
+                        </label>
+                        <label class="selectgroup-item">
+                            <input type="radio" name="logotipo_posicion"
+                                   {% ifequal form.logotipo_posicion.value "LFT" %}checked='checked'{% endifequal %}
+                            value="LFT" class="selectgroup-input" />
+                            <span class="selectgroup-button selectgroup-button-icon">
+                                <i class="fas fa-align-left"></i>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group col-12 col-lg-4">
+                    <label class="col-form-label col-form-label-sm">Logotipo:</label>
+                    <!--input type="file" name="logotipo" id="id_logotipo" accept="image/*"
+                           class="form-control form-control-sm"
+                           value=" {{form.logotipo.value }}" /-->
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input form-control-sm" name="logotipo"
+                               id="id_logotipo" value=" {{form.logotipo.value }}" accept="image/*">
+                        <label class="custom-file-label" for="id_logotipo">Elija un archivo</label>
+                    </div>
+                </div>
+                <div class="form-group col-12 col-lg-4">
+                    <label class="col-form-label">Límite aforo:</label>
+                    <input type="text"
+                           name="aforo_maximo"
+                           id="id-aforo_maximo"
+                           maxlength="300" class="form-control form-control-sm" required
+                           value=" {{form.aforo_maximo.value }}"/>
+                </div>
+                <div class="form-group col-12 col-lg-4">
+                    <label class="col-form-label col-form-label-sm">Vista aforo:</label>
+                    {{form.aforo_formato.value}}
+                    <div class="selectgroup w-50">
+                        <label class="selectgroup-item w-80">
+                            <input type="radio" name="aforo_formato"
+                                   {% ifequal form.aforo_formato.value "PCT" %} checked='checked' {% endifequal %}
+                            value="PCT" class="selectgroup-input" />
+                            <span class="selectgroup-button">  Porcentaje </span>
+                        </label>
+                        <label class="selectgroup-item w-50">
+                            <input type="radio" name="aforo_formato"
+                                   {% ifequal form.aforo_formato.value "NMB" %}checked='checked'{% endifequal %}
+                            value="NMB" class="selectgroup-input" />
+                            <span class="selectgroup-button"> Número </span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group form-inline col-12 col-lg-4">
+                    <label class="col-form-label mr-3">Ver aforo máximo</label>
+                    <input type="checkbox"
+                           name="aforo_mostrar_maximo"
+                           maxlength="30" class="form-control form-control-sm"
+                           value="True" {% if form.aforo_mostrar_maximo.value %}checked{% endif %}
+                           id="id_aforo_mostrar_maximo"/>
+                </div>
+                <div class="form-group form-inline col-12 col-lg-4">
+                    <label class="col-form-label mr-3">Indicar aforo casi lleno</label>
+                    <input type="checkbox"
+                           name="aforo_mostrar_casi_lleno"
+                           maxlength="30" class="form-control form-control-sm"
+                           value="True" {% if form.aforo_mostrar_casi_lleno.value %}checked{% endif %}
+                           id="id_aforo_mostrar_casi_lleno"/>
+                </div>
+                <div class="form-group col-12 col-lg-4">
+                    <label class="col-form-label">Frase señal en verde</label>
+                    <input type="text"
+                           name="aforo_frase_verde"
+                           id="id-aforo_frase_verde"
+                           maxlength="300" class="form-control form-control-sm" required
+                           value=" {{form.aforo_frase_verde.value }}"/>
+                </div>
+                <div class="form-group col-12 col-lg-4">
+                    <label class="col-form-label">Frase señal en ambar:</label>
+                    <input type="text"
+                           name="aforo_frase_ambar"
+                           id="id-aforo_frase_ambar"
+                           maxlength="300" class="form-control form-control-sm" required
+                           value=" {{form.aforo_frase_ambar.value }}"/>
+                </div>
+                <div class="form-group col-12 col-lg-4">
+                    <label class="col-form-label">Frase señal en rojo:</label>
+                    <input type="text"
+                           name="aforo_frase_rojo"
+                           id="id-aforo_frase_rojo"
+                           maxlength="300" class="form-control form-control-sm" required
+                           value=" {{form.aforo_frase_rojo.value }}"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-row m-0 p-2">
+        <div class="form-group col-12">
+            {% if form.errors %}
+            <div class="alert alert-danger my-1">
+                {% for field in form %}
+                {% if field.errors %}
+                <li>
+                    <strong class="mr-3">{{ field.label | capfirst }}: </strong>
+                    <ul class="errorlist">
+                        {% for error in field.errors %}
+                        <li>{{error|escape}}</li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                {% endif %}
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endblock modal-content %}
+    {% block modal-content-footer %}
+    <button type="submit" class="btn btn-success">Guardar</button>
+    <button type="reset" class="btn btn-warning" >Cancelar</button>
+    <button type="button" class="btn btn-danger" data-dismiss="modal"
+            onclick="javascript:window.location='/monitor/todos'">Cerrar
+    </button>
+    {% endblock modal-content-footer %}
+    {% block modal-content-form-tag-end %}
+</form>
+{% endblock modal-content-form-tag-end %}
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+<script>
+    $(document).ready(function(){
+        $('select[name=clientes]').change(function(){
+            id_cliente = $(this).val();
+            $('select[name=id_instalacion]').find('option').remove().end();
+            $('select[name=id_instalacion]').append($('<option></option>').val('').html('---------'));
+            $('select[name=id_camara_zona]').find('option').remove().end();
+            $('select[name=id_camara_zona]').append($('<option></option>').val('').html('---------'));
+            if (id_cliente != '') {
+                request_url = '/instalacion/listar_por_id_cliente/' + id_cliente + '';
+                $.ajax({
+                    url: request_url,
+                    success: function(data){
+                        $.each(data, function(index, text){
+                            $('select[name=id_instalacion]').append(
+                                 $('<option></option>').val(index).html(text)
+                             );
+                        });
+                    }
+                });
+            };
+            return false;
+        });
+        $('select[name=id_instalacion]').change(function(){
+            id = $(this).val();
+            $('select[name=id_camara_zona]').find('option').remove().end();
+            $('select[name=id_camara_zona]').append($('<option></option>').val('').html('---------'));
+            if (id != '') {
+                request_url = '/camara_zona/listar_por_id_instalacion/' + id + '';
+                $.ajax({
+                    url: request_url,
+                    success: function(data){
+                        $.each(data, function(index, text){
+                            $('select[name=id_camara_zona]').append(
+                                 $('<option></option>').val(index).html(text)
+                             );
+                        });
+                    }
+                });
+            };
+            return false;
+        });
+    });
+    //Permite que el nobe del archivo se muestre en la caja de texto del fileUpload
+    $(".custom-file-input").on("change", function() {
+      var fileName = $(this).val().split("\\").pop();
+      $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+</script>
+
+{% endblock javascripts %}

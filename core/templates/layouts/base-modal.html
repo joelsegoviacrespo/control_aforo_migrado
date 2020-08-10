@@ -1,0 +1,38 @@
+{% extends "layouts/base.html" %}
+{% block content %}{% endblock content %}
+{% block content-modal %}
+		<div class="modal fade" id="modalForm" tabindex="-1" role="dialog" aria-labelledby="modalFormTitle" aria-hidden="true">
+			<div class="modal-dialog modal-lg modal-xl" role="document" >
+				<div class="modal-content">
+					{% block modal-content-form-tag-begin %} {% endblock modal-content-form-tag-begin %}
+					<div class="modal-header bg-custom-gray">
+						<h5 class="modal-title font-weight-bold" id="modalFormTitle">
+							{% block modal-content-title %} {% endblock modal-content-title %}
+						</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close" {% block modal-content-title-dissmiss %} {% endblock modal-content-title-dissmiss %}>
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						{% block modal-content %} {% endblock modal-content %}
+					</div>
+					<div class="modal-footer py-2 bg-custom-gray-dark ">
+						{% block modal-content-footer %} {% endblock modal-content-footer %}
+					</div>
+					{% block modal-content-form-tag-end %} {% endblock modal-content-form-tag-end %}
+				</div>
+			</div>
+		</div>
+{% endblock content-modal %}
+
+{% block javascripts-page %}
+<script>
+    $(document).ready(function(){
+        $("#modalForm").modal({backdrop: 'static', keyboard: false});
+    });
+
+    $('#modalForm').on('hidden.bs.modal', function () {
+		$(this).find('form').trigger('reset');
+	})
+</script>
+{% endblock javascripts-page %}

@@ -1,0 +1,9 @@
+{# First render the pages #}
+{% for instalacion in menu_instalaciones %}
+    {# Then check if current instalacion is 'published' #}
+    {% if instalacion.status == 'published' %}
+        <li>
+            <a href="{{ instalacion.id }}">{{instalacion.nombre_completo}}</a>
+        </li>
+    {% endif %}
+{% endfor %}

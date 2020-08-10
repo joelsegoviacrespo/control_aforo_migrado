@@ -1,0 +1,15 @@
+db.dispositivo.insert({"id":"1","mac_wifi:"12:80:34:45:65","mac_bluetooh":"62:23:89:45:67","estatus": "true"})
+db.dispositivo.insert({"id":"1","mac_wifi":"34:98:34:67:67","mac_bluetooh":"23:60:76:45:64","estatus": "true"})
+db.dispositivo.insert({"id":"1","mac_wifi":"56:98:21:67:63","mac_bluetooh":"23:64:65:98:47","estatus": "true"})
+db.dispositivo.insert({"id":"1","mac_wifi":"72:98:73:67:67","mac_bluetooh":"94:64:30:98:42","estatus": "tru
+
+
+/merakimv/Q2GV-4YBM-YWWJ/raw_detections	Entire image	Object detections from whole camera frame
+/merakimv/Q2GV-4YBM-YWWJ/665406844943990873	Cola Panaderia	Current state of zone
+/merakimv/Q2GV-4YBM-YWWJ/665406844943990872	Entrada Principal	Current state of zone
+/merakimv/Q2GV-4YBM-YWWJ/light	Camera	Measurements from the camera's light sensor (lux)
+
+
+/merakimv/Q2HV-B24V-ZKN5/raw_detections	Entire image	Object detections from whole camera frame
+/merakimv/Q2HV-B24V-ZKN5/665406844943990874	Entrada	Current state of zone
+/merakimv/Q2HV-B24V-ZKN5/light	Camera	Measurements from the camera's light sensor (lux)

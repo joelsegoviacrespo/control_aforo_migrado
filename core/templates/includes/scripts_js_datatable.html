@@ -1,0 +1,27 @@
+	<script >
+		$(document).ready(function() {
+			$('#add-row').DataTable({
+				"pageLength": 5,
+				"language": {
+                    "lengthMenu": "Mostrar&nbsp; _MENU_  &nbsp;registros por página",
+                    "zeroRecords": "No hay registros",
+                    "info": "Pág.&nbsp; _PAGE_ de _PAGES_ &nbsp;",
+                    "infoEmpty": "No hay registros disponibles",
+                    "infoFiltered": "(filtered from _MAX_ total records)",
+                    "scrollY": 200,
+                    "scrollX": true,
+                    paginate: {
+                                    previous: '<i class="fas fa-angle-left"></i>',
+                                    next:     '<i class="fas fa-angle-right"></i>'
+                                },
+                                aria: {
+                                    paginate: {
+                                        previous: '<i class="fas fa-angle-left"></i>',
+                                        next:     '<i class="fas fa-angle-right"></i>'
+                                    }
+                                },
+                     "search": "Filtrado por:&nbsp; _INPUT_ ",
+                },
+			});
+		});
+	</script>
