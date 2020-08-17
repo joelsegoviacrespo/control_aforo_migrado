@@ -3,7 +3,6 @@ from djongo import models
 import os
 from instalacion.models import Instalacion
 
-
 def path_and_rename(path, prefix):
     def wrapper(instance, filename):
         ext = filename.split('.')[-1]
@@ -60,7 +59,7 @@ class Monitor(models.Model):
     id_camara_zona = models.CharField(max_length=255, blank=False, default='')
     mac_wifi = models.CharField(max_length=30, blank=False, default='')
     descripcion = models.CharField(max_length=300, blank=False, default='')
-    color_barra_cabecera = models.CharField(max_length=3, choices=HEADER_COLOR, default=WHITE)
+    color_barra_cabecera = models.CharField(max_length=3, choices=HEADER_COLOR, default=BLACK)
     texto_barra_cabecera = models.CharField(max_length=100, blank=False, default='')
     logotipo = models.ImageField(upload_to='images/', blank=True)
     logotipo_archivo_nombre = models.CharField(max_length=300, blank=True, default='')
@@ -84,7 +83,6 @@ class Monitor(models.Model):
 
     def __init__(self, *args, **kwargs):
         super(Monitor, self).__init__(*args, **kwargs)
-
 
 # def logotipo_nombre(instance, filename):
 #     ext = filename.split('.')[-1]

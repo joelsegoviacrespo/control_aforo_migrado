@@ -3,7 +3,7 @@
 License: MIT
 Copyright (c) 2019 - present AppSeed.us
 """
-
+from pymongo import MongoClient
 import os
 from decouple import config
 from unipath import Path
@@ -113,6 +113,19 @@ DATABASES = {
                  'authSource': 'admin',
                  'authMechanism': 'SCRAM-SHA-1'
              }
+        },
+        'ControlAforo': {
+            'ENGINE': 'djongo',
+            'NAME': 'SMF_BDControlAforoMQTTMensajes',
+            'CLIENT': {
+                 'host': 'mongodb://smfactory:S0ftwar4Mf4ac0ory@5.196.27.225:27117',
+                 'port': 27117,
+                 'username': 'smfactory',
+                 'password': 'S0ftwar4Mf4ac0ory',
+                 'authSource': 'admin',
+                 'authMechanism': 'SCRAM-SHA-1',
+                 'db_coleccion': 'camara_mvsense_messages'
+            }
         },
 }
 

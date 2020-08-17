@@ -68,17 +68,6 @@ def showOnDisplay(request):
 
     return JsonResponse({'error:': 'request method not allowed'}, status=status.HTTP_400_BAD_REQUEST)
 
-#TODO: PAsar esto a los settings
-#Configuración conexión a la base de datos
-DB_IP ="5.196.27.225"
-#DB_IP ="127.0.0.1"
-DB_Port = "27117"
-DB_Name = "SMF_BDControlAforoMQTTMensajes"
-#DB_Name = "MosaykDB"
-DB_Collection = "camara_mvsense_messages"
-DB_USER_Name = "smfactory"
-DB_USER_Password = "S0ftwar4Mf4ac0ory"
-
 @api_view(['GET', 'POST'])
 @authentication_classes([])
 @permission_classes([])
@@ -111,7 +100,7 @@ def configuracion(request, id_monitor):
                 "mac_wifi": monitor["mac_wifi"],
                 "nro_personas": nro_personas,
                 "aforo_maximo": monitor["aforo_maximo"],
-                "texto_barra_cabecera" : "Nos alegra verle de nuevo",
+                "texto_barra_cabecera" : monitor ["texto_barra_cabecera"],
                 "color_barra_cabecera": monitor["color_barra_cabecera"],
                 "logotipo_archivo_nombre": monitor["logotipo_archivo_nombre"],
                 "logotipo_posicion": monitor["logotipo_posicion"],
