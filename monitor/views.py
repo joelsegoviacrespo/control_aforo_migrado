@@ -12,6 +12,7 @@ from rest_framework import views, status
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
+from django.conf import settings
 
 from camara_zona.models import CamaraZona
 from monitor.forms import MonitorForm, MonitorEditarForm, MonitorShowForm
@@ -84,9 +85,9 @@ def configuracion(request, id_monitor):
             #random.randint(0, 50)
             #Obtiene el número de personas en el sitio
             try:
-                conn = MongoClient(DB_IP + ":" + DB_Port)
-                db = conn[DB_Name]
-                collection = db[DB_Collection]
+                conn = MongoClient(settings.DB_IP + ":" + settings.DB_PORT)
+                db = conn[settings.DB_NAME]
+                collection = db[settings.DB_COLLECTION]
                 data = collection.find_one({'camara_serial':camara_serial,'zona':zona_numero}, sort=[('_id', pymongo.DESCENDING)])
                 if data is not None:
                     nro_personas = data['nro_personas']
