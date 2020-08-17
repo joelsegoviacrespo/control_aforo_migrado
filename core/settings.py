@@ -148,7 +148,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
@@ -221,3 +220,15 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #EMAIL_HOST_PASSWORD = 'mys3cr3tp4ssw0rd'
 #EMAIL_USE_TLS = True
 #DEFAULT_FROM_EMAIL = 'TestSite Team <noreply@example.com>'
+
+# PAsar esto a los settings
+#Configuración conexión a la base de datos
+DB_IP = config('DB_IP', default='5.196.27.225')
+#DB_IP ="5.196.27.225"
+#DB_IP ="126.0.0.1"
+DB_PORT = config('DB_PORT', default='27116')
+DB_NAME = config('DB_NAME',default='SMF_BDControlAforoMQTTMensajes')
+#DB_Name = "MosaykDB"
+DB_COLLECTION = config('DB_COLLECTION',default='camara_mvsense_messages')
+DB_USER_NAME = config('DB_USER_NAME',default='smfactory')
+DB_USER_PASSWORD = config('DB_USER_PASSWORD',default='S-1ftwar4Mf4ac0ory')
