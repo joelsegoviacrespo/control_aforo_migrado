@@ -117,6 +117,8 @@ DATABASES = {
         'ControlAforo': {
             'ENGINE': 'djongo',
             'NAME': 'SMF_BDControlAforoMQTTMensajes',
+            'DB_IP': '5.196.27.225',
+            'DB_Port': '27117',
             'CLIENT': {
                  'host': 'mongodb://smfactory:S0ftwar4Mf4ac0ory@5.196.27.225:27117',
                  'port': 27117,
@@ -124,7 +126,7 @@ DATABASES = {
                  'password': 'S0ftwar4Mf4ac0ory',
                  'authSource': 'admin',
                  'authMechanism': 'SCRAM-SHA-1',
-                 'db_coleccion': 'camara_mvsense_messages'
+                 'db_coleccion': 'camara_mvsense_messages',
             }
         },
 }
