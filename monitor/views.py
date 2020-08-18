@@ -88,18 +88,20 @@ def configuracion(request, id_monitor):
                 conn = MongoClient(settings.DB_IP + ":" + settings.DB_PORT)
                 db = conn[settings.DB_NAME]
                 collection = db[settings.DB_COLLECTION]
+                collection2 = db[settings.DB_COLLECTION2]
                 data = collection.find_one({'camara_serial':camara_serial,'zona':zona_numero}, sort=[('_id', pymongo.DESCENDING)])
-                if data is not None:
-                    nro_personas = data['nro_personas']
+                data2 = collection2.find_one({})
+                if data2 is not None:
+                    nro_aforo = data2['nro_aforo']
                 else:
-                    nro_personas = 0
+                    nro_aforo = 0
             except Exception as e:
                 print('%s (%s)' % (e, type(e)))
                 pass
             monitor_js = {
                 "id_camara_zona": monitor["id_camara_zona"],
                 "mac_wifi": monitor["mac_wifi"],
-                "nro_personas": nro_personas,
+                "nro_personas": nro_aforo,
                 "aforo_maximo": monitor["aforo_maximo"],
                 "texto_barra_cabecera" : monitor ["texto_barra_cabecera"],
                 "color_barra_cabecera": monitor["color_barra_cabecera"],

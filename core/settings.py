@@ -126,7 +126,22 @@ DATABASES = {
                  'password': 'S0ftwar4Mf4ac0ory',
                  'authSource': 'admin',
                  'authMechanism': 'SCRAM-SHA-1',
-                 'db_coleccion': 'camara_mvsense_messages',
+                 'db_coleccion': 'aforo_info',
+            }
+        },
+        'DBCollection2': {
+            'ENGINE': 'djongo',
+            'NAME': 'SMF_BDControlAforoMQTTMensajes',
+            'DB_IP': '5.196.27.225',
+            'DB_Port': '27117',
+            'CLIENT': {
+                 'host': 'mongodb://smfactory:S0ftwar4Mf4ac0ory@5.196.27.225:27117',
+                 'port': 27117,
+                 'username': 'smfactory',
+                 'password': 'S0ftwar4Mf4ac0ory',
+                 'authSource': 'admin',
+                 'authMechanism': 'SCRAM-SHA-1',
+                 'db_collection': 'aforo_info',
             }
         },
 }
@@ -223,14 +238,22 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #EMAIL_USE_TLS = True
 #DEFAULT_FROM_EMAIL = 'TestSite Team <noreply@example.com>'
 
-# PAsar esto a los settings
 #Configuración conexión a la base de datos
 DB_IP = config('DB_IP', default='5.196.27.225')
 #DB_IP ="5.196.27.225"
-#DB_IP ="126.0.0.1"
-DB_PORT = config('DB_PORT', default='27116')
+#DB_IP ="127.0.0.1"
+DB_PORT = config('DB_PORT', default='27117')
 DB_NAME = config('DB_NAME',default='SMF_BDControlAforoMQTTMensajes')
-#DB_Name = "MosaykDB"
-DB_COLLECTION = config('DB_COLLECTION',default='camara_mvsense_messages')
+DB_COLLECTION = config('DB_COLLECTION',default='aforo_info')
 DB_USER_NAME = config('DB_USER_NAME',default='smfactory')
-DB_USER_PASSWORD = config('DB_USER_PASSWORD',default='S-1ftwar4Mf4ac0ory')
+DB_USER_PASSWORD = config('DB_USER_PASSWORD',default='S0ftwar4Mf4ac0ory')
+
+#Configuración conexión a la base de datos
+DB_IP = config('DB_IP', default='5.196.27.225')
+#DB_IP ="5.196.27.225"
+#DB_IP ="127.0.0.1"
+DB_PORT = config('DB_PORT', default='27117')
+DB_NAME = config('DB_NAME',default='SMF_BDControlAforoMQTTMensajes')
+DB_COLLECTION2 = config('DB_COLLECTION2',default='aforo_info')
+DB_USER_NAME = config('DB_USER_NAME',default='smfactory')
+DB_USER_PASSWORD = config('DB_USER_PASSWORD',default='S0ftwar4Mf4ac0ory')
