@@ -53,6 +53,7 @@ class SignUpForm(UserCreationForm):
                 "class": "form-control"
             }
         ))
+   
 
     class Meta:
         model = User
