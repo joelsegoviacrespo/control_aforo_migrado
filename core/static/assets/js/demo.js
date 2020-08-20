@@ -11,6 +11,7 @@ Circles.create({
 	duration:     400,
 	wrpClass:     'circles-wrp',
 	textClass:    'circles-text',
+
 	styleWrapper: true,
 	styleText:    true
 })
