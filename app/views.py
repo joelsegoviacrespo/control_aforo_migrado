@@ -28,10 +28,15 @@ def index(request):
         #instalaciones = Instalacion.objects.filter('cliente':)
         form = {'foo': 'staff'}
     else:
-        id_cliente = request.user.cliente.get_id()
-        id_instalacion = Instalacion.objects.values('_id').filter(id_cliente_id=id_cliente, instalacion_estado=True)[0]
-        monitores = Monitor.objects.filter(id_instalacion_id=id_instalacion, monitor_estado=True)
+        id_cliente = 0
+        id_instalacion = 0
+        monitores = {}
         estadisticas = {}
+        if hasattr(request.user, 'cliente'):            
+           id_cliente = request.user.cliente.get_id()        
+           id_instalacion = Instalacion.objects.values('_id').filter(id_cliente_id=id_cliente, instalacion_estado=True)[0]       
+           monitores = Monitor.objects.filter(id_instalacion_id=id_instalacion, monitor_estado=True)  
+      
         form = {'id_cliente': id_cliente, 'monitores' : monitores, 'estadisticas' : estadisticas}
 
     return render(request, "index.html",  {'form': form})

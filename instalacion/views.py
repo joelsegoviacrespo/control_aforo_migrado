@@ -41,7 +41,9 @@ def todos(request):
     instalaciones = {}
     if request.user.is_staff:
         instalaciones = Instalacion.objects.all()
-    elif request.user.cliente.get_id() is not None:
+        
+    elif hasattr(request.user, 'cliente') and (request.user.cliente.get_id() is not None):
+        
         instalaciones  = Instalacion.objects.filter(id_cliente=request.user.cliente.get_id())
 
     for instalacion in instalaciones:
