@@ -3,9 +3,11 @@
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
             <div>
                 <br>
-                cliente > {{form.id_cliente}}
+               <!--cliente >--> 
+               {{form.id_cliente}}
                 <br>
-                monitores > {{form.monitores}}
+                <!--monitores >-->
+                {{form.monitores}}
                 <h2 class="text-white pb-2 fw-bold">Panel de control</h2>
                 {% if user.is_superuser %}
                 <h5 class="text-white op-7 mb-2"> [S]Administrador </h5>
@@ -72,7 +74,7 @@
       </div>
     </div-->
     <div class="row mt--2">
-        <div class="col-md-4">
+        <div class="col-md-5">
             <div class="card full-height">
                 <div class="card-body">
                     <div class="card-title">Salón General</div>
@@ -85,6 +87,36 @@
                 </div>
             </div>
         </div>
+
+ <div class="col-md-7">
+            <div class="card full-height">
+                <div class="card-header text-center pt-2 pb-3">
+                    <b>Cámara: <small>Entrada Principal</small></b>
+                </div>
+                <img class="card-img-top" src="../static/assets/img/example10.jpeg" alt="Card image">
+                <div class="card-img-overlay">
+                    <div class="row py-5">
+                        <div class="col-md-4 d-flex flex-column justify-content-around">
+                            <div>
+                                <h6 class="fw-bold text-uppercase text-success op-8">Total Income</h6>
+                                <h3 class="fw-bold">$9.782</h3>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold text-uppercase text-danger op-8">Total Spend</h6>
+                                <h3 class="fw-bold">$1,248</h3>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div id="chart-container">
+                                <canvas id="totalIncomeChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-center"><b>Zona: <small>Completa</small></b></div>
+            </div>
+        </div>
+        
         <!--<div class="col-md-8">
             <div class="card">
                 <div class="card-header">
