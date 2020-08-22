@@ -241,6 +241,7 @@
             </div>
         </div>-->
     </div>
+    {% block body%}
     <div class="row">
         <div class="col-md-3">
             <div class="card full-height">
@@ -248,7 +249,7 @@
                     <b>Cámara: <small>Entrada Principal</small></b>
                 </div>
                 <img class="card-img-top" src="../static/assets/img/vertical.jpg" alt="Card image">
-              
+             
                 <div class="card-img-overlay">
                     <div class="d-flex flex-wrap justify-content-around">
                         <div class="px-2 pb-2 pb-md-0 text-center mt-5 mb-0">
@@ -261,6 +262,7 @@
                 <div class="card-footer text-center"><b>Zona: <small>Completa</small></b></div>
             </div>
         </div>
+        {% endblock %}
         <div class="col-md-3">
           <div class="card full-height">
               <div class="card-body">
