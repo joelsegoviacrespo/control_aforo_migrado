@@ -30,6 +30,7 @@ def index(request):
 
     #consulta a meraki
     url = "https://api.meraki.com/api/v1/devices/Q2HV-B24V-ZKN5/camera/generateSnapshot"
+    url2= "https://api.meraki.com/api/v1/devices/Q2GV-4YBM-YWWJ/camera/generateSnapshot"
 
     payload = {}
     headers = {
@@ -38,12 +39,16 @@ def index(request):
     }
 
     response = requests.request("POST", url, headers=headers, data = payload)
+
+    response2= requests.request("POST",url2 ,headers=headers, data = payload)
+
     #consulta a meraki
     if request.user.is_staff:
 
         #instalaciones = Instalacion.objects.filter('cliente':)
         
         form = {'foo': 'staff', 'meraki' : response}
+        form2 ={'foo':'staff','meraki': response2}
 
     else:
         id_cliente = 0
@@ -57,9 +62,13 @@ def index(request):
            monitores = Monitor.objects.filter(id_instalacion_id=id_instalacion, monitor_estado=True) 
       
         form = {'id_cliente': id_cliente, 'monitores' : monitores, 'estadisticas' : estadisticas, 'meraki' : response}
+        
+        form2 = {'id_cliente' : id_cliente, 'monitores' : monitores, 'estadisticas' : estadisticas, 'meraki' : response2} 
     #print(post, flush=True)
     print(response.text.encode('utf8'), flush=True)        
-    return render(request, "index.html",  {'form': form})
+    return render(request, "index.html",  {'form': form, 'form2':form2})
+    print(response2.text.encode('utf8', {'flush': form2}))
+    #return render(request, "index.html", {'form2':form2})
 
 @login_required(login_url="/login/")
 def pages(request):
