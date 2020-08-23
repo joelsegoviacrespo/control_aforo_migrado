@@ -12,6 +12,11 @@ from django import template
 
 from instalacion.models import Instalacion
 from monitor.models import Monitor
+import sys
+import http.client
+import mimetypes
+from pip._vendor import requests
+
 
 
 def hfs(request):
@@ -23,22 +28,37 @@ def hfs(request):
 @login_required(login_url="/login/")
 def index(request):
 
+    #consulta a meraki
+    url = "https://api.meraki.com/api/v1/devices/Q2HV-B24V-ZKN5/camera/generateSnapshot"
+
+    payload = {}
+    headers = {
+    'X-Cisco-Meraki-API-Key': '920a310b87feb3832739a79d573845404c6825d0',
+    'Content-Type': 'application/json'
+    }
+
+    response = requests.request("POST", url, headers=headers, data = payload)
+    #consulta a meraki
     if request.user.is_staff:
 
         #instalaciones = Instalacion.objects.filter('cliente':)
-        form = {'foo': 'staff'}
+        
+        form = {'foo': 'staff', 'meraki' : response}
+
     else:
         id_cliente = 0
         id_instalacion = 0
         monitores = {}
         estadisticas = {}
+        
         if hasattr(request.user, 'cliente'):            
            id_cliente = request.user.cliente.get_id()        
            id_instalacion = Instalacion.objects.values('_id').filter(id_cliente_id=id_cliente, instalacion_estado=True)[0]       
-           monitores = Monitor.objects.filter(id_instalacion_id=id_instalacion, monitor_estado=True)  
+           monitores = Monitor.objects.filter(id_instalacion_id=id_instalacion, monitor_estado=True) 
       
-        form = {'id_cliente': id_cliente, 'monitores' : monitores, 'estadisticas' : estadisticas}
-
+        form = {'id_cliente': id_cliente, 'monitores' : monitores, 'estadisticas' : estadisticas, 'meraki' : response}
+    #print(post, flush=True)
+    print(response.text.encode('utf8'), flush=True)        
     return render(request, "index.html",  {'form': form})
 
 @login_required(login_url="/login/")
@@ -60,3 +80,4 @@ def pages(request):
     
         html_template = loader.get_template( 'error-500.html' )
         return HttpResponse(html_template.render(context, request))
+

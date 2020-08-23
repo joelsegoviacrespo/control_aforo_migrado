@@ -12,6 +12,6 @@ class HomeView(TemplateView):
             'Content-Type': 'application/json',
         }
 
-       response = requests.post('https://api.meraki.com/api/v1/devices/Q2HV-B24V-ZKN5/camera/generateSnapshot', headers=headers)
-       return render(request, template_name,{'out':response})
+        response = request.post('https://api.meraki.com/api/v1/devices/Q2HV-B24V-ZKN5/camera/generateSnapshot', headers=headers)
+        return render(request, template_name,{'out':response})
 
