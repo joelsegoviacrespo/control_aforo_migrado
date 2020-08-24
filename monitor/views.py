@@ -225,8 +225,8 @@ def configuracion(request, id_monitor):
             #random.randint(0, 50)
             #Obtiene el número de personas en el sitio
             try:
-                #conn = MongoClient(settings.DB_IP + ":" + settings.DB_PORT)
-                conn = MongoClient(settings.DB_FULL)
+                conn = MongoClient(settings.DB_IP + ":" + settings.DB_PORT)
+                #conn = MongoClient(settings.DB_FULL)
                 db = conn[settings.DB_NAME]
                 collection = db[settings.DB_COLLECTION]
                 collection2 = db[settings.DB_COLLECTION2]
@@ -278,14 +278,23 @@ def configuracion_camaras(request, id_monitor):
             # TODO: Ajustar esto, no debe ir a dos tablas a buscar lo mismo
              
             #monitor = Monitor.objects.values().filter(_id=id_monitor, monitor_estado=True)[0]
+            print("configuracion_camaras2")
             monitor = Monitor.objects.values().filter(monitor_estado=True)[0]
-            camara_zona = CamaraZona.objects.values('id_camara_zona').filter(_id=monitor["id_camara_zona"], camara_zona_estado=True)[0]
-            id_camara_zona = camara_zona['id_camara_zona']
-            camara_serial = id_camara_zona.split('_')[0]
-            zona_numero = id_camara_zona.split('_')[1]
+            print("configuracion_camaras3")
+            #camara_zona = CamaraZona.objects.values('id_camara_zona').filter(_id=monitor["id_camara_zona"], camara_zona_estado=True)[0]
+            
+            #id_camara_zona = camara_zona['id_camara_zona']
+            id_camara_zona = 0
+            print("configuracion_camaras4")
+            #camara_serial = id_camara_zona.split('_')[0]
+            camara_serial = ""
+            print("configuracion_camaras5")
+            #zona_numero = id_camara_zona.split('_')[1]
+            zona_numero = 0
+            print("configuracion_camaras6")
             nro_personas = 0
             camarasAll =  Camaras.objects.all()
-
+            print("antes1")
             #random.randint(0, 50)
             #Obtiene el número de personas en el sitio
             try:
@@ -307,13 +316,19 @@ def configuracion_camaras(request, id_monitor):
                 else:
                     nro_aforo = 0
                 
-                
+                print("antes del for")
+                print("len camaras")
+                print(len(camarasAll))
                 for camaras in camarasAll:
+                    print("1")
                     print(camaras._id)
+                    print("2")
                     print(camaras.nombre_camara)
+                    print("3")
                     print(camaras.serial_camara)
-                    print(camaras.instalacion.nombre)
-                    camaras.instalacion = model_to_dict(camaras.instalacion)
+                    print("4")
+                   # print(camaras.instalacion.nombre)
+                    #camaras.instalacion = model_to_dict(camaras.instalacion)
                     zonas_camaras = []
                     for zonas_camara in camaras.zonas_camara:
                         print(zonas_camara.nombre_zona_camara)
@@ -325,13 +340,13 @@ def configuracion_camaras(request, id_monitor):
                         
                     camaras.zonas_camara = zonas_camaras
                    #camaras =  model_to_dict(camaras)
-                    
+                   
                 camaras_serialize = serializers.serialize('json', camarasAll)
-                zonas_camaras = camaras.zonas_camara
+                #zonas_camaras = []#camaras.zonas_camara
                 print("camaras_serialize")
                 print(camaras_serialize)
-                print("zonas_camaras")
-                print(zonas_camaras)
+                #print("zonas_camaras")
+                #print(zonas_camaras)
             except Exception as e:
                 print('%s (%s)' % (e, type(e)))
                 pass
@@ -351,7 +366,7 @@ def configuracion_camaras(request, id_monitor):
                 "aforo_frase_verde": monitor["aforo_frase_verde"],
                 "aforo_frase_ambar": monitor["aforo_frase_ambar"],
                 "aforo_frase_rojo": monitor["aforo_frase_rojo"],
-                "zonas_camaras":zonas_camaras,
+                #"zonas_camaras":zonas_camaras,
                 "camaras": camaras_serialize
             }
             return HttpResponse(simplejson.dumps(monitor_js), content_type='application/json')

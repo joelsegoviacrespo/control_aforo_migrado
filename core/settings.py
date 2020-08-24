@@ -134,7 +134,7 @@ DATABASES = {
             'DB_IP': '5.196.27.225',
             'DB_Port': '27117',
             'CLIENT': {
-                 'host': 'mongodb://smfactory:S0ftwar4Mf4ac0ory@5.196.27.225:27117',
+                 'host': 'mongodb://smfactory:S0ftwar4Mf4ac0ory@5.196.27.225:27227',
                  'port': 27117,
                  'username': 'smfactory',
                  'password': 'S0ftwar4Mf4ac0ory',
@@ -149,7 +149,7 @@ DATABASES = {
             'DB_IP': '5.196.27.225',
             'DB_Port': '27117',
             'CLIENT': {
-                 'host': 'mongodb://smfactory:S0ftwar4Mf4ac0ory@5.196.27.225:27117',
+                 'host': 'mongodb://smfactory:S0ftwar4Mf4ac0ory@5.196.27.225:27227',
                  'port': 27117,
                  'username': 'smfactory',
                  'password': 'S0ftwar4Mf4ac0ory',
@@ -256,7 +256,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DB_IP = config('DB_IP', default='5.196.27.225')
 #DB_IP ="5.196.27.225"
 #DB_IP ="127.0.0.1"
-DB_PORT = config('DB_PORT', default='27117')
+DB_PORT = config('DB_PORT', default='27227')
 DB_NAME = config('DB_NAME',default='SMF_BDControlAforoMQTTMensajes')
 DB_COLLECTION = config('DB_COLLECTION',default='aforo_info')
 DB_USER_NAME = config('DB_USER_NAME',default='smfactory')
@@ -266,7 +266,7 @@ DB_USER_PASSWORD = config('DB_USER_PASSWORD',default='S0ftwar4Mf4ac0ory')
 DB_IP = config('DB_IP', default='5.196.27.225')
 DB_IP ="5.196.27.225"
 #DB_IP ="127.0.0.1"
-DB_PORT = config('DB_PORT', default='27117')
+DB_PORT = config('DB_PORT', default='27227')
 DB_NAME = config('DB_NAME',default='SMF_BDControlAforoMQTTMensajes')
 DB_COLLECTION2 = config('DB_COLLECTION2',default='aforo_info')
 DB_USER_NAME = config('DB_USER_NAME',default='smfactory')
