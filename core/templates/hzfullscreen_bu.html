@@ -114,9 +114,9 @@
 	hzt_ambar ="../static/assets/img/design/sha.png";
 	hzt_rojo ="../static/assets/img/design/shr.png";
 
-
-	$(document).ready(function(){
+	function revisar_cambios() {
 		id_monitor = $('#hdn_monitor').val();
+		id_monitor = 10
 		if (id_monitor != '') {
 			request_url = '/monitor/configuracion/' + id_monitor + '';
 			$.ajax({
@@ -213,7 +213,117 @@
 				}
 			});
 		};
+    };
+
+  $(document).ready(function(){});
+
+    revisar_cambios();
+
+    $(function(){
+        window.setInterval(function(){
+           revisar_cambios();
+        },5000);
     });
+
+	/*$(document).ready(function(){
+		id_monitor = $('#hdn_monitor').val();
+		if (id_monitor != '') {
+			request_url = '/monitor/configuracion/' + id_monitor + '';
+			$.ajax({
+				url: request_url,
+				success: function(data){
+					nro_personas = parseInt(data['nro_personas']);
+					aforo_maximo = parseInt(data['aforo_maximo']);
+					color_barra_cabecera = data['color_barra_cabecera'];
+					texto_barra_cabecera = data['texto_barra_cabecera'];
+					logotipo_archivo_nombre = data['logotipo_archivo_nombre'];
+					logotipo_posicion = data['logotipo_posicion'];
+					fondo_imagen_archivo_nombre = data['fondo_imagen_archivo_nombre'];
+					aforo_formato = data['aforo_formato'];
+					aforo_mostrar_maximo = data['aforo_mostrar_maximo'];
+					aforo_mostrar_casi_lleno = data['aforo_mostrar_casi_lleno'];
+					aforo_frase_verde = data['aforo_frase_verde'];
+					aforo_frase_ambar = data['aforo_frase_ambar'];
+					aforo_frase_rojo = data['aforo_frase_rojo'];
+
+
+					switch (color_barra_cabecera)
+					{
+						case "WTH":
+							color_barra_cabecera ="#FFFFFF";
+							break;
+						case "G60":
+							color_barra_cabecera ="#4c4c4c";
+							break;
+						case "G30":
+							color_barra_cabecera ="#999999";
+							break;
+						case "BLK":
+							color_barra_cabecera ="#000000";
+							break;
+					}
+
+					switch (true)
+					{
+					   case (nro_personas < 18):
+					   		sem_color = hzt_verde;
+					   		frase = aforo_frase_verde;
+					   		break;
+					   case (nro_personas < 41):
+					   		sem_color = hzt_ambar;
+					   		frase = aforo_frase_ambar;
+					   		break;
+					   case (nro_personas > 40):
+						   sem_color = hzt_rojo;
+						   frase = aforo_frase_rojo;
+						   break;
+					   default:
+						   sem_color = hzt_verde;
+						   frase = aforo_frase_verde;
+					}
+
+				    $('#semaforo').attr('src',sem_color);
+				    $('#texto_barra_cabecera').html(texto_barra_cabecera);
+
+					if(aforo_mostrar_maximo==false){
+						$("#msg_aforo_maximo").hide().html('');
+					}
+					else{
+						$("#msg_aforo_maximo").show().html(aforo_maximo);
+					}
+					if(aforo_mostrar_casi_lleno==false){
+						$("#msg_aforo_casi_lleno").hide().html('');
+					}
+					else{
+						$("#msg_aforo_casi_lleno").show().html(frase);
+					}
+				    /*color_barra_cabecera*/
+
+				    /*if (aforo_formato=="PCT"){
+				    	nro_personas_show = ((nro_personas * 100)/aforo_maximo).toFixed(0) + "%";
+				    }
+				    else{
+				    	nro_personas_show = nro_personas;
+				    }
+
+					Circles.create({
+						id:'circles-1',
+						radius:100,
+						value:nro_personas,
+						maxValue:aforo_maximo,
+						width:15,
+						text: nro_personas_show,
+						colors:['#f1f1f1', '#FF9E27'], /*#FF9E27*/
+						/*duration:400,
+						wrpClass:'circles-wrp',
+						textClass:'circles-text',
+						styleWrapper:true,
+						styleText:true
+					});
+				}
+			});
+		};
+    });*/
 
 
     /*

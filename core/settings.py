@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'instalacion.apps.InstalacionConfig',
     'camara_zona.apps.CamaraZonaConfig',
     'monitor.apps.MonitorConfig',
+    'camaras.apps.CamarasConfig',
 ]
 
 MIDDLEWARE = [
@@ -101,6 +102,19 @@ DATABASES = {
                  'authMechanism': 'SCRAM-SHA-1'
              }
         },
+#         'default': {
+#             'ENGINE': 'djongo',
+#             'NAME': 'aforo',
+#             'ENFORCE_SCHEMA': False,
+#             'CLIENT': {
+#                 'host': 'mongodb://smfactory:S0ftwar4Mf4ac0ory@127.0.0.1:27117',
+#                 'port': 27117,
+#                 'username': 'smfactory',
+#                 'password': 'S0ftwar4Mf4ac0ory',
+#                 'authSource': 'admin',
+#                 'authMechanism': 'SCRAM-SHA-1'
+#             }
+#        },
         'BDMosayk': {
              'ENGINE': 'djongo',
              'NAME': 'SMF_BDMosayk',
@@ -250,10 +264,13 @@ DB_USER_PASSWORD = config('DB_USER_PASSWORD',default='S0ftwar4Mf4ac0ory')
 
 #Configuración conexión a la base de datos
 DB_IP = config('DB_IP', default='5.196.27.225')
-#DB_IP ="5.196.27.225"
+DB_IP ="5.196.27.225"
 #DB_IP ="127.0.0.1"
 DB_PORT = config('DB_PORT', default='27117')
 DB_NAME = config('DB_NAME',default='SMF_BDControlAforoMQTTMensajes')
 DB_COLLECTION2 = config('DB_COLLECTION2',default='aforo_info')
 DB_USER_NAME = config('DB_USER_NAME',default='smfactory')
 DB_USER_PASSWORD = config('DB_USER_PASSWORD',default='S0ftwar4Mf4ac0ory')
+DB_FULL = "mongodb://user_aforo_mongo:Af0r0smfC10uDM0n4O@5.196.27.225:27227/aforo?authSource=admin&authMechanism=SCRAM-SHA-256"
+
+

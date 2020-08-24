@@ -242,101 +242,65 @@
         </div>-->
     </div>
     {% block body%}
-    <div class="row">
-        <div class="col-md-3">
-            <div class="card full-height">
-                <div class="card-header text-center pt-2 pb-3">
-                    <b>Cámara: <small>Entrada Principal</small></b>
-                </div>
-                <img class="card-img-top"  src="{{ form2.meraki.json.url }}" alt="Card image">
-             
-                <div class="card-img-overlay">
-                    <div class="d-flex flex-wrap justify-content-around">
-                        <div class="px-2 pb-2 pb-md-0 text-center mt-5 mb-0">
-                            <div id="circles-1" class="py-5"></div>
-                            <h3 class="fw-bold mt-3 mb-0 text-gray">Aforo máximo 50 personas</h3>
-                            <h1 class="fw-bold mt-3 mb-2 text-gray">Bienvenidos</h1>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer text-center"><b>Zona: <small>Completa</small></b></div>
-            </div>
-        </div>
-        {% endblock %}
-        <div class="col-md-3">
+   
+    {% endblock %}
+
+
+<!--Todo este div muestra una fila -->
+	 {% for camara in camaras %}
+		<div class="row">
+		{% for zonas_camara in camara.zonas_camara %}
+		
+		
+			  <div class="col-md-3">
           <div class="card full-height">
+                <div class="card-header text-center pt-2 pb-4">
+                    <b>Cámara: <small>{{camara.nombre_camara}}</small></b>
+                </div>			  
               <div class="card-body">
-                  <div class="card-title text-center">Estadísticas</div>
-                  <div class="card-category">Aforo</div>
+                  <div class="card-category text-center"><b>Zona: <small>{{zonas_camara.nombre_zona_camara}} aforo en la zona</small></b></div>
+                  
                   <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
                       <div class="px-2 pb-2 pb-md-0 text-center">
-                          <div id="circles-2"></div>
-                          <h6 class="fw-bold mt-3 mb-0">Personas</h6>
+                          <div id="circles-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" class="py-5"></div>
+						  <!--h3 class="fw-bold mt-1 mb-0 text">Aforo máximo 50 personas</h3-->                          
                       </div>
                   </div>
-                  <div class="card-category">Total en el día</div>
-                  <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
-                      <div class="px-2 pb-2 pb-md-0 text-center">
-                          <div id="circles-3"></div>
-                          <h6 class="fw-bold mt-3 mb-0">Personas</h6>
-                      </div>
-                      <!--div class="px-2 pb-2 pb-md-0 text-center">
-                          <div id="circles-3"></div>
-                          <h6 class="fw-bold mt-3 mb-0">Subscribers</h6>
-                      </div-->
-                  </div>
-              </div>
+              </div>				
           </div>
       </div>
 
+	
 
-<!-- veticales-->
-
-        <div class="col-md-3">
+         <div class="col-md-3">
           <div class="card full-height">
-              <div class="card-header text-center pt-2 pb-3">
-                  <b>Cámara: <small>Entrada Principal </small></b>
+              <div class="card-header text-center pt-2 pb-3">                  
+				   <b>Cámara: <small>{{camara.nombre_camara}}</small></b>
               </div>
               <img class="card-img-top" src="{{ form.meraki.json.url }}" alt="Card image">
               <div class="card-img-overlay">
                   <div class="d-flex flex-wrap justify-content-around">
                       <div class="px-2 pb-2 pb-md-0 text-center mt-5 mb-0">
-                          <div id="circles-4" class="py-5"></div>
-                          <h3 class="fw-bold mt-3 mb-0 text-gray">Aforo máximo 50 personas</h3>
-                          <h1 class="fw-bold mt-3 mb-2 text-gray">Bienvenidos</h1>
+                          
+                          <!--h3 class="fw-bold mt-3 mb-0 text-gray">Aforo máximo: <span id="msg_aforo_maximo" class="px-2"></span> personas </h3>
+                          <h1 class="fw-bold mt-3 mb-2 text-gray">Bienvenidos</h1-->
                       </div>
+					<div class="card-category text-center">
+					
+					</div>
                   </div>
               </div>
-              <div class="card-footer text-center"><b>Zona: <small>Completa</small></b></div>
+              <div class="card-footer text-center"><b>Zona: <small>{{zonas_camara.nombre_zona_camara}}</small></b></div>
+			<!--div class="card-footer text-center">Aforo máximo: <span id="msg_aforo_maximo" class="px-2"></span> personas</div-->
+			  
+			  <div class="card-footer text-center"><b>Bienvenidos</small></b></div>
           </div>
       </div>
 
+		{% endfor %}
+	<!--Fin de  la columna-->
 
-        <div class="col-md-3">
-            <div class="card full-height">
-                <div class="card-body">
-                    <div class="card-title text-center">Estadísticas</div>
-                    <div class="card-category">Aforo</div>
-                    <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
-                        <div class="px-2 pb-2 pb-md-0 text-center">
-                            <div id="circles-5"></div>
-                            <h6 class="fw-bold mt-3 mb-0">Personas</h6>
-                        </div>
-                    </div>
-                    <div class="card-category">Total en el día</div>
-                    <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
-                        <div class="px-2 pb-2 pb-md-0 text-center">
-                            <div id="circles-6"></div>
-                            <h6 class="fw-bold mt-3 mb-0">Personas</h6>
-                        </div>
-                        <!--div class="px-2 pb-2 pb-md-0 text-center">
-                            <div id="circles-3"></div>
-                            <h6 class="fw-bold mt-3 mb-0">Subscribers</h6>
-                        </div-->
-                    </div>
-                </div>
-            </div>
-        </div>
+	
         <!--<div class="col-md-6">
             <div class="card full-height">
                 <div class="card-header text-center pt-2 pb-3">
@@ -819,3 +783,306 @@
     </div>
     -->
 </div>
+{% endfor %}
+<!--Fin de  la Fila-->
+<!--   Core JS Files   -->
+<script src="../static/assets/js/core/jquery.3.2.1.min.js"></script>
+<script src="../static/assets/js/core/popper.min.js"></script>
+<script src="../static/assets/js/core/bootstrap.min.js"></script>
+
+<!-- jQuery UI -->
+<script src="../static/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+<script src="../static/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+
+<!-- jQuery Scrollbar -->
+<script src="../static/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+
+<!-- Chart JS -->
+<script src="../static/assets/js/plugin/chart.js/chart.min.js"></script>
+
+<!-- jQuery Sparkline -->
+<script src="../static/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+
+<!-- Chart Circle -->
+<script src="../static/assets/js/plugin/chart-circle/circles.min.js"></script>
+
+<!-- Atlantis JS -->
+<script src="../static/assets/js/atlantis.min.js"></script>
+
+<script>
+	/*let searchParams = new URLSearchParams(window.location.search)
+	if searchParams.has('m');
+	let param = searchParams.get('sent')
+	*/
+	hzt_verde = "../static/assets/img/design/shv.png";
+	hzt_ambar ="../static/assets/img/design/sha.png";
+	hzt_rojo ="../static/assets/img/design/shr.png";
+
+
+ function revisar_cambios() {
+		id_monitor = $('#hdn_monitor').val();
+		id_monitor = 10
+		if (id_monitor != '') {
+			request_url = '/monitor/configuracion_camaras/' + id_monitor + '';
+			$.ajax({
+				url: request_url,
+				success: function(data){
+					nro_personas = parseInt(data['nro_personas']);
+					aforo_maximo = parseInt(data['aforo_maximo']);
+					color_barra_cabecera = data['color_barra_cabecera'];
+					texto_barra_cabecera = data['texto_barra_cabecera'];
+					logotipo_archivo_nombre = data['logotipo_archivo_nombre'];
+					logotipo_posicion = data['logotipo_posicion'];
+					fondo_imagen_archivo_nombre = data['fondo_imagen_archivo_nombre'];
+					aforo_formato = data['aforo_formato'];
+					aforo_mostrar_maximo = data['aforo_mostrar_maximo'];
+					aforo_mostrar_casi_lleno = data['aforo_mostrar_casi_lleno'];
+					aforo_frase_verde = data['aforo_frase_verde'];
+					aforo_frase_ambar = data['aforo_frase_ambar'];
+					aforo_frase_rojo = data['aforo_frase_rojo'];
+					zonas_camaras = data['zonas_camaras']	
+					//camaras = JSON.parse(data['camaras'])
+					camaras = JSON.parse(data['camaras'])
+					
+					
+					console.log("zonas_camaras")
+					console.log(zonas_camaras)
+					
+					console.log("camaras::")
+					console.log(camaras)
+					console.log("camaras[0].fields.nombre_camara")
+					console.log(camaras[0].fields.nombre_camara)
+					console.log("camaras[0].fields.instalacion")
+					console.log(camaras[0].fields.instalacion)
+					console.log(typeof(camaras[0].fields.instalacion))
+					var instalacion = camaras[0].fields.instalacion
+					console.log("instalacion")
+					console.log(instalacion)
+					instalacion_c =instalacion.replace(/'/g, '"');	
+					str = instalacion_c.indexOf('{');
+					console.log("str: "+str)
+					str2 =  instalacion_c.indexOf(',');
+					instalacion_c =  instalacion_c.replace('"_id": None, ',"")
+						
+					console.log("instalacion_c")
+					console.log(instalacion_c)
+					console.log("instalacion_c")
+					instalacion_p = JSON.parse(instalacion_c) 				
+					
+					console.log(instalacion_p)
+					console.log("instalacion_p.nombre")
+					console.log(instalacion_p.nombre)
+					
+					/*for (i = 0; i < camaras.length; i++)
+					{
+						console.log("camaras: "+i)
+						console.log(camaras[i])
+						var zonas_camara = camaras[i].fields.zonas_camara
+						console.log("zonas_camara: ")
+						console.log(zonas_camara)
+					}*/
+					
+					
+					
+					
+					
+					crearCircle(camaras)
+
+					switch (color_barra_cabecera)
+					{
+						case "WTH":
+							color_barra_cabecera ="#FFFFFF";
+							break;
+						case "G60":
+							color_barra_cabecera ="#4c4c4c";
+							break;
+						case "G30":
+							color_barra_cabecera ="#999999";
+							break;
+						case "BLK":
+							color_barra_cabecera ="#000000";
+							break;
+					}
+
+					switch (true)
+					{
+					   case (nro_personas < 18):
+					   		sem_color = hzt_verde;
+					   		frase = aforo_frase_verde;
+					   		break;
+					   case (nro_personas < 41):
+					   		sem_color = hzt_ambar;
+					   		frase = aforo_frase_ambar;
+					   		break;
+					   case (nro_personas > 40):
+						   sem_color = hzt_rojo;
+						   frase = aforo_frase_rojo;
+						   break;
+					   default:
+						   sem_color = hzt_verde;
+						   frase = aforo_frase_verde;
+					}
+
+				    $('#semaforo').attr('src',sem_color);
+				    $('#texto_barra_cabecera').html(texto_barra_cabecera);
+
+					if(aforo_mostrar_maximo==false){
+						$("#msg_aforo_maximo").hide().html('');
+					}
+					else{
+						$("#msg_aforo_maximo").show().html(aforo_maximo);
+					}
+					if(aforo_mostrar_casi_lleno==false){
+						$("#msg_aforo_casi_lleno").hide().html('');
+					}
+					else{
+						$("#msg_aforo_casi_lleno").show().html(frase);
+					}
+				    /*color_barra_cabecera*/
+
+				    if (aforo_formato=="PCT"){
+				    	nro_personas_show = ((nro_personas * 100)/aforo_maximo).toFixed(0) + "%";
+				    }
+				    else{
+				    	nro_personas_show = nro_personas;
+				    }
+
+					Circles.create({
+						id:'circles-1',
+						radius:100,
+						value:nro_personas,
+						maxValue:aforo_maximo,
+						width:15,
+						text: nro_personas_show,
+						colors:['#f1f1f1', '#FF9E27'], /*#FF9E27*/
+						duration:400,
+						wrpClass:'circles-wrp',
+						textClass:'circles-text',
+						styleWrapper:true,
+						styleText:true
+					});
+				}
+			});
+		};
+    };
+
+    $(document).ready(function(){});
+
+    revisar_cambios();
+
+    $(function(){
+        window.setInterval(function(){
+           revisar_cambios();
+        },5000);
+    });
+
+	function crearCircle(camaras){
+		
+		console.log("crearCircle")
+		console.log("camaras::")
+		console.log(camaras)
+		for (i = 0; i < camaras.length; i++)
+		{
+			console.log("camaras: "+i)
+			console.log("camaras[i].fields.zonas_camara")
+			console.log((camaras[i].fields.zonas_camara))
+			nombre_camara = camaras[i].fields.nombre_camara
+			console.log("nombre_camara")
+			console.log(nombre_camara)
+			var zonas_camara_str = camaras[i].fields.zonas_camara.replace(/'/g, '"');		
+			console.log("zonas_camara")
+			console.log(zonas_camara)			
+			var zonas_camara = JSON.parse(zonas_camara_str)
+			console.log("zonas_camara")
+			console.log(zonas_camara)
+			console.log("zonas_camara.length")
+			console.log(zonas_camara.length)
+			
+			for (j = 0; j < zonas_camara.length; j++){
+				console.log("zonas_camara"+j)
+				console.log(zonas_camara[j])				
+				console.log("zonas_camara "+j+" nombre_zona_camara ")
+				console.log(zonas_camara[j].nombre_zona_camara)
+				console.log("zonas_camara "+j+" nro_personas ")
+				console.log(zonas_camara[j].nro_personas)
+				id_circle = "circles"+"-"+nombre_camara+"-"+zonas_camara[j].nombre_zona_camara
+				id_circle_persona = "circles-persona"+"-"+nombre_camara+"-"+zonas_camara[j].nombre_zona_camara
+				setCircle(id_circle,id_circle_persona,100,zonas_camara[j].nro_personas)
+			}
+			
+		}
+		
+		
+		
+	}
+	
+	function setCircle(id_circle,id_circle_persona,maxValue,value){
+		console.log("setCircle 100")
+		console.log("id_circle")
+		console.log(id_circle)
+		console.log("maxValue")
+		console.log(maxValue)
+		console.log("value")
+		console.log(value)		
+		
+		var circle = document.getElementById('circles-camara2-puerta central')
+		console.log("circle")
+		console.log(circle)
+		Circles.create({
+			id:id_circle,
+			radius:45,
+			value:value,
+			maxValue:maxValue,
+			width:7,
+			text: value,
+			colors:['#f1f1f1', '#FF9E27'],
+			duration:400,
+			wrpClass:'circles-wrp',
+			textClass:'circles-text',
+			styleWrapper:true,
+			styleText:true
+		})
+				Circles.create({
+			id:id_circle_persona,
+			radius:45,
+			value:value,
+			maxValue:maxValue,
+			width:7,
+			text: value,
+			colors:['#f1f1f1', '#FF9E27'],
+			duration:400,
+			wrpClass:'circles-wrp',
+			textClass:'circles-text',
+			styleWrapper:true,
+			styleText:true
+		})
+	}
+	
+	
+
+    /*
+    $(function(){
+        //prepare Your data array with img urls
+        var dataArray=new Array();
+        dataArray[0]="../static/assets/img/design/shv.png";
+        dataArray[1]="../static/assets/img/design/sha.png";
+        dataArray[2]="../static/assets/img/design/shr.png";
+
+        //start with id=0 after 5 seconds
+        var thisId=0;
+
+        window.setInterval(function(){
+            $('#semaforo').attr('src',dataArray[thisId]);
+            thisId++; //increment data array id
+            console.log(thisId);
+            if (thisId==3) thisId=0; //repeat from start
+        },5000);
+    });*/
+
+
+
+
+</script>
+
+
+

@@ -17,6 +17,9 @@ from django.conf import settings
 from camara_zona.models import CamaraZona
 from monitor.forms import MonitorForm, MonitorEditarForm, MonitorShowForm
 from monitor.models import Monitor
+from camaras.models import Camaras
+from django.forms.models import model_to_dict
+from django.core import serializers
 
 from .serializers import MonitorSerializer, MonitorLinkSerializer, MonitorFSSerializer, MonitorShowSerializer
 
@@ -72,7 +75,7 @@ def showOnDisplay(request):
 @api_view(['GET', 'POST'])
 @authentication_classes([])
 @permission_classes([])
-def configuracion(request, id_monitor):
+def configuracion_old(request, id_monitor):
     if request.method == 'GET':
         try:
             # TODO: Ajustar esto, no debe ir a dos tablas a buscar lo mismo
@@ -203,3 +206,159 @@ def eliminar(request, id):
         pass
     # TODO: Enviar mensaje de eliminado
     return redirect("/monitor/todos")
+
+
+@api_view(['GET', 'POST'])
+@authentication_classes([])
+@permission_classes([])
+def configuracion(request, id_monitor):
+    if request.method == 'GET':
+        try:
+            # TODO: Ajustar esto, no debe ir a dos tablas a buscar lo mismo
+            #monitor = Monitor.objects.values().filter(_id=id_monitor, monitor_estado=True)[0]
+            monitor = Monitor.objects.values().filter(monitor_estado=True)[0]
+            camara_zona = CamaraZona.objects.values('id_camara_zona').filter(_id=monitor["id_camara_zona"], camara_zona_estado=True)[0]
+            id_camara_zona = camara_zona['id_camara_zona']
+            camara_serial = id_camara_zona.split('_')[0]
+            zona_numero = id_camara_zona.split('_')[1]
+            nro_personas = 0
+            #random.randint(0, 50)
+            #Obtiene el número de personas en el sitio
+            try:
+                #conn = MongoClient(settings.DB_IP + ":" + settings.DB_PORT)
+                conn = MongoClient(settings.DB_FULL)
+                db = conn[settings.DB_NAME]
+                collection = db[settings.DB_COLLECTION]
+                collection2 = db[settings.DB_COLLECTION2]
+                #data = collection.find_one({'camara_serial':camara_serial,'zona':zona_numero}, sort=[('_id', pymongo.DESCENDING)])
+                data2 = collection2.find_one({})
+                print("data2: ",data2)
+                if data2 is not None:
+                    nro_aforo = data2['nro_aforo']
+                else:
+                    nro_aforo = 0
+            except Exception as e:
+                print('%s (%s)' % (e, type(e)))
+                pass
+            
+            monitor_js = {
+                "id_camara_zona": monitor["id_camara_zona"],
+                "mac_wifi": monitor["mac_wifi"],
+                "nro_personas": nro_aforo,
+                "aforo_maximo": monitor["aforo_maximo"],
+                "texto_barra_cabecera" : monitor ["texto_barra_cabecera"],
+                "color_barra_cabecera": monitor["color_barra_cabecera"],
+                "logotipo_archivo_nombre": monitor["logotipo_archivo_nombre"],
+                "logotipo_posicion": monitor["logotipo_posicion"],
+                "fondo_imagen_archivo_nombre": monitor["fondo_imagen_archivo_nombre"],
+                "aforo_formato": monitor["aforo_formato"],
+                "aforo_mostrar_maximo": monitor["aforo_mostrar_maximo"],
+                "aforo_mostrar_casi_lleno": monitor["aforo_mostrar_casi_lleno"],
+                "aforo_frase_verde": monitor["aforo_frase_verde"],
+                "aforo_frase_ambar": monitor["aforo_frase_ambar"],
+                "aforo_frase_rojo": monitor["aforo_frase_rojo"]
+            }
+            return HttpResponse(simplejson.dumps(monitor_js), content_type='application/json')
+        except Exception as e:
+            print('%s (%s)' % (e, type(e)))
+            return JsonResponse({'m': id_monitor, 'error:': 'parametros erroneos'},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        pass
+    return JsonResponse({'m': id_monitor, 'error:': 'parametros erroneos 2'},
+                        status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET', 'POST'])
+@authentication_classes([])
+@permission_classes([])
+def configuracion_camaras(request, id_monitor):
+    if request.method == 'GET':
+        try:
+            print("configuracion_camaras")
+            # TODO: Ajustar esto, no debe ir a dos tablas a buscar lo mismo
+             
+            #monitor = Monitor.objects.values().filter(_id=id_monitor, monitor_estado=True)[0]
+            monitor = Monitor.objects.values().filter(monitor_estado=True)[0]
+            camara_zona = CamaraZona.objects.values('id_camara_zona').filter(_id=monitor["id_camara_zona"], camara_zona_estado=True)[0]
+            id_camara_zona = camara_zona['id_camara_zona']
+            camara_serial = id_camara_zona.split('_')[0]
+            zona_numero = id_camara_zona.split('_')[1]
+            nro_personas = 0
+            camarasAll =  Camaras.objects.all()
+
+            #random.randint(0, 50)
+            #Obtiene el número de personas en el sitio
+            try:
+                print(settings.DB_IP)
+                print(settings.DB_PORT)
+                print(settings.DB_NAME)
+                conn = MongoClient(settings.DB_FULL)
+                db = conn[settings.DB_NAME]
+                collection = db[settings.DB_COLLECTION]
+                collection2 = db[settings.DB_COLLECTION2]
+                #data = collection.find_one({'camara_serial':camara_serial,'zona':zona_numero}, sort=[('_id', pymongo.DESCENDING)])
+                data2 = collection2.find_one({})
+                print("data2")
+                print(data2)
+                if data2 is not None:
+                    nro_aforo = data2['nro_aforo']
+                    print("nro_aforo")
+                    print(nro_aforo)
+                else:
+                    nro_aforo = 0
+                
+                
+                for camaras in camarasAll:
+                    print(camaras._id)
+                    print(camaras.nombre_camara)
+                    print(camaras.serial_camara)
+                    print(camaras.instalacion.nombre)
+                    camaras.instalacion = model_to_dict(camaras.instalacion)
+                    zonas_camaras = []
+                    for zonas_camara in camaras.zonas_camara:
+                        print(zonas_camara.nombre_zona_camara)
+                        print(zonas_camara.nro_personas)
+                        zonas_camara = model_to_dict(zonas_camara)
+                        zonas_camaras.append(zonas_camara)
+                        print("zonas_camara")
+                        print(zonas_camara)
+                        
+                    camaras.zonas_camara = zonas_camaras
+                   #camaras =  model_to_dict(camaras)
+                    
+                camaras_serialize = serializers.serialize('json', camarasAll)
+                zonas_camaras = camaras.zonas_camara
+                print("camaras_serialize")
+                print(camaras_serialize)
+                print("zonas_camaras")
+                print(zonas_camaras)
+            except Exception as e:
+                print('%s (%s)' % (e, type(e)))
+                pass
+            monitor_js = {
+                "id_camara_zona": monitor["id_camara_zona"],
+                "mac_wifi": monitor["mac_wifi"],
+                "nro_personas": nro_aforo,
+                "aforo_maximo": monitor["aforo_maximo"],
+                "texto_barra_cabecera" : monitor ["texto_barra_cabecera"],
+                "color_barra_cabecera": monitor["color_barra_cabecera"],
+                "logotipo_archivo_nombre": monitor["logotipo_archivo_nombre"],
+                "logotipo_posicion": monitor["logotipo_posicion"],
+                "fondo_imagen_archivo_nombre": monitor["fondo_imagen_archivo_nombre"],
+                "aforo_formato": monitor["aforo_formato"],
+                "aforo_mostrar_maximo": monitor["aforo_mostrar_maximo"],
+                "aforo_mostrar_casi_lleno": monitor["aforo_mostrar_casi_lleno"],
+                "aforo_frase_verde": monitor["aforo_frase_verde"],
+                "aforo_frase_ambar": monitor["aforo_frase_ambar"],
+                "aforo_frase_rojo": monitor["aforo_frase_rojo"],
+                "zonas_camaras":zonas_camaras,
+                "camaras": camaras_serialize
+            }
+            return HttpResponse(simplejson.dumps(monitor_js), content_type='application/json')
+        except Exception as e:
+            print('%s (%s)' % (e, type(e)))
+            return JsonResponse({'m': id_monitor, 'error:': 'parametros erroneos'},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        pass
+    return JsonResponse({'m': id_monitor, 'error:': 'parametros erroneos 2'},
+                        status=status.HTTP_400_BAD_REQUEST)

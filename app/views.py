@@ -9,6 +9,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.template import loader
 from django.http import HttpResponse, JsonResponse
 from django import template
+from camaras.models import Camaras
 
 from instalacion.models import Instalacion
 from monitor.models import Monitor
@@ -43,6 +44,7 @@ def index(request):
     response2= requests.request("POST",url2 ,headers=headers, data = payload)
 
     #consulta a meraki
+    camarasAll =  Camaras.objects.all()
     if request.user.is_staff:
 
         #instalaciones = Instalacion.objects.filter('cliente':)
@@ -66,7 +68,7 @@ def index(request):
         form2 = {'id_cliente' : id_cliente, 'monitores' : monitores, 'estadisticas' : estadisticas, 'meraki' : response2} 
     #print(post, flush=True)
     print(response.text.encode('utf8'), flush=True)        
-    return render(request, "index.html",  {'form': form, 'form2':form2})
+    return render(request, "index.html",  {'form': form, 'form2':form2,'camaras':camarasAll})
     print(response2.text.encode('utf8', {'flush': form2}))
     #return render(request, "index.html", {'form2':form2})
 
