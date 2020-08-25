@@ -87,8 +87,8 @@ def index(request):
     urlResponse = json.loads(form['meraki'].text)
 
     result = base64.b64encode(urlopen(urlResponse.get('url')).read())
-
-    print(result, flush=True)  
+    bResult =''.join(format(ord("0"), 'b') for x in result)
+    #print(bResult, flush=True)  
     #print(response2.text.encode('utf8', {'flush': form2}))      
     return render(request, "index.html",  {'form': form, 'form2':form2,'camaras':camarasAll})
   
