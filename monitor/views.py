@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
-import pymongo
+#import pymongo
+from djongo import models
 import simplejson
 from django.http import HttpResponse
 import random
@@ -7,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.utils.translation import activate
-from pymongo import MongoClient
+#from pymongo import MongoClient
 from rest_framework import views, status
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.parsers import JSONParser
@@ -18,6 +19,7 @@ from camara_zona.models import CamaraZona
 from monitor.forms import MonitorForm, MonitorEditarForm, MonitorShowForm
 from monitor.models import Monitor
 from camaras.models import Camaras
+from aforoInfo.models import AforoInfo
 from django.forms.models import model_to_dict
 from django.core import serializers
 
@@ -88,7 +90,7 @@ def configuracion_old(request, id_monitor):
             #random.randint(0, 50)
             #Obtiene el número de personas en el sitio
             try:
-                conn = MongoClient(settings.DB_IP + ":" + settings.DB_PORT)
+                """conn = MongoClient(settings.DB_IP + ":" + settings.DB_PORT)
                 db = conn[settings.DB_NAME]
                 collection = db[settings.DB_COLLECTION]
                 collection2 = db[settings.DB_COLLECTION2]
@@ -97,7 +99,7 @@ def configuracion_old(request, id_monitor):
                 if data2 is not None:
                     nro_aforo = data2['nro_aforo']
                 else:
-                    nro_aforo = 0
+                    nro_aforo = 0"""
             except Exception as e:
                 print('%s (%s)' % (e, type(e)))
                 pass
@@ -225,14 +227,25 @@ def configuracion(request, id_monitor):
             #random.randint(0, 50)
             #Obtiene el número de personas en el sitio
             try:
-                conn = MongoClient(settings.DB_IP + ":" + settings.DB_PORT)
+                
+                aforoInfo =  AforoInfo.objects.all()
+                 
+                print("aforoInfo")
+                print(aforoInfo)
+                print("aforoInfo.nro_aforo")
+                print(aforoInfo.nro_aforo)
+                print("aforoInfo.cola")
+                print(aforoInfo.cola)
+                
+                
+                #conn = MongoClient(settings.DB_IP + ":" + settings.DB_PORT)
                 #conn = MongoClient(settings.DB_FULL)
-                db = conn[settings.DB_NAME]
+                """db = conn[settings.DB_NAME]
                 collection = db[settings.DB_COLLECTION]
                 collection2 = db[settings.DB_COLLECTION2]
                 #data = collection.find_one({'camara_serial':camara_serial,'zona':zona_numero}, sort=[('_id', pymongo.DESCENDING)])
                 data2 = collection2.find_one({})
-                print("data2: ",data2)
+                print("data2: ",data2)"""
                 if data2 is not None:
                     nro_aforo = data2['nro_aforo']
                 else:
@@ -298,7 +311,7 @@ def configuracion_camaras(request, id_monitor):
             #random.randint(0, 50)
             #Obtiene el número de personas en el sitio
             try:
-                print(settings.DB_IP)
+                """print(settings.DB_IP)
                 print(settings.DB_PORT)
                 print(settings.DB_NAME)
                 conn = MongoClient(settings.DB_FULL)
@@ -308,7 +321,7 @@ def configuracion_camaras(request, id_monitor):
                 #data = collection.find_one({'camara_serial':camara_serial,'zona':zona_numero}, sort=[('_id', pymongo.DESCENDING)])
                 data2 = collection2.find_one({})
                 print("data2")
-                print(data2)
+                print(data2)"""
                 if data2 is not None:
                     nro_aforo = data2['nro_aforo']
                     print("nro_aforo")

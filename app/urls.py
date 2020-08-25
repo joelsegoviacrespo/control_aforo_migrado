@@ -15,4 +15,7 @@ urlpatterns = [
     path('camara_zona/', include('camara_zona.urls')),
     path('cliente/', include('cliente.urls')),
     path('instalacion/', include('instalacion.urls')),
+    path('camaras/', include('camaras.urls')),
+    path('aforoInfo/', include('aforoInfo.urls')),
+ 
 ]

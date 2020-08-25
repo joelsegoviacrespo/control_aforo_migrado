@@ -38,6 +38,9 @@ def index(request):
     'X-Cisco-Meraki-API-Key': '920a310b87feb3832739a79d573845404c6825d0',
     'Content-Type': 'application/json'
     }
+    
+    response = {}
+    response2 = {}
 
     response = requests.request("POST", url, headers=headers, data = payload)
 
@@ -66,10 +69,9 @@ def index(request):
         form = {'id_cliente': id_cliente, 'monitores' : monitores, 'estadisticas' : estadisticas, 'meraki' : response}
         
         form2 = {'id_cliente' : id_cliente, 'monitores' : monitores, 'estadisticas' : estadisticas, 'meraki' : response2} 
-    #print(post, flush=True)
-    print(response.text.encode('utf8'), flush=True)        
+            
     return render(request, "index.html",  {'form': form, 'form2':form2,'camaras':camarasAll})
-    print(response2.text.encode('utf8', {'flush': form2}))
+    
     #return render(request, "index.html", {'form2':form2})
 
 @login_required(login_url="/login/")
