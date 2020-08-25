@@ -21,6 +21,8 @@ from pip._vendor import requests
 import logging
 import base64
 from django.conf import settings
+import json
+from urllib.request import urlopen 
 
 def hfs(request):
     context = {'foo': 'bar'}
@@ -45,10 +47,14 @@ def index(request):
     response2 = {}
 
     response = requests.request("POST", url, headers=headers, data = payload)
+   
+
 
     response2= requests.request("POST",url2 ,headers=headers, data = payload)
+    
+    
 
-    result = base64.b64encode(response.content)
+
     #consulta a meraki
     camarasAll =  Camaras.objects.all()
     if request.user.is_staff:
@@ -74,12 +80,17 @@ def index(request):
       
         form2 = {'id_cliente' : id_cliente, 'monitores' : monitores, 'estadisticas' : estadisticas, 'meraki' : response2} 
 
-    
+   
     #ninguno de los prints se imprimen
-    print(post, flush=True)
-    print(result.text.encode('utf8',flush = True))
-    print(response.text.encode('utf8'), flush=True)  
-    print(response2.text.encode('utf8', {'flush': form2}))      
+    #print(post, flush=True)
+    #print(result.text.encode('utf8'),flush = True)
+    urlResponse = json.loads(form['meraki'].text)
+
+    result = base64.b64encode(urlopen(urlResponse.get('url')).read())
+
+    print(result, flush=True)  
+    #"data:image/png;base64,"
+    #print(response2.text.encode('utf8', {'flush': form2}))      
     return render(request, "index.html",  {'form': form, 'form2':form2,'camaras':camarasAll})
   
 
@@ -91,12 +102,12 @@ def index(request):
 
 
    
-#agregado para hacer debug no funciona logging
- fmt = getattr(settings, 'LOG_FORMAT', None)
- lvl = getattr(settings, 'LOG_LEVEL', logging.DEBUG)
- logging.basicConfig(format=fmt, level=lvl)
- logging.debug("Logging started on %s for %s" % (logging.root.name, logging.getLevelName(lvl)))
- logging.debug("Oh hai!----------------------------")
+            #agregado para hacer debug no funciona logging
+            #fmt = getattr(settings, 'LOG_FORMAT', None)
+            #lvl = getattr(settings, 'LOG_LEVEL', logging.DEBUG)
+            #logging.basicConfig(format=fmt, level=lvl)
+            #logging.debug("Logging started on %s for %s" % (logging.root.name, logging.getLevelName(lvl)))
+            #logging.debug("Oh hai!----------------------------")
    
   
 
