@@ -40,6 +40,9 @@ def index(request):
     'X-Cisco-Meraki-API-Key': '920a310b87feb3832739a79d573845404c6825d0',
     'Content-Type': 'application/json'
     }
+    
+    response = {}
+    response2 = {}
 
     response = requests.request("POST", url, headers=headers, data = payload)
 
@@ -70,21 +73,33 @@ def index(request):
         
       
         form2 = {'id_cliente' : id_cliente, 'monitores' : monitores, 'estadisticas' : estadisticas, 'meraki' : response2} 
-    lvl = getattr(settings, 'LOG_LEVEL', logging.DEBUG)
-    #print(post, flush=True)
-    #print(result.text.encode('utf8',flush = True))
-    #print(response.text.encode('utf8'), flush=True)        
+
+    
+    #ninguno de los prints se imprimen
+    print(post, flush=True)
+    print(result.text.encode('utf8',flush = True))
+    print(response.text.encode('utf8'), flush=True)  
+    print(response2.text.encode('utf8', {'flush': form2}))      
     return render(request, "index.html",  {'form': form, 'form2':form2,'camaras':camarasAll})
   
-    fmt = getattr(settings, 'LOG_FORMAT', None)
-    lvl = getattr(settings, 'LOG_LEVEL', logging.DEBUG)
 
-    logging.basicConfig(format=fmt, level=lvl)
-    logging.debug("Logging started on %s for %s" % (logging.root.name, logging.getLevelName(lvl)))
-    logging.debug("Oh hai!----------------------------")
-    print(response2.text.encode('utf8', {'flush': form2}))
-  
+
+
+
+
+
+
+
    
+#agregado para hacer debug no funciona logging
+ fmt = getattr(settings, 'LOG_FORMAT', None)
+ lvl = getattr(settings, 'LOG_LEVEL', logging.DEBUG)
+ logging.basicConfig(format=fmt, level=lvl)
+ logging.debug("Logging started on %s for %s" % (logging.root.name, logging.getLevelName(lvl)))
+ logging.debug("Oh hai!----------------------------")
+   
+  
+
     
     #return render(request, "index.html", {'form2':form2})
 

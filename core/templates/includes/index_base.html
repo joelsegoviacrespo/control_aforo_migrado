@@ -823,7 +823,7 @@
 		id_monitor = $('#hdn_monitor').val();
 		id_monitor = 10
 		if (id_monitor != '') {
-			request_url = '/monitor/configuracion_camaras/' + id_monitor + '';
+			request_url = '/camaras/configuracion_camaras/' + id_monitor + '';
 			$.ajax({
 				url: request_url,
 				success: function(data){
@@ -839,20 +839,15 @@
 					aforo_mostrar_casi_lleno = data['aforo_mostrar_casi_lleno'];
 					aforo_frase_verde = data['aforo_frase_verde'];
 					aforo_frase_ambar = data['aforo_frase_ambar'];
-					aforo_frase_rojo = data['aforo_frase_rojo'];
-					zonas_camaras = data['zonas_camaras']	
-					//camaras = JSON.parse(data['camaras'])
-					camaras = JSON.parse(data['camaras'])
+					aforo_frase_rojo = data['aforo_frase_rojo'];										
+					camaras = JSON.parse(data['camaras'])		
 					
 					
-					console.log("zonas_camaras")
-					console.log(zonas_camaras)
-					
-					console.log("camaras::")
+					/*console.log("camaras::")
 					console.log(camaras)
 					console.log("camaras[0].fields.nombre_camara")
 					console.log(camaras[0].fields.nombre_camara)
-					/*console.log("camaras[0].fields.instalacion")
+					console.log("camaras[0].fields.instalacion")
 					console.log(camaras[0].fields.instalacion)
 					console.log(typeof(camaras[0].fields.instalacion))
 					var instalacion = camaras[0].fields.instalacion
@@ -979,32 +974,32 @@
 	function crearCircle(camaras){
 		
 		console.log("crearCircle")
-		console.log("camaras::")
-		console.log(camaras)
+		//console.log("camaras::")
+		//console.log(camaras)
 		for (i = 0; i < camaras.length; i++)
 		{
-			console.log("camaras: "+i)
-			console.log("camaras[i].fields.zonas_camara")
-			console.log((camaras[i].fields.zonas_camara))
+			//console.log("camaras: "+i)
+			//console.log("camaras[i].fields.zonas_camara")
+			//console.log((camaras[i].fields.zonas_camara))
 			nombre_camara = camaras[i].fields.nombre_camara
-			console.log("nombre_camara")
-			console.log(nombre_camara)
+			//console.log("nombre_camara")
+			//console.log(nombre_camara)
 			var zonas_camara_str = camaras[i].fields.zonas_camara.replace(/'/g, '"');		
-			console.log("zonas_camara")
-			console.log(zonas_camara)			
+			//console.log("zonas_camara")
+			//console.log(zonas_camara)			
 			var zonas_camara = JSON.parse(zonas_camara_str)
-			console.log("zonas_camara")
-			console.log(zonas_camara)
-			console.log("zonas_camara.length")
-			console.log(zonas_camara.length)
+			//console.log("zonas_camara")
+			//console.log(zonas_camara)
+			//console.log("zonas_camara.length")
+			//console.log(zonas_camara.length)
 			
 			for (j = 0; j < zonas_camara.length; j++){
-				console.log("zonas_camara"+j)
-				console.log(zonas_camara[j])				
-				console.log("zonas_camara "+j+" nombre_zona_camara ")
-				console.log(zonas_camara[j].nombre_zona_camara)
-				console.log("zonas_camara "+j+" nro_personas ")
-				console.log(zonas_camara[j].nro_personas)
+				//console.log("zonas_camara"+j)
+				//console.log(zonas_camara[j])				
+				//console.log("zonas_camara "+j+" nombre_zona_camara ")
+				//console.log(zonas_camara[j].nombre_zona_camara)
+				//console.log("zonas_camara "+j+" nro_personas ")
+				//console.log(zonas_camara[j].nro_personas)
 				id_circle = "circles"+"-"+nombre_camara+"-"+zonas_camara[j].nombre_zona_camara
 				id_circle_persona = "circles-persona"+"-"+nombre_camara+"-"+zonas_camara[j].nombre_zona_camara
 				setCircle(id_circle,id_circle_persona,100,zonas_camara[j].nro_personas)
@@ -1017,17 +1012,15 @@
 	}
 	
 	function setCircle(id_circle,id_circle_persona,maxValue,value){
-		console.log("setCircle 100")
+		/*console.log("setCircle 100")
 		console.log("id_circle")
 		console.log(id_circle)
 		console.log("maxValue")
 		console.log(maxValue)
 		console.log("value")
-		console.log(value)		
+		console.log(value)*/		
 		
-		var circle = document.getElementById('circles-camara2-puerta central')
-		console.log("circle")
-		console.log(circle)
+		
 		Circles.create({
 			id:id_circle,
 			radius:45,
@@ -1042,7 +1035,7 @@
 			styleWrapper:true,
 			styleText:true
 		})
-				Circles.create({
+		Circles.create({
 			id:id_circle_persona,
 			radius:45,
 			value:value,

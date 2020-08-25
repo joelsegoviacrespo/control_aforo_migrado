@@ -118,7 +118,7 @@
 		id_monitor = $('#hdn_monitor').val();
 		id_monitor = 10
 		if (id_monitor != '') {
-			request_url = '/monitor/configuracion/' + id_monitor + '';
+			request_url = '/camaras/configuracion/' + id_monitor + '';
 			$.ajax({
 				url: request_url,
 				success: function(data){

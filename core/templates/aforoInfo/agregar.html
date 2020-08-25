@@ -1,0 +1,51 @@
+{% extends "layouts/base-modal.html" %}
+
+{% block title %} Cliente {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block modal-content-title-dissmiss %}
+onclick="javascript:window.location='/cliente/todos'"
+{% endblock modal-content-title-dissmiss %}
+{% block modal-content-form-tag-begin %}
+<form method="POST" class="post-form" action="/aforoInfo/">
+    {% endblock modal-content-form-tag-begin %}
+    {% block modal-content-title %}
+    <ul class="ml-0 breadcrumbs">
+        <li class="nav-home">
+            <a href="#">
+                <i class="fas fa-users"></i>
+            </a>
+        </li>
+        <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+        </li>
+        <li class="nav-item">
+            <a href="#">Cliente</a>
+        </li>
+        <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+        </li>
+        <li class="nav-item">
+            <a href="#">Agregar</a>
+        </li>
+    </ul>
+    {% endblock modal-content-title %}
+    {% block modal-content %}
+    {% csrf_token %}
+
+	{{form.as_p}}
+    {% endblock modal-content %}
+    {% block modal-content-footer %}
+    <button type="submit" class="btn btn-success">Guardar</button>
+    <button type="reset" class="btn btn-warning" >Cancelar</button>
+    <button type="button" class="btn btn-danger" data-dismiss="modal"
+            onclick="javascript:window.location='/cliente/todos'">Cerrar
+    </button>
+    {% endblock modal-content-footer %}
+{% block modal-content-form-tag-end %}
+</form>
+{% endblock modal-content-form-tag-end %}
+<!-- Specific JS goes HERE -->
+{% block javascripts %}{% endblock javascripts %}

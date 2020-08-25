@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'camara_zona.apps.CamaraZonaConfig',
     'monitor.apps.MonitorConfig',
     'camaras.apps.CamarasConfig',
+    'aforoInfo.apps.AforoinfoConfig',
+    
 ]
 
 MIDDLEWARE = [
@@ -114,50 +116,8 @@ DATABASES = {
 #                 'authSource': 'admin',
 #                 'authMechanism': 'SCRAM-SHA-1'
 #             }
-#        },
-        'BDMosayk': {
-             'ENGINE': 'djongo',
-             'NAME': 'SMF_BDMosayk',
-             'ENFORCE_SCHEMA': False,
-             'CLIENT': {
-                 'host': 'mongodb://smfactory:S0ftwar4Mf4ac0ory@127.0.0.1:27117',
-                 'port': 27117,
-                 'username': 'smfactory',
-                 'password': 'S0ftwar4Mf4ac0ory',
-                 'authSource': 'admin',
-                 'authMechanism': 'SCRAM-SHA-1'
-             }
-        },
-        'ControlAforo': {
-            'ENGINE': 'djongo',
-            'NAME': 'SMF_BDControlAforoMQTTMensajes',
-            'DB_IP': '5.196.27.225',
-            'DB_Port': '27117',
-            'CLIENT': {
-                 'host': 'mongodb://smfactory:S0ftwar4Mf4ac0ory@5.196.27.225:27227',
-                 'port': 27117,
-                 'username': 'smfactory',
-                 'password': 'S0ftwar4Mf4ac0ory',
-                 'authSource': 'admin',
-                 'authMechanism': 'SCRAM-SHA-1',
-                 'db_coleccion': 'aforo_info',
-            }
-        },
-        'DBCollection2': {
-            'ENGINE': 'djongo',
-            'NAME': 'SMF_BDControlAforoMQTTMensajes',
-            'DB_IP': '5.196.27.225',
-            'DB_Port': '27117',
-            'CLIENT': {
-                 'host': 'mongodb://smfactory:S0ftwar4Mf4ac0ory@5.196.27.225:27227',
-                 'port': 27117,
-                 'username': 'smfactory',
-                 'password': 'S0ftwar4Mf4ac0ory',
-                 'authSource': 'admin',
-                 'authMechanism': 'SCRAM-SHA-1',
-                 'db_collection': 'aforo_info',
-            }
-        },
+#        },  
+#        
 }
 
 
@@ -214,31 +174,31 @@ STATICFILES_DIRS = (
 
 #Allow Log by email or console
 ADMINS = (('Ligia', 'ligiapuertas@gmail.com'), ('Joel', 'joelsegoviacrespo@gmail.com'))
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': True,
-    'formatters': {
-        'verbose': {
-            'format': '%(asctime)s %(levelname)s [%(name)s:%(lineno)s] %(module)s %(process)d %(thread)d %(message)s'
-        }
-    },
-    'handlers': {
-        'gunicorn': {
-            'level': 'DEBUG',
-            'class': 'logging.handlers.RotatingFileHandler',
-            'formatter': 'verbose',
-            'filename': '/opt/gunicorn.errors',
-            'maxBytes': 1024 * 1024 * 100,  # 100 mb
-        }
-    },
-    'loggers': {
-        'gunicorn.errors': {
-            'level': 'DEBUG',
-            'handlers': ['gunicorn'],
-            'propagate': True,
-        },
-    }
-}
+#LOGGING = {
+#    'version': 1,
+#    'disable_existing_loggers': True,
+#    'formatters': {
+#        'verbose': {
+#            'format': '%(asctime)s %(levelname)s [%(name)s:%(lineno)s] %(module)s %(process)d %(thread)d %(message)s'
+#        }
+#    },
+#    'handlers': {
+#        'gunicorn': {
+#            'level': 'DEBUG',
+#            'class': 'logging.handlers.RotatingFileHandler',
+#            'formatter': 'verbose',
+#            'filename': '/opt/gunicorn.errors',
+#            'maxBytes': 1024 * 1024 * 100,  # 100 mb
+#        }
+#    },
+#    'loggers': {
+#        'gunicorn.errors': {
+#            'level': 'DEBUG',
+#            'handlers': ['gunicorn'],
+#            'propagate': True,
+#        },
+#    }
+#}
 
 #EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 #EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
@@ -252,25 +212,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #EMAIL_USE_TLS = True
 #DEFAULT_FROM_EMAIL = 'TestSite Team <noreply@example.com>'
 
-#Configuración conexión a la base de datos
-DB_IP = config('DB_IP', default='5.196.27.225')
-#DB_IP ="5.196.27.225"
-#DB_IP ="127.0.0.1"
-DB_PORT = config('DB_PORT', default='27227')
-DB_NAME = config('DB_NAME',default='SMF_BDControlAforoMQTTMensajes')
-DB_COLLECTION = config('DB_COLLECTION',default='aforo_info')
-DB_USER_NAME = config('DB_USER_NAME',default='smfactory')
-DB_USER_PASSWORD = config('DB_USER_PASSWORD',default='S0ftwar4Mf4ac0ory')
-
-#Configuración conexión a la base de datos
-DB_IP = config('DB_IP', default='5.196.27.225')
-DB_IP ="5.196.27.225"
-#DB_IP ="127.0.0.1"
-DB_PORT = config('DB_PORT', default='27227')
-DB_NAME = config('DB_NAME',default='SMF_BDControlAforoMQTTMensajes')
-DB_COLLECTION2 = config('DB_COLLECTION2',default='aforo_info')
-DB_USER_NAME = config('DB_USER_NAME',default='smfactory')
-DB_USER_PASSWORD = config('DB_USER_PASSWORD',default='S0ftwar4Mf4ac0ory')
-DB_FULL = "mongodb://user_aforo_mongo:Af0r0smfC10uDM0n4O@5.196.27.225:27227/aforo?authSource=admin&authMechanism=SCRAM-SHA-256"
 
 
