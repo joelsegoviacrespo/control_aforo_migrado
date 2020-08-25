@@ -18,11 +18,13 @@ import http.client
 import mimetypes
 from pip._vendor import requests
 
-
+import logging
+import base64
+from django.conf import settings
 
 def hfs(request):
     context = {'foo': 'bar'}
-    #return render(request, 'index.html', context) si request es none entonces no rpesta atencion al context
+    return render(request, 'index.html', context) #si request es none entonces no rpesta atencion al context
     return render(request, 'hzfullscreen_bu.html', context)
 
 
@@ -43,12 +45,13 @@ def index(request):
 
     response2= requests.request("POST",url2 ,headers=headers, data = payload)
 
+    result = base64.b64encode(response.content)
     #consulta a meraki
     camarasAll =  Camaras.objects.all()
     if request.user.is_staff:
 
         #instalaciones = Instalacion.objects.filter('cliente':)
-        
+       
         form = {'foo': 'staff', 'meraki' : response}
         form2 ={'foo':'staff','meraki': response2}
 
@@ -65,11 +68,24 @@ def index(request):
       
         form = {'id_cliente': id_cliente, 'monitores' : monitores, 'estadisticas' : estadisticas, 'meraki' : response}
         
+      
         form2 = {'id_cliente' : id_cliente, 'monitores' : monitores, 'estadisticas' : estadisticas, 'meraki' : response2} 
+    lvl = getattr(settings, 'LOG_LEVEL', logging.DEBUG)
     #print(post, flush=True)
-    print(response.text.encode('utf8'), flush=True)        
+    #print(result.text.encode('utf8',flush = True))
+    #print(response.text.encode('utf8'), flush=True)        
     return render(request, "index.html",  {'form': form, 'form2':form2,'camaras':camarasAll})
+  
+    fmt = getattr(settings, 'LOG_FORMAT', None)
+    lvl = getattr(settings, 'LOG_LEVEL', logging.DEBUG)
+
+    logging.basicConfig(format=fmt, level=lvl)
+    logging.debug("Logging started on %s for %s" % (logging.root.name, logging.getLevelName(lvl)))
+    logging.debug("Oh hai!----------------------------")
     print(response2.text.encode('utf8', {'flush': form2}))
+  
+   
+    
     #return render(request, "index.html", {'form2':form2})
 
 @login_required(login_url="/login/")
