@@ -6,6 +6,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 from cliente.models import Cliente
+from django.utils import timezone
 
 
 class Profile(models.Model):
@@ -58,3 +59,7 @@ admin.site.register(User, UserAdmin)
 #     ClienteGroup.user_set.add(userObj)
 #
 #     super(Cliente, self).save(*args, **kwargs)
+
+##class Image(models.Model):
+    ##smapshot = models.CharField( on_delete=models.CASCADE,max=255)
+    ##timestamp = models.DateTimeField(default=timezone.now)
