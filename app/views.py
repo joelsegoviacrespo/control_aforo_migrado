@@ -22,7 +22,7 @@ import logging
 import base64
 from django.conf import settings
 import json
-from urllib.request import urlopen 
+from urllib.request.urlopen import urlopen
 
 def hfs(request):
     context = {'foo': 'bar'}
@@ -35,7 +35,7 @@ def index(request):
 
     #consulta a meraki
     url = "https://api.meraki.com/api/v1/devices/Q2HV-B24V-ZKN5/camera/generateSnapshot"
-    url2= "https://api.meraki.com/api/v1/devices/Q2GV-4YBM-YWWJ/camera/generateSnapshot"
+    #url2= "https://api.meraki.com/api/v1/devices/Q2GV-4YBM-YWWJ/camera/generateSnapshot"
 
     payload = {}
     headers = {
@@ -44,25 +44,26 @@ def index(request):
     }
     
     response = {}
-    response2 = {}
+    #response2 = {}
 
     response = requests.request("POST", url, headers=headers, data = payload)
    
-
-
-    response2= requests.request("POST",url2 ,headers=headers, data = payload)
-    
-    
-
-
+    #response2= requests.request("POST",url2 ,headers=headers, data = payload)
+    urlResponse = json.loads(response.text)
     #consulta a meraki
     camarasAll =  Camaras.objects.all()
+
+    extract = urlResponse.get('url')
+    result = urlopen(extract)
+    htmlSource = base64.b64encode(result.read())      
+
+     
     if request.user.is_staff:
 
         #instalaciones = Instalacion.objects.filter('cliente':)
        
-        form = {'foo': 'staff', 'meraki' : response}
-        form2 ={'foo':'staff','meraki': response2}
+        form = {'foo': 'staff', 'meraki' : htmlSource}
+        #form2 ={'foo':'staff','meraki': response2}
 
     else:
         id_cliente = 0
@@ -75,34 +76,26 @@ def index(request):
            id_instalacion = Instalacion.objects.values('_id').filter(id_cliente_id=id_cliente, instalacion_estado=True)[0]       
            monitores = Monitor.objects.filter(id_instalacion_id=id_instalacion, monitor_estado=True) 
       
-        form = {'id_cliente': id_cliente, 'monitores' : monitores, 'estadisticas' : estadisticas, 'meraki' : response}
+        form = {'id_cliente': id_cliente, 'monitores' : monitores, 'estadisticas' : estadisticas, 'meraki' : htmlSource}
         
       
-        form2 = {'id_cliente' : id_cliente, 'monitores' : monitores, 'estadisticas' : estadisticas, 'meraki' : response2} 
+        #form2 = {'id_cliente' : id_cliente, 'monitores' : monitores, 'estadisticas' : estadisticas, 'meraki' : response2} 
 
    
     #ninguno de los prints se imprimen
     #print(post, flush=True)
     #print(result.text.encode('utf8'),flush = True)
-    urlResponse = json.loads(form['meraki'].text)
+    
 
-    result = base64.b64encode(urlopen(urlResponse.get('url')).read())
+    #variable con la url extraida y convertida a base64 
+    #result = base64.b64encode(urlopen(urlResponse.get('url')).read())
 
-    print(result, flush=True)  
+    #print(result, flush=True)  
     #print(response2.text.encode('utf8', {'flush': form2})) 
      
      
-         
-    return render(request, "index.html",  {'form': form, 'form2':form2,'camaras':camarasAll})
+    return render(request, "index.html",  {'form': form,'camaras':camarasAll})
   
-
-
-
-
-
-
-
-
    
             #agregado para hacer debug no funciona logging
             #fmt = getattr(settings, 'LOG_FORMAT', None)
