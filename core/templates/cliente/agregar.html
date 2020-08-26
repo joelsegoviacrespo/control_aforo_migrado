@@ -45,7 +45,7 @@ onclick="javascript:window.location='/cliente/todos'"
                     <input type="checkbox" name="cliente_estado" id="id_cliente_estado" class="form-control form-control-sm"
                            value="True" {% if form.cliente_estado.value %}checked{% endif %} />
                 </div>
-                <div class="form-group col-12 col-lg-4">
+                <!--div class="form-group col-12 col-lg-4">
                     <label class="col-form-label mr-3">Usuario:</label>
                     <br>
                     <select name="user" id="id_user" class="form-control form-control-sm">
@@ -53,7 +53,7 @@ onclick="javascript:window.location='/cliente/todos'"
                         {{ usuario }}
                         {% endfor %}
                     </select>
-                </div>
+                </div-->
                 <div class="col-12"></div>
                 <div class="form-group col-12 col-lg-3">
                     <label class="col-form-label col-form-label-sm">NIF:</label>
@@ -88,6 +88,18 @@ onclick="javascript:window.location='/cliente/todos'"
                     <input type="text" name="codigo_postal" id="id_codigo_postal" class="form-control form-control-sm"
                            required
                            maxlength="100" value="{{ form.codigo_postal.value }}"/>
+                </div>
+                <div class="form-group col-12 col-lg-4 col-lg-4 col-lg-4">
+                    <label class="col-form-label col-form-label-sm">Nombre contacto:</label>
+                    <input type="text" name="contacto" id="id_contacto" class="form-control form-control-sm"
+                           required
+                           maxlength="100" value="{{ form.contacto.value }}"/>
+                </div>
+                <div class="form-group col-12 col-lg-4 col-lg-4 col-lg-4">
+                    <label class="col-form-label col-form-label-sm">Cargo:</label>
+                    <input type="text" name="cargo" id="id_cargo" class="form-control form-control-sm"
+                           required
+                           maxlength="100" value="{{ form.cargo.value }}"/>
                 </div>
                 <div class="form-group col-12 col-xs-6 col-lg-6 col-lg-3">
                     <label class="col-form-label col-form-label-sm">Teléfono:</label>

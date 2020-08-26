@@ -47,6 +47,7 @@ def camaras(request):
             for error in field.errors:
                 print("field.name")
                 print(field.name)
+                #print(field.name % " | " % error)
 
                 print(error)
         # for error in form.non_field_errors:
@@ -58,11 +59,14 @@ def camaras(request):
 @login_required(login_url="/login/")
 def todos(request):
     activate('es')
-    camarasAll =  Camaras.objects.all()
-    for camaras in camarasAll:
-        camaras.id = str(camaras._id)
-    return render(request, "camaras/todos.html", {'form': camarasAll})
-
+    if request.user.is_staff:
+        camarasAll =  Camaras.objects.all()
+    elif hasattr(request.user, 'cliente') and (request.user.cliente.get_id() is not None):
+        camaras  = Camara.objects.filter(id_cliente=request.user.cliente.get_id())
+        for camaras in camarasAll:
+            camaras.id = str(camaras._id)
+        return render(request, "camaras/todos.html", {'form': camarasAll})
+    
 
 @login_required(login_url="/login/")
 def editar(request, id):
@@ -118,8 +122,6 @@ def configuracion_camaras(request, id_monitor):
                   
                 if aforoInfo is not None:
                     nro_aforo = aforoInfo.nro_aforo
-                
-
                 
                 for camaras in camarasAll:
                     #print(camaras._id)                
@@ -183,13 +185,10 @@ def configuracion(request, id_monitor):
             zona_numero = 0
             nro_personas = 0
             camarasAll =  Camaras.objects.all()
-           
-          
 
             nro_aforo = 0
 
             try:
-                
                 aforoInfo =  AforoInfo.objects.first()  
                 if aforoInfo is not None:                   
                     nro_aforo = aforoInfo.nro_aforo
