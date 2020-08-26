@@ -55,9 +55,11 @@ def index(request):
     camarasAll =  Camaras.objects.all()
 
     extract = urlResponse.get('url')
+    
     result = urlopen(extract)
     htmlSource = base64.b64encode(result.read())      
-
+    
+    print(result)
      
     if request.user.is_staff:
 
