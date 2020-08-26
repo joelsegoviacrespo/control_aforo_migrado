@@ -22,7 +22,8 @@ import logging
 import base64
 from django.conf import settings
 import json
-from urllib.request import urlopen
+import urllib.request
+#from urllib.request import urlopen
 #from urllib.request.urlopen import urlopen
 
 def hfs(request):
@@ -55,15 +56,15 @@ def index(request):
     camarasAll =  Camaras.objects.all()
 
     extract = urlResponse.get('url')
-    result = urlopen(extract)
-    htmlSource = base64.b64encode(result.read())      
+    #result = urllib.request.urlopen(extract)
+    #htmlSource = base64.b64encode(result.read())      
 
      
     if request.user.is_staff:
 
         #instalaciones = Instalacion.objects.filter('cliente':)
        
-        form = {'foo': 'staff', 'meraki' : htmlSource}
+        form = {'foo': 'staff', 'meraki' : extract}
         #form2 ={'foo':'staff','meraki': response2}
 
     else:
