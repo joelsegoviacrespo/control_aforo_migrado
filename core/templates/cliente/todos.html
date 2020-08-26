@@ -30,15 +30,13 @@
 {% block content-form-form-tag-begin %} {% endblock content-form-form-tag-begin %}
 {% block content-form-content %}
     <div class="card-header m-0 p-2">
-        {% if user.cliente.get_id >= 2 %}
         <div class="d-flex align-items-center">
             <h4 class="card-title"></h4>
-            <a href="/cliente/" role="button"
+            <a href="/cliente/" role="button"{% if user.profile.rol|add:0 >= 2 %}disabled{%endif%}
                class="btn btn-primary ml-auto">
                 <i class="fa fa-plus mr-2" title="Agregar"></i>Agregar
             </a>
         </div>
-        {%endif%}
     </div>
     <div class="card-body">
         <div class="table-responsive m-0 p-0 py-3 w-100">
@@ -47,15 +45,14 @@
                 <thead>
                 <tr>
                     <th class="text-center"></th>
-                    {% if user.is_staff  %}
-                    <th>Usuario</th>
-                    {% endif  %}
                     <th>NIF</th>
                     <th>Razón social</th>
                     <th>Dirección</th>
                     <th>Problación</th>
                     <th>Provincia</th>
                     <th>Código postal</th>
+                    <th>Contacto</th>
+                    <th>Cargo</th>
                     <th>Teléfono</th>
                     <th>Móvil</th>
                     <th>e-mail</th>
@@ -63,24 +60,6 @@
                     <th class="text-center"></th>
                 </tr>
                 </thead>
-                <!--tfoot>
-                <tr>
-                    <th>NIF</th>
-                    {% if user.is_staff  %}
-                    <th>Usuario</th>
-                    {% endif  %}
-                    <th>Razón social</th>
-                    <th>Dirección</th>
-                    <th>Problación</th>
-                    <th>Provincia</th>
-                    <th>Código postal</th>
-                    <th>Teléfono</th>
-                    <th>Móvil</th>
-                    <th>e-mail</th>
-                    <th>Estado</th>
-                    <th></th>
-                </tr>
-                </tfoot-->
                 <tbody>
                 {% for cliente in form %}
                 <tr>
@@ -96,19 +75,14 @@
                             </a>
                         </div>
                     </td>
-                    {% if user.is_staff  %}
-                        {% if cliente.user is not None %}
-                            <td class="text-center">{{ cliente.user }}</td>
-                        {% else %}
-                            <td class="text-center">No asignado</td>
-                        {% endif%}
-                    {% endif %}
                     <td>{{ cliente.nif }}</td>
                     <td>{{ cliente.razon_social }}</td>
                     <td>{{ cliente.direccion }}</td>
                     <td>{{ cliente.poblacion }}</td>
                     <td>{{ cliente.provincia }}</td>
                     <td>{{ cliente.codigo_postal }}</td>
+                    <td>{{ cliente.contacto }}</td>
+                    <td>{{ cliente.cargo }}</td>
                     <td>{{ cliente.telefono }}</td>
                     <td>{{ cliente.movil }}</td>
                     <td>{{ cliente.email }}</td>

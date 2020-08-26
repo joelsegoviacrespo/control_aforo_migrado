@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+from pymongo import MongoClient
 from django.contrib.auth.decorators import login_required
 from djongo import models
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
@@ -12,6 +13,18 @@ def mng(request):
     context = {'foo': 'bar'}
     return render(request, 'cliente/manage.html', context)
 
+@login_required(login_url="/login/")
+def configuracion(request, id_cliente):
+    if request.method == 'GET':
+        try:
+            client = MongoClient(settings.DB_IP + ":" + settings.DB_PORT)
+            db = client[setting.DB_NAME]
+            collection1 = db[settings.DB_COLLECTION]
+            data1 = collection1.insert_one({'form.Cliente'})
+        except Exception as e:
+            print('%s (%s)' % (e, type(e)))
+            pass
+        
 
 @login_required(login_url="/login/")
 def cliente(request):

@@ -7,13 +7,15 @@ from djongo import models
 
 class Cliente(models.Model):
     _id = models.ObjectIdField()
-    user = models.OneToOneField(User, on_delete=models.SET_NULL, blank=True, null=True)
+    #user = models.OneToOneField(User, on_delete=models.SET_NULL, blank=True, null=True)
     nif = models.CharField(max_length=20, blank=False, default='')
     razon_social = models.CharField(max_length=255, blank=False, default='')
     direccion = models.CharField(max_length=255, blank=False, default='')
     poblacion = models.CharField(max_length=255, blank=False, default='')
     provincia = models.CharField(max_length=255, blank=False, default='')
     codigo_postal = models.CharField(max_length=10, blank=False, default='')
+    contacto = models.CharField(max_length=225, blank=False, default='')
+    cargo = models.CharField(max_length=225, blank=False, default='')
     telefono = models.CharField(max_length=20, blank=False, default='')
     movil = models.CharField(max_length=20, blank=False, default='')
     email = models.EmailField(max_length=255, blank=False, default='')

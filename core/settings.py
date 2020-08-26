@@ -104,20 +104,21 @@ DATABASES = {
                  'authMechanism': 'SCRAM-SHA-1'
              }
         },
-#         'default': {
-#             'ENGINE': 'djongo',
-#             'NAME': 'aforo',
-#             'ENFORCE_SCHEMA': False,
-#             'CLIENT': {
-#                 'host': 'mongodb://smfactory:S0ftwar4Mf4ac0ory@127.0.0.1:27117',
-#                 'port': 27117,
-#                 'username': 'smfactory',
-#                 'password': 'S0ftwar4Mf4ac0ory',
-#                 'authSource': 'admin',
-#                 'authMechanism': 'SCRAM-SHA-1'
-#             }
-#        },  
-#        
+'DBCollection1': {
+            'ENGINE': 'djongo',
+            'NAME': 'aforo',
+            'DB_IP': '5.196.27.225',
+            'DB_Port': '27227',
+            'CLIENT': {
+                 'host': 'mongodb://user_aforo_mongo:Af0r0smfC10uDM0n4O@5.196.27.225:27227',
+                 'port': 27227,
+                 'username': 'user_aforo_mongo',
+                 'password': 'Af0r0smfC10uDM0n4O',
+                 'authSource': 'admin',
+                 'authMechanism': 'SCRAM-SHA-1',
+                 'db_collection1': 'cliente',
+            }
+        },    
 }
 
 
@@ -213,4 +214,13 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #DEFAULT_FROM_EMAIL = 'TestSite Team <noreply@example.com>'
 
 
-
+#Configuración conexión a la base de datos
+DB_IP = config('DB_IP', default='5.196.27.225')
+DB_IP ="5.196.27.225"
+#DB_IP ="127.0.0.1"
+DB_PORT = config('DB_PORT', default='27227')
+DB_NAME = config('DB_NAME',default='aforo')
+DB_COLLECTION2 = config('DB_COLLECTION1',default='cliente')
+DB_USER_NAME = config('DB_USER_NAME',default='user_aforo_mongo')
+DB_USER_PASSWORD = config('DB_USER_PASSWORD',default='Af0r0smfC10uDM0n4O')
+DB_FULL = "mongodb://user_aforo_mongo:Af0r0smfC10uDM0n4O@5.196.27.225:27227/aforo?authSource=admin&authMechanism=SCRAM-SHA-256"
