@@ -22,7 +22,8 @@ import logging
 import base64
 from django.conf import settings
 import json
-from urllib.request.urlopen import urlopen
+from urllib.request import urlopen
+#from urllib.request.urlopen import urlopen
 
 def hfs(request):
     context = {'foo': 'bar'}
