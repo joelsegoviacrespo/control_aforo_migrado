@@ -22,7 +22,8 @@ import logging
 import base64
 from django.conf import settings
 import json
-from urllib.request import urlopen
+import urllib.request
+#from urllib.request import urlopen
 #from urllib.request.urlopen import urlopen
 
 def hfs(request):
@@ -48,16 +49,19 @@ def index(request):
     #response2 = {}
 
     response = requests.request("POST", url, headers=headers, data = payload)
-   
+    #print(response.response, flush=True)
     #response2= requests.request("POST",url2 ,headers=headers, data = payload)
-    urlResponse = json.loads(response.text)
+    if(not response ):
+        extract = "/static/assets/img/people.jpg"
+    else:
+        urlResponse = json.loads(response.text)
+        extract = urlResponse.get('url')
     #consulta a meraki
     camarasAll =  Camaras.objects.all()
 
-    extract = urlResponse.get('url')
-    
-    result = urlopen(extract)
-    htmlSource = base64.b64encode(result.read())      
+   # extract = urlResponse.get('url')
+    #result = urllib.request.urlopen(extract)
+    #htmlSource = base64.b64encode(result.read())      
     
     print(result)
      
@@ -65,7 +69,7 @@ def index(request):
 
         #instalaciones = Instalacion.objects.filter('cliente':)
        
-        form = {'foo': 'staff', 'meraki' : htmlSource}
+        form = {'foo': 'staff', 'meraki' : extract}
         #form2 ={'foo':'staff','meraki': response2}
 
     else:
