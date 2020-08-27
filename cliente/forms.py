@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
-from cliente.models import Cliente
+from cliente.models import Cliente,ClienteEmbebido
 
 
 class ClienteForm(forms.ModelForm):
@@ -16,7 +16,7 @@ class ClienteForm(forms.ModelForm):
     class Meta:
         model = Cliente
         fields = '__all__'
-        # exclude = ('id_cliente',)
+        exclude = ('numero_cliente',)
 
     def __init__(self, *args, **kwargs):
         super(ClienteForm, self).__init__(*args, **kwargs)
@@ -35,3 +35,16 @@ class ClienteTodosForm(forms.ModelForm):
 
     # def __init__(self, *args, **kwargs):
     #     print('oooo')
+
+
+class ClienteEmbebidoForm(forms.ModelForm):
+    
+
+    class Meta:
+        model = ClienteEmbebido
+        #fields =  '__all__'
+        fields =  ('nif','razon_social',)
+        #exclude = ('id_cliente',)
+
+  
+        

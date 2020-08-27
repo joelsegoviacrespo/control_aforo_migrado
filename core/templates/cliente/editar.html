@@ -1,18 +1,15 @@
-{% extends "layouts/base-modal.html" %}
+{% extends "layouts/base-form.html" %}
 
 {% block title %} Cliente {% endblock title %}
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
 
-{% block modal-content-title-dissmiss %}
-onclick="javascript:window.location='/cliente/todos'"
-{% endblock modal-content-title-dissmiss %}
-{% block modal-content-form-tag-begin %}
-<form method="POST" class="post-form" action="/cliente/actualizar/{{form.id.value}}/">
-    {% endblock modal-content-form-tag-begin %}
-    {% block modal-content-title %}
-    <ul class="ml-0 breadcrumbs">
+
+{% block content-form-page-header-title %} Cliente {% endblock content-form-page-header-title %}
+{% block content-form-page-header %}
+
+    <ul class="breadcrumbs">
         <li class="nav-home">
             <a href="#">
                 <i class="fas fa-users"></i>
@@ -31,197 +28,242 @@ onclick="javascript:window.location='/cliente/todos'"
             <a href="#">Editar</a>
         </li>
     </ul>
-    {% endblock modal-content-title %}
-    {% block modal-content %}
-    {% csrf_token %}
-    <div class="card bg-custom-gray p-1">
-        <div class="card-header m-0 py-1">
-            <h5>Datos generales</h5>
-        </div>
-        <div class="card-body bg-light p-1">
-            <div class="form-row col-12">
-                <div class="form-group form-inline col-12 mx-2 my-0 p-0">
-                    <label class="col-form-label mr-3">Activo:</label>
-                    <input type="checkbox" name="cliente_estado" id="id_cliente_estado"
-                           class="form-control form-control-sm"
-                           value="True" {% if form.cliente_estado.value %}checked{% endif %} />
-                </div>
-                <!--div class="form-group col-12 col-lg-4">
-                    <label class="col-form-label mr-3">Usuario:</label>
-                    <br>
-                    <select name="user" id="id_user" class="form-control form-control-sm">
-                        {% for usuario in form.user %}
-                        {{ usuario }}
-                        {% endfor %}
-                    </select>
-                </div-->
-                <div class="col-12"></div>                
-                <div class="form-group col-12 col-lg-3">
-                    <label class="col-form-label col-form-label-sm">NIF:</label>
-                    <input type="text" name="nif" id="id_nif" class="form-control form-control-sm" required
-                           maxlength="100"
-                           value="{{ form.nif.value }}"/>
-                </div>
-                <div class="form-group col-12 col-lg-3">
-                    <label class="col-form-label col-form-label-sm">Razón social:</label>
-                    <input type="text" name="razon_social" id="id_razon_social" class="form-control form-control-sm"
-                           required
-                           maxlength="100"
-                           value="{{ form.razon_social.value }}"/>
-                </div>
-                <div class="form-group col-12 col-lg-6">
-                    <label class="col-form-label col-form-label-sm">Dirección:</label>
-                    <input type="text" name="direccion" id="id_direccion" class="form-control form-control-sm" required
-                           maxlength="255" value="{{ form.direccion.value }}"/>
-                </div>
-                <div class="form-group col-12 col-xs-6 col-lg-6 col-lg-4">
-                    <label class="col-form-label col-form-label-sm">Población:</label>
-                    <input type="text" name="poblacion" id="id_poblacion" class="form-control form-control-sm" required
-                           maxlength="100" value="{{form.poblacion.value}}"/>
-                </div>
-                <div class="form-group col-12 col-xs-6 col-lg-6 col-lg-4">
-                    <label class="col-form-label col-form-label-sm">Provincia:</label>
-                    <input type="text" name="provincia" id="id_provincia" class="form-control form-control-sm" required
-                           maxlength="100" value="{{ form.provincia.value }}"/>
-                </div>
-                <div class="form-group col-12 col-lg-4 col-lg-4 col-lg-4">
-                    <label class="col-form-label col-form-label-sm">Código postal:</label>
-                    <input type="text" name="codigo_postal" id="id_codigo_postal" class="form-control form-control-sm"
-                           required
-                           maxlength="100" value="{{ form.codigo_postal.value }}"/>
-                </div>
-                <div class="form-group col-12 col-lg-4 col-lg-4 col-lg-4">
-                    <label class="col-form-label col-form-label-sm">Nombre contacto:</label>
-                    <input type="text" name="contacto" id="id_contacto" class="form-control form-control-sm"
-                           required
-                           maxlength="100" value="{{ form.contacto.value }}"/>
-                </div>
-                <div class="form-group col-12 col-lg-4 col-lg-4 col-lg-4">
-                    <label class="col-form-label col-form-label-sm">Cargo:</label>
-                    <input type="text" name="cargo" id="id_cargo" class="form-control form-control-sm"
-                           required
-                           maxlength="100" value="{{ form.cargo.value }}"/>
-                </div>
-                <div class="form-group col-12 col-xs-6 col-lg-6 col-lg-3">
-                    <label class="col-form-label col-form-label-sm">Teléfono:</label>
-                    <input type="text" name="telefono" id="id_telefono" class="form-control form-control-sm" required
-                           maxlength="100" value="{{ form.telefono.value }}"/>
-                </div>
-                <div class="form-group col-12 col-xs-6 col-lg-6 col-lg-3">
-                    <label class="col-form-label col-form-label-sm">Movil:</label>
-                    <input type="text" name="movil" id="id_movil" class="form-control form-control-sm" required
-                           maxlength="100" value="{{ form.movil.value }}"/>
-                </div>
-                <div class="form-group col-12 col-xs-12 col-lg-12 col-lg-6">
-                    <label class="col-form-label col-form-label-sm">e-mail:</label>
-                    <input type="text" name="email" id="id_email" class="form-control form-control-sm" required
-                           maxlength="100" value="{{ form.email.value }}"/>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="card bg-custom-gray p-1">
-        <div class="card-header p-1">
-            <h5>Administración</h5>
-        </div>
-        <div class="card-body bg-light p-1">
-            <div class="form-row m-0 p-2">
-                <div class="form-group col-12 col-xs-6 col-lg-4 col-lg-3">
-                    <label class="col-form-label">Nombre:</label>
-                    <input type="text" name="administracion_nombre" id="id_administracion_nombre" class="form-control form-control-sm"
-                           required
-                           maxlength="100" value="{{ form.administracion_nombre.value}}"/>
-                </div>
-                <div class="form-group col-12 col-xs-6 col-lg-4 col-lg-3">
-                    <label class="col-form-label">Cargo :</label>
-                    <input type="text" name="administracion_cargo" id="id_administracion_cargo" class="form-control form-control-sm"
-                           required
-                           maxlength="100" value="{{ form.administracion_cargo.value}}"/>
-                </div>
-                <div class="form-group col-12 col-xs-12 col-lg-6 col-lg-6">
-                    <label class="col-form-label">e-mail:</label>
-                    <input type="text" name="administracion_email" id="id_administracion_email" class="form-control form-control-sm"
-                           required
-                           maxlength="100" value="{{ form.administracion_email.value}}"/>
-                </div>
-                <div class="form-group col-12 col-xs-6 col-lg-4 col-lg-3">
-                    <label class="col-form-label">Teléfono:</label>
-                    <input type="text" name="administracion_telefono" id="id_administracion_telefono"
-                           class="form-control form-control-sm"
-                           required
-                           maxlength="100" value="{{ form.administracion_telefono.value}}"/>
-                </div>
-                <div class="form-group col-12 col-xs-6 col-lg-4 col-lg-3">
-                    <label class="col-form-label">Movil:</label>
-                    <input type="text" name="administracion_movil" id="id_administracion_movil" class="form-control form-control-sm"
-                           required
-                           maxlength="100" value="{{ form.administracion_movil.value}}"/>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="card bg-custom-gray p-1">
-        <div class="card-header p-1">
-            <h5>Técnico</h5>
-        </div>
-        <div class="card-body bg-light p-1">
-            <div class="form-row m-0 p-2">
-                <div class="form-group col-12 col-xs-6 col-lg-6 col-lg-3">
-                    <label class="col-form-label">Nombre:</label>
-                    <input type="text" name="tecnico_nombre" id="id_tecnico_nombre" class="form-control form-control-sm" required
-                           maxlength="100" value="{{ form.tecnico_nombre.value}}"/>
-                </div>
-                <div class="form-group col-12 col-xs-6 col-lg-6 col-lg-3">
-                    <label class="col-form-label">Cargo :</label>
-                    <input type="text" name="tecnico_cargo" id="id_tecnico_cargo" class="form-control form-control-sm" required
-                           maxlength="100" value="{{ form.tecnico_cargo.value}}"/>
-                </div>
-                <div class="form-group col-12 col-xs-12 col-lg-6 col-lg-6">
-                    <label class="col-form-label">e-mail:</label>
-                    <input type="text" name="tecnico_email" id="id_tecnico_email" class="form-control form-control-sm" required
-                           maxlength="100" value="{{ form.tecnico_email.value}}"/>
-                </div>
-                <div class="form-group col-12 col-xs-6 col-lg-6 col-lg-3">
-                    <label class="col-form-label">Teléfono:</label>
-                    <input type="text" name="tecnico_telefono" id="id_tecnico_telefono" class="form-control form-control-sm" required
-                           maxlength="100" value="{{ form.tecnico_telefono.value}}"/>
-                </div>
-                <div class="form-group col-12 col-xs-6 col-lg-6 col-lg-3">
-                    <label class="col-form-label">Movil:</label>
-                    <input type="text" name="tecnico_movil" id="id_tecnico_movil" class="form-control form-control-sm" required
-                           maxlength="100" value="{{ form.tecnico_movil.value}}"/>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="form-row m-0 p-2">
-        <div class="form-group col-12">
-            {% for field in form %}
-            {% if field.errors %}
-            <div class="alert alert-danger my-1">
-                <li>
-                    <strong class="mr-3">{{ field.label | capfirst }}: </strong>
-                    <ul class="errorlist">
-                        {% for error in field.errors %}
-                        <li>{{error|escape}}</li>
-                        {% endfor %}
-                    </ul>
-                </li>
-            </div>
-            {% endif %}
-            {% endfor %}
-        </div>
-    </div>
-    {% endblock modal-content %}
-    {% block modal-content-footer %}
-    <button type="submit" class="btn btn-success">Guardar</button>
-    <button type="reset" class="btn btn-warning" >Cancelar</button>
-    <button type="button" class="btn btn-danger" data-dismiss="modal"
-            onclick="javascript:window.location='/cliente/todos'">Cerrar
-    </button>
-    {% endblock modal-content-footer %}
-{% block modal-content-form-tag-end %}
-</form>
-{% endblock modal-content-form-tag-end %}
+{% endblock content-form-page-header %}
+{% block content-form-form-tag-begin %} {% endblock content-form-form-tag-begin %}
+{% block content-form-content %}
+<div class="card-body">
+	<div class="row">
+		<div class="col-md-12">			 
+				<form method="POST" class="post-form" action="/cliente/actualizar/{{form.id.value}}/">
+					{% csrf_token %}
+					<div class="card bg-custom-gray p-1">
+				        <div class="card-header m-0 py-1">
+				            <h5>Datos generales</h5>
+				        </div>						
+					    <div class="card-body bg-light p-1">
+							<div class="form-check">									
+								<div class="row">
+									<label class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Activo <span class="required-label">*</span></label>
+									<div class="col-lg-4 col-md-9 col-sm-8 d-flex align-items-center">
+										<div class="custom-control custom-checkbox">
+											<input type="checkbox" class="custom-control-input" id="cliente_estado" name="cliente_estado" 
+												value="True" {% if form.cliente_estado.value %}checked{% endif %}>
+												<label class="custom-control-label" for="cliente_estado"></label>
+										</div>
+									</div>
+								</div>
+							</div>											
+							<div class="form-group form-show-validation row">
+								<label for="nif" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">NIF<span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<input type="text" class="form-control" id="id_nif" name="nif" placeholder="NIF" required
+									 	maxlength="100"
+		                   		  		value="{{ form.nif.value }}"/>
+								</div>
+							</div>
+							<div class="form-group form-show-validation row">
+								<label for="razon_social" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Razón social<span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<input type="text" class="form-control" id="id_razon_social" name="razon_social" placeholder="Razón social" required
+									 	maxlength="100"
+		                   		  		value="{{ form.razon_social.value }}"/>
+								</div>
+							</div>
+							<div class="form-group form-show-validation row">
+								<label for="direccion" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Dirección<span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<input type="text" class="form-control" id="id_direccion" name="direccion" placeholder="Dirección" required
+									 	maxlength="255"
+		                   		  		value="{{ form.direccion.value }}"/>
+								</div>
+							</div>									
+							<div class="form-group form-show-validation row">
+								<label for="poblacion" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Población<span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<input type="text" class="form-control" id="id_poblacion" name="poblacion" placeholder="Población" required
+									 	maxlength="100"
+		                   		  		value="{{ form.poblacion.value }}"/>
+								</div>
+							</div>		
+							<div class="form-group form-show-validation row">
+								<label for="provincia" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Provincia<span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<input type="text" class="form-control" id="id_provincia" name="provincia" placeholder="Provincia" required
+									 	maxlength="100"
+		                   		  		value="{{ form.provincia.value }}"/>
+								</div>
+							</div>
+							<div class="form-group form-show-validation row">
+								<label for="codigo_postal" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Código postal<span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<input type="text" class="form-control" id="id_codigo_postal" name="codigo_postal" placeholder="Código postal" required
+									 	maxlength="100"
+		                   		  		value="{{ form.codigo_postal.value }}"/>
+								</div>
+							</div>
+							<div class="form-group form-show-validation row">
+								<label for="contacto" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Contacto<span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<input type="text" class="form-control" id="id_contacto" name="contacto" placeholder="Contacto" required
+									 	maxlength="100"
+		                   		  		value="{{ form.contacto.value }}"/>
+								</div>
+							</div>
+							<div class="form-group form-show-validation row">
+								<label for="cargo" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Cargo<span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<input type="text" class="form-control" id="id_cargo" name="cargo" placeholder="Cargo" required
+									 	maxlength="100"
+		                   		  		value="{{ form.cargo.value }}"/>
+								</div>
+							</div>												
+							<div class="form-group form-show-validation row">
+								<label for="telefono" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Teléfono<span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<input type="text" class="form-control" id="id_telefono" name="telefono" placeholder="Teléfono" required
+									 	maxlength="100"
+		                   		  		value="{{ form.telefono.value }}"/>
+								</div>
+							</div>
+							<div class="form-group form-show-validation row">
+								<label for="movil" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Movil<span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<input type="text" class="form-control" id="id_movil" name="movil" placeholder="Movil" required
+									 	maxlength="100"
+		                   		  		value="{{ form.movil.value }}"/>
+								</div>
+							</div>		
+							<div class="form-group form-show-validation row">
+								<label for="email" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">E-mail<span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<input type="email" class="form-control" id="id_email" name="email" placeholder="E-mail" required
+									 	maxlength="100"
+		                   		  		value="{{ form.email.value }}"/>
+								</div>
+							</div>	
+		
+					    </div><!--fin card body-->
+					</div><!--fin "card bg-custom-gray p-1-->
+																																																							
+										
+				    <div class="card bg-custom-gray p-1">
+        				<div class="card-header p-1">
+            				<h5>Administración</h5>
+        				</div>
+						<div class="card-body bg-light p-1">
+							<div class="form-group form-show-validation row">
+								<label for="administracion_nombre" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Nombre<span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<input type="text" class="form-control" id="id_administracion_nombre" name="administracion_nombre" placeholder="Nombre" required
+									 	maxlength="100"
+		                   		  		value="{{ form.administracion_nombre.value }}"/>
+								</div>
+							</div>														
+							<div class="form-group form-show-validation row">
+								<label for="administracion_cargo" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Cargo<span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<input type="text" class="form-control" id="id_administracion_cargo" name="administracion_cargo" placeholder="Cargo" required
+									 	maxlength="100"
+		                   		  		value="{{ form.administracion_cargo.value }}"/>
+								</div>
+							</div>		
+							<div class="form-group form-show-validation row">
+								<label for="administracion_email" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">E-mail<span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<input type="email" class="form-control" id="id_administracion_email" name="administracion_email" placeholder="E-mail" required
+									 	maxlength="100"
+		                   		  		value="{{ form.administracion_email.value }}"/>
+								</div>
+							</div>		
+							<div class="form-group form-show-validation row">
+								<label for="administracion_telefono" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Teléfono<span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<input type="text" class="form-control" id="id_administracion_telefono" name="administracion_telefono" placeholder="Teléfono" required
+									 	maxlength="100"
+		                   		  		value="{{ form.administracion_telefono.value }}"/>
+								</div>
+							</div>
+							<div class="form-group form-show-validation row">
+								<label for="administracion_movil" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Movil<span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<input type="text" class="form-control" id="id_administracion_movil" name="administracion_movil" placeholder="Movil" required
+									 	maxlength="100"
+		                   		  		value="{{ form.administracion_movil.value }}"/>
+								</div>
+							</div>							
+						</div><!--fin card body-->
+				    </div><!--fin "card bg-custom-gray p-1-->
+					<div class="card bg-custom-gray p-1">
+        				<div class="card-header p-1">
+            				<h5>Técnico</h5>
+        				</div>
+						<div class="card-body bg-light p-1">
+							<div class="form-group form-show-validation row">
+								<label for="tecnico_nombre" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Nombre<span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<input type="text" class="form-control" id="id_tecnico_nombre" name="tecnico_nombre" placeholder="Nombre" required
+									 	maxlength="100"
+		                   		  		value="{{ form.tecnico_nombre.value }}"/>
+								</div>
+							</div>		
+							<div class="form-group form-show-validation row">
+								<label for="tecnico_cargo" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Cargo<span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<input type="text" class="form-control" id="id_tecnico_cargo" name="tecnico_cargo" placeholder="Cargo" required
+									 	maxlength="100"
+		                   		  		value="{{ form.tecnico_cargo.value }}"/>
+								</div>
+							</div>		
+							<div class="form-group form-show-validation row">
+								<label for="tecnico_email" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">E-mail<span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<input type="email" class="form-control" id="id_tecnico_email" name="tecnico_email" placeholder="E-mail" required
+									 	maxlength="100"
+		                   		  		value="{{ form.tecnico_email.value }}"/>
+								</div>
+							</div>
+							<div class="form-group form-show-validation row">
+								<label for="tecnico_telefono" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Teléfono<span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<input type="text" class="form-control" id="id_tecnico_telefono" name="tecnico_telefono" placeholder="Teléfono" required
+									 	maxlength="100"
+		                   		  		value="{{ form.tecnico_telefono.value }}"/>
+								</div>
+							</div>		
+							<div class="form-group form-show-validation row">
+								<label for="tecnico_movil" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Movil<span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<input type="text" class="form-control" id="id_tecnico_movil" name="tecnico_movil" placeholder="Movil" required
+									 	maxlength="100"
+		                   		  		value="{{ form.tecnico_movil.value }}"/>
+								</div>
+							</div>																									
+							<div class="card-action">
+								<div class="row">
+									<div class="col-md-12">
+										<input class="btn btn-success" type="submit" value="Guardar">
+										<button class="btn btn-danger" type="reset">Cancelar</button>
+									</div>										
+								</div>
+							</div>
+						</div><!--fin card body-->
+					</div><!--fin "card bg-custom-gray p-1-->						
+				</form>
+			
+		</div>
+	</div>
+</div>	
+
+
+
+
+{% endblock content-form-content %}
+{% block content-form-form-tag-end %} {% endblock content-form-form-tag-end %}
+
+
 <!-- Specific JS goes HERE -->
 {% block javascripts %}{% endblock javascripts %}
+{% block javascripts-page %}
+    {% include 'includes/scripts_js_datatable.html' %}
+
+{% endblock javascripts-page %}

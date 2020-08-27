@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 from django import forms
 from camara_zona.models import CamaraZona
-from cliente.models import Cliente
+#from cliente.models import Cliente
 from instalacion.models import Instalacion
 from monitor.models import Monitor
 

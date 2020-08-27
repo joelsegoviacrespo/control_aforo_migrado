@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 from django import forms
 from camara_zona.models import CamaraZona
-from cliente.models import Cliente
+#from cliente.models import Cliente
 
 
 class CamaraZonaForm(forms.ModelForm):
@@ -27,7 +27,7 @@ class CamaraZonaFormWorking(forms.ModelForm):
     id = forms.CharField(widget=forms.HiddenInput, required=False, initial=0)
     camara_serial = forms.CharField(widget=forms.HiddenInput, required=False, initial='')
     zona_numero = forms.CharField(widget=forms.HiddenInput, required=False, initial=0)
-    clientes = forms.ModelChoiceField(queryset=Cliente.objects.all().filter(cliente_estado=True))
+#    clientes = forms.ModelChoiceField(queryset=Cliente.objects.all().filter(cliente_estado=True))
 
     class Meta:
         model = CamaraZona
@@ -65,7 +65,7 @@ class CamaraZonaEditarForm(forms.ModelForm):
     id_cliente = forms.CharField(widget=forms.HiddenInput, required=False, initial=0)
     camara_serial = forms.CharField(widget=forms.HiddenInput, required=False, initial='')
     zona_numero = forms.CharField(widget=forms.HiddenInput, required=False, initial=0)
-    clientes = forms.ChoiceField(label=u'Clientes')
+#    clientes = forms.ChoiceField(label=u'Clientes')
     #Vehicle.objects.values('brand_name').distinct().order_by('brand_name')
 
     class Meta:

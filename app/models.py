@@ -5,7 +5,7 @@ from django.dispatch import receiver
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
-from cliente.models import Cliente
+#from cliente.models import Cliente
 from django.utils import timezone
 
 
@@ -19,7 +19,7 @@ class Profile(models.Model):
         (ADMINISTRADOR, 'Administrador'),
     )
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    id_cliente = models.ForeignKey(Cliente, on_delete=models.SET_NULL, blank=True, null=True, default=None)
+    #id_cliente = models.ForeignKey(Cliente, on_delete=models.SET_NULL, blank=True, null=True, default=None)
     rol = models.PositiveSmallIntegerField(choices=ROLE_CHOICES, null=False, blank=False, default=0)
 
     def __str__(self):
