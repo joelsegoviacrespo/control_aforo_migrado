@@ -35,16 +35,18 @@
     <div class="card-header m-0 p-2">
         <div class="d-flex align-items-center">
             <h4 class="card-title"></h4>
-            <a href="/cliente/" role="button"
-               class="btn btn-primary ml-auto">
+            <a href="/cliente/" role="button"></a>
+            {% if perms.cliente.Can_add_cliente %}
+            <div class="btn btn-primary ml-auto"> 
                 <i class="fa fa-plus mr-2" title="Agregar"></i>Agregar
+            </div>
             </a>
+            {% endif %}
         </div>
     </div>
 
     <div class="card-body">
         <div class="table-responsive m-0 p-0 py-3 w-100">
-            <!--table id="add-row" class="display table table-striped table-hover table-bordered table-head-bg-primary table-bordered-bd-primary"-->
             <table id="add-row" class="display table table-striped table-hover table-head-bg-primary ">
                 <thead>
                 <tr>	
@@ -58,25 +60,12 @@
                     <th>Teléfono</th>
                     <th>Móvil</th>
                     <th>e-mail</th>
-                    <th>Estado</th>                    
-                    <th class="text-center">Editar y eliminar</th>					
+                    <th>Estado</th>  
+                    {% if perms.cliente.Can_change_cliente %}               
+                    <th class="text-center">Opciones</th>
+                    {% endif %}					
                 </tr>
                 </thead>
-                <!--tfoot>
-                <tr>
-                    <th>NIF</th>
-                    <th>Razón social</th>
-                    <th>Dirección</th>
-                    <th>Problación</th>
-                    <th>Provincia</th>
-                    <th>Código postal</th>
-                    <th>Teléfono</th>
-                    <th>Móvil</th>
-                    <th>e-mail</th>
-                    <th>Estado</th>
-                    <th></th>
-                </tr>
-                </tfoot-->
                 <tbody>
 				{% for cliente in form %}
                 <tr>		
@@ -97,15 +86,20 @@
                     </td>
 					 <td>						
                         <div class="form-button-action m-0 p-0">
-						
-                            <a href="/cliente/editar/{{ cliente.id }}" role="button"
-                               class="btn btn-link btn-primary btn-sm">
-                                <span class="fa fa-edit" title="Editar"></span>
-                            </a>						
-                            <a href="/cliente/eliminar/{{ cliente.id }}" role="button"
-                               class="btn btn-link btn-danger btn-sm">
-                                <span class="fa fa-times" title="Eliminar"></span>
-                            </a>						
+                            <a href="/cliente/editar/{{ cliente.id }}" role="button">
+                                {% if perms.cliente.Can_change_cliente %}
+                                <div class="btn btn-link btn-primary btn-sm">
+                                    <span class="fa fa-edit" title="Editar"></span>
+                                </div>
+                            </a>	
+                                {% endif %}					
+                            <a href="/cliente/eliminar/{{ cliente.id }}" role="button">
+                                {% if perms.cliente.Can_delete_cliente %}
+                                <div class="btn btn-link btn-danger btn-sm">
+                                    <span class="fa fa-times" title="Eliminar"></span>
+                                </div>
+                            </a>		
+                                {% endif %}				
                         </div>
                     </td>
                 </tr>
