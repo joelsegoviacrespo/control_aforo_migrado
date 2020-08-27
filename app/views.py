@@ -63,7 +63,7 @@ def index(request):
     #result = urllib.request.urlopen(extract)
     #htmlSource = base64.b64encode(result.read())      
     
-    print(result)
+    #print(result)
      
     if request.user.is_staff:
 
