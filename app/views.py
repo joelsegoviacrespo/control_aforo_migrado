@@ -49,13 +49,17 @@ def index(request):
     #response2 = {}
 
     response = requests.request("POST", url, headers=headers, data = payload)
-   
+    #print(response.response, flush=True)
     #response2= requests.request("POST",url2 ,headers=headers, data = payload)
-    urlResponse = json.loads(response.text)
+    if(not response ):
+        extract = "/static/assets/img/people.jpg"
+    else:
+        urlResponse = json.loads(response.text)
+        extract = urlResponse.get('url')
     #consulta a meraki
     camarasAll =  Camaras.objects.all()
 
-    extract = urlResponse.get('url')
+   # extract = urlResponse.get('url')
     #result = urllib.request.urlopen(extract)
     #htmlSource = base64.b64encode(result.read())      
 

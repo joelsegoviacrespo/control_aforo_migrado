@@ -6,7 +6,6 @@ Copyright (c) 2019 - present AppSeed.us
 from django.conf.urls import url, include
 from django.urls import path, re_path
 from app import views
-
 urlpatterns = [
     re_path(r'^.*\.html', views.pages, name='pages'),
     path('hfs', views.hfs, name='hfs'),
