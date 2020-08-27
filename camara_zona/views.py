@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect, get_object_or_404, get_list_or_40
 from django.utils.translation import activate
 from camara_zona.forms import CamaraZonaForm, CamaraZonaEditarForm
 from camara_zona.models import CamaraZona
-from cliente.models import Cliente
+#from cliente.models import Cliente
 
 
 @login_required(login_url="/login/")

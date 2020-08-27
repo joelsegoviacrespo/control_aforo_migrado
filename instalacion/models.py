@@ -2,11 +2,11 @@
 from djongo import models
 from django import forms
 
-from cliente.models import Cliente
+#from cliente.models import Cliente
 
 class Instalacion(models.Model):
     _id = models.ObjectIdField()
-    nif_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    #nif_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     nombre_comercial = models.CharField(max_length=255, blank=False, default='')
     direccion = models.CharField(max_length=255, blank=False, default='')
     telefono = models.CharField(max_length=20, blank=False, default='')

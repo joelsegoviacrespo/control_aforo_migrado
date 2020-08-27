@@ -104,7 +104,7 @@ def eliminar(request, id):
 @authentication_classes([])
 @permission_classes([])
 def configuracion_camaras(request, id_monitor):
-    print("configuracion_camaras")
+    #print("configuracion_camaras")
     if request.method == 'GET':
         try:           
             
@@ -175,7 +175,7 @@ def configuracion_camaras(request, id_monitor):
 @authentication_classes([])
 @permission_classes([])
 def configuracion(request, id_monitor):
-    print("configuracion")
+    #print("configuracion")
     if request.method == 'GET':
         try:
             
