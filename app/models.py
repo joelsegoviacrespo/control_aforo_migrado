@@ -10,13 +10,13 @@ from django.utils import timezone
 
 
 class Profile(models.Model):
-    ADMINISTRADOR = 1
-    CLIENTE = 2
+    SUPERUSUARIO = 1
+    ADMINISTRADOR = 2
     USUARIO = 3
-    ROLE_CHOICES = (
-        (USUARIO, 'Usuario'),
-        (CLIENTE, 'Cliente'),
+    ROLE_CHOICES = (     
+        (SUPERUSUARIO, 'Superusuario'),
         (ADMINISTRADOR, 'Administrador'),
+        (USUARIO, 'Usuario'),
     )
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     #id_cliente = models.ForeignKey(Cliente, on_delete=models.SET_NULL, blank=True, null=True, default=None)
