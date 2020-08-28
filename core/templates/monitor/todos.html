@@ -54,9 +54,8 @@
                     <th>Zona</th>
                     <th>Descripción</th>
                     <th>Estado</th>
-                    {% if user is staff %}               
+                    {% if perms.monitor.Can_change_monitor %}              
                     <th class="text-center">Opciones</th>
-                    {% else %}disable 
                     {% endif %}		
                 </tr>
                 </thead>

@@ -53,9 +53,8 @@
                         <th>Contacto</th>
                         <th>Técnico</th>
                         <th>Estado</th>
-                        {% if user is staff %}               
+                        {% if perms.instalacion.Can_change_instalacion %}             
                         <th class="text-center">Opciones</th>
-                        {% else %}disable 
                         {% endif %}	
                     </tr>
                     </thead>

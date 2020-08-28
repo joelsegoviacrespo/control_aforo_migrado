@@ -52,9 +52,8 @@
                     <th>Zona</th>
                     <th>Descripción</th>
                     <th>Estado</th>
-                    {% if user is staff %}               
+                    {% if perms.camaras.Can_change_camaras %}               
                     <th class="text-center">Opciones</th>
-                    {% else %}disable 
                     {% endif %}	
                 </tr>
                 </thead>

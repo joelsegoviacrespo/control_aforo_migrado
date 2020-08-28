@@ -61,9 +61,8 @@
                     <th>Móvil</th>
                     <th>e-mail</th>
                     <th>Estado</th>  
-                    {% if user is staff %}               
+                    {% if perms.cliente.Can_change_cliente %}               
                     <th class="text-center">Opciones</th>
-                    {% else %}disable 
                     {% endif %}					
                 </tr>
                 </thead>
