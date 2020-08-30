@@ -56,13 +56,13 @@ def todos(request):
 def editar(request, id):
     activate('es')
     instalacion = get_object_or_404(Instalacion, _id=id)
-    myObj = Instalacion.objects.values('cliente')
-    print("instalacion.cliente.nif")
+    #myObj = Instalacion.objects.values('cliente')
+    #print("instalacion.cliente.nif")
     
-    print(instalacion.cliente.nif)
+    #print(instalacion.cliente.nif)
     
-    print("myObj")
-    print(myObj)
+    #print("myObj")
+    #print(myObj)
     
     form = InstalacionEditarForm(request.POST or None, instance=instalacion)
  

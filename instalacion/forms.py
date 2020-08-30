@@ -42,8 +42,8 @@ class InstalacionEditarForm(forms.ModelForm):
         if instance and instance._id:
             self.fields["id"].initial = str(instance._id)
         
-        print("instance.cliente.nif")
-        print(instance.cliente)
+        #print("instance.cliente.nif")
+        #print(instance.cliente)
         self.fields["id_cliente_nif"].initial = str(instance.cliente.nif)    
         choices = [(cliente.nif, cliente.razon_social)                   
                    for cliente in  Cliente.objects.all()]
