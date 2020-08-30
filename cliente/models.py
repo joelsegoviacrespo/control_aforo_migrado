@@ -58,10 +58,19 @@ class Cliente(models.Model):
        
     class Meta:
         db_table = "cliente"
+    
+    
         
 class ClienteEmbebido(models.Model):
     nif = models.CharField(max_length=20, blank=False, default='')
-    razon_social = models.CharField(max_length=255, blank=False, default='')
+    #razon_social = models.CharField(max_length=255, blank=False, default='')
+    
+    def __unicode__(self):
+        return self.nif
+
+    def __str__(self,):
+        return str(self.nif)
+
     
     class Meta:        
         abstract = True

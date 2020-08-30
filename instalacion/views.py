@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from djongo import models
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.utils.translation import activate
-from instalacion.forms import InstalacionForm
+from instalacion.forms import InstalacionForm,InstalacionEditarForm
 from instalacion.models import Instalacion
 
 
@@ -13,7 +13,7 @@ from instalacion.models import Instalacion
 def instalacion(request):
     activate('es')
     if request.method == "POST":
-        form = InstalacionForm(request.POST)
+        form = InstalacionForm(request.POST)        
         if form.is_valid():
             try:
                 form.save()
@@ -25,7 +25,7 @@ def instalacion(request):
     if form.errors:
         for field in form:
             for error in field.errors:
-                #print(field.name % " | " % error)
+                print(field.name)
 
                 print(error)
         # for error in form.non_field_errors:
@@ -56,7 +56,16 @@ def todos(request):
 def editar(request, id):
     activate('es')
     instalacion = get_object_or_404(Instalacion, _id=id)
-    form = InstalacionForm(request.POST or None, instance=instalacion)
+    myObj = Instalacion.objects.values('cliente')
+    print("instalacion.cliente.nif")
+    
+    print(instalacion.cliente.nif)
+    
+    print("myObj")
+    print(myObj)
+    
+    form = InstalacionEditarForm(request.POST or None, instance=instalacion)
+ 
     return render(request, 'instalacion/editar.html', { 'form' : form })
 
 
@@ -64,7 +73,7 @@ def editar(request, id):
 def actualizar(request, id):
     activate('es')
     instalacion = get_object_or_404(Instalacion, _id=id)
-    form = InstalacionForm(request.POST or None, instance=instalacion)
+    form = InstalacionEditarForm(request.POST or None, instance=instalacion)
     if form.is_valid():
         form.save()
         return redirect("/instalacion/todos")

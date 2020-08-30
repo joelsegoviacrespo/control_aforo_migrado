@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 from djongo import models
 import os
-from instalacion.models import Instalacion
+#from instalacion.models import Instalacion
 
 def path_and_rename(path, prefix):
     def wrapper(instance, filename):
@@ -55,7 +55,7 @@ class Monitor(models.Model):
     )
 
     _id = models.ObjectIdField()
-    id_instalacion = models.ForeignKey(Instalacion, on_delete=models.CASCADE, blank=False)
+    #id_instalacion = models.ForeignKey(Instalacion, on_delete=models.CASCADE, blank=False)
     id_camara_zona = models.CharField(max_length=255, blank=False, default='')
     mac_wifi = models.CharField(max_length=30, blank=False, default='')
     descripcion = models.CharField(max_length=300, blank=False, default='')
@@ -130,4 +130,3 @@ class Monitor(models.Model):
     #
     # def path_and_rename(path, prefix):
     #     return wrapper
-

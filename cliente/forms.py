@@ -43,7 +43,7 @@ class ClienteEmbebidoForm(forms.ModelForm):
     class Meta:
         model = ClienteEmbebido
         #fields =  '__all__'
-        fields =  ('nif','razon_social',)
+        fields =  ('nif',)
         #exclude = ('id_cliente',)
 
   
