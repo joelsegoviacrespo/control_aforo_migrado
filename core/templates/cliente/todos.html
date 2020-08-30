@@ -5,10 +5,8 @@
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
 
-
 {% block content-form-page-header-title %} Clientes {% endblock content-form-page-header-title %}
 {% block content-form-page-header %}
-
     <ul class="breadcrumbs">
         <li class="nav-home">
             <a href="#">
@@ -31,12 +29,11 @@
 {% endblock content-form-page-header %}
 {% block content-form-form-tag-begin %} {% endblock content-form-form-tag-begin %}
 {% block content-form-content %}
-
     <div class="card-header m-0 p-2">
         <div class="d-flex align-items-center">
             <h4 class="card-title"></h4>
-            <a href="/cliente/" role="button"></a>
             {% if perms.cliente.Can_add_cliente %}
+            <a href="/cliente/" role="button">
             <div class="btn btn-primary ml-auto"> 
                 <i class="fa fa-plus mr-2" title="Agregar"></i>Agregar
             </div>
@@ -44,9 +41,9 @@
             {% endif %}
         </div>
     </div>
-
     <div class="card-body">
         <div class="table-responsive m-0 p-0 py-3 w-100">
+            <div class="table-responsive w-100 m-0 p-0 pb-3"></div>
             <table id="add-row" class="display table table-striped table-hover table-head-bg-primary ">
                 <thead>
                 <tr>	
@@ -85,7 +82,7 @@
                         {% endif %}                  
                     </td>
 					 <td>						
-                        <div class="form-button-action m-0 p-0">
+                        <div class="form-button-action">
                             <a href="/cliente/editar/{{ cliente.id }}" role="button">
                                 {% if perms.cliente.Can_change_cliente %}
                                 <div class="btn btn-link btn-primary btn-sm">
@@ -108,6 +105,7 @@
             </table>
         </div>
     </div>
+</div>
 {% endblock content-form-content %}
 {% block content-form-form-tag-end %} {% endblock content-form-form-tag-end %}
 
