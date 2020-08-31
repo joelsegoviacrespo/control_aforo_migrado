@@ -39,12 +39,12 @@ def instalacion(request):
 def todos(request):
     activate('es')
     instalaciones = {}
-    if request.user.is_staff:
-        instalaciones = Instalacion.objects.all()
+    #if request.user.is_staff:
+    instalaciones = Instalacion.objects.all()
         
-    elif hasattr(request.user, 'cliente') and (request.user.cliente.get_id() is not None):
+    #elif hasattr(request.user, 'cliente') and (request.user.cliente.get_id() is not None):
         
-        instalaciones  = Instalacion.objects.filter(id_cliente=request.user.cliente.get_id())
+    #    instalaciones  = Instalacion.objects.filter(id_cliente=request.user.cliente.get_id())
 
     for instalacion in instalaciones:
         instalacion.id = str(instalacion._id)
