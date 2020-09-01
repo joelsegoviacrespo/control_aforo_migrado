@@ -16,5 +16,5 @@ urlpatterns = [
     path('instalacion/', include('instalacion.urls')),
     path('camaras/', include('camaras.urls')),
     path('aforoInfo/', include('aforoInfo.urls')),
- 
+    path('valores/', include('valores.urls')),
 ]

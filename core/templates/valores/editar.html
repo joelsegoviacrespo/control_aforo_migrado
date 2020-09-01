@@ -1,0 +1,200 @@
+{% extends "layouts/base-form.html" %}
+
+{% block title %} Valores {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+
+{% block content-form-page-header-title %} Valores {% endblock content-form-page-header-title %}
+{% block content-form-page-header %}
+
+    <ul class="breadcrumbs">
+        <li class="nav-home">
+            <a href="#">
+                <i class="fa fa-bars"></i>
+            </a>
+        </li>
+        <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+        </li>
+        <li class="nav-item">
+            <a href="#">Valores</a>
+        </li>
+        <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+        </li>
+        <li class="nav-item">
+            <a href="#">Agregar</a>
+        </li>
+    </ul>
+{% endblock content-form-page-header %}
+{% block content-form-form-tag-begin %} {% endblock content-form-form-tag-begin %}
+{% block content-form-content %}
+<div class="card-body">
+	<div class="row">
+		<div class="col-md-12">			 
+				<form method="POST" class="post-form" action="/valores/actualizar/{{form.id.value}}/">
+					{% csrf_token %}
+					<div class="card bg-custom-gray p-1">
+				        <div class="card-header m-0 py-1">
+				            <h5>Datos de valores</h5>
+				        </div>						
+					    <div class="card-body bg-light p-1">
+							<div class="form-check">									
+								<div class="row">
+									<label class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Activo <span class="required-label">*</span></label>
+									<div class="col-lg-4 col-md-9 col-sm-8 d-flex align-items-center">
+										<div class="custom-control custom-checkbox">
+											<input type="checkbox" class="custom-control-input" id="activo" name="activo" value="True" {% if form.activo.value %}checked{% endif %}>
+											<label class="custom-control-label" for="activo"></label>
+										</div>
+									</div>
+								</div>
+							</div>		
+							<div class="form-group form-show-validation row">
+								<label for="cliente" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Cliente <span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<div class="select2-input">
+										<select name="instalacion-nif_cliente" required id="instalacion-nif_cliente" class="form-control">
+							            	<option value="" selected> --------- </option>
+                        					{% for id, value in form.fields.cliente_nif.choices %}
+                            					 {% if form.id_cliente_nif.value == id %}
+                                					<option value="{{ id }}" selected="selected">{{ value }}</option>
+                            					{% else %}
+                                					<option value="{{ id }}">{{ value }}</option>
+												{% endif %}
+                        					{% endfor %}																		
+										</select>
+										
+									</div>
+								</div>
+							</div>	
+							<div class="form-group form-show-validation row">
+								<label for="cliente" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Instalación<span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<div class="select2-input">												
+										<select name="instalacion-nombre" required id="id_instalacion-nombre" class="form-control">
+											  <option value="">--------</option>
+									
+						                        {% for id, value in form.fields.instalacion_nombre.choices %}
+						                            {% if form.instalacion_n.value|stringformat:"s" == id|stringformat:"s" %}
+						                                <option value="{{ id }}" selected="selected">{{ value }}</option>
+						                            {% else %}
+						                                <option value="{{ id }}">{{ value }}</option>
+						                            {% endif %}
+						                        {% endfor %}						                										
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="form-group form-show-validation row">
+								<label for="descripcion" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Descripción<span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<input type="text" class="form-control" id="id_descripcion" name="descripcion" placeholder="Descripción" required
+									 	maxlength="100"
+		                   		  		value="{{ form.descripcion.value }}"/>
+								</div>
+							</div>		
+							<div class="form-group form-show-validation row">
+								<label for="maximo_aforo" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Maximo aforo<span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<input type="number" class="form-control" id="id_maximo_aforo" name="maximo_aforo" placeholder="Maximo aforo" required
+									 	maxlength="100"
+		                   		  		value="{{ form.maximo_aforo.value }}"/>
+								</div>
+							</div>
+							<div class="form-group form-show-validation row">
+								<label for="mostrar_valor" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Mostrar valor <span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<div class="select2-input">
+										
+										<select name="mostrar_valor" required id="id_mostrar_valor" class="form-control">
+						                    	<option value="" selected> --------- </option>
+                    						{% for id, value in form.fields.mostrar_valor.choices %}
+                        						 {% if form.id_mostrar_valor.value|stringformat:"s" == id|stringformat:"s" %}
+						                                <option value="{{ id }}" selected="selected">{{ value }}</option>
+						                            {% else %}
+						                                <option value="{{ id }}">{{ value }}</option>
+						                            {% endif %}
+                    						{% endfor %}																		
+										</select>
+									</div>
+								</div>
+							</div>	
+							<div class="form-check">									
+								<div class="row">
+									<label class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Mostrar capacidad <span class="required-label">*</span></label>
+									<div class="col-lg-4 col-md-9 col-sm-8 d-flex align-items-center">
+										<div class="custom-control custom-checkbox">
+											<input type="checkbox" class="custom-control-input" id="mostrar_capacidad" name="mostrar_capacidad" value="True" {% if form.mostrar_capacidad.value %}checked{% endif %}>
+											<label class="custom-control-label" for="mostrar_capacidad"></label>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-check">									
+								<div class="row">
+									<label class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Mostrar ambar <span class="required-label">*</span></label>
+									<div class="col-lg-4 col-md-9 col-sm-8 d-flex align-items-center">
+										<div class="custom-control custom-checkbox">
+											<input type="checkbox" class="custom-control-input" id="mostrar_ambar" name="mostrar_ambar" value="True" {% if form.mostrar_ambar.value %}checked{% endif %}>
+											<label class="custom-control-label" for="mostrar_ambar"></label>
+										</div>
+									</div>
+								</div>
+							</div>																																																																																														
+							<div class="card-action">
+								<div class="row">
+									<div class="col-md-12">
+										<input class="btn btn-success" type="submit" value="Guardar">
+										<button class="btn btn-danger" type="reset">Cancelar</button>
+									</div>										
+								</div>
+							</div>
+						</div><!--fin card body-->
+					</div><!--fin "card bg-custom-gray p-1-->						
+				</form>			
+		</div>
+	</div>
+</div>	
+
+
+
+
+{% endblock content-form-content %}
+{% block content-form-form-tag-end %} {% endblock content-form-form-tag-end %}
+
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+<script>
+    $(document).ready(function(){
+        $('select[name=instalacion-nif_cliente]').change(function(){
+            nif_cliente = $(this).val();
+            $('select[name=instalacion-nombre]').find('option').remove().end();
+            $('select[name=instalacion-nombre]').append($('<option></option>').val('').html('---------'));
+            if (nif_cliente != '') {
+                request_url = '/instalacion/listar_por_nif_cliente/' + nif_cliente + '';
+                $.ajax({
+                    url: request_url,
+                    success: function(data){
+                        $.each(data, function(index, text){
+                            $('select[name=instalacion-nombre]').append(
+                                 $('<option></option>').val(index).html(text)
+                             );
+                        });
+                    }
+                });
+            };
+            return false;
+        })
+    });
+</script>
+
+
+{% endblock javascripts %}
+{% block javascripts-page %}
+    {% include 'includes/scripts_js_datatable.html' %}
+
+{% endblock javascripts-page %}

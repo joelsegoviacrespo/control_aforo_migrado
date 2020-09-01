@@ -1,0 +1,95 @@
+{% extends "layouts/base-form.html" %}
+
+{% block title %} Valores {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content-form-page-header-title %} Valores {% endblock content-form-page-header-title %}
+{% block content-form-page-header %}
+    <ul class="breadcrumbs">
+        <li class="nav-home">
+            <a href="#">
+                <i class="fa fa-bars"></i>
+ 				
+            </a>
+        </li>
+        <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+        </li>
+        <li class="nav-item">
+            <a href="#">Valores</a>
+        </li>
+        <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+        </li>
+        <li class="nav-item">
+            <a href="#">Todos</a>
+        </li>
+    </ul>
+{% endblock content-form-page-header %}
+{% block content-form-form-tag-begin %} {% endblock content-form-form-tag-begin %}
+{% block content-form-content %}
+    <div class="card-header m-0 p-2">
+        <div class="d-flex align-items-center">
+            <h4 class="card-title"></h4>
+            <a href="/valores/" role="button" 
+               class="btn btn-primary ml-auto">
+                <i class="fa fa-plus mr-2" title="Agregar"></i>Agregar
+            </a>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive m-0 p-0 py-3 w-100">
+            <!--table id="add-row" class="display table table-striped table-hover table-bordered table-head-bg-primary table-bordered-bd-primary"-->
+            <div class="table-responsive w-100 m-0 p-0 pb-3">
+                <table id="add-row" class="display table table-striped table-hover table-head-bg-primary ">
+                    <thead>
+                    <tr>
+                        
+                        <th>Descripción</th>
+                        <th>Aforo maximo</th>
+                        <th>Valor</th>
+                        <th>Capacidad</th>
+                        <th>Activo</th>
+                        <th class="w-10 text-center">Opciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for valores in valoresTodos %}
+                        <tr>                            
+                            <td>{{ valores.descripcion }}</td>
+                            <td>{{ valores.maximo_aforo }}</td>
+                            <td>{% if valores.mostrar_valor == 'PCT' %}Porcentaje {% else %} Número {% endif %}</td>
+                            <td>{{ valores.mostrar_capacidad }}</td>
+                            <td class="text-center">{% if valores.activo %}<i class="fa fa-check-square text-success"></i>{% else %}<i class="fa fa-times text-danger"></i>{% endif %}</td>
+                            <td>
+                                <div class="form-button-action">
+                                    <a href="/valores/editar/{{ valores.id }}" role="button"
+                                       class="btn btn-link btn-primary btn-lg">
+                                        <span class="fa fa-edit" title="Editar"></span>
+                                    </a>
+                                   
+                                    <a href="/valores/eliminar/{{ valores.id }}" role="button"
+                                       class="btn btn-link btn-danger">
+                                        <span class="fa fa-times" title="Eliminar"></span>
+                                    </a>
+                                   
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock content-form-content %}
+{% block content-form-form-tag-end %} {% endblock content-form-form-tag-end %}
+
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}{% endblock javascripts %}
+{% block javascripts-page %}
+    {% include 'includes/scripts_js_datatable.html' %}
+{% endblock javascripts-page %}

@@ -46,7 +46,8 @@ class Instalacion(models.Model):
     objects = models.DjongoManager()
         
 class InstalacionEmbebido(models.Model):
-    _id = models.ObjectIdField()    
+    _id = models.ObjectIdField()   
+    nif_cliente = models.CharField(max_length=20, blank=False, default='')     
     nombre = models.CharField(max_length=255, blank=False, default='')
     
     class Meta:        

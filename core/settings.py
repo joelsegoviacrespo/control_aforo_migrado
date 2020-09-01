@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'monitor.apps.MonitorConfig',
     'camaras.apps.CamarasConfig',
     'aforoInfo.apps.AforoinfoConfig',
+    'valores.apps.ValoresConfig',
     
 ]
 

@@ -92,9 +92,15 @@ def eliminar(request, id):
     return redirect("/instalacion/todos")
 
 
-def listar_por_id_cliente(request, id_cliente):
-    instalaciones = Instalacion.objects.all().filter(id_cliente=id_cliente, instalacion_estado=True)
+def listar_por_nif_cliente(request, nif_cliente):
+    print("listar_por_nif_cliente")
+    print("nif_cliente")
+    print(nif_cliente)
+    #instalaciones = Instalacion.objects.all().filter(id_cliente=id_cliente, instalacion_estado=True)
+    #instalaciones = Instalacion.objects.values('cliente')
+    instalaciones = Instalacion.objects.all().filter(cliente={'nif': nif_cliente}, instalacion_estado=True)        
     instalaciones_dict = {}
     for instalacion in instalaciones:
-        instalaciones_dict[str(instalacion._id)] = instalacion.nombre_comercial
+        instalaciones_dict[str(instalacion.nombre_comercial)] = instalacion.nombre_comercial
+    
     return HttpResponse(simplejson.dumps(instalaciones_dict), content_type ="application/json")
