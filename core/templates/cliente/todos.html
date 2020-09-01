@@ -57,10 +57,8 @@
                     <th>Teléfono</th>
                     <th>Móvil</th>
                     <th>e-mail</th>
-                    <th>Estado</th>  
-                    {% if perms.cliente.Can_change_cliente %}               
-                    <th class="text-center">Opciones</th>
-                    {% endif %}					
+                    <th>Estado</th>             
+                    <th class="text-center">Opciones</th>	
                 </tr>
                 </thead>
                 <tbody>
@@ -79,24 +77,24 @@
                     <td class="text-center">
                     	{% if cliente.cliente_estado %}<i class="fa fa-check-square text-success"></i>
                       	{% else %}<i class="fa fa-times text-danger"></i>
-                        {% endif %}                  
+                        {% endif %}      
                     </td>
 					 <td>						
                         <div class="form-button-action">
+                            {% if perms.cliente.Can_change_cliente %}
                             <a href="/cliente/editar/{{ cliente.id }}" role="button">
-                                {% if perms.cliente.Can_change_cliente %}
                                 <div class="btn btn-link btn-primary btn-sm">
                                     <span class="fa fa-edit" title="Editar"></span>
                                 </div>
                             </a>	
-                                {% endif %}					
+                            {% endif %}
+                            {% if perms.cliente.Can_delete_cliente %}			
                             <a href="/cliente/eliminar/{{ cliente.id }}" role="button">
-                                {% if perms.cliente.Can_delete_cliente %}
                                 <div class="btn btn-link btn-danger btn-sm">
                                     <span class="fa fa-times" title="Eliminar"></span>
                                 </div>
                             </a>		
-                                {% endif %}				
+                            {% endif %}				
                         </div>
                     </td>
                 </tr>
