@@ -38,8 +38,6 @@
         </ul>
     </div>
 
-    <!--<div class="row justify-content-center align-items-center" style="height:80vh;">
-        <div class="row justify-content-center align-items-center" style="height:80vh;">-->
     <div class="row justify-content-center align-items-center">
         <div class="col-md-12">
             <div class="card">
@@ -101,8 +99,10 @@
                     <div>
                         <div class="card-action">
                             <button type="submit" class="btn btn-success">iniciar sesión</button>
-                            <!--span>Olvidó la contraseña</span-->
+                            <br>
                             <a href="{% url 'accounts:password_reset' %}">¿Olvidó la contraseña?</a>
+                            <br>
+                            <a href="{% url 'accounts:register' %}">Registrarse</a>
 
                         </div>
                         <!--input type="submit" value="login" />
