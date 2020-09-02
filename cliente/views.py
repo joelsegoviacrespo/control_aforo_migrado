@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404, get_list_or_40
 from django.utils.translation import activate
 from cliente.forms import ClienteForm, ClienteTodosForm
 from cliente.models import Cliente
+from app.models import Profile
 
 
 #TODO: ELIMINAR: Está solo de referencia de los estilos, no incluir en la versión final
