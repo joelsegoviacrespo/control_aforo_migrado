@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'camaras.apps.CamarasConfig',
     'aforoInfo.apps.AforoinfoConfig',
     'valores.apps.ValoresConfig',
+    'usuarios.apps.UsuariosConfig',
     
 ]
 

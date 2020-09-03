@@ -32,7 +32,7 @@
     <div class="card-header m-0 p-2">
         <div class="d-flex align-items-center">
             <h4 class="card-title"></h4>
-            {% if perms.cliente.Can_add_cliente %}
+            {% if user.profile.rol <= 2 %}
             <a href="/cliente/" role="button"
             class="btn btn-primary ml-auto"> 
                 <i class="fa fa-plus mr-2" title="Agregar"></i>Agregar
@@ -80,14 +80,14 @@
                     </td>
 					 <td>						
                         <div class="form-button-action">
-                            {% if perms.cliente.Can_change_cliente %}
+                            {% if user.profile.rol <= 2 %}
                             <a href="/cliente/editar/{{ cliente.id }}" role="button">
                                 <div class="btn btn-link btn-primary btn-sm">
                                     <span class="fa fa-edit" title="Editar"></span>
                                 </div>
                             </a>	
                             {% endif %}
-                            {% if perms.cliente.Can_delete_cliente %}			
+                            {% if user.profile.rol <= 2 %}			
                             <a href="/cliente/eliminar/{{ cliente.id }}" role="button">
                                 <div class="btn btn-link btn-danger btn-sm">
                                     <span class="fa fa-times" title="Eliminar"></span>
