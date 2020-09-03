@@ -170,7 +170,7 @@
          <!--Todo este div muestra una fila -->
          
 	 {% for camara in camaras %}
-   <div class="row p-4" >
+   <div class="row" >
     {% for zonas_camara in camara.zonas_camara %}
    
    
@@ -199,35 +199,40 @@
  
 
         <div class="col-md-3">
-         <div class="card full-height">
-             <div class="card-header text-center pt-2 pb-3">                  
-          <b>Cámara: <small>{{camara.nombre_camara}}</small></b>
-             </div>
+          <div class="card full-height">
+              <div class="card-header text-center pt-2 pb-3">                  
+                <b>Cámara: <small>{{camara.nombre_camara}}</small></b>
+              </div>
              
-             <img class="card-img-top pt-4 p-2 rounded" src="{{ form.meraki }}">
+             <img class="card-img-top  p-4 rounded" src="{{ form.meraki }}">
              
              <div class="card-img-overlay">
-                 <div class="d-flex flex-wrap justify-content-around">
-                     <div class="px-2 pb-2 pb-md-0 text-center mt-5 mb-0">
+                <div class="d-flex flex-wrap justify-content-around">
+                  <div class="px-2 pb-2 pb-md-0 text-center mt-5 mb-0">
                          
                          <!--h3 class="fw-bold mt-3 mb-0 text-gray">Aforo máximo: <span id="msg_aforo_maximo" class="px-2"></span> personas </h3>
                          <h1 class="fw-bold mt-3 mb-2 text-gray">Bienvenidos</h1-->
-                     </div>
-         <div class="card-category text-center">
+                    </div>
+              <div class="card-category text-center">
          
-         </div>
-                 </div>
-             </div>
-           <!-- <div class="card-footer text-center"><b>Zona: <small>{{zonas_camara.nombre_zona_camara}}</small></b></div>
-   div class="card-footer text-center">Aforo máximo: <span id="msg_aforo_maximo" class="px-2"></span> personas</div
+        
+                
+            
+              <!-- <div class="card-footer text-center"><b>Zona: <small>{{zonas_camara.nombre_zona_camara}}</small></b></div>
+              div class="card-footer text-center">Aforo máximo: <span id="msg_aforo_maximo" class="px-2"></span> personas</div
        
-       <div class="card-footer text-center"><b>Bienvenidos</small></b></div> -->
-         </div>
-     </div>
+               <div class="card-footer text-center"><b>Bienvenidos</small></b></div> -->
+              </div>
+           </div>
+        </div>
+  </div>
+  </div>
+     
 
    {% endfor %}
 
-      </div>
+  
+</div>
         
         <!--<div class="col-md-8">
             <div class="card">
@@ -350,7 +355,7 @@
         </div>-->
       
       
-    </div>
+    
     {% block body%}
    
     {% endblock %}
@@ -842,8 +847,10 @@
     </div>
     --> 
  
-</div>
+
 {% endfor %}
+  </div>
+</div>
 <!--Fin de  la Fila-->
 <!--   Core JS Files   -->
 <script src="../static/assets/js/core/jquery.3.2.1.min.js"></script><!--estos dos juntos no permiten abirir el menu del perfil-->
