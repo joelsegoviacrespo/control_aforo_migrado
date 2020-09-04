@@ -10,7 +10,7 @@
                 <!--{{form.monitores}}-->
                 <h2 class="text-white pb-4 pt-2 fw-bold">Panel de control</h2>
                 {% if user.is_superuser %}
-                --<h5 class="text-white op-7 mb-2"> <!--[S]Administrador--> </h5>
+                <h5 class="text-white op-7 mb-2"> <!--[S]Administrador--> </h5>
                 {% elif user.is_staff %}
                 <h5 class="text-white op-7 mb-2">{{user.profile.get_rol_display}} </h5>
                 {%else%}
@@ -166,8 +166,8 @@
           </div>
           
          </div>
-         <!------------------------->
-         <!--Todo este div muestra una fila -->
+        
+       Todo este div muestra una fila -->
         
 
         
@@ -181,12 +181,12 @@
             <div class="col-md-3">
               <div class="card full-height">
                     <div class="card-header text-center pt-2 pb-4">
-                        <b>Cámara: <small>{{camara.nombre_camara}}</small></b>
+                        <b> {{camara.nombre_camara}}</b>
                     </div>			  
                   <div class="card-body">
                     
                       
-                      <div class="card-category text-center"><b>Nombre de zona: <small>{{zonas_camara.nombre_zona_camara}}</small></b></div>
+                      <div class="card-category text-center"><b>{{zonas_camara.nombre_zona_camara}}</b></div>
                       
                       <div class="col-md-12" >
                         <div id="chart-container" >
@@ -212,7 +212,7 @@
               <div class="col-md-3">
                 <div class="card full-height">
                     <div class="card-header text-center pt-2 pb-3">                  
-                      <b>Cámara: <small>{{camara.nombre_camara}}</small></b>
+                      <b>{{camara.nombre_camara}}</b>
                     </div>
                   
                   <img class="card-img-top  p-4 rounded" src="{{ form.meraki }}">
