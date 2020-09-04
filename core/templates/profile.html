@@ -34,39 +34,26 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title">Perfil de usuario</div>
+                        <div class="card-title">Datos de usuario</div>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6 col-lg-4">
                                 <div class="form-group">
-                                    <label for="nombre">Nombre</label>
-                                    <input type="text" class="form-control" id="nombre" placeholder="Nombre">
+                                    <label for="nombre">Usuario</label>
+                                    <h6><b>{{ request.user.profile.get_rol_display }}</b></h6>
                                 </div>
                                 <div class="form-group">
-                                    <label for="apellido">Apellido</label>
-                                    <input type="text" class="form-control" id="apellido" placeholder="Apellido">
-                                </div>
-                                <div class="form-check">
-                                    <label>Genero</label><br/>
-                                    <label class="form-radio-label">
-                                        <input class="form-radio-input" type="radio" name="optionsRadios" value=""  checked="">
-                                        <span class="form-radio-sign">Masculino</span>
-                                    </label>
-                                    <label class="form-radio-label ml-3">
-                                        <input class="form-radio-input" type="radio" name="optionsRadios" value="">
-                                        <span class="form-radio-sign">Femenino</span>
-                                    </label>
+                                    <label for="apellido">Razon social</label>
+                                    <h4>{{ request.user.get_full_name }}</h4>
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleFormControlFile1">Subir foto de perfil</label>
-                                    <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                                    <label for="apellido">Email</label>
+                                    <h6><b>{{ request.user.get_full_email }}</b></h6>
                                 </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" value="">
-                                        <span class="form-check-sign">Acepto los terminos y condiciones</span>
-                                    </label>
+                                <div class="form-group">
+                                    <label for="apellido">Cliente</label>
+                                    <h6><b>{{ request.user.cliente.razon_social|escape }}</b></h6>
                                 </div>
                             </div>
                         </div>
@@ -74,8 +61,8 @@
                     <div class="card-action">
                         <div class="row">
                             <div class="col-md-12">
-                                <input class="btn btn-success" type="submit" value="Guardar">
-                                <button class="btn btn-danger" type="reset">Cancelar</button>
+                                <a href="editar_profile.html" class="btn btn-primary">Editar</a>
+                                <a href="/" class="btn btn-danger">Regresar</a>
                             </div>										
                         </div>
                     </div>

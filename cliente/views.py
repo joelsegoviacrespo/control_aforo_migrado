@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.core.exceptions import PermissionDenied
 from djongo import models
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.utils.translation import activate
@@ -12,7 +13,7 @@ def mng(request):
     context = {'foo': 'bar'}
     return render(request, 'cliente/manage.html', context)
 
-
+@user_passes_test 
 @login_required(login_url="/login/")
 def cliente(request):
     activate('es')

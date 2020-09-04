@@ -1,6 +1,6 @@
 {% extends "layouts/base-form.html" %}
 
-{% block title %} Cliente {% endblock title %}
+{% block title %} Usuarios {% endblock title %}
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -50,18 +50,19 @@
                     <th>Nombre</th>
                     <th>Apellido</th>
                     <th>e-mail</th>
+                    <th>Staff</th> 
                     <th>Activo</th>             
                     <th class="text-center">Opciones</th>
                 </tr>
                 </thead>
                 <tbody>
-				{% for usuarios in form %}
+				{% for usuarios in usuariosTodos %}
                 <tr>					 					
                     <td>{{ usuarios.username }}</td>
                     <td>{{ usuarios.first_name }}</td>
                     <td>{{ usuarios.last_name }}</td>
                     <td>{{ usuarios.email }}</td>
-                    <td>{{ usuarios.is_active }}</td>
+                    <td>{{ usuarios.is_staff }}</td>
                     <td class="text-center">
                     	{% if usuarios.usuarios_is_active %}<i class="fa fa-check-square text-success"></i>
                       	{% else %}<i class="fa fa-times text-danger"></i>
