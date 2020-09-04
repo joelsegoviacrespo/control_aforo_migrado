@@ -1,0 +1,261 @@
+{% extends "layouts/base-form.html" %}
+
+{% block title %} Fondos {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+
+{% block content-form-page-header-title %} Fondos {% endblock content-form-page-header-title %}
+{% block content-form-page-header %}
+
+    <ul class="breadcrumbs">
+        <li class="nav-home">
+            <a href="#">
+                 <i class="fa fa-bars"></i>
+            </a>
+        </li>
+        <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+        </li>
+        <li class="nav-item">
+            <a href="#">Fondos</a>
+        </li>
+        <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+        </li>
+        <li class="nav-item">
+            <a href="#">Editar</a>
+        </li>
+    </ul>
+{% endblock content-form-page-header %}
+{% block content-form-form-tag-begin %} {% endblock content-form-form-tag-begin %}
+{% block content-form-content %}
+<div class="card-body">
+	<div class="row">
+		<div class="col-md-12">			 
+				<form method="POST" class="post-form" action="/fondos/actualizar/{{form.id.value}}/" enctype="multipart/form-data">
+					{% csrf_token %}
+					<div class="card bg-custom-gray p-1">
+				        <div class="card-header m-0 py-1">
+				            <h5>Datos de fondos</h5>
+				        </div>						
+					    <div class="card-body bg-light p-1">
+							<div class="form-check">									
+								<div class="row">
+									<label class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Activo <span class="required-label">*</span></label>
+									<div class="col-lg-4 col-md-9 col-sm-8 d-flex align-items-center">
+										<div class="custom-control custom-checkbox">
+											<input type="checkbox" class="custom-control-input" id="activo" name="activo" value="True">
+											<label class="custom-control-label" for="activo"></label>
+										</div>
+									</div>
+								</div>
+							</div>		
+							<div class="form-group form-show-validation row">
+								<label for="cliente" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Cliente <span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<div class="select2-input">
+										
+										<select name="instalacion-nif_cliente" required id="instalacion-nif_cliente" class="form-control">
+						                   <option value="" selected> --------- </option>
+                        					{% for id, value in form.fields.cliente_nif.choices %}
+                            					 {% if form.id_cliente_nif.value == id %}
+                                					<option value="{{ id }}" selected="selected">{{ value }}</option>
+                            					{% else %}
+                                					<option value="{{ id }}">{{ value }}</option>
+												{% endif %}
+                        					{% endfor %}																			
+										</select>
+									</div>
+								</div>
+							</div>	<input type="hidden" class="form-control" id="id_numero_cliente" name="numero_cliente" value="{{ form.numero_cliente.value }}" />
+							<div class="form-group form-show-validation row">
+								<label for="cliente" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Instalación<span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<div class="select2-input">
+										
+										<select name="instalacion-nombre" required id="id_instalacion-nombre" class="form-control">
+											 <option value="">--------</option>
+									
+						                        {% for id, value in form.fields.instalacion_nombre.choices %}
+						                            {% if form.instalacion_n.value|stringformat:"s" == id|stringformat:"s" %}
+						                                <option value="{{ id }}" selected="selected">{{ value }}</option>
+						                            {% else %}
+						                                <option value="{{ id }}">{{ value }}</option>
+						                            {% endif %}
+						                        {% endfor %}							                										
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="form-group form-show-validation row">
+								<label for="descripcion" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Descripción<span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<input type="text" class="form-control" id="id_descripcion" name="descripcion" placeholder="Descripción" required
+									 	maxlength="100"
+		                   		  		value="{{ form.descripcion.value }}"/>
+								</div>
+							</div>						
+							<div class="form-group form-show-validation row">
+								<label for="orientacion" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Orientación<span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<div class="select2-input">
+										
+										<select name="orientacion" required id="id_orientacion" class="form-control">
+						                    	<option value="" selected> --------- </option>
+                    						{% for id, value in form.fields.orientacion.choices %}
+												{% if form.id_orientacion.value|stringformat:"s" == id|stringformat:"s" %}
+						                                <option value="{{ id }}" selected="selected">{{ value }}</option>
+						                        {% else %}
+						                                <option value="{{ id }}">{{ value }}</option>
+						                        {% endif %}
+                        						
+                    						{% endfor %}																		
+										</select>
+									</div>
+								</div>
+							</div>	
+							<div class="form-group form-show-validation row">
+								<label for="hora_apertura" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Hora apertura<span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<input type="time" class="form-control" id="id_hora_apertura" name="hora_apertura" placeholder="Hora inicio" required
+										max="23:59:59" min="00:00:00" step="1"								 	
+		                   		  		value="{{ form.hora_apertura.value }}"/>
+								</div>
+							</div>		
+							<div class="form-group form-show-validation row">
+								<label for="hora_cierre" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Hora cierre<span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<input type="time" class="form-control" id="id_hora_cierre" name="hora_cierre" placeholder="Hora fin" required
+										max="23:59:59" min="00:00:00" step="1"								 	
+		                   		  		value="{{ form.hora_cierre.value }}"/>
+								</div>
+							</div>
+							<div class="form-group form-show-validation row">
+								<label class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Imagen verde<span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<div class="input-file input-file-image">
+										<img class="img-upload-preview img-square" width="100" height="100"  src="{{form.url_verde.value}}" alt="imagen previa">
+										<input type="file" class="form-control form-control-file" id="uploadVerde" name="uploadVerde" accept="image/*" onchange="getFileNameNC('uploadVerde','id_url_verde','id_lbl_verde','id_nombre_archivo_verde')">									
+										<div><label id="id_lbl_verde" for="lbl_server_local" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-left">{{form.url_verde.value}}</label>
+										<input type="hidden" id="id_url_verde" name="url_verde" value="{{form.url_verde.value}}"/>
+										<input type="hidden" id="id_nombre_archivo_verde" name="nombre_archivo_verde" value="{{form.nombre_archivo_verde.value}}"/></div>									
+										<label for="uploadVerde" class="btn btn-primary btn-round btn-lg"><i class="fa fa-file-image"></i> Subir Imagen</label>
+									</div>
+								</div>
+							</div>
+							<div class="form-group form-show-validation row">
+								<label class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Imagen ambar<span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<div class="input-file input-file-image">
+										<img class="img-upload-preview img-square" width="100" height="100"  src="{{form.url_ambar.value}}" alt="imagen previa">
+										<input type="file" class="form-control form-control-file" id="uploadAmbar" name="uploadAmbar" accept="image/*" onchange="getFileNameNC('uploadAmbar','id_url_ambar','id_lbl_ambar','id_nombre_archivo_ambar')">									
+										<div><label id="id_lbl_ambar" for="lbl_server_local" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-left">{{form.url_ambar.value}}</label>
+										<input type="hidden" id="id_url_ambar" name="url_ambar" value="{{form.url_ambar.value}}"/>
+										<input type="hidden" id="id_nombre_archivo_ambar" name="nombre_archivo_ambar" value="{{form.nombre_archivo_ambar.value}}"/></div>									
+										<label for="uploadAmbar" class="btn btn-primary btn-round btn-lg"><i class="fa fa-file-image"></i> Subir Imagen</label>
+									</div>
+								</div>
+							</div>
+							<div class="form-group form-show-validation row">
+								<label class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Imagen rojo<span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<div class="input-file input-file-image">
+										<img class="img-upload-preview img-square" width="100" height="100"  src="{{form.url_rojo.value}}" alt="imagen previa">
+										<input type="file" class="form-control form-control-file" id="uploadRojo" name="uploadRojo" accept="image/*" onchange="getFileNameNC('uploadRojo','id_url_rojo','id_lbl_rojo','id_nombre_archivo_rojo')">									
+										<div><label id="id_lbl_rojo" for="lbl_server_local" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-left">{{form.url_rojo.value}}</label>
+										<input type="hidden" id="id_url_rojo" name="url_rojo" value="{{form.url_rojo.value}}"/>
+										<input type="hidden" id="id_nombre_archivo_rojo" name="nombre_archivo_rojo" value="{{form.nombre_archivo_rojo.value}}"/></div>									
+										<label for="uploadRojo" class="btn btn-primary btn-round btn-lg"><i class="fa fa-file-image"></i> Subir Imagen</label>
+									</div>
+								</div>
+							</div>		
+							<div class="form-group form-show-validation row">
+								<label class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Imagen cerrado<span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<div class="input-file input-file-image">
+										<img class="img-upload-preview img-square" width="100" height="100"  src="{{form.url_cerrado.value}}" alt="imagen previa">
+										<input type="file" class="form-control form-control-file" id="uploadCierre" name="uploadCierre" accept="image/*" onchange="getFileNameNC('uploadCierre','id_url_cerrado','id_lbl_cierre','id_nombre_archivo_cerrado')">									
+										<div><label id="id_lbl_cierre" for="lbl_server_local" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-left">{{form.url_cerrado.value}}</label>
+										<input type="hidden" id="id_url_cerrado" name="url_cerrado" value="{{form.url_cerrado.value}}"/>
+										<input type="hidden" id="id_nombre_archivo_cerrado" name="nombre_archivo_cerrado" value="{{form.nombre_archivo_cerrado.value}}"/></div>									
+										<label for="uploadCierre" class="btn btn-primary btn-round btn-lg"><i class="fa fa-file-image"></i> Subir Imagen</label>
+									</div>
+								</div>
+							</div>																																																																																																																				
+							<div class="card-action">
+								<div class="row">
+									<div class="col-md-12">
+										<input class="btn btn-success" type="submit" value="Guardar">
+										<button class="btn btn-danger" type="reset">Cancelar</button>
+									</div>										
+								</div>
+							</div>
+						</div><!--fin card body-->
+					</div><!--fin "card bg-custom-gray p-1-->						
+				</form>			
+		</div>
+	</div>
+</div>	
+
+
+
+
+{% endblock content-form-content %}
+{% block content-form-form-tag-end %} {% endblock content-form-form-tag-end %}
+
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+<script>
+    $(document).ready(function(){
+        $('select[name=instalacion-nif_cliente]').change(function(){
+            nif_cliente = $(this).val();			
+            $('select[name=instalacion-nombre]').find('option').remove().end();
+            $('select[name=instalacion-nombre]').append($('<option></option>').val('').html('---------'));
+            if (nif_cliente != '') {
+                request_url = '/fondos/listar_por_nif_cliente/' + nif_cliente + '';
+                $.ajax({
+                    url: request_url,
+                    success: function(data){
+						instalaciones = data['instalaciones'];
+						cliente = data['cliente'];
+						console.log("numero_cliente: "+cliente.numero_cliente)
+						document.getElementById("id_numero_cliente").value =  cliente.numero_cliente
+                        $.each(instalaciones, function(index, text){
+                            $('select[name=instalacion-nombre]').append(
+                                 $('<option></option>').val(index).html(text)
+                             );
+                        });
+                    }
+                });
+            };
+            return false;
+        })
+    });
+
+
+	$(document).ready(function(){
+        $('select[name=instalacion-nombre]').change(function(){
+            console.log("instalacion-nombre")
+			/*document.getElementById("uploadVerde").disabled = true;
+            instalacion_select = document.getElementById("id_instalacion-nombre")
+			instalacion_nombre = instalacion_select.options[instalacion_select.selectedIndex].value
+			if (instalacion_nombre != "")
+			{
+				document.getElementById("uploadVerde").disabled = false;	
+			}*/
+			
+        })
+    });
+	  
+    
+</script>
+
+
+{% endblock javascripts %}
+{% block javascripts-page %}
+    {% include 'includes/scripts_js_datatable.html' %}
+	{% include 'includes/funciones_js.html' %}
+{% endblock javascripts-page %}

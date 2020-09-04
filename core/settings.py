@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'aforoInfo.apps.AforoinfoConfig',
     'valores.apps.ValoresConfig',
     'usuarios.apps.UsuariosConfig',
+    'fondos.apps.FondosConfig',
     
 ]
 
@@ -92,7 +93,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
+DATABASES = {           
          'default': {
              'ENGINE': 'djongo',
              'NAME': 'aforo',
@@ -168,6 +169,8 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'mosayk')
+MEDIA_URL = '/mosayk/'
 
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
@@ -176,7 +179,14 @@ STATICFILES_DIRS = (
 
 
 #Allow Log by email or console
-ADMINS = (('Ligia', 'ligiapuertas@gmail.com'), ('Joel', 'joelsegoviacrespo@gmail.com'))
+ADMINS = (('Joel', 'joelsegoviacrespo@gmail.com'))
+FTP_SETTINGS = {
+    "ftp_url": "ftp.cluster028.hosting.ovh.net",
+    "ftp_port": "21",     
+    "ftp_user": "softwarext",
+    "ftp_pass": "PjE4yQ3qAyzA", 
+    "ftp_folder": "www/mosayk/",    
+}
 #LOGGING = {
 #    'version': 1,
 #    'disable_existing_loggers': True,
