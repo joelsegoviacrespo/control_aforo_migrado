@@ -46,7 +46,8 @@
 									<label class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Activo <span class="required-label">*</span></label>
 									<div class="col-lg-4 col-md-9 col-sm-8 d-flex align-items-center">
 										<div class="custom-control custom-checkbox">
-											<input type="checkbox" class="custom-control-input" id="activo" name="activo" value="True">
+											<input type="checkbox" class="custom-control-input" id="activo" name="activo" value="True"
+												{% if form.activo.value %}checked{% endif %}>
 											<label class="custom-control-label" for="activo"></label>
 										</div>
 									</div>
