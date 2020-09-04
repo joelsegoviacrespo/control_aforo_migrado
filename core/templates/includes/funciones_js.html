@@ -1,0 +1,37 @@
+	<script>
+		
+		function getFileName(idUpload,id_icon,id_lbl_icon) 
+		{
+			console.log("getFileName desde funciones");
+			filePath = document.getElementById(idUpload).value 
+			console.log(filePath)
+			console.log(filePath.lastIndexOf('\\'))
+			console.log(filePath.length)
+			filename = filePath.substr((filePath.lastIndexOf('\\') + 1),filePath.length)
+			console.log(filename)
+			document.getElementById(id_icon).value = "{{ url_media }}"+filename
+			document.getElementById(id_lbl_icon).innerHTML = "{{ url_media }}"+filename
+			
+			
+		}
+		
+		function getFileNameNC(idUpload,id_icon,id_lbl_icon,id_nombre_archivo) 
+		{
+			console.log("getFileNameNC desde funciones");
+			document.getElementById(id_lbl_icon).innerHTML = ""
+			filePath = document.getElementById(idUpload).value 
+			console.log(filePath)
+			console.log(filePath.lastIndexOf('\\'))
+			console.log(filePath.length)
+			filename = filePath.substr((filePath.lastIndexOf('\\') + 1),filePath.length)
+			console.log(filename)
+			document.getElementById(id_icon).value = "{{ url_media }}"
+			document.getElementById(id_nombre_archivo).value = filename	
+			console.log(document.getElementById(id_nombre_archivo).value)	
+			//document.getElementById(id_lbl_icon).innerHTML = resto_dir
+			
+			
+		}	
+		
+				
+	</script>

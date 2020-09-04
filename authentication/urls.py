@@ -14,6 +14,7 @@ app_name = 'accounts'
 
 urlpatterns = [    
     path('register/', register_user, name="register"),
+    path('usuarios/agregar/', register_user, name="register"),
     
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(next_page='/accounts/login'), name='logout'),

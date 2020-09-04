@@ -1,0 +1,118 @@
+# -*- encoding: utf-8 -*-
+import simplejson as simplejson
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+from djongo import models
+from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
+from django.utils.translation import activate
+from usuarios.forms import UsuariosForm,UsuariosEditarForm
+from usuarios.models import Usuarios
+
+@login_required(login_url="/login/")
+def register_user(request):
+    activate('es')
+    msg     = None
+    success = False
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get("username")
+            raw_password = form.cleaned_data.get("password1")
+            user = authenticate(username=username, password=raw_password)
+
+            msg     = 'User created.'
+            success = True
+            #return redirect("/login/")
+        else:
+            msg = 'Form is not valid'    
+    else:
+        form = SignUpForm()
+
+    return render(request, "usuarios/agregar.html", {"form": form, "msg" : msg, "success" : success })
+
+@login_required(login_url="/login/")
+def usuarios(request):
+    activate('es')
+    if request.method == "POST":       
+        form = UsuariosForm(request.POST)        
+        if form.is_valid():
+            try:
+                form.save()
+                return redirect('/usuarios/todos')
+            except:
+                pass
+    else:
+        form = UsuariosForm()
+    if form.errors:
+        for field in form:
+            for error in field.errors:
+                print(field.name)
+
+                print(error)
+        # for error in form.non_field_errors:
+        #     print('NFE | ')
+        #     print(error)
+    return render(request, 'usuarios/agregar.html', {'form': form})
+
+
+
+@login_required(login_url="/login/")
+def todos(request):
+    activate('es')
+    usuariosTodos = {}
+    #if request.user.is_staff:
+    usuariosTodos = Usuarios.objects.all()
+        
+    #elif hasattr(request.user, 'cliente') and (request.user.cliente.get_id() is not None):
+        
+    #    instalaciones  = Instalacion.objects.filter(id_cliente=request.user.cliente.get_id())
+
+    for usuarios in usuariosTodos:
+        usuarios.id = str(usuarios._id)
+
+    return render(request, "usuarios/todos.html", {'usuariosTodos': usuariosTodos})
+
+
+@login_required(login_url="/login/")
+def editar(request, id):
+    activate('es')
+    usuarios = get_object_or_404(Usuarios, _id=id)
+    
+    form = UsuariosEditarForm(request.POST or None, instance=usuarios)
+ 
+    return render(request, 'usuarios/editar.html', { 'form' : form })
+
+
+@login_required(login_url="/login/")
+def actualizar(request, id):
+    activate('es')
+    usuarios = get_object_or_404(Usuarios, _id=id)
+    form = UsuariosEditarForm(request.POST or None, instance=usuarios)
+    if form.is_valid():
+        form.save()
+        return redirect("/usuarios/todos")
+    if form.errors:
+      for field in form:
+          for error in field.errors:
+              print(field.name)
+    
+              print(error)
+      # for error in form.non_field_errors:
+      #     print('NFE | ')
+      #     print(error)
+    return render(request, 'usuarios/editar.html', { 'form' : form })
+
+
+@login_required(login_url="/login/")
+def eliminar(request, id):
+    activate('es')
+    try:
+        usuarios = Usuarios.objects.get(_id=id)
+        usuarios.delete()
+    except Exception as e:
+        print('%s (%s)' % (e, type(e)))
+        pass
+    return redirect("/usuarios/todos")
+
+
