@@ -220,6 +220,118 @@
 			}
 		});
 
+		var totalIncomeChart3 = document.getElementById('totalIncomeChart3').getContext('2d');
+		var mytotalIncomeChart3 = new Chart(totalIncomeChart3, {
+			type: 'bar',
+			data: {
+				labels: ["D", "L", "M", "M", "J", "V", "S"],
+				datasets : [{
+					label: "Total Income",
+					backgroundColor: '#ff9e27',
+					borderColor: 'rgb(23, 125, 255)',
+					data: [2, 4, 8, 5, 4, 2, 6, 7, 8, 10],
+				}],
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				legend: {
+					display: false,
+				},
+				scales: {
+					yAxes: [{
+						ticks: {
+							display: false //this will remove only the label
+						},
+						gridLines : {
+							drawBorder: false,
+							display : false
+						}
+					}],
+					xAxes : [ {
+						gridLines : {
+							drawBorder: false,
+							display : false
+						}
+					}]
+				},
+			}
+		});
+		var totalIncomeChart4 = document.getElementById('totalIncomeChart2').getContext('2d');
+		var mytotalIncomeChart4 = new Chart(totalIncomeChart4, {
+			type: 'bar',
+			data: {
+				labels: ["D", "L", "M", "M", "J", "V", "S"],
+				datasets : [{
+					label: "Total Income",
+					backgroundColor: '#ff9e27',
+					borderColor: 'rgb(23, 125, 255)',
+					data: [2, 4, 8, 5, 4, 2, 6, 7, 8, 10],
+				}],
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				legend: {
+					display: false,
+				},
+				scales: {
+					yAxes: [{
+						ticks: {
+							display: false //this will remove only the label
+						},
+						gridLines : {
+							drawBorder: false,
+							display : false
+						}
+					}],
+					xAxes : [ {
+						gridLines : {
+							drawBorder: false,
+							display : false
+						}
+					}]
+				},
+			}
+		});
+		var totalIncomeChart5 = document.getElementById('totalIncomeChart5').getContext('2d');
+		var mytotalIncomeChart5 = new Chart(totalIncomeChart5, {
+			type: 'bar',
+			data: {
+				labels: ["D", "L", "M", "M", "J", "V", "S"],
+				datasets : [{
+					label: "Total Income",
+					backgroundColor: '#ff9e27',
+					borderColor: 'rgb(23, 125, 255)',
+					data: [2, 4, 8, 5, 4, 2, 6, 7, 8, 10],
+				}],
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				legend: {
+					display: false,
+				},
+				scales: {
+					yAxes: [{
+						ticks: {
+							display: false //this will remove only the label
+						},
+						gridLines : {
+							drawBorder: false,
+							display : false
+						}
+					}],
+					xAxes : [ {
+						gridLines : {
+							drawBorder: false,
+							display : false
+						}
+					}]
+				},
+			}
+		});
+
 
 		$('#lineChart').sparkline([105,103,123,100,95,105,115], {
 			type: 'line',

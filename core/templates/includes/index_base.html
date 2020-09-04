@@ -1,4 +1,4 @@
-<div class="panel-header bg-primary-gradient" >
+<div class="panel-header bg-primary-gradient" style ="height:85px;" >
     <div class="page-inner py-3" >
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
             <div>
@@ -109,8 +109,8 @@
                 <div class="card-body">
                     <div class="card-title">Salón General</div>
                     <div class="card-category">Concurrencia actual</div>
-                    <div class="d-flex justify-content-around h-80 w-100 pt-4 rounded">
-                        <div class="embed-responsive embed-responsive-16by9 h-80 w-100 m-0 p-2 rounded shadow "><!--4by9-->
+                    <div class="d-flex justify-content-around h-30 w-100 pt-4 rounded">
+                        <div class="embed-responsive embed-responsive-16by9 h-30 w-100 m-0 p-2 rounded shadow "><!--4by9-->
                             <iframe class="embed-responsive-item" src="hfs" class="h-100 w-100" scrolling="no"></iframe>
                         </div>
                     </div>
@@ -166,70 +166,84 @@
           </div>
           
          </div>
-         <!-- ----------------------->
+         <!------------------------->
          <!--Todo este div muestra una fila -->
-         
-	 {% for camara in camaras %}
-   <div class="row" >
-    {% for zonas_camara in camara.zonas_camara %}
-   
-   
-       <div class="col-md-3">
-         <div class="card full-height">
-               <div class="card-header text-center pt-2 pb-4">
-                   <b>Cámara: <small>{{camara.nombre_camara}}</small></b>
-               </div>			  
-             <div class="card-body">
-              
-                
-                 <div class="card-category text-center"><b>Nombre de zona: <small>{{zonas_camara.nombre_zona_camara}}</small></b></div>
-                
-              
-                 <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
-                     <div class="px-2 pb-2 pb-md-0 text-center">
-                         <div id="circles-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" class="py-5"></div>
-             <!--h3 class="fw-bold mt-1 mb-0 text">Aforo máximo 50 personas</h3-->                          
-                     </div>
-                 </div>
-             </div>				
-         </div>
-     </div>
-    
-
- 
-
-        <div class="col-md-3">
-          <div class="card full-height">
-              <div class="card-header text-center pt-2 pb-3">                  
-                <b>Cámara: <small>{{camara.nombre_camara}}</small></b>
-              </div>
-             
-             <img class="card-img-top  p-4 rounded" src="{{ form.meraki }}">
-             
-             <div class="card-img-overlay">
-                <div class="d-flex flex-wrap justify-content-around">
-                  <div class="px-2 pb-2 pb-md-0 text-center mt-5 mb-0">
-                         
-                         <!--h3 class="fw-bold mt-3 mb-0 text-gray">Aforo máximo: <span id="msg_aforo_maximo" class="px-2"></span> personas </h3>
-                         <h1 class="fw-bold mt-3 mb-2 text-gray">Bienvenidos</h1-->
-                    </div>
-              <div class="card-category text-center">
-         
         
-                
-            
-              <!-- <div class="card-footer text-center"><b>Zona: <small>{{zonas_camara.nombre_zona_camara}}</small></b></div>
-              div class="card-footer text-center">Aforo máximo: <span id="msg_aforo_maximo" class="px-2"></span> personas</div
-       
-               <div class="card-footer text-center"><b>Bienvenidos</small></b></div> -->
-              </div>
-           </div>
-        </div>
-  </div>
-  </div>
-     
 
+        
+	 {% for camara in camaras %}
+   <div class="row {{var}}">
+    {% for zonas_camara in camara.zonas_camara %}
+     
+        
+        
+        
+            <div class="col-md-3">
+              <div class="card full-height">
+                    <div class="card-header text-center pt-2 pb-4">
+                        <b>Cámara: <small>{{camara.nombre_camara}}</small></b>
+                    </div>			  
+                  <div class="card-body">
+                    
+                      
+                      <div class="card-category text-center"><b>Nombre de zona: <small>{{zonas_camara.nombre_zona_camara}}</small></b></div>
+                      
+                      <div class="col-md-12" >
+                        <div id="chart-container" >
+                      
+                          <canvas id="totalIncomeChart2"style="display: block; width:262px; height :100px;"></canvas>
+                        </div>
+                      </div>
+
+                      
+
+
+                      <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
+                          <div class="px-2 pb-2 pb-md-0 text-center">
+                              <div id="circles-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" class="py-5"></div>
+                  <!--h3 class="fw-bold mt-1 mb-0 text">Aforo máximo 50 personas</h3-->                          
+                          </div>
+                      </div>
+                  </div>				
+              </div>
+          </div>
+          
+        
+              <div class="col-md-3">
+                <div class="card full-height">
+                    <div class="card-header text-center pt-2 pb-3">                  
+                      <b>Cámara: <small>{{camara.nombre_camara}}</small></b>
+                    </div>
+                  
+                  <img class="card-img-top  p-4 rounded" src="{{ form.meraki }}">
+                  
+                  <div class="card-img-overlay">
+                      <div class="d-flex flex-wrap justify-content-around">
+                        <div class="px-2 pb-2 pb-md-0 text-center mt-5 mb-0">
+                              
+                              <!--h3 class="fw-bold mt-3 mb-0 text-gray">Aforo máximo: <span id="msg_aforo_maximo" class="px-2"></span> personas </h3>
+                              <h1 class="fw-bold mt-3 mb-2 text-gray">Bienvenidos</h1-->
+                          </div>
+                    <div class="card-category text-center">
+              
+              
+                      
+                  
+                    <!-- <div class="card-footer text-center"><b>Zona: <small>{{zonas_camara.nombre_zona_camara}}</small></b></div>
+                    div class="card-footer text-center">Aforo máximo: <span id="msg_aforo_maximo" class="px-2"></span> personas</div
+            
+                    <div class="card-footer text-center"><b>Bienvenidos</small></b></div> -->
+                    </div>
+                </div>
+              </div>
+        </div>
+        </div>
+        
+       
+      
+      
    {% endfor %}
+   
 
   
 </div>
@@ -846,9 +860,11 @@
       </div>
     </div>
     --> 
- 
+    
 
 {% endfor %}
+
+
   </div>
 </div>
 <!--Fin de  la Fila-->
