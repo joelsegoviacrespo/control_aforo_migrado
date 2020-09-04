@@ -1,5 +1,7 @@
 # -*- encoding: utf-8 -*-
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from usuarios.models import Usuarios 
 from cliente.models import Cliente
 from instalacion.models import Instalacion, InstalacionEmbebido
@@ -10,7 +12,7 @@ class UsuariosForm(forms.ModelForm):
     cliente_nif = forms.ChoiceField()
 
     class Meta:
-        model = Cliente
+        model = Usuarios
         fields = '__all__'
 
     def __init__(self, *args, **kwargs):
@@ -57,7 +59,62 @@ class UsuariosEditarForm(forms.ModelForm):
         #self.fields["clientes"].choices = [(str(c.nif), c.razon_social) for c in Cliente.objects.all().filter(cliente_estado=True)]
         
 
-  
+class SignUpForm(UserCreationForm):
+    is_active = forms.BooleanField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder" : "Activo",                
+                "class": "form-control"
+            }
+        ))
+    username = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder" : "Username",                
+                "class": "form-control"
+            }
+        ))
+    first_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder" : "Nombre",                
+                "class": "form-control"
+            }
+        ))
+    last_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder" : "Apellido",                
+                "class": "form-control"
+            }
+        ))
+    email = forms.EmailField(
+        widget=forms.EmailInput(
+            attrs={
+                "placeholder" : "Email",                
+                "class": "form-control"
+            }
+        ))
+    password1 = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                "placeholder" : "Password",                
+                "class": "form-control"
+            }
+        ))
+    password2 = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                "placeholder" : "Password check",                
+                "class": "form-control"
+            }
+        ))
+   
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password1', 'password2')
+        
                 
          
 

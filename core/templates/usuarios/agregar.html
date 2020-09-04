@@ -1,6 +1,6 @@
 {% extends "layouts/base-form.html" %}
 
-{% block title %} Cliente {% endblock title %}
+{% block title %} Usuarios {% endblock title %}
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -40,6 +40,7 @@
 				            <h5>Registro de usuario</h5>
 				        </div>						
 					    <div class="card-body bg-light p-1">
+                            <span class="text-danger">{{ form.is_active.errors }}</span>
 							<div class="form-check">									
 								<div class="row">
 									<label class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Activo <span class="required-label">*</span></label>
@@ -50,7 +51,8 @@
                                         </div>
 									</div>
                                 </div>
-							</div>											
+                            </div>
+                            <span class="text-danger">{{ form.username.errors }}</span>						
 							<div class="form-group form-show-validation row">
 								<label for="username" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Usuario<span class="required-label">*</span></label>
 								<div class="col-lg-4 col-md-9 col-sm-8">
@@ -59,24 +61,25 @@
 		                   		  		value="{{ form.username.value }}"/>
                                 </div>
                             </div>
+                            <span class="text-danger">{{ form.password1.errors }}</span>
                             <div class="form-group form-show-validation row">
 								<label for="password" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Contraseña<span class="required-label">*</span></label>
 								<div class="col-lg-4 col-md-9 col-sm-8">
-									<input type="text" class="form-control" id="id_password" name="password" placeholder="contraseña" required
-									 	maxlength="100"
-		                   		  		value="{{ form.password.value }}"/>
-                                </div>
-                            </div>
-                            <span class="text-danger">{{ form.password1.errors }}</span>
-                            <div class="form-group form-show-validation row">
-								<label for="password" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Confirmar contraseña<span class="required-label">*</span></label>
-								<div class="col-lg-4 col-md-9 col-sm-8">
-									<input type="text" class="form-control" id="id_password" name="password" placeholder="confirmar contraseña" required
+									<input type="password" class="form-control" id="id_password" name="password" placeholder="contraseña" required
 									 	maxlength="100"
 		                   		  		value="{{ form.password.value }}"/>
                                 </div>
                             </div>
                             <span class="text-danger">{{ form.password2.errors }}</span>
+                            <div class="form-group form-show-validation row">
+								<label for="password" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Confirmar contraseña<span class="required-label">*</span></label>
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<input type="password" class="form-control" id="id_password" name="password" placeholder="confirmar contraseña" required
+									 	maxlength="100"
+		                   		  		value="{{ form.password.value }}"/>
+                                </div>
+                            </div>
+                            <span class="text-danger">{{ form.first_name.errors }}<</span>
                             <div class="form-group form-show-validation row">
 								<label for="first_name" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Nombre<span class="required-label">*</span></label>
 								<div class="col-lg-4 col-md-9 col-sm-8">
@@ -85,7 +88,7 @@
 		                   		  		value="{{ form.first_name.value }}"/>
                                 </div>
                             </div>
-                            <span class="text-danger">{{ form.first_name.errors }}</span>
+                            <span class="text-danger">{{ form.last_name.errors }}</span>
 							<div class="form-group form-show-validation row">
 								<label for="last_name" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Apellido<span class="required-label">*</span></label>
 								<div class="col-lg-4 col-md-9 col-sm-8">
@@ -94,6 +97,7 @@
 		                   		  		value="{{ form.last_name.value }}"/>
                                 </div>
                             </div>
+                            <span class="text-danger">{{ form.email.errors }}</span>
                             <div class="form-group form-show-validation row">
 								<label for="email" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">E-mail<span class="required-label">*</span></label>
 								<div class="col-lg-4 col-md-9 col-sm-8">
