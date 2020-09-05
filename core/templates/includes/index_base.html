@@ -10,7 +10,7 @@
                 <!--{{form.monitores}}-->
                 <h2 class="text-white pb-4 pt-2 fw-bold">Panel de control</h2>
                 {% if user.is_superuser %}
-                --<h5 class="text-white op-7 mb-2"> <!--[S]Administrador--> </h5>
+                <h5 class="text-white op-7 mb-2"> <!--[S]Administrador--> </h5>
                 {% elif user.is_staff %}
                 <h5 class="text-white op-7 mb-2">{{user.profile.get_rol_display}} </h5>
                 {%else%}
@@ -139,6 +139,20 @@
                   </div>
                   
                 </div>-->
+                <div class="btn-group text-center" role="group">
+                
+                </div>
+
+                <div class="container">
+                  <div class="row">
+                    <div class="col text-center mb-5">
+                      <button class="btn btn-primary btn-sm mr-3" style="min-width: 120px;">Hoy</button>
+                <button class="btn btn-primary btn-sm mr-3"style="min-width: 120px;">Esta Semana</button>
+                <button class="btn btn-primary btn-sm mr-3" style="min-width: 120px;">Este Mes</button>
+                    </div>
+                  </div>
+                </div>
+
                 <div class="col-md-12" >
                   <div id="chart-container" >
                     <canvas id="totalIncomeChart" style="display: block; width:262px; height :100px;"></canvas>
@@ -166,8 +180,8 @@
           </div>
           
          </div>
-         <!------------------------->
-         <!--Todo este div muestra una fila -->
+        
+       Todo este div muestra una fila -->
         
 
         
@@ -181,62 +195,68 @@
             <div class="col-md-3">
               <div class="card full-height">
                     <div class="card-header text-center pt-2 pb-4">
-                        <b>Cámara: <small>{{camara.nombre_camara}}</small></b>
+                        <b><small>{{camara.nombre_camara}}</small></b>
                     </div>			  
                   <div class="card-body">
-                    
-                      
-                      <div class="card-category text-center"><b>Nombre de zona: <small>{{zonas_camara.nombre_zona_camara}}</small></b></div>
-                      
-                      <div class="col-md-12" >
-                        <div id="chart-container" >
-                      
-                          <canvas id="totalIncomeChart2"style="display: block; width:262px; height :100px;"></canvas>
-                        </div>
-                      </div>
-
-                      
-
-
-                      <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
+             
+                      <div class="card-category text-center"><b><small>{{zonas_camara.nombre_zona_camara}}</small></b></div>
+                  
+                      <div class="d-flex flex-wrap justify-content-around ">
                           <div class="px-2 pb-2 pb-md-0 text-center">
-                              <div id="circles-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" class="py-5"></div>
-                  <!--h3 class="fw-bold mt-1 mb-0 text">Aforo máximo 50 personas</h3-->                          
+                              <div id="circles-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" class="py-3"></div>
+                         <!--h3 class="fw-bold mt-1 mb-0 text">Aforo máximo 50 personas</h3-->                          
                           </div>
                       </div>
-                  </div>				
+                  </div>			
+                  <div class="col-md-12"  >
+                    <div id="chart-container" >
+                  
+                      <canvas id="barras-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" style="display: block; width:262px; height :100px;"></canvas>
+                    </div>
+                  </div>	
               </div>
-          </div>
+            </div>
           
         
               <div class="col-md-3">
                 <div class="card full-height">
                     <div class="card-header text-center pt-2 pb-3">                  
-                      <b>Cámara: <small>{{camara.nombre_camara}}</small></b>
+                      <b><small>{{camara.nombre_camara}}</small></b>
                     </div>
                   
                   <img class="card-img-top  p-4 rounded" src="{{ form.meraki }}">
                   
                   <div class="card-img-overlay">
+                    
                       <div class="d-flex flex-wrap justify-content-around">
                         <div class="px-2 pb-2 pb-md-0 text-center mt-5 mb-0">
-                              
+                    
                               <!--h3 class="fw-bold mt-3 mb-0 text-gray">Aforo máximo: <span id="msg_aforo_maximo" class="px-2"></span> personas </h3>
                               <h1 class="fw-bold mt-3 mb-2 text-gray">Bienvenidos</h1-->
                           </div>
+                          
                     <div class="card-category text-center">
               
-              
-                      
-                  
                     <!-- <div class="card-footer text-center"><b>Zona: <small>{{zonas_camara.nombre_zona_camara}}</small></b></div>
                     div class="card-footer text-center">Aforo máximo: <span id="msg_aforo_maximo" class="px-2"></span> personas</div
             
                     <div class="card-footer text-center"><b>Bienvenidos</small></b></div> -->
                     </div>
+                    
+                </div>
+               
+              </div>
+                     
+              <div class="col-md-12" >
+                <br>
+                <div id="chart-container" >
+              
+                  <canvas id="barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}"style="display: block; width:262px; height :100px;"></canvas>
                 </div>
               </div>
+              
         </div>
+        
         </div>
         
        
@@ -966,6 +986,7 @@
 					
 					
 					crearCircle(camaras)
+          crearBarra(camaras)
 
 					switch (color_barra_cabecera)
 					{
@@ -1107,6 +1128,89 @@
 		
 		Circles.create({
 			id:id_circle,
+			radius:35,
+			value:value,
+			maxValue:maxValue,
+			width:7,
+			text: value,
+			colors:['#f1f1f1', '#FF9E27'],
+			duration:400,
+			wrpClass:'circles-wrp',
+			textClass:'circles-text',
+			styleWrapper:true,
+			styleText:true
+		})
+		Circles.create({
+			id:id_circle_persona,
+			radius:35,
+			value:value,
+			maxValue:maxValue,
+			width:7,
+			text: value,
+			colors:['#f1f1f1', '#FF9E27'],
+			duration:400,
+			wrpClass:'circles-wrp',
+			textClass:'circles-text',
+			styleWrapper:true,
+			styleText:true
+		})
+	}
+	
+	
+//barras------------------------------------------------------
+
+function crearBarra(camaras){
+		
+		console.log("crearBarras")
+		//console.log("camaras::")
+		//console.log(camaras)
+		for (i = 0; i < camaras.length; i++)
+		{
+			//console.log("camaras: "+i)
+			//console.log("camaras[i].fields.zonas_camara")
+			//console.log((camaras[i].fields.zonas_camara))
+			nombre_camara = camaras[i].fields.nombre_camara
+			//console.log("nombre_camara")
+			//console.log(nombre_camara)
+			var zonas_camara_str = camaras[i].fields.zonas_camara.replace(/'/g, '"');		
+			//console.log("zonas_camara")
+			//console.log(zonas_camara)			
+			var zonas_camara = JSON.parse(zonas_camara_str)
+			//console.log("zonas_camara")
+			//console.log(zonas_camara)
+			//console.log("zonas_camara.length")
+			//console.log(zonas_camara.length)
+			
+			for (j = 0; j < zonas_camara.length; j++){
+				//console.log("zonas_camara"+j)
+				//console.log(zonas_camara[j])				
+				//console.log("zonas_camara "+j+" nombre_zona_camara ")
+				//console.log(zonas_camara[j].nombre_zona_camara)
+				//console.log("zonas_camara "+j+" nro_personas ")
+				//console.log(zonas_camara[j].nro_personas)
+				id_barra = "barras"+"-"+nombre_camara+"-"+zonas_camara[j].nombre_zona_camara
+				id_barra_persona = "barras-persona"+"-"+nombre_camara+"-"+zonas_camara[j].nombre_zona_camara
+				setBarra(id_barra_persona,100,zonas_camara[j].nro_personas)
+			} 
+			
+		}
+		
+		
+		
+	}
+	
+	function setBarra(id_barra_persona,maxValue,value){
+		/*console.log("setCircle 100")
+		console.log("id_circle")
+		console.log(id_circle)
+		console.log("maxValue")
+		console.log(maxValue)
+		console.log("value")
+		console.log(value)*/		
+		
+		
+		/*Circles.create({
+			id:id_circle,
 			radius:45,
 			value:value,
 			maxValue:maxValue,
@@ -1133,10 +1237,87 @@
 			styleWrapper:true,
 			styleText:true
 		})
-	}
-	
-	
+	}*/
 
+  var totalIncomeChart = document.getElementById(id_barra_persona,id_barra).getContext('2d');
+
+var mytotalIncomeChart = new Chart(totalIncomeChart, {
+  type: 'bar',
+  data: {
+    labels: ["D", "L", "M", "M", "J", "V", "S"],
+    datasets : [{
+      label: "Total Income",
+      backgroundColor: '#ff9e27',
+      borderColor: 'rgb(23, 125, 255)',
+      data: [6, 4, 9, 5, 4, 6, 4, 3, 8, 10],
+    }],
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    legend: {
+      display: false,
+    },
+    scales: {
+      yAxes: [{
+        ticks: {
+          display: false //this will remove only the label
+        },
+        gridLines : {
+          drawBorder: false,
+          display : false
+        }
+      }],
+      xAxes : [ {
+        gridLines : {
+          drawBorder: false,
+          display : false
+        }
+      }]
+    },
+  }
+});
+var totalIncomeChart = document.getElementById(id_barra).getContext('2d');
+
+var mytotalIncomeChart = new Chart(totalIncomeChart, {
+  type: 'bar',
+  data: {
+    labels: ["D", "L", "M", "M", "J", "V", "S"],
+    datasets : [{
+      label: "Total Income",
+      backgroundColor: '#ff9e27',
+      borderColor: 'rgb(23, 125, 255)',
+      data: [6, 4, 9, 5, 4, 6, 4, 3, 8, 10],
+    }],
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    legend: {
+      display: false,
+    },
+    scales: {
+      yAxes: [{
+        ticks: {
+          display: false //this will remove only the label
+        },
+        gridLines : {
+          drawBorder: false,
+          display : false
+        }
+      }],
+      xAxes : [ {
+        gridLines : {
+          drawBorder: false,
+          display : false
+        }
+      }]
+    },
+  }
+});
+
+
+}
     /*
     $(function(){
         //prepare Your data array with img urls

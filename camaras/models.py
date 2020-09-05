@@ -8,6 +8,7 @@ class ZonaCamara(models.Model):
     nombre_zona_camara = models.CharField(max_length=250, blank=False, default='')
     nro_personas = models.IntegerField(blank=True, default=0)
     
+    
     class Meta:        
        abstract = True
 
