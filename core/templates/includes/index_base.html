@@ -181,17 +181,17 @@
             <div class="col-md-3">
               <div class="card full-height">
                     <div class="card-header text-center pt-2 pb-4">
-                        <b>Cámara: <small>{{camara.nombre_camara}}</small></b>
+                        <b><small>{{camara.nombre_camara}}</small></b>
                     </div>			  
                   <div class="card-body">
                     
                       
-                      <div class="card-category text-center"><b>Nombre de zona: <small>{{zonas_camara.nombre_zona_camara}}</small></b></div>
+                      <div class="card-category text-center"><b><small>{{zonas_camara.nombre_zona_camara}}</small></b></div>
                       
                       <div class="col-md-12" >
                         <div id="chart-container" >
                       
-                          <canvas id="totalIncomeChart2"style="display: block; width:262px; height :100px;"></canvas>
+                          <canvas id="barras-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}"style="display: block; width:262px; height :100px;"></canvas>
                         </div>
                       </div>
 
@@ -212,7 +212,7 @@
               <div class="col-md-3">
                 <div class="card full-height">
                     <div class="card-header text-center pt-2 pb-3">                  
-                      <b>Cámara: <small>{{camara.nombre_camara}}</small></b>
+                      <b><small>{{camara.nombre_camara}}</small></b>
                     </div>
                   
                   <img class="card-img-top  p-4 rounded" src="{{ form.meraki }}">
@@ -966,6 +966,7 @@
 					
 					
 					crearCircle(camaras)
+          crearBarra(camaras)
 
 					switch (color_barra_cabecera)
 					{
@@ -1136,7 +1137,129 @@
 	}
 	
 	
+//barras------------------------------------------------------
 
+function crearBarra(camaras){
+		
+		console.log("crearBarras")
+		//console.log("camaras::")
+		//console.log(camaras)
+		for (i = 0; i < camaras.length; i++)
+		{
+			//console.log("camaras: "+i)
+			//console.log("camaras[i].fields.zonas_camara")
+			//console.log((camaras[i].fields.zonas_camara))
+			nombre_camara = camaras[i].fields.nombre_camara
+			//console.log("nombre_camara")
+			//console.log(nombre_camara)
+			var zonas_camara_str = camaras[i].fields.zonas_camara.replace(/'/g, '"');		
+			//console.log("zonas_camara")
+			//console.log(zonas_camara)			
+			var zonas_camara = JSON.parse(zonas_camara_str)
+			//console.log("zonas_camara")
+			//console.log(zonas_camara)
+			//console.log("zonas_camara.length")
+			//console.log(zonas_camara.length)
+			
+			for (j = 0; j < zonas_camara.length; j++){
+				//console.log("zonas_camara"+j)
+				//console.log(zonas_camara[j])				
+				//console.log("zonas_camara "+j+" nombre_zona_camara ")
+				//console.log(zonas_camara[j].nombre_zona_camara)
+				//console.log("zonas_camara "+j+" nro_personas ")
+				//console.log(zonas_camara[j].nro_personas)
+				//id_barra = "barras"+"-"+nombre_camara+"-"+zonas_camara[j].nombre_zona_camara
+				id_barra_persona = "barras-persona"+"-"+nombre_camara+"-"+zonas_camara[j].nombre_zona_camara
+				setBarra(id_barra_persona,100,zonas_camara[j].nro_personas)
+			}
+			
+		}
+		
+		
+		
+	}
+	
+	function setBarra(id_barra_persona,maxValue,value){
+		/*console.log("setCircle 100")
+		console.log("id_circle")
+		console.log(id_circle)
+		console.log("maxValue")
+		console.log(maxValue)
+		console.log("value")
+		console.log(value)*/		
+		
+		
+		/*Circles.create({
+			id:id_circle,
+			radius:45,
+			value:value,
+			maxValue:maxValue,
+			width:7,
+			text: value,
+			colors:['#f1f1f1', '#FF9E27'],
+			duration:400,
+			wrpClass:'circles-wrp',
+			textClass:'circles-text',
+			styleWrapper:true,
+			styleText:true
+		})
+		Circles.create({
+			id:id_circle_persona,
+			radius:45,
+			value:value,
+			maxValue:maxValue,
+			width:7,
+			text: value,
+			colors:['#f1f1f1', '#FF9E27'],
+			duration:400,
+			wrpClass:'circles-wrp',
+			textClass:'circles-text',
+			styleWrapper:true,
+			styleText:true
+		})
+	}*/
+
+  var totalIncomeChart = document.getElementById(id_barra_persona).getContext('2d');
+
+var mytotalIncomeChart = new Chart(totalIncomeChart, {
+  type: 'bar',
+  data: {
+    labels: ["D", "L", "M", "M", "J", "V", "S"],
+    datasets : [{
+      label: "Total Income",
+      backgroundColor: '#ff9e27',
+      borderColor: 'rgb(23, 125, 255)',
+      data: [6, 4, 9, 5, 4, 6, 4, 3, 8, 10],
+    }],
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    legend: {
+      display: false,
+    },
+    scales: {
+      yAxes: [{
+        ticks: {
+          display: false //this will remove only the label
+        },
+        gridLines : {
+          drawBorder: false,
+          display : false
+        }
+      }],
+      xAxes : [ {
+        gridLines : {
+          drawBorder: false,
+          display : false
+        }
+      }]
+    },
+  }
+});
+
+
+}
     /*
     $(function(){
         //prepare Your data array with img urls
