@@ -8,6 +8,11 @@ from django.utils.translation import activate
 from usuarios.forms import UsuariosForm,UsuariosEditarForm
 from usuarios.models import Usuarios
 
+from django.template import RequestContext
+from django.shortcuts import render_to_response
+from usuarios.forms import LoginForm
+from django.contrib.auth import authenticate, login
+
 @login_required(login_url="/login/")
 def register_user(request):
     activate('es')
@@ -18,7 +23,7 @@ def register_user(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get("username")
-            raw_password = form.cleaned_data.get("password1")
+            raw_password = form.cleaned_data.get("password")
             user = authenticate(username=username, password=raw_password)
 
             msg     = 'User created.'
@@ -30,6 +35,27 @@ def register_user(request):
         form = SignUpForm()
 
     return render(request, "usuarios/agregar.html", {"form": form, "msg" : msg, "success" : success })
+
+def login_page(request):
+    message = None
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = request.POST('username')
+            password = request.POST('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    message = "Te has identificado de modo correcto"
+                else:
+                    message = "Tu usuario se encuentra inactivo"
+            else:
+                message = "Nombre de usuario y/o contraseña incorrecto"
+        else:
+            form = LoginForm()
+        return render_to_response('login.html', {'message': message, 'form': form},
+        context_instance=RequestContext(request))
 
 @login_required(login_url="/login/")
 def usuarios(request):

@@ -44,12 +44,20 @@
                                     <h6><b>{{ request.user.profile.get_rol_display }}</b></h6>
                                 </div>
                                 <div class="form-group">
-                                    <label for="apellido">Razon social</label>
-                                    <h4>{{ request.user.get_full_name }}</h4>
+                                    <label for="apellido">Nombre de usuario</label>
+                                    <h4>{{ request.user.profile }}</h4>
+                                </div>
+                                <div class="form-group">
+                                    <label for="apellido">Nombre</label>
+                                    <h4>{{ request.user.first_name }}</h4>
+                                </div>
+                                <div class="form-group">
+                                    <label for="apellido">Apellido</label>
+                                    <h4>{{ request.user.last_name }}</h4>
                                 </div>
                                 <div class="form-group">
                                     <label for="apellido">Email</label>
-                                    <h6><b>{{ request.user.get_full_email }}</b></h6>
+                                    <h6><b>{{ request.user.email }}</b></h6>
                                 </div>
                                 <div class="form-group">
                                     <label for="apellido">Cliente</label>
