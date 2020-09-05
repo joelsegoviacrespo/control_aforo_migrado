@@ -50,8 +50,9 @@
                     <th>Nombre</th>
                     <th>Apellido</th>
                     <th>e-mail</th>
+                    <th>Cliente</th>  
                     <th>Staff</th> 
-                    <th>Activo</th>             
+                    <th>Activo</th>            
                     <th class="text-center">Opciones</th>
                 </tr>
                 </thead>
@@ -62,9 +63,14 @@
                     <td>{{ usuarios.first_name }}</td>
                     <td>{{ usuarios.last_name }}</td>
                     <td>{{ usuarios.email }}</td>
-                    <td>{{ usuarios.is_staff }}</td>
+                    <td>{{ usuarios.cliente.nif }}</td>
                     <td class="text-center">
-                    	{% if usuarios.usuarios_is_active %}<i class="fa fa-check-square text-success"></i>
+                    	{% if usuarios.is_staff %}<i class="fa fa-check-square text-success"></i>
+                      	{% else %}<i class="fa fa-times text-danger"></i>
+                        {% endif %}      
+                    </td>
+                    <td class="text-center">
+                    	{% if usuarios.is_active %}<i class="fa fa-check-square text-success"></i>
                       	{% else %}<i class="fa fa-times text-danger"></i>
                         {% endif %}      
                     </td>
