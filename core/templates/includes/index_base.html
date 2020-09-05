@@ -10,7 +10,7 @@
                 <!--{{form.monitores}}-->
                 <h2 class="text-white pb-4 pt-2 fw-bold">Panel de control</h2>
                 {% if user.is_superuser %}
-                --<h5 class="text-white op-7 mb-2"> <!--[S]Administrador--> </h5>
+                <h5 class="text-white op-7 mb-2"> <!--[S]Administrador--> </h5>
                 {% elif user.is_staff %}
                 <h5 class="text-white op-7 mb-2">{{user.profile.get_rol_display}} </h5>
                 {%else%}
@@ -166,8 +166,8 @@
           </div>
           
          </div>
-         <!------------------------->
-         <!--Todo este div muestra una fila -->
+        
+       Todo este div muestra una fila -->
         
 
         
