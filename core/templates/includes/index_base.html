@@ -121,7 +121,9 @@
         <div class="col-md-6">
           <div class="card full-height">
             <div class="card-body">
-              <div class="card-title text-center pt-2 pb-1 ">Entrada Principal</div>
+              <!--div class="card-title text-center pt-2 pb-1 ">Entrada Principal</div>-->
+				<div class="card-title text-center pt-2 pb-1 "></div>
+
               
               <!--<div class="row py-1" >-->
                 <!--<div class="col-md-4 d-flex flex-column justify-content-around">
@@ -208,13 +210,22 @@
 					  <div class="card-header text-center pt-2 pb-4">
                         <b><small>{{camara.nombre_camara}}</small></b>
                     </div>
-                  </div>			
+                  </div>
+				  <div class="card-footer ">
+					
+                    <div id="chart-container" >
+                  		<canvas id="barras-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" style="display: block; width:262px; height :120px;"></canvas>
+                      
+                    
+                  	</div>
+				  </div>
+					<!--					
                   <div class="col-md-12"  >
                     <div id="chart-container" >
-                  
+                      
                       <canvas id="barras-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" style="display: block; width:262px; height :120px;"></canvas>
                     </div>
-                  </div>	
+                  </div>-->	
               </div>
             </div>
           
@@ -224,10 +235,11 @@
                     <div class="card-header text-center pt-2 pb-3">                  
                       <b><small>{{camara.nombre_camara}}</small></b>
 					</div> <br><br>
-					Este es el serial {{form.serial}}<br><br>
+				<!--	QUITAR ESTO ANTES DE SUBIR LOS CAMBIOS-->
+				<!--	Este es el serial {{form.serial}}<br><br>
 				  Esta es la imagen1 {{form.meraki}} <br><br>
 				  Esta es la imagen2 {{form.meraki2}}<br><br>
-				  Si el serial es Q2HV-B24V-ZKN5 <br><br>
+				  Si el serial es Q2HV-B24V-ZKN5 <br><br>-->
 				  {% if  form.serial == "Q2HV-B24V-ZKN5" %}
 				  <img class="card-img-top p-4 rounded" src="{{ form.meraki }}">
 				  {%endif%}
@@ -267,6 +279,7 @@
               </div>
                      
               <div class="col-md-12" >
+				<p>camara</p>
                 <br>
                 <div id="chart-container" >
               
