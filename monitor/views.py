@@ -340,7 +340,7 @@ def configuracion_camaras(request, id_monitor):
                     print("3")
                     print(camaras.serial_camara)
                     print("4")
-                   # print(camaras.instalacion.nombre)
+                    #print(camaras.instalacion.nombre)
                     #camaras.instalacion = model_to_dict(camaras.instalacion)
                     zonas_camaras = []
                     for zonas_camara in camaras.zonas_camara:

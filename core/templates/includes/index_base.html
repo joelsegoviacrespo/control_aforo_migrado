@@ -194,9 +194,7 @@
         
             <div class="col-md-3">
               <div class="card full-height">
-                    <div class="card-header text-center pt-2 pb-4">
-                        <b><small>{{camara.nombre_camara}}</small></b>
-                    </div>			  
+                    			  
                   <div class="card-body">
              
                       <div class="card-category text-center"><b><small>{{zonas_camara.nombre_zona_camara}}</small></b></div>
@@ -206,7 +204,10 @@
                               <div id="circles-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" class="py-3"></div>
                          <!--h3 class="fw-bold mt-1 mb-0 text">Aforo máximo 50 personas</h3-->                          
                           </div>
-                      </div>
+					  </div>
+					  <div class="card-header text-center pt-2 pb-4">
+                        <b><small>{{camara.nombre_camara}}</small></b>
+                    </div>
                   </div>			
                   <div class="col-md-12"  >
                     <div id="chart-container" >
@@ -223,9 +224,14 @@
                     <div class="card-header text-center pt-2 pb-3">                  
                       <b><small>{{camara.nombre_camara}}</small></b>
                     </div>
-                  
+                  {% if  form.serial == "Q2HV-B24V-ZKN5" %}
                   <img class="card-img-top p-4 rounded" src="{{ form.meraki }}">
-                  
+				  {%elif form.serial == "Q2GV-4YBM-YWWJ"%}
+				  <img class="card-img-top p-4 rounded" src="{{ form.meraki2 }}">
+				  {%else%}
+				  <img class="card-img-top p-4 rounded" src="{{ form.meraki2 }}">
+				  {%endif%}
+
                   <div class="card-img-overlay">
                     
                       <div class="d-flex flex-wrap justify-content-around">
