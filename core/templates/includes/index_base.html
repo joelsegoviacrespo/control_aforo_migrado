@@ -223,15 +223,28 @@
                 <div class="card full-height">
                     <div class="card-header text-center pt-2 pb-3">                  
                       <b><small>{{camara.nombre_camara}}</small></b>
-                    </div>
-                  {% if  form.serial == "Q2HV-B24V-ZKN5" %}
+					</div> <br><br>
+					Este es el serial {{form.serial}}<br><br>
+				  Esta es la imagen1 {{form.meraki}} <br><br>
+				  Esta es la imagen2 {{form.meraki2}}<br><br>
+				  Si el serial es Q2HV-B24V-ZKN5 <br><br>
+				  {% if  form.serial == "Q2HV-B24V-ZKN5" %}
+				  <img class="card-img-top p-4 rounded" src="{{ form.meraki }}">
+				  {%endif%}
+				  {% if form.serial == "Q2GV-4YBM-YWWJ"%}
+				  <img class="card-img-top p-4 rounded" src="{{ form.meraki2 }}">
+				  {%endif%}
+
+
+				<!--  {% if  form.serial == "Q2HV-B24V-ZKN5" %}
+				 
                   <img class="card-img-top p-4 rounded" src="{{ form.meraki }}">
 				  {%elif form.serial == "Q2GV-4YBM-YWWJ"%}
 				  <img class="card-img-top p-4 rounded" src="{{ form.meraki2 }}">
 				  {%else%}
 				  <img class="card-img-top p-4 rounded" src="{{ form.meraki2 }}">
 				  {%endif%}
-
+				-->
                   <div class="card-img-overlay">
                     
                       <div class="d-flex flex-wrap justify-content-around">
