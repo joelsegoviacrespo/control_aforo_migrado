@@ -224,14 +224,12 @@
                     <div class="card-header text-center pt-2 pb-3">                  
                       <b><small>{{camara.nombre_camara}}</small></b>
 					</div> <br><br>
-					Este es el serial {{form.serial}}<br><br>
-				  Esta es la imagen1 {{form.meraki}} <br><br>
-				  Esta es la imagen2 {{form.meraki2}}<br><br>
-				  Si el serial es Q2HV-B24V-ZKN5 <br><br>
-				  {% if  form.serial == "Q2HV-B24V-ZKN5" %}
+					
+				  
+				  {% if  camaras.serial_camara == "Q2HV-B24V-ZKN5" %}
 				  <img class="card-img-top p-4 rounded" src="{{ form.meraki }}">
-				  {%endif%}
-				  {% if form.serial == "Q2GV-4YBM-YWWJ"%}
+				  
+				  {% elif camaras.serial_camara == "Q2GV-4YBM-YWWJ"%}
 				  <img class="card-img-top p-4 rounded" src="{{ form.meraki2 }}">
 				  {%endif%}
 
