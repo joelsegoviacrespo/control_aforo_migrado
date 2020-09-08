@@ -45,6 +45,7 @@ def index(request):
     #url2= "https://api.meraki.com/api/v1/devices/Q2GV-4YBM-YWWJ/camera/generateSnapshot"
     a=1
     b=2
+    form = {}
     for camaras in camarasAll:
                     #print("1")
                     #print(camaras._id)

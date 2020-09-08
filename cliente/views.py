@@ -13,7 +13,7 @@ def mng(request):
     context = {'foo': 'bar'}
     return render(request, 'cliente/manage.html', context)
 
-@user_passes_test 
+
 @login_required(login_url="/login/")
 def cliente(request):
     activate('es')
