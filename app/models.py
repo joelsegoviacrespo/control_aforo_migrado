@@ -1,11 +1,12 @@
-# -*- encoding: utf-8 -*-
+ # -*- encoding: utf-8 -*-
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
-#from cliente.models import Cliente
+from cliente.models import Cliente
+from instalacion.models import Instalacion 
 from django.utils import timezone
 
 
@@ -19,7 +20,8 @@ class Profile(models.Model):
         (USUARIO, 'Usuario'),
     )
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    #id_cliente = models.ForeignKey(Cliente, on_delete=models.SET_NULL, blank=True, null=True, default=None)
+    cliente = models.ForeignKey(Cliente, on_delete=models.SET_NULL, blank=True, null=True, default=None)
+    instalacion = models.ForeignKey(Instalacion, on_delete=models.SET_NULL, blank=True, null=True, default=None)
     rol = models.PositiveSmallIntegerField(choices=ROLE_CHOICES, null=False, blank=False, default=0)
 
     def __str__(self):
@@ -36,12 +38,14 @@ class ProfileInline(admin.StackedInline):
 # Define un nuevo usuario admin
 class UserAdmin(BaseUserAdmin):
     inlines = (ProfileInline,)
+    
 
 
 # Deshacer el registro del usuario admin
 admin.site.unregister(User)
 # Registra el nuevo usuario
 admin.site.register(User, UserAdmin)
+
 
 # @receiver(post_save, sender=User)
 # def create_or_update_user_profile(sender, instance, created, **kwargs):

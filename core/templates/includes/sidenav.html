@@ -33,12 +33,12 @@
 										</li>
 										<li class="nav-item m-0 p-0 h-75">
 											<a href="/fondos/todos">
-												<i class="fa fa-bars text-secondary"></i>
+												<i class="fas fa-fill-drip text-secondary"></i>
 												<span> Fondos </span>
 											</a>
 										</li>
 																			
-										<!--{% if user.is_staff  %}
+										{% if user.is_staff  %}
 											<li class="nav-item m-0 p-0 h-75">
 												<a href="/usuarios/todos">
 													<i class="far fa-address-card text-secondary"></i>
@@ -66,27 +66,7 @@
 													</ul>
 												</div>
 											</li>
-										{% elif user.profile.rol <= 2 %}
-											<li class="nav-item m-0 p-0 h-75">
-												<a href="/admin/auth/user/">
-													<i class="fas fa-users text-secondary"></i>
-													<span> Usuarios </span>
-												</a>
-											</li> 
-										{% endif %}-->
-										{% if user.profile.rol <= 2 %}
-											<li class="nav-item m-0 p-0 h-75">
-												<a href="/usuarios/todos">
-													<i class="far fa-address-card text-secondary"></i>
-													<span> Usuarios </span>
-												</a>
-											</li>
-											<li class="nav-item m-0 p-0 h-75">
-												<a href="/fondos/todos">
-													<i class="fas fa-fill-drip text-secondary"></i>
-													<span> Fondos </span>
-												</a>
-											</li>	
+									
 										{% endif %}
 									</ul>
 								</div>
