@@ -121,7 +121,9 @@
         <div class="col-md-6">
           <div class="card full-height">
             <div class="card-body">
-              <div class="card-title text-center pt-2 pb-1 ">Entrada Principal</div>
+              <!--div class="card-title text-center pt-2 pb-1 ">Entrada Principal</div>-->
+				<div class="card-title text-center pt-2 pb-1 "></div>
+
               
               <!--<div class="row py-1" >-->
                 <!--<div class="col-md-4 d-flex flex-column justify-content-around">
@@ -145,10 +147,10 @@
 
                 <div class="container">
                   <div class="row">
-                    <div class="col text-center mb-5">
-                      <button class="btn btn-primary btn-sm mr-3" style="min-width: 120px;">Hoy</button>
-                <button class="btn btn-primary btn-sm mr-3"style="min-width: 120px;">Esta Semana</button>
-                <button class="btn btn-primary btn-sm mr-3" style="min-width: 120px;">Este Mes</button>
+                    <div class="col text-center mb-5 ">
+                      <button class="btn btn-primary btn-sm mr-3 pt-2" style="min-width: 120px;">Hoy</button>
+                <button class="btn btn-primary btn-sm mr-3 pt-2"style="min-width: 120px;">Esta Semana</button>
+                <button class="btn btn-primary btn-sm mr-3 pt-2" style="min-width: 120px;">Este Mes</button>
                     </div>
                   </div>
                 </div>
@@ -205,34 +207,51 @@
                          <!--h3 class="fw-bold mt-1 mb-0 text">Aforo máximo 50 personas</h3-->                          
                           </div>
 					  </div>
-					  <div class="card-header text-center pt-2 pb-4">
+					  <div class="card-header text-center pt-2 pb-4" style=" border-width:0px !important;">
                         <b><small>{{camara.nombre_camara}}</small></b>
                     </div>
-                  </div>			
+                  </div>
+				  <div class="card-footer " style=" border-width:0px !important;">
+					
+                    <div id="chart-container" >
+                  		<canvas id="barras-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" style="display: block; width:262px; height :120px;"></canvas>
+                      
+                    
+                  	</div>
+				  </div>
+					<!--					
                   <div class="col-md-12"  >
                     <div id="chart-container" >
-                  
+                      
                       <canvas id="barras-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" style="display: block; width:262px; height :120px;"></canvas>
                     </div>
-                  </div>	
+                  </div>-->	
               </div>
             </div>
           
         
               <div class="col-md-3">
+				  
                 <div class="card full-height">
-                    <div class="card-header text-center pt-2 pb-3">                  
-                      <b><small>{{camara.nombre_camara}}</small></b>
-					</div> <br><br>
 					
-				  
-				  {% if  camaras.serial_camara == "Q2HV-B24V-ZKN5" %}
-				  <img class="card-img-top p-4 rounded" src="{{ form.meraki }}">
-				  
-				  {% elif camaras.serial_camara == "Q2GV-4YBM-YWWJ"%}
-				  <img class="card-img-top p-4 rounded" src="{{ form.meraki2 }}">
-				  {%endif%}
-
+                    <div class="card-header text-center pt-2 pb-3"style=" border-width:0px !important">                  
+					 
+						<div class="card-body">
+							<b><small>{{camara.nombre_camara}}</small></b>
+							{% if  form.serial == "Q2HV-B24V-ZKN5" %}
+							<img class="card-img-top p-4 rounded" src="{{ form.meraki }}">
+							{%endif%}
+							{% if form.serial == "Q2GV-4YBM-YWWJ"%}
+							<img class="card-img-top p-4 rounded" src="{{ form.meraki2 }}">
+							{%endif%}
+						  </div>
+					</div> <br><br>
+				<!--	QUITAR ESTO ANTES DE SUBIR LOS CAMBIOS-->
+				<!--	Este es el serial {{form.serial}}<br><br>
+				  Esta es la imagen1 {{form.meraki}} <br><br>
+				  Esta es la imagen2 {{form.meraki2}}<br><br>
+				  Si el serial es Q2HV-B24V-ZKN5 <br><br>-->
+				 
 
 				<!--  {% if  form.serial == "Q2HV-B24V-ZKN5" %}
 				 
@@ -265,6 +284,7 @@
               </div>
                      
               <div class="col-md-12" >
+				<!--<p>camara</p>-->
                 <br>
                 <div id="chart-container" >
               
