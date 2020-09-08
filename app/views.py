@@ -62,7 +62,7 @@ def index(request):
                     
                     #print ("serial camaras")
                     #print (camaras.serial_camara)
-
+                    
                     for zonas_camara in camaras.serial_camara:
                         #print(camaras.serial_camara)
                         url = "https://api.meraki.com/api/v1/devices/Q2HV-B24V-ZKN5/camera/generateSnapshot"

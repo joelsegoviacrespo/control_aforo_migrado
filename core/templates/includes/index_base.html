@@ -154,7 +154,7 @@
                     </div>
                   </div>
                 </div>
-
+				
                 <div class="col-md-12" >
                   <div id="chart-container" >
                     <canvas id="totalIncomeChart" style="display: block; width:262px; height :100px;"></canvas>
@@ -238,11 +238,11 @@
 					 
 						<div class="card-body">
 							<b><small>{{camara.nombre_camara}}</small></b>
-							{% if  form.serial == "Q2HV-B24V-ZKN5" %}
-							<img class="card-img-top p-4 rounded" src="{{ form.meraki }}">
+							{% if  camara.serial_camara == "Q2HV-B24V-ZKN5" %}
+							<img class="card-img-top p-2 rounded" src="{{ form.meraki }}">
 							{%endif%}
-							{% if form.serial == "Q2GV-4YBM-YWWJ"%}
-							<img class="card-img-top p-4 rounded" src="{{ form.meraki2 }}">
+							{% if camara.serial_camara == "Q2GV-4YBM-YWWJ"%}
+							<img class="card-img-top p-2 rounded" src="{{ form.meraki2 }}">
 							{%endif%}
 						  </div>
 					</div> <br><br>
