@@ -4,7 +4,7 @@ from django.conf.urls import url
 from usuarios import views
 
 urlpatterns = [
-    path('', views.usuarios, name='usuarios'),
+    path('', views.user, name='user'),
     path('todos', views.todos),
     path('editar/<str:id>/', views.editar),
     path('actualizar/<str:id>/', views.actualizar),

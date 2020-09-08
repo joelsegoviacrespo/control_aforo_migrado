@@ -4,7 +4,7 @@ from djongo import models
 from cliente.models import Cliente,ClienteEmbebido
 from cliente.forms import ClienteEmbebidoForm
 
-class Usuarios(models.Model):
+class User(models.Model):
     _id = models.ObjectIdField()
     cliente = models.EmbeddedField(
        model_container=ClienteEmbebido,
@@ -33,9 +33,9 @@ class Usuarios(models.Model):
     def get_id(self):
         return str(self._id)
        
-    class Meta:
+    '''class Meta:
         db_table = "auth.user"
-    objects = models.DjongoManager()
+    objects = models.DjongoManager()'''
 
 class UsuarioEmbebido(models.Model):
     _id = models.ObjectIdField()   

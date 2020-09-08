@@ -3,7 +3,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from cliente.models import Cliente
-from usuarios.models import Usuarios, UsuarioEmbebido
+from usuarios.models import User#, UsuarioEmbebido
 
 
 class UsuariosForm(forms.ModelForm):
@@ -11,7 +11,7 @@ class UsuariosForm(forms.ModelForm):
     cliente_nif = forms.ChoiceField()
 
     class Meta:
-        model = Usuarios
+        model = User
         fields = '__all__'
 
     def __init__(self, *args, **kwargs):
@@ -33,7 +33,7 @@ class UsuariosEditarForm(forms.ModelForm):
     id_cliente_nif = forms.CharField(widget=forms.HiddenInput, required=False, initial=0)
     
     class Meta:
-        model = Usuarios
+        model = User
         fields =  '__all__'
 
     def __init__(self, *args, **kwargs):
@@ -57,10 +57,10 @@ class UsuariosEditarForm(forms.ModelForm):
         self.fields["usuarios_nombre"] = forms.ChoiceField(choices=usuarios_choices,required=False)
         #self.fields["clientes"].choices = [(str(c.nif), c.razon_social) for c in Cliente.objects.all().filter(cliente_estado=True)]
 
-class UsuarioEmbebidoForm(forms.ModelForm):
+'''class UsuarioEmbebidoForm(forms.ModelForm):
     class Meta:
         model = UsuarioEmbebido
-        fields =  ('nif_cliente','nombre',)    
+        fields =  ('nif_cliente','nombre',)  '''  
 class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput())
