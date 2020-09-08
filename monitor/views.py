@@ -337,6 +337,7 @@ def configuracion_camaras(request, id_monitor):
                     print(camaras._id)
                     print("2")
                     print(camaras.nombre_camara)
+                    print(camaras.nro_personas)
                     print("3")
                     print(camaras.serial_camara)
                     print("4")
