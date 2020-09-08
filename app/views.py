@@ -46,13 +46,13 @@ def index(request):
     a=1
     b=2
     for camaras in camarasAll:
-                    print("1")
-                    print(camaras._id)
-                    print("2")
-                    print(camaras.nombre_camara)
-                    print("3")
-                    print(camaras.serial_camara)
-                    print("4")
+                    #print("1")
+                    #print(camaras._id)
+                    #print("2")
+                    #print(camaras.nombre_camara)
+                    #print("3")
+                    #print(camaras.serial_camara)
+                    #print("4")
                    # print(camaras.instalacion.nombre)
                     #camaras.instalacion = model_to_dict(camaras.instalacion)
                     zonas_camaras = []
@@ -60,14 +60,14 @@ def index(request):
 
                     
                     
-                    print ("serial camaras")
-                    print (camaras.serial_camara)
+                    #print ("serial camaras")
+                    #print (camaras.serial_camara)
 
                     for zonas_camara in camaras.serial_camara:
-                        print(camaras.serial_camara)
+                        #print(camaras.serial_camara)
                         url = "https://api.meraki.com/api/v1/devices/Q2HV-B24V-ZKN5/camera/generateSnapshot"
                         url2 = "https://api.meraki.com/api/v1/devices/Q2GV-4YBM-YWWJ/camera/generateSnapshot"  
-                        print(url)
+                        #print(url)
                         #consulta a meraki
 
                         payload = {}
@@ -90,9 +90,9 @@ def index(request):
                         response = requests.request("POST", url, headers=headers, data = payload)
                         #print(response.response, flush=True)
                         response2= requests.request("POST",url2 ,headers=headers, data = payload)
-                        print ("response2")
-                        print(response)
-                        print (response2)
+                        #print ("response2")
+                        #print(response)
+                        #print (response2)
                         if(not response and not response2):
                             extract = "/static/assets/img/people.jpg"
                         
@@ -101,8 +101,8 @@ def index(request):
                             urlResponse2 = json.loads(response2.text)
                             extract = urlResponse.get('url')
                             extract2= urlResponse2.get('url')
-                            print(extract)
-                            print(extract2)
+                            #print(extract)
+                            #print(extract2)
                             #consulta a meraki
                             camarasAll =  Camaras.objects.all()
                             serial = camaras.serial_camara
