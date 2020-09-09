@@ -35,10 +35,10 @@ class Instalacion(models.Model):
     instalacion_estado = models.BooleanField(blank=False, default=True)
 
     def __unicode__(self):
-        return self.cliente
+        return self.nombre_comercial
 
     def __str__(self,):
-        return str(self.cliente)
+        return str(self.nombre_comercial)
     
     class Meta:
         db_table = "instalacion"
