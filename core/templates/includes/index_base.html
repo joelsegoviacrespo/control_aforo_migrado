@@ -148,38 +148,50 @@
                 <div class="container">
                   <div class="row">
                     <div class="col text-center mb-5 ">
-                      <button class="btn btn-primary btn-sm mr-3 pt-2" style="min-width: 120px;">Hoy</button>
-                <button class="btn btn-primary btn-sm mr-3 pt-2"style="min-width: 120px;">Esta Semana</button>
-                <button class="btn btn-primary btn-sm mr-3 pt-2" style="min-width: 120px;">Este Mes</button>
+						<a class="btn btn-primary" href="#" role="button">Este mes</a>
+						<button class="btn btn-primary" type="submit">Esta semana</button>
+						<input class="btn btn-primary" type="button" value="Hoy">
+						
                     </div>
                   </div>
                 </div>
-				
+			
                 <div class="col-md-12" >
-                  <div id="chart-container" >
-                    <canvas id="totalIncomeChart" style="display: block; width:262px; height :100px;"></canvas>
+					<p align="center">Total Aforo</p>
+                  <div id="chart-container" style="max-height: 100px;" >
+					
+                    <canvas id="totalIncomeChart" style=" width: 376px; height: 100px;"></canvas>
                   </div>
                   <div>
                     
-                  
+			     
                   </div>
                   <div class="col-md-12" >
-                    <div id="chart-container" >
-                      <canvas id="totalIncomeChart1"style="display: block; width:262px; height :100px;"></canvas>
+					<p align="center">Total Persona</p>
+                    <div id="chart-container" style="max-height: 100px;">
+						
+                      <canvas id="totalIncomeChart1"style=" width: 376px; height: 100px;"></canvas>
                       
                       
-                    
-                    </div>
-                  </div>
+					</div>
+			
+                </div>
+                </div>
                 </div>
               </div>
               </div>
               </div>
-            </div>
+			</div>
+
+
+
+
+		
               <!--</div>-->
               <!--<div class="card-footer text-center"><h3>Zona: <h3>Completa</h3></h3></div>
             </div>
-          </div>
+		  
+		</div>
           
          </div>
         
@@ -208,13 +220,15 @@
                           </div>
 					  </div>
 					  <div class="card-header text-center pt-2 pb-4" style=" border-width:0px !important;">
+						<br>
+						
                         <b><small>{{camara.nombre_camara}}</small></b>
                     </div>
                   </div>
 				  <div class="card-footer " style=" border-width:0px !important;">
 					
                     <div id="chart-container" >
-                  		<canvas id="barras-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" style="display: block; width:262px; height :120px;"></canvas>
+                  		<canvas id="barras-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" style="display: block; width:262px; max-height: 100px;"></canvas>
                       
                     
                   	</div>
@@ -239,12 +253,15 @@
 						<div class="card-body">
 							<b><small>{{camara.nombre_camara}}</small></b>
 							{% if  camara.serial_camara == "Q2HV-B24V-ZKN5" %}
-							<img class="card-img-top thumbnail" src="{{ form.meraki }}">
+							<img class="card-img-top thumbnail" src="{{ form.meraki }}" onerror="this.src='/static/assets/img/onerrorQ2HV-B24V-ZKN5.jpg';">
+						
 							{%endif%}
 							{% if camara.serial_camara == "Q2GV-4YBM-YWWJ"%}
-							<img class="card-img-top thumbnail" src="{{ form.meraki2 }}">
+							<img class="card-img-top thumbnail" src="{{ form.meraki2 }}" onerror="this.src='/static/assets/img/onerrorQ2GV-4YBM-YWWJ.jpg';">
+						
 							{%endif%}
 						  </div>
+						  <p>Total Personas: {{zonas_camara.nro_personas}}</p>
 					</div> <br><br>
 				<!--	QUITAR ESTO ANTES DE SUBIR LOS CAMBIOS-->
 				<!--	Este es el serial {{form.serial}}<br><br>
@@ -288,7 +305,7 @@
                 <br>
                 <div id="chart-container" >
               
-                  <canvas id="barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}"style="display: block; width:262px; height :100px;"></canvas>
+                  <canvas id="barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}"style="display: block; width:262px; max-height: 100px;"></canvas>
                 </div>
               </div>
               
