@@ -6,26 +6,37 @@ from djongo import models
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.utils.translation import activate
 from usuarios.forms import UsuariosForm,UsuariosEditarForm
-from usuarios.models import User
-
+from django.contrib.auth.models import User
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 from usuarios.forms import LoginForm
 from django.contrib.auth import authenticate, login
-
+import datetime
 @login_required(login_url="/login/")
 def register_user(request):
     activate('es')
     msg     = None
     success = False
+    print("??")
+
     if request.method == "POST":
+        print("me da ansiedad 1")
+
         form = SignUpForm(request.POST)
         if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get("username")
-            raw_password = form.cleaned_data.get("password")
-            user = authenticate(username=username, password=raw_password)
+            print("me da ansiedad")
 
+            user = form.save(commit=False)
+            user.username = form.cleaned_data.get("username")
+            user.raw_password = form.cleaned_data.get("password1")
+            user.is_active = form.cleaned_data.get("is_active")
+            user.email = form.cleaned_data.get("username")
+            user.date_joined = datetime.datetime.now()
+            user.first_name = form.cleaned_data.get("first_name")
+            user.last_name = form.cleaned_data.get("last_name")
+            # user = authenticate(username=username, password=raw_password)
+            print("me da ansiedad")
+            user.save()
             msg     = 'User created.'
             success = True
             #return redirect("/login/")
@@ -58,28 +69,40 @@ def login_page(request):
         context_instance=RequestContext(request))
 
 @login_required(login_url="/login/")
-def user(request):
+def usuarios(request):
     activate('es')
     if request.method == "POST":       
-        form = UsuariosForm(request.POST)        
+        form = UsuariosForm(request.POST)  
+        print(form.is_valid())
+        if form.errors:
+            for field in form:
+                for error in field.errors:
+                    print(field.name)
+
+                    print(error)
         if form.is_valid():
-            try:
-                form.save()
-                return redirect('/usuarios/todos')
-            except:
-                pass
+            
+            user = form.save(commit=False)
+            user.username = form.cleaned_data.get("username")
+            user.raw_password = form.cleaned_data.get("password1")
+            user.is_active = form.cleaned_data.get("is_active")
+            user.email = form.cleaned_data.get("username")
+            user.date_joined = datetime.datetime.now()
+            user.first_name = form.cleaned_data.get("first_name")
+            user.last_name = form.cleaned_data.get("last_name")
+            # user = authenticate(username=username, password=raw_password)
+            print("este es el segundo intento")
+            user.save()
+            return redirect('/usuarios/todos')
+            
+        else:
+            form = UsuariosForm()
     else:
         form = UsuariosForm()
-    if form.errors:
-        for field in form:
-            for error in field.errors:
-                print(field.name)
-
-                print(error)
         # for error in form.non_field_errors:
         #     print('NFE | ')
         #     print(error)
-    return render(request, 'usuarios/agregar.html', {'form': form})
+        return render(request, 'usuarios/agregar.html', {'form': form})
 
 
 
@@ -88,14 +111,14 @@ def todos(request):
     activate('es')
     usuariosTodos = {}
     #if request.user.is_staff:
-    usuariosTodos = Usuarios.objects.all()
+    usuariosTodos = User.objects.all()
         
     #elif hasattr(request.user, 'cliente') and (request.user.cliente.get_id() is not None):
         
     #    instalaciones  = Instalacion.objects.filter(id_cliente=request.user.cliente.get_id())
 
-    for usuarios in usuariosTodos:
-        usuarios.id = str(usuarios._id)
+    # for usuarios in usuariosTodos:
+    #     usuarios.id = str(usuarios._id)
 
     return render(request, "usuarios/todos.html", {'usuariosTodos': usuariosTodos})
 
@@ -103,7 +126,7 @@ def todos(request):
 @login_required(login_url="/login/")
 def editar(request, id):
     activate('es')
-    usuarios = get_object_or_404(Usuarios, _id=id)
+    usuarios = get_object_or_404(User, _id=id)
     
     form = UsuariosEditarForm(request.POST or None, instance=usuarios)
  
@@ -113,7 +136,7 @@ def editar(request, id):
 @login_required(login_url="/login/")
 def actualizar(request, id):
     activate('es')
-    usuarios = get_object_or_404(Usuarios, _id=id)
+    usuarios = get_object_or_404(User, _id=id)
     form = UsuariosEditarForm(request.POST or None, instance=usuarios)
     if form.is_valid():
         form.save()
@@ -134,7 +157,7 @@ def actualizar(request, id):
 def eliminar(request, id):
     activate('es')
     try:
-        usuarios = Usuarios.objects.get(_id=id)
+        usuarios = User.objects.get(_id=id)
         usuarios.delete()
     except Exception as e:
         print('%s (%s)' % (e, type(e)))
