@@ -253,10 +253,12 @@
 						<div class="card-body">
 							<b><small>{{camara.nombre_camara}}</small></b>
 							{% if  camara.serial_camara == "Q2HV-B24V-ZKN5" %}
-							<img class="card-img-top thumbnail" src="{{ form.meraki }}">
+							<img class="card-img-top thumbnail" src="{{ form.meraki }}" onerror="this.src='/static/assets/img/onerrorQ2HV-B24V-ZKN5.jpg';">
+						
 							{%endif%}
 							{% if camara.serial_camara == "Q2GV-4YBM-YWWJ"%}
-							<img class="card-img-top thumbnail" src="{{ form.meraki2 }}">
+							<img class="card-img-top thumbnail" src="{{ form.meraki2 }}" onerror="this.src='/static/assets/img/onerrorQ2GV-4YBM-YWWJ.jpg';">
+						
 							{%endif%}
 						  </div>
 						  <p>Total Personas: {{zonas_camara.nro_personas}}</p>
