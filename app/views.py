@@ -112,13 +112,13 @@ def index(request):
                             #result = urllib.request.urlopen(extract)
                             #htmlSource = base64.b64encode(result.read())      
                             #print(result)
-                            if request.user.is_staff:
+                        if request.user.is_staff:
                             
                                 #instalaciones = Instalacion.objects.filter('cliente':)
                                 
                                 formeee = {'foo': 'staff', 'meraki' : extract, 'serial':serial, 'meraki2':extract2}
                                 #form2 ={'foo':'staff','meraki': response2}
-                            else:
+                        else:
                                 id_cliente = 0
                                 id_instalacion = 0
                                 monitores = {}
@@ -143,7 +143,7 @@ def index(request):
 
                                 #print(result, flush=True)  
                                 #print(response2.text.encode('utf8', {'flush': form2})) 
-                            return render(request, "index.html",  {'formee': formeee,'camaras':camarasAll})
+                        return render(request, "index.html",  {'formee': formeee,'camaras':camarasAll})
                                 
 
                                 
