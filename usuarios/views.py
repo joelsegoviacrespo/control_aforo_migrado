@@ -18,16 +18,6 @@ def register_user(request):
     activate('es')
     msg     = None
     success = False
-<<<<<<< Updated upstream
-    if request.method == "POST":
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get("username")
-            raw_password = form.cleaned_data.get("password")
-            user = authenticate(username=username, password=raw_password)
-
-=======
 
     if request.method == "POST":
 
@@ -44,7 +34,6 @@ def register_user(request):
             user.last_name = form.cleaned_data.get("last_name")
             # user = authenticate(username=username, password=raw_password)
             user.save()
->>>>>>> Stashed changes
             msg     = 'User created.'
             success = True
             #return redirect("/login/")
@@ -82,13 +71,6 @@ def user(request):
     if request.method == "POST":       
         form = UsuariosForm(request.POST)        
         if form.is_valid():
-<<<<<<< Updated upstream
-            try:
-                form.save()
-                return redirect('/usuarios/todos')
-            except:
-                pass
-=======
             
             user = form.save(commit=False)
             user.username = form.cleaned_data.get("username")
@@ -103,7 +85,6 @@ def user(request):
             
         else:
             form = UsuariosForm()
->>>>>>> Stashed changes
     else:
         form = UsuariosForm()
     if form.errors:
@@ -139,11 +120,6 @@ def todos(request):
 @login_required(login_url="/login/")
 def editar(request, id):
     activate('es')
-<<<<<<< Updated upstream
-    usuarios = get_object_or_404(Usuarios, _id=id)
-    
-    form = UsuariosEditarForm(request.POST or None, instance=usuarios)
-=======
     user = get_object_or_404(User, _id=id)
     if request.method == "POST":
         form = UsuariosEditarForm(request.POST, instance=user)
@@ -159,7 +135,6 @@ def editar(request, id):
             
         else:
             form = UsuariosEditarForm(instance=user)
->>>>>>> Stashed changes
  
     return render(request, 'usuarios/editar.html', { 'form' : form })
 
