@@ -6,7 +6,7 @@ from djongo import models
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.utils.translation import activate
 from usuarios.forms import UsuariosForm,UsuariosEditarForm
-from usuarios.models import Usuarios
+from usuarios.models import User
 
 from django.template import RequestContext
 from django.shortcuts import render_to_response
@@ -58,7 +58,7 @@ def login_page(request):
         context_instance=RequestContext(request))
 
 @login_required(login_url="/login/")
-def usuarios(request):
+def user(request):
     activate('es')
     if request.method == "POST":       
         form = UsuariosForm(request.POST)        
