@@ -102,8 +102,8 @@ def index(request):
                             urlResponse2 = json.loads(response2.text)
                             extract = urlResponse.get('url')
                             extract2= urlResponse2.get('url')
-                            print(extract)
-                            print(extract2)
+                            #print(extract)
+                            #print(extract2)
                             #consulta a meraki
                             camarasAll =  Camaras.objects.all()
                             serial = camaras.serial_camara
@@ -116,7 +116,7 @@ def index(request):
                             
                                 #instalaciones = Instalacion.objects.filter('cliente':)
                                 
-                                form = {'foo': 'staff', 'meraki' : extract, 'serial':serial, 'meraki2':extract2}
+                                formeee = {'foo': 'staff', 'meraki' : extract, 'serial':serial, 'meraki2':extract2}
                                 #form2 ={'foo':'staff','meraki': response2}
                             else:
                                 id_cliente = 0
@@ -127,7 +127,7 @@ def index(request):
                                    id_cliente = request.user.cliente.get_id()        
                                    id_instalacion = Instalacion.objects.values('_id').filter(id_cliente_id=id_cliente, instalacion_estado=True)[0]       
                                    monitores = Monitor.objects.filter(id_instalacion_id=id_instalacion, monitor_estado=True) 
-                                   form = {'id_cliente': id_cliente, 'monitores' : monitores, 'estadisticas' : estadisticas, 'meraki' : extract, 'serial':serial, 'meraki2':extract2}
+                                   formeee = {'id_cliente': id_cliente, 'monitores' : monitores, 'estadisticas' : estadisticas, 'meraki' : extract, 'serial':serial, 'meraki2':extract2}
 
 
                                     #form2 = {'id_cliente' : id_cliente, 'monitores' : monitores, 'estadisticas' : estadisticas, 'meraki' : response2} 
@@ -143,7 +143,7 @@ def index(request):
 
                                 #print(result, flush=True)  
                                 #print(response2.text.encode('utf8', {'flush': form2})) 
-                            return render(request, "index.html",  {'form': form,'camaras':camarasAll})
+                            return render(request, "index.html",  {'formee': formeee,'camaras':camarasAll})
                                 
 
                                 
