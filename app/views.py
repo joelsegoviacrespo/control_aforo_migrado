@@ -106,6 +106,7 @@ def index(request):
                             #print(extract2)
                             #consulta a meraki
                             camarasAll =  Camaras.objects.all()
+                            camarasAll.append({"urls":{"meraki":extract,"meraki2":extract2}})
                             serial = camaras.serial_camara
                             
                             #                   extract = urlResponse.get('url')
@@ -145,7 +146,7 @@ def index(request):
                                 #print(result, flush=True)  
                                 #print(response2.text.encode('utf8', {'flush': form2})) 
     formeee={'meraki':extract,'meraki2':extract2}
-    print ("Cualquier cosa:",formeee)
+    print ("Objeto completo de camaras:",camarasAll)
     return render(request, "index.html",  {'formee': formeee,'camaras':camarasAll})
                                 
 
