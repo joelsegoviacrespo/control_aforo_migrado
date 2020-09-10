@@ -249,11 +249,10 @@ def configuracion(request, id_monitor):
                     elif Date==6:
                         total_day_info = aforoInfo.nro_aforo
                         sund_info =total_day_info
-                        print("d")
+                        print("d") 
 
 
                 
-
             except Exception as e:
                 print('%s (%s)' % (e, type(e)))
                 pass
