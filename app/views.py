@@ -117,6 +117,7 @@ def index(request):
                                 #instalaciones = Instalacion.objects.filter('cliente':)
                                 
         formeee = {'foo': 'staff', 'meraki' : extract, 'serial':serial, 'meraki2':extract2}
+        print ("el forme del staff:"+formeee)
                                 #form2 ={'foo':'staff','meraki': response2}
     else:
         id_cliente = 0
@@ -128,7 +129,7 @@ def index(request):
             id_instalacion = Instalacion.objects.values('_id').filter(id_cliente_id=id_cliente, instalacion_estado=True)[0]       
             monitores = Monitor.objects.filter(id_instalacion_id=id_instalacion, monitor_estado=True) 
             formeee = {'id_cliente': id_cliente, 'monitores' : monitores, 'estadisticas' : estadisticas, 'meraki' : extract, 'serial':serial, 'meraki2':extract2}
-
+            print("Este es del else:"+formeee)
 
                                     #form2 = {'id_cliente' : id_cliente, 'monitores' : monitores, 'estadisticas' : estadisticas, 'meraki' : response2} 
 
