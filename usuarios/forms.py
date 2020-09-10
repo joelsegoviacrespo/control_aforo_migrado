@@ -29,12 +29,15 @@ class UsuariosForm(forms.ModelForm):
 
 class UsuariosEditarForm(forms.ModelForm):
     id = forms.CharField(widget=forms.HiddenInput, required=False, initial=0)
-    cliente_nif = forms.ChoiceField()
+    username = forms.CharField(widget=forms.HiddenInput, required=False, initial=0)
+    email = forms.CharField(widget=forms.HiddenInput, required=False, initial=0)
+    first_name = forms.CharField(widget=forms.HiddenInput, required=False, initial=0)
+    last_name = forms.CharField(widget=forms.HiddenInput, required=False, initial=0)
     id_cliente_nif = forms.CharField(widget=forms.HiddenInput, required=False, initial=0)
     
     class Meta:
         model = User
-        fields =  '__all__'
+        fields = ('username', 'email', 'first_name', 'last_name')
 
     def __init__(self, *args, **kwargs):
         super(UsuariosEditarForm, self).__init__(*args, **kwargs)
@@ -63,6 +66,7 @@ class UsuariosEditarForm(forms.ModelForm):
         fields =  ('nif_cliente','nombre',)  '''  
 class LoginForm(forms.Form):
     username = forms.CharField()
+<<<<<<< Updated upstream
     password = forms.CharField(widget=forms.PasswordInput())
 class SignUpForm(UserCreationForm):
     is_active = forms.BooleanField(
@@ -119,3 +123,6 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2')
+=======
+    password = forms.CharField(widget=forms.PasswordInput())
+>>>>>>> Stashed changes

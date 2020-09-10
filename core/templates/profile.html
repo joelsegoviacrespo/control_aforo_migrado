@@ -40,31 +40,31 @@
                         <div class="row">
                             <div class="col-md-6 col-lg-4">
                                 <div class="form-group">
-                                    <label for="nombre">Usuario</label>
+                                    <label for="user">Usuario</label>
                                     <h6><b>{{ request.user.profile.get_rol_display }}</b></h6>
                                 </div>
                                 <div class="form-group">
-                                    <label for="apellido">Nombre de usuario</label>
+                                    <label for="username">Nombre de usuario</label>
                                     <h4>{{ request.user.profile }}</h4>
                                 </div>
                                 <div class="form-group">
-                                    <label for="apellido">Nombre</label>
+                                    <label for="first_name">Nombre</label>
                                     <h4>{{ request.user.first_name }}</h4>
                                 </div>
                                 <div class="form-group">
-                                    <label for="apellido">Apellido</label>
+                                    <label for="last_name">Apellido</label>
                                     <h4>{{ request.user.last_name }}</h4>
                                 </div>
                                 <div class="form-group">
-                                    <label for="apellido">Email</label>
+                                    <label for="email">Email</label>
                                     <h6><b>{{ request.user.email }}</b></h6>
                                 </div>
-                                {% if user.profile.rol > 2 %}
+                               <!-- {% if user.profile.rol > 2 %}
                                 <div class="form-group">
-                                    <label for="apellido">Cliente</label>
-                                    <h6><b>{{ request.user.cliente.razon_social|escape }}</b></h6>
+                                    <label for="cliente">Cliente</label>
+                                    <h6><b>{{ request.user.profile.id_cliente }}</b></h6>
                                 </div>
-                                {% endif %}
+                                {% endif %}-->
                             </div>
                         </div>
                     </div>
