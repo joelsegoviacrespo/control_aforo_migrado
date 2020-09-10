@@ -32,8 +32,30 @@ def hfs(request):
 @login_required(login_url="/login/")
 def index(request):
     camarasAll =  Camaras.objects.all()
+    url = "https://api.meraki.com/api/v1/devices/Q2HV-B24V-ZKN5/camera/generateSnapshot"
+    url2 = "https://api.meraki.com/api/v1/devices/Q2GV-4YBM-YWWJ/camera/generateSnapshot"  
+                        
+
+    payload = {}
+    headers = {
+                        'X-Cisco-Meraki-API-Key': '920a310b87feb3832739a79d573845404c6825d0',
+                        'Content-Type': 'application/json'
+                }
    
-    return render(request, "index.html",  {'camaras':camarasAll})
+    response = requests.request("POST", url, headers=headers, data = payload)
+    response2= requests.request("POST",url2 ,headers=headers, data = payload)
+
+    if(not response and not response2):
+            
+        extract = "/static/assets/img/people.jpg"
+                        
+    else:
+        urlResponse = json.loads(response.text)
+        urlResponse2 = json.loads(response2.text)
+        extract = urlResponse.get('url')
+        extract2= urlResponse2.get('url')
+
+    return render(request, "index.html",  {'camaras':camarasAll,'url1':extract,'url2':extract2})
  
 
 @login_required(login_url="/login/")
