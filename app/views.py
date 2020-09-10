@@ -48,7 +48,8 @@ def index(request):
     if(not response and not response2):
             
         extract = "/static/assets/img/people.jpg"
-                        
+        extract2 = "/static/assets/img/people.jpg"
+      
     else:
         urlResponse = json.loads(response.text)
         urlResponse2 = json.loads(response2.text)
