@@ -7,7 +7,6 @@ from django.shortcuts import render, redirect, get_object_or_404, get_list_or_40
 from django.utils.translation import activate
 from instalacion.forms import InstalacionForm,InstalacionEditarForm
 from instalacion.models import Instalacion
-import Constantes
 
 
 @login_required(login_url="/login/")
@@ -39,19 +38,13 @@ def instalacion(request):
 @login_required(login_url="/login/")
 def todos(request):
     activate('es')
-    instalaciones = {}   
+    instalaciones = {}
+    #if request.user.is_staff:
+    instalaciones = Instalacion.objects.all()
         
-    
-    if (request.user.profile.rol== Constantes.SUPERUSUARIO):    
-        instalaciones = Instalacion.objects.all()
+    #elif hasattr(request.user, 'cliente') and (request.user.cliente.get_id() is not None):
         
-    elif (request.user.profile.rol == Constantes.ADMINISTRADOR) and hasattr(request.user.profile, 'cliente') and (request.user.profile.cliente.get_id() is not None):      
-        instalaciones = Instalacion.objects.all().filter(cliente={'nif': request.user.profile.cliente.nif})
-      
-    elif (request.user.profile.rol > Constantes.ADMINISTRADOR) and hasattr(request.user.profile, 'cliente') and (request.user.profile.cliente.get_id() is not None): 
-
-          if hasattr(request.user.profile, 'instalacion') and (request.user.profile.instalacion.get_id() is not None):
-              instalaciones  = Instalacion.objects.all().filter(_id=request.user.profile.instalacion.get_id())
+    #    instalaciones  = Instalacion.objects.filter(id_cliente=request.user.cliente.get_id())
 
     for instalacion in instalaciones:
         instalacion.id = str(instalacion._id)

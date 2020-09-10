@@ -40,9 +40,6 @@ class Instalacion(models.Model):
     def __str__(self,):
         return str(self.nombre_comercial)
     
-    def get_id(self):
-        return str(self._id)
-    
     class Meta:
         db_table = "instalacion"
     
