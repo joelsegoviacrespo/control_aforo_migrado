@@ -112,22 +112,22 @@ def index(request):
                             #result = urllib.request.urlopen(extract)
                             #htmlSource = base64.b64encode(result.read())      
                             #print(result)
-                        if request.user.is_staff:
+    if request.user.is_staff:
                             
                                 #instalaciones = Instalacion.objects.filter('cliente':)
                                 
-                                formeee = {'foo': 'staff', 'meraki' : extract, 'serial':serial, 'meraki2':extract2}
+        formeee = {'foo': 'staff', 'meraki' : extract, 'serial':serial, 'meraki2':extract2}
                                 #form2 ={'foo':'staff','meraki': response2}
-                        else:
-                                id_cliente = 0
-                                id_instalacion = 0
-                                monitores = {}
-                                estadisticas = {}
-                                if hasattr(request.user, 'cliente'):            
-                                   id_cliente = request.user.cliente.get_id()        
-                                   id_instalacion = Instalacion.objects.values('_id').filter(id_cliente_id=id_cliente, instalacion_estado=True)[0]       
-                                   monitores = Monitor.objects.filter(id_instalacion_id=id_instalacion, monitor_estado=True) 
-                                   formeee = {'id_cliente': id_cliente, 'monitores' : monitores, 'estadisticas' : estadisticas, 'meraki' : extract, 'serial':serial, 'meraki2':extract2}
+    else:
+        id_cliente = 0
+        id_instalacion = 0
+        monitores = {}
+        estadisticas = {}
+        if hasattr(request.user, 'cliente'):            
+            id_cliente = request.user.cliente.get_id()        
+            id_instalacion = Instalacion.objects.values('_id').filter(id_cliente_id=id_cliente, instalacion_estado=True)[0]       
+            monitores = Monitor.objects.filter(id_instalacion_id=id_instalacion, monitor_estado=True) 
+            formeee = {'id_cliente': id_cliente, 'monitores' : monitores, 'estadisticas' : estadisticas, 'meraki' : extract, 'serial':serial, 'meraki2':extract2}
 
 
                                     #form2 = {'id_cliente' : id_cliente, 'monitores' : monitores, 'estadisticas' : estadisticas, 'meraki' : response2} 
