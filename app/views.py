@@ -105,8 +105,10 @@ def index(request):
                             #print(extract)
                             #print(extract2)
                             #consulta a meraki
+                            urls= {"meraki":extract,"meraki2":extract2}
+                            zonas_camaras.append = (urls)
                             camarasAll =  Camaras.objects.all()
-                            camarasAll.append({"urls":{"meraki":extract,"meraki2":extract2}})
+                            #camarasAll.append({"urls":{"meraki":extract,"meraki2":extract2}})
                             serial = camaras.serial_camara
                             
                             #                   extract = urlResponse.get('url')
