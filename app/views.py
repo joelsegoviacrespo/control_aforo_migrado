@@ -28,6 +28,18 @@ import base64
 from django.conf import settings
 import json
 import urllib.request
+
+
+
+import calendar
+import datetime
+import pytz
+from datetime import date
+today = date.today()
+
+
+
+
 #from urllib.request import urlopen
 #from urllib.request.urlopen import urlopen
 
@@ -46,6 +58,22 @@ def index(request):
     a=1
     b=2
     form = {}
+
+
+    
+    mond_info =0
+    tues_info = 0
+    wedn_info = 0
+    thur_info = 0
+    frid_info =0
+    satu_info = 0
+    sund_infor = 0
+    total_day_info =0
+    grafica_info = [1,2,3,4,5,6,7,8,9,10]
+
+
+
+
     for camaras in camarasAll:
                     #print("1")
                     #print(camaras._id)
@@ -96,8 +124,67 @@ def index(request):
                         #print (response2)
                         if(not response and not response2):
                             extract = "/static/assets/img/people.jpg"
+
                         
                         else:
+
+                                        
+                            total_day_info = 3
+                            date =today.strftime("%d, %m, %Y")
+                            print(date)
+                            Date = datetime.datetime.strptime(date, '%d, %m, %Y').weekday()
+
+
+
+                            print(Date)
+                            if Date==0:
+                                total_day_info = 3
+                                mond_info =total_day_info
+                                grafica_info.append(mond_info)
+
+                                print("l")
+                            elif Date==1:
+                                total_day_info =3
+                                tues_info =total_day_info 
+                                print("m")
+
+                                grafica_info.append(mond_info)
+                                print(grafica_info)
+                            elif Date==2:
+                                total_day_info = 3
+                                wedn_info =total_day_info
+                                print("m")
+                                grafica_info.append(tues_info)
+                                print(grafica_info)
+                            elif Date==3:
+                                total_day_info = 3
+                                thur_info =total_day_info
+                                print("j")
+                                grafica_info.append(thur_info)
+                                print(grafica_info)
+                            elif Date==4:
+                                total_day_info = 3
+                                frid_info =total_day_info
+                                print("v")
+                                grafica_info.append(frid_info)
+                                print(grafica_info)
+                            elif Date==5:
+                                total_day_info =3
+                                satu_info =total_day_info
+                                print("s")
+                                grafica_info.append(satu_info)
+                                print(grafica_info)
+                            elif Date==6:
+                                total_day_info = 3
+                                sund_info =total_day_info
+                                print("d") 
+                                grafica_info.append(sund_info)
+                                print(grafica_info)
+
+
+
+
+
                             urlResponse = json.loads(response.text)
                             urlResponse2 = json.loads(response2.text)
                             extract = urlResponse.get('url')
@@ -119,6 +206,7 @@ def index(request):
                                 form = {'foo': 'staff', 'meraki' : extract, 'serial':serial, 'meraki2':extract2}
                                 #form2 ={'foo':'staff','meraki': response2}
                             else:
+                                grafica_info = [1,2,3,4,5,6,7,8,9,10]
                                 id_cliente = 0
                                 id_instalacion = 0
                                 monitores = {}
@@ -127,7 +215,7 @@ def index(request):
                                    id_cliente = request.user.cliente.get_id()        
                                    id_instalacion = Instalacion.objects.values('_id').filter(id_cliente_id=id_cliente, instalacion_estado=True)[0]       
                                    monitores = Monitor.objects.filter(id_instalacion_id=id_instalacion, monitor_estado=True) 
-                                   form = {'id_cliente': id_cliente, 'monitores' : monitores, 'estadisticas' : estadisticas, 'meraki' : extract, 'serial':serial, 'meraki2':extract2}
+                                   form = {'id_cliente': id_cliente, 'monitores' : monitores, 'estadisticas' : estadisticas, 'meraki' : extract, 'serial':serial, 'meraki2':extract2, 'grafica_info': "[1,2,3,4,5,6,7,8,9,10]"}
 
 
                                     #form2 = {'id_cliente' : id_cliente, 'monitores' : monitores, 'estadisticas' : estadisticas, 'meraki' : response2} 

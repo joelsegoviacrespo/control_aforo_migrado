@@ -203,7 +203,7 @@ def configuracion(request, id_monitor):
             satu_info = 0
             sund_infor = 0
             total_day_info =0
-            grafica_info = []
+            grafica_info = [1,2,3,4,5,6,7,8,9]
             
 
             nro_aforo = 0
@@ -216,7 +216,7 @@ def configuracion(request, id_monitor):
 
                     total_day_info = aforoInfo.nro_aforo
                     date =today.strftime("%d, %m, %Y")
-                    print(date)
+                    #print(date)
                     Date = datetime.datetime.strptime(date, '%d, %m, %Y').weekday()
                     
 
@@ -225,31 +225,46 @@ def configuracion(request, id_monitor):
                     if Date==0:
                         total_day_info = aforoInfo.nro_aforo
                         mond_info =total_day_info
+                        grafica_info.append(mond_info)
+                        
                         print("l")
                     elif Date==1:
                         total_day_info = aforoInfo.nro_aforo
                         tues_info =total_day_info 
                         print("m")
+                        
+                        grafica_info.append(mond_info)
+                        print(grafica_info)
                     elif Date==2:
                         total_day_info = aforoInfo.nro_aforo
                         wedn_info =total_day_info
                         print("m")
+                        grafica_info.append(tues_info)
+                        print(grafica_info)
                     elif Date==3:
                         total_day_info = aforoInfo.nro_aforo
                         thur_info =total_day_info
                         print("j")
+                        grafica_info.append(thur_info)
+                        print(grafica_info)
                     elif Date==4:
                         total_day_info = aforoInfo.nro_aforo
                         frid_info =total_day_info
                         print("v")
+                        grafica_info.append(frid_info)
+                        print(grafica_info)
                     elif Date==5:
                         total_day_info = aforoInfo.nro_aforo
                         satu_info =total_day_info
                         print("s")
+                        grafica_info.append(satu_info)
+                        print(grafica_info)
                     elif Date==6:
                         total_day_info = aforoInfo.nro_aforo
                         sund_info =total_day_info
                         print("d") 
+                        grafica_info.append(sund_info)
+                        print(grafica_info)
 
 
                 
