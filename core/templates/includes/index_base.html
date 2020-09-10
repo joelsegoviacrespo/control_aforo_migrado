@@ -249,15 +249,15 @@
                 <div class="card full-height">
 					
                     <div class="card-header text-center pt-2 pb-3"style=" border-width:0px !important">                  
-					 FORM Es: {{formeee}}
+					 
 						<div class="card-body">
 							<b><small>{{camara.nombre_camara}}</small></b>
 							{% if  camara.serial_camara == "Q2HV-B24V-ZKN5" %}
-							<img class="card-img-top p-4 rounded" src="{{ formeee.meraki }}" onerror="this.src='/static/assets/img/onerrorQ2HV-B24V-ZKN5.jpg';">
+							<img class="card-img-top p-4 rounded" src="{{ formee.meraki }}" onerror="this.src='/static/assets/img/onerrorQ2HV-B24V-ZKN5.jpg';">
 						
 							{%endif%}
 							{% if camara.serial_camara == "Q2GV-4YBM-YWWJ"%}
-							<img class="card-img-top p-4 rounded" src="{{ formeee.meraki2 }}" onerror="this.src='/static/assets/img/onerrorQ2GV-4YBM-YWWJ.jpg';">
+							<img class="card-img-top p-4 rounded" src="{{ formee.meraki2 }}" onerror="this.src='/static/assets/img/onerrorQ2GV-4YBM-YWWJ.jpg';">
 							{%endif%}
 						  </div>
 						  <p>Total Personas: {{zonas_camara.nro_personas}}</p>
