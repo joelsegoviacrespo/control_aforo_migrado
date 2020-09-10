@@ -143,8 +143,8 @@ def index(request):
 
                                 #print(result, flush=True)  
                                 #print(response2.text.encode('utf8', {'flush': form2})) 
-                        print ("Cualquier cosa",formeee)
-                        return render(request, "index.html",  {'formee': formeee,'camaras':camarasAll})
+    print ("Cualquier cosa:",formeee)
+    return render(request, "index.html",  {'formee': formeee,'camaras':camarasAll})
                                 
 
                                 
