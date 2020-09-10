@@ -102,8 +102,8 @@ def index(request):
                             urlResponse2 = json.loads(response2.text)
                             extract = urlResponse.get('url')
                             extract2= urlResponse2.get('url')
-                            #print(extract)
-                            #print(extract2)
+                            print(extract)
+                            print(extract2)
                             #consulta a meraki
                             camarasAll =  Camaras.objects.all()
                             serial = camaras.serial_camara
