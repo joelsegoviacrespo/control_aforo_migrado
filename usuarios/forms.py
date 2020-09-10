@@ -3,73 +3,22 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from cliente.models import Cliente
-# from usuarios.models import Usuarios, UsuarioEmbebido
+from usuarios.models import User#, UsuarioEmbebido
 
-import datetime
+
 class UsuariosForm(forms.ModelForm):
     id = forms.CharField(widget=forms.HiddenInput, required=False, initial=0)
-    
-    is_active = forms.BooleanField(
-        widget=forms.TextInput(
-            attrs={
-                "placeholder" : "Activo",                
-                "class": "form-control"
-            }
-        ))
-    username = forms.CharField(
-        widget=forms.TextInput(
-            attrs={
-                "placeholder" : "Username",                
-                "class": "form-control"
-            }
-        ))
-    first_name = forms.CharField(
-        widget=forms.TextInput(
-            attrs={
-                "placeholder" : "Nombre",                
-                "class": "form-control"
-            }
-        ))
-    last_name = forms.CharField(
-        widget=forms.TextInput(
-            attrs={
-                "placeholder" : "Apellido",                
-                "class": "form-control"
-            }
-        ))
-    email = forms.EmailField(
-        widget=forms.EmailInput(
-            attrs={
-                "placeholder" : "Email",                
-                "class": "form-control"
-            }
-        ))
-    password1 = forms.CharField(
-        widget=forms.PasswordInput(
-            attrs={
-                "placeholder" : "Password",                
-                "class": "form-control"
-            }
-        ))
-    password2 = forms.CharField(
-        widget=forms.PasswordInput(
-            attrs={
-                "placeholder" : "Password check",                
-                "class": "form-control"
-            }
-        ))
-    
     cliente_nif = forms.ChoiceField()
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'password2')
+        fields = '__all__'
 
     def __init__(self, *args, **kwargs):
         super(UsuariosForm, self).__init__(*args, **kwargs)
         instance = getattr(self, 'instance', None)
-        # if instance and instance._id:
-        #     self.fields["id"].initial = str(instance._id)
+        if instance and instance._id:
+            self.fields["id"].initial = str(instance._id)
             
         choices = [(cliente.nif, cliente.razon_social)                   
                    for cliente in  Cliente.objects.all()]
@@ -108,15 +57,14 @@ class UsuariosEditarForm(forms.ModelForm):
         self.fields["usuarios_nombre"] = forms.ChoiceField(choices=usuarios_choices,required=False)
         #self.fields["clientes"].choices = [(str(c.nif), c.razon_social) for c in Cliente.objects.all().filter(cliente_estado=True)]
 
-# class UsuarioEmbebidoForm(forms.ModelForm):
-#     class Meta:
-#         model = UsuarioEmbebido
-#         fields =  ('nif_cliente','nombre',)  
-
+'''class UsuarioEmbebidoForm(forms.ModelForm):
+    class Meta:
+        model = UsuarioEmbebido
+        fields =  ('nif_cliente','nombre',)  '''  
 class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput())
-class SignUpForm(forms.Form):
+class SignUpForm(UserCreationForm):
     is_active = forms.BooleanField(
         widget=forms.TextInput(
             attrs={
@@ -167,8 +115,7 @@ class SignUpForm(forms.Form):
             }
         ))
    
-    date_joined = datetime.datetime.now()
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2', 'date_joined')
+        fields = ('username', 'email', 'password1', 'password2')
