@@ -101,6 +101,7 @@ def index(request):
             grafica_info[3]=wedn_info
             print(grafica_info)
             
+            
         elif Date==3:
             print("j")
             total_day_info = 4
