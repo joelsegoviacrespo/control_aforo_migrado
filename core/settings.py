@@ -98,7 +98,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {           
          'default': {
              'ENGINE': 'djongo',
-             'NAME': 'aforo',
+             'NAME': 'aforo_desarrollo',
              'ENFORCE_SCHEMA': False,
              'CLIENT': {
                  'host': 'mongodb://user_aforo_mongo:Af0r0smfC10uDM0n4O@5.196.27.225:27227',
