@@ -13,6 +13,7 @@
 								</a>
 								<div class="collapse" id="cliente">
 									<ul class="nav nav-collapse">
+										{% if user.is_staff %}
 										<li class="nav-item m-0 p-0 h-75">
 											<a href="/cliente/todos">
 												<i class="fas fa-users text-secondary"></i>
@@ -37,7 +38,8 @@
 												<span> Fondos </span>
 											</a>
 										</li>
-																			
+										{% endif %}
+									
 										{% if user.is_staff  %}
 											<li class="nav-item m-0 p-0 h-75">
 												<a href="/usuarios/todos">
@@ -66,8 +68,8 @@
 													</ul>
 												</div>
 											</li>
-									
 										{% endif %}
+									
 									</ul>
 								</div>
 							</li>

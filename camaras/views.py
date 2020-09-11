@@ -195,15 +195,7 @@ def configuracion(request, id_monitor):
             camarasAll =  Camaras.objects.all()
 
 
-            mond_info =0
-            tues_info = 0
-            wedn_info = 0
-            thur_info = 0
-            frid_info =0
-            satu_info = 0
-            sund_infor = 0
-            total_day_info =0
-            grafica_info = []
+           
             
 
             nro_aforo = 0
@@ -214,42 +206,7 @@ def configuracion(request, id_monitor):
                     nro_aforo = aforoInfo.nro_aforo
 
 
-                    total_day_info = aforoInfo.nro_aforo
-                    date =today.strftime("%d, %m, %Y")
-                    print(date)
-                    Date = datetime.datetime.strptime(date, '%d, %m, %Y').weekday()
                     
-
-
-                    print(Date)
-                    if Date==0:
-                        total_day_info = aforoInfo.nro_aforo
-                        mond_info =total_day_info
-                        print("l")
-                    elif Date==1:
-                        total_day_info = aforoInfo.nro_aforo
-                        tues_info =total_day_info 
-                        print("m")
-                    elif Date==2:
-                        total_day_info = aforoInfo.nro_aforo
-                        wedn_info =total_day_info
-                        print("m")
-                    elif Date==3:
-                        total_day_info = aforoInfo.nro_aforo
-                        thur_info =total_day_info
-                        print("j")
-                    elif Date==4:
-                        total_day_info = aforoInfo.nro_aforo
-                        frid_info =total_day_info
-                        print("v")
-                    elif Date==5:
-                        total_day_info = aforoInfo.nro_aforo
-                        satu_info =total_day_info
-                        print("s")
-                    elif Date==6:
-                        total_day_info = aforoInfo.nro_aforo
-                        sund_info =total_day_info
-                        print("d") 
 
 
                 

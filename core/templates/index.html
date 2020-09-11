@@ -13,9 +13,18 @@
 
 {% block javascripts %}
 
+
+
+
 	<script src="../../static/assets/js/demo.js"></script>
 
 	<script>
+
+		
+
+
+
+
 		Circles.create({
 			id:'circles-1',
 			radius:45,
@@ -145,7 +154,7 @@
 
 
 		var totalIncomeChart1 = document.getElementById('totalIncomeChart1').getContext('2d');
-
+		var arrayA=JSON.parse("{{grafica_info}}")
 		var mytotalIncomeChart1 = new Chart(totalIncomeChart1, {
 			type: 'bar',
 			data: {
@@ -154,7 +163,7 @@
 					label: "Total persona",
 					backgroundColor: '#ff9e27',
 					borderColor: 'rgb(23, 125, 255)',
-					data: [2, 4, 8, 5, 4, 2, 6, 7, 8, 10],
+					data: arrayA,
 				}],
 			},
 			options: {
@@ -341,6 +350,7 @@
 			lineColor: '#ffa534',
 			fillColor: 'rgba(255, 165, 52, .14)'
 		});
+		
 	</script>
 
 {% endblock javascripts %}
