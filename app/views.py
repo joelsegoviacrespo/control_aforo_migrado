@@ -168,6 +168,7 @@ def index(request):
                 camarasAll =  Camaras.objects.all()
                 serial = camaras.serial_camara
                 
+                
                 #                   extract = urlResponse.get('url')
                 #result = urllib.request.urlopen(extract)
                 #htmlSource = base64.b64encode(result.read())      
