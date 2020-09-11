@@ -38,7 +38,8 @@
 												<span> Fondos </span>
 											</a>
 										</li>
-																			
+										{% endif %}
+									
 										{% if user.is_staff  %}
 											<li class="nav-item m-0 p-0 h-75">
 												<a href="/usuarios/todos">
@@ -67,7 +68,6 @@
 													</ul>
 												</div>
 											</li>
-									
 										{% endif %}
 										{%endif%}
 									</ul>

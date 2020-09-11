@@ -2,12 +2,7 @@
     <div class="page-inner py-3" >
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
             <div>
-                <!--<br>-->
-               <!--cliente >--> 
-               <!--{{form.id_cliente}}-->
-                <!--<br>-->
-                <!--monitores >-->
-                <!--{{form.monitores}}-->
+               
                 <h2 class="text-white pb-4 pt-2 fw-bold">Panel de control</h2>
                 {% if user.is_superuser %}
                 <h5 class="text-white op-7 mb-2"> <!--[S]Administrador--> </h5>
@@ -25,84 +20,13 @@
     </div>
 </div>
 <div class="page-inner mt--5 ">
-    <!--div class="row mt--2">
-      <div class="col-md-6">
-        <div class="card full-height">
-          <div class="card-body">
-            <div class="card-title">Overall statistics</div>
-            <div class="card-category">Daily information about statistics in system</div>
-            <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
-              <div class="px-2 pb-2 pb-md-0 text-center">
-                <div id="circles-1"></div>
-                <h6 class="fw-bold mt-3 mb-0">New Users</h6>
-              </div>
-              <div class="px-2 pb-2 pb-md-0 text-center">
-                <div id="circles-2"></div>
-                <h6 class="fw-bold mt-3 mb-0">Sales</h6>
-              </div>
-              <div class="px-2 pb-2 pb-md-0 text-center">
-                <div id="circles-3"></div>
-                <h6 class="fw-bold mt-3 mb-0">Subscribers</h6>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="card full-height">
-          <div class="card-body">
-            <div class="card-title">Total income & spend statistics</div>
-            <div class="row py-3">
-              <div class="col-md-4 d-flex flex-column justify-content-around">
-                <div>
-                  <h6 class="fw-bold text-uppercase text-success op-8">Total Income</h6>
-                  <h3 class="fw-bold">$9.782</h3>
-                </div>
-                <div>
-                  <h6 class="fw-bold text-uppercase text-danger op-8">Total Spend</h6>
-                  <h3 class="fw-bold">$1,248</h3>
-                </div>
-              </div>
-              <div class="col-md-8">
-                <div id="chart-container">
-                  <canvas id="totalIncomeChart"></canvas>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-	</div-->
-	
 
-	
         
         
 
     <div class="row mt--2 " >
 
-	<!--<div class="col-md-2">
-			<div class="card full-height">
-			  <div class="card-body">
-				<div class="card-title">Overall statistics</div>
-				<div class="card-category">Daily information about statistics in system</div>
-				<div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
-				  <div class="px-2 pb-2 pb-md-0 text-center">
-					<div id="circles-1"></div>
-					<h6 class="fw-bold mt-3 mb-0">New Users</h6>
-				  </div>
-				  <div class="px-2 pb-2 pb-md-0 text-center">
-					<div id="circles-2"></div>
-					<h6 class="fw-bold mt-3 mb-0">Sales</h6>
-				  </div>
-				  <div class="px-2 pb-2 pb-md-0 text-center">
-					<div id="circles-3"></div>
-					<h6 class="fw-bold mt-3 mb-0">Subscribers</h6>
-				  </div>
-				</div>
-			  </div>
-			</div>
-			</div>-->
+	
 		
         <div class="col-md-6"style="height:10%;">
             <div class="card full-height ">
@@ -184,22 +108,8 @@
 			</div>
 
 
-
-
-		
-              <!--</div>-->
-              <!--<div class="card-footer text-center"><h3>Zona: <h3>Completa</h3></h3></div>
-            </div>
-		  
-		</div>
-          
-         </div>
         
-       Todo este div muestra una fila -->
-        
-
-        
-	 {% for camara in camaras %}
+{% for camara in camaras %}
    <div class="row {{var}}">
     {% for zonas_camara in camara.zonas_camara %}
      
@@ -254,22 +164,16 @@
 							<b><small>{{camara.nombre_camara}}</small></b>
 							
 							{% if  camara.serial_camara == "Q2HV-B24V-ZKN5" %}
-							<img class="card-img-top p-2" src="{{ form.meraki }}" onerror="this.src='/static/assets/img/onerrorQ2HV-B24V-ZKN5.jpg';">
+							<img class="card-img-top p-1 rounded" src="{{ url1 }}" onerror="this.src='/static/assets/img/onerrorQ2HV-B24V-ZKN5.jpg';">
 						
 							{%endif%}
 							{% if camara.serial_camara == "Q2GV-4YBM-YWWJ"%}
-							<img class="card-img-top `-2" src="{{ form.meraki2 }}" onerror="this.src='/static/assets/img/onerrorQ2GV-4YBM-YWWJ.jpg';">
-						
+							<img class="card-img-top p-1 rounded" src="{{ url2 }}" onerror="this.src='/static/assets/img/onerrorQ2GV-4YBM-YWWJ.jpg';">
 							{%endif%}
 						  </div>
 						  <p>Total Personas: {{zonas_camara.nro_personas}}</p>
 					</div> <br><br>
-				<!--	QUITAR ESTO ANTES DE SUBIR LOS CAMBIOS-->
-				<!--	Este es el serial {{form.serial}}<br><br>
-				  Esta es la imagen1 {{form.meraki}} <br><br>
-				  Esta es la imagen2 {{form.meraki2}}<br><br>
-				  Si el serial es Q2HV-B24V-ZKN5 <br><br>-->
-				 
+			
 
 				<!--  {% if  form.serial == "Q2HV-B24V-ZKN5" %}
 				 
