@@ -37,6 +37,8 @@ import pytz
 from datetime import date
 today = date.today()
 
+from aforoInfo.models import AforoInfo
+
 
 
 
@@ -70,7 +72,7 @@ def index(request):
     sund_infor = 0
     total_day_info =0
     grafica_info = [1,2,3,4,5,6,7,8,9,10]
-
+    
 
 
 
@@ -85,7 +87,7 @@ def index(request):
                    # print(camaras.instalacion.nombre)
                     #camaras.instalacion = model_to_dict(camaras.instalacion)
                     zonas_camaras = []
-                    
+                    grafica_info = [0,0,0,0,0,0,0,0,0]
 
                     
                     
@@ -138,47 +140,47 @@ def index(request):
 
                             print(Date)
                             if Date==0:
-                                total_day_info = 3
+                                total_day_info = 1
                                 mond_info =total_day_info
-                                grafica_info.append(mond_info)
+                                grafica_info.insert(0,mond_info)
 
                                 print("l")
                             elif Date==1:
-                                total_day_info =3
+                                total_day_info =2
                                 tues_info =total_day_info 
                                 print("m")
-
-                                grafica_info.append(mond_info)
+                                grafica_info.insert(1,tues_info)
+                                
                                 print(grafica_info)
                             elif Date==2:
                                 total_day_info = 3
                                 wedn_info =total_day_info
                                 print("m")
-                                grafica_info.append(tues_info)
+                                grafica_info.insert(2,wedn_info)
                                 print(grafica_info)
                             elif Date==3:
-                                total_day_info = 3
+                                total_day_info = 4
                                 thur_info =total_day_info
                                 print("j")
-                                grafica_info.append(thur_info)
+                                grafica_info.insert(4,thur_info)
                                 print(grafica_info)
                             elif Date==4:
-                                total_day_info = 3
+                                total_day_info = 5
                                 frid_info =total_day_info
                                 print("v")
-                                grafica_info.append(frid_info)
+                                grafica_info.insert(5,frid_info)
                                 print(grafica_info)
                             elif Date==5:
-                                total_day_info =3
+                                total_day_info =6
                                 satu_info =total_day_info
                                 print("s")
-                                grafica_info.append(satu_info)
+                                grafica_info.insert(6,satu_info)
                                 print(grafica_info)
                             elif Date==6:
-                                total_day_info = 3
+                                total_day_info = 7
                                 sund_info =total_day_info
                                 print("d") 
-                                grafica_info.append(sund_info)
+                                grafica_info.insert(7,sund_info)
                                 print(grafica_info)
 
 
@@ -206,7 +208,7 @@ def index(request):
                                 form = {'foo': 'staff', 'meraki' : extract, 'serial':serial, 'meraki2':extract2}
                                 #form2 ={'foo':'staff','meraki': response2}
                             else:
-                                grafica_info = [1,2,3,4,5,6,7,8,9,10]
+                                
                                 id_cliente = 0
                                 id_instalacion = 0
                                 monitores = {}
@@ -215,7 +217,7 @@ def index(request):
                                    id_cliente = request.user.cliente.get_id()        
                                    id_instalacion = Instalacion.objects.values('_id').filter(id_cliente_id=id_cliente, instalacion_estado=True)[0]       
                                    monitores = Monitor.objects.filter(id_instalacion_id=id_instalacion, monitor_estado=True) 
-                                   form = {'id_cliente': id_cliente, 'monitores' : monitores, 'estadisticas' : estadisticas, 'meraki' : extract, 'serial':serial, 'meraki2':extract2, 'grafica_info': "[1,2,3,4,5,6,7,8,9,10]"}
+                                   form = {'id_cliente': id_cliente, 'monitores' : monitores, 'estadisticas' : estadisticas, 'meraki' : extract, 'serial':serial, 'meraki2':extract2}
 
 
                                     #form2 = {'id_cliente' : id_cliente, 'monitores' : monitores, 'estadisticas' : estadisticas, 'meraki' : response2} 
@@ -231,7 +233,7 @@ def index(request):
 
                                 #print(result, flush=True)  
                                 #print(response2.text.encode('utf8', {'flush': form2})) 
-                            return render(request, "index.html",  {'form': form,'camaras':camarasAll})
+                            return render(request, "index.html",  {'form': form,'camaras':camarasAll,'grafica_info':grafica_info})
                                 
 
                                 

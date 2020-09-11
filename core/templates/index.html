@@ -154,7 +154,7 @@
 
 
 		var totalIncomeChart1 = document.getElementById('totalIncomeChart1').getContext('2d');
-		
+		var arrayA=JSON.parse("{{grafica_info}}")
 		var mytotalIncomeChart1 = new Chart(totalIncomeChart1, {
 			type: 'bar',
 			data: {
@@ -163,7 +163,7 @@
 					label: "Total persona",
 					backgroundColor: '#ff9e27',
 					borderColor: 'rgb(23, 125, 255)',
-					data: grafica_info,
+					data: arrayA,
 				}],
 			},
 			options: {
