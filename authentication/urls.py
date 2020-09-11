@@ -1,5 +1,6 @@
 from django.urls import path, reverse_lazy, include
 from .views import login_view, register_user
+from usuarios.views import usuarios
 from authentication import views
 from django.contrib.auth.views import (
     LoginView, LogoutView,
@@ -14,7 +15,7 @@ app_name = 'accounts'
 
 urlpatterns = [    
     path('register/', register_user, name="register"),
-    path('usuarios/agregar/', register_user, name="register"),
+    path('usuarios/agregar/', usuarios, name="usuarios"),
     
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(next_page='/accounts/login'), name='logout'),
