@@ -76,59 +76,59 @@ def index(request):
         grafica_info = [0,0,0,0,0,0,0,0,0,0]
         total_day_info = 3
         date =today.strftime("%Y, %m, %d")
-        print("the dateeeee")
-        print(date)
+        #print("the dateeeee")
+        #print(date)
         Date = calendar.weekday(2020,9,10)
-        print("the new date")
-        print(Date)
+        #print("the new date")
+        #print(Date)
         if Date==0:
             total_day_info = 1
             mond_info =total_day_info
             grafica_info[1]=mond_info
-            print("l")
+            #print("l")
         elif Date==1:
             total_day_info =2
             tues_info =total_day_info 
             
-            print("m")
+            #print("m")
             grafica_info[2]=tues_info
             
-            print(grafica_info)
+            #print(grafica_info)
         elif Date==2:
             total_day_info = 3
             wedn_info =total_day_info
-            print("m")
+            #print("m")
             grafica_info[3]=wedn_info
-            print(grafica_info)
+            #print(grafica_info)
             
             
         elif Date==3:
-            print("j")
+            #print("j")
             total_day_info = 4
             thur_info =total_day_info
             grafica_info[4]=thur_info
             print(grafica_info)
             
             
-            print(grafica_info)
+            #print(grafica_info)
         elif Date==4:
             total_day_info = 5
             frid_info =total_day_info
-            print("v")
+            #print("v")
             grafica_info[5]=frid_info
-            print(grafica_info)
+            #print(grafica_info)
         elif Date==5:
             total_day_info =6
             satu_info =total_day_info
-            print("s")
+            #print("s")
             grafica_info[6]=satu_info
-            print(grafica_info)
+            #print(grafica_info)
         elif Date==6:
             total_day_info = 7
             sund_info =total_day_info
-            print("d") 
+            #print("d") 
             grafica_info[0]=sund_info
-            print(grafica_info)
+            #print(grafica_info)
         
         
         
