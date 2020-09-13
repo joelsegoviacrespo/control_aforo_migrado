@@ -45,14 +45,9 @@ def todos(request):
         valoresTodos = Valores.objects.all()
         
     elif (request.user.profile.rol == Constantes.ADMINISTRADOR) and hasattr(request.user.profile, 'cliente') and (request.user.profile.cliente.get_id() is not None):
-            print("Perfil Administrador")    
-            print("nif del cliente")
-            print(request.user.profile.cliente.nif)
             valoresTodos = Valores.objects.all().filter(instalacion={'nif_cliente': request.user.profile.cliente.nif})
 
-    elif (request.user.profile.rol > Constantes.ADMINISTRADOR) and hasattr(request.user.profile, 'cliente') and (request.user.profile.cliente.get_id() is not None): 
-          print('nif_cliente: ',request.user.profile.cliente.nif)
-          print('nombre: ',request.user.profile.instalacion.nombre_comercial)
+    elif (request.user.profile.rol > Constantes.ADMINISTRADOR) and hasattr(request.user.profile, 'cliente') and (request.user.profile.cliente.get_id() is not None):    
           if hasattr(request.user.profile, 'instalacion') and (request.user.profile.instalacion.get_id() is not None):
               valoresTodos = Valores.objects.all().filter(instalacion={'nif_cliente': request.user.profile.cliente.nif} and {'nombre': request.user.profile.instalacion.nombre_comercial})
 

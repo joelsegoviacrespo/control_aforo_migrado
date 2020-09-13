@@ -12,6 +12,7 @@ import os
 from django.conf import settings
 from instalacion.models import Instalacion
 from cliente.models import Cliente
+import Constantes
 
 @login_required(login_url="/login/")
 def fondos(request):
@@ -58,12 +59,17 @@ def fondos(request):
 def todos(request):
     activate('es')
     fondosTodos = {}
-    #if request.user.is_staff:
-    fondosTodos = Fondos.objects.all()
+    if (request.user.profile.rol== Constantes.SUPERUSUARIO):
+        fondosTodos = Fondos.objects.all()
         
-    #elif hasattr(request.user, 'cliente') and (request.user.cliente.get_id() is not None):
-        
-    #    instalaciones  = Instalacion.objects.filter(id_cliente=request.user.cliente.get_id())
+    elif (request.user.profile.rol == Constantes.ADMINISTRADOR) and hasattr(request.user.profile, 'cliente') and (request.user.profile.cliente.get_id() is not None):    
+            print(request.user.profile.cliente.nif)
+            fondosTodos = Fondos.objects.all().filter(instalacion={'nif_cliente': request.user.profile.cliente.nif})
+    
+    elif (request.user.profile.rol > Constantes.ADMINISTRADOR) and hasattr(request.user.profile, 'cliente') and (request.user.profile.cliente.get_id() is not None):         
+          if hasattr(request.user.profile, 'instalacion') and (request.user.profile.instalacion.get_id() is not None):
+              fondosTodos = Fondos.objects.all().filter(instalacion={'nif_cliente': request.user.profile.cliente.nif} and {'nombre': request.user.profile.instalacion.nombre_comercial})
+    
 
     for fondos in fondosTodos:
         fondos.id = str(fondos._id)
