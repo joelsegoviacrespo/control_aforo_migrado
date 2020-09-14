@@ -77,10 +77,10 @@ def index(request):
         
         for zonas_camara in camaras.serial_camara:
             #print(camaras.serial_camara)
-            info_grafica_semana = [1,2,3,4,5,6,7,8,9,10]
+            info_grafica_semana = [3,5,4,2,1,8,7,6,9,10]
             formato_hora = ["H","H","H","H","H","H","H","H","H"]
             formato_semana= ["D", "L", "M", "M", "J", "V", "S"]
-            info_grafica_horas = [10,9,8,7,6,5,4,3,2,1]
+            info_grafica_horas = [10,2,5,9,6,8,4,3,2,7]
             url = "https://api.meraki.com/api/v1/devices/Q2HV-B24V-ZKN5/camera/generateSnapshot"
             url2 = "https://api.meraki.com/api/v1/devices/Q2GV-4YBM-YWWJ/camera/generateSnapshot"  
         

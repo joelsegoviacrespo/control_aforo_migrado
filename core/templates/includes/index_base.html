@@ -80,7 +80,34 @@
                     </div>
                   </div>
                 </div>
-			
+			<script>
+				 
+			function ajax(){
+				const http = new XMLHttpRequest;
+				const url = "";
+alert("ok");
+				http.onreadystatechange =function(){
+					if(this.readyState ==4 && this.status==200){
+console.log(this.responseText);
+
+					}
+				}
+				http.open("Get",url);
+				http.send();
+			}
+document.getElementById("1").addEventListener("click", function(){
+ajax();
+document.getElementById("demo").id = "newid";
+});
+document.getElementById("2").addEventListener("click", function(){
+ajax();
+});
+document.getElementById("totalIncomeChart").id = "totalIncomeChart1";
+document.getElementById("3").addEventListener("click", function(){
+ajax();
+});
+document.getElementById("demo").id = "newid";
+			</script>
                 <div class="col-md-12" >
 					<p align="center">Total Aforo</p>
                   <div id="chart-container" style="max-height: 100px;" >
