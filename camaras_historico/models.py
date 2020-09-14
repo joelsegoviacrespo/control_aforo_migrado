@@ -1,26 +1,21 @@
-from django.db import models
+from djongo import models
 from django.contrib import admin
 
 
 # Create your models here.
-class Historico(models.Model):
-    instalacion = models.EmbeddedField(
-        model_container = Instalacion
-         )
-    nombre_camara =  models.CharField()
-    serial_camara = models.CharField()
-    ts = models.CharField()
-    zonas_camaras = models.ArrayField (
-        
-        info_zona_camara = models.EmbeddedField(
-            model_container = Info_zona_camara
-            )
+class camaras_historico(models.Model):
+    instalacion = models.EmbeddedField('Instalacion',null=True,blank=True)
+    nombre_camara =  models.CharField(max_length=200)
+    serial_camara = models.CharField(max_length=200)
+    ts = models.CharField(max_length=200)
+    zonas_camara = models.ArrayField (
+    models.EmbeddedField('Info_zona_camara',null=True,blank=True)
     )
 
-class Instalacion(models.Model):
-    nombre = models.CharField()
+class instalacion(models.Model):
+    nombre = models.CharField(max_length=200)
 
-class Info_zona_camara(models.Model):
-    nombre_zona_camara = models.CharField()
+class info_zona_camara(models.Model):
+    nombre_zona_camara = models.CharField(max_length=200)
     nro_persoas = models.IntegerField() 
     

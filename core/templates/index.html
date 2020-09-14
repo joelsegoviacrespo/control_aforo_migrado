@@ -114,16 +114,17 @@
 
 
 		var totalIncomeChart = document.getElementById('totalIncomeChart').getContext('2d');
-
+		var arrayA=JSON.parse("{{info_grafica_semana}}")
+		
 		var mytotalIncomeChart = new Chart(totalIncomeChart, {
 			type: 'bar',
 			data: {
-				labels: ["D", "L", "M", "M", "J", "V", "S"],
+				labels:["D", "L", "M", "M", "J", "V", "S"],
 				datasets : [{
 					label: "Total aforo",
 					backgroundColor: '#ff9e27',
 					borderColor: 'rgb(23, 125, 255)',
-					data: [6, 4, 9, 5, 4, 6, 4, 3, 8, 10],
+					data: arrayA,
 				}],
 			},
 			options: {
@@ -154,7 +155,7 @@
 
 
 		var totalIncomeChart1 = document.getElementById('totalIncomeChart1').getContext('2d');
-		var arrayA=JSON.parse("{{grafica_info}}")
+		var arrayB=JSON.parse("{{info_grafica_horas}}")
 		var mytotalIncomeChart1 = new Chart(totalIncomeChart1, {
 			type: 'bar',
 			data: {
@@ -163,7 +164,7 @@
 					label: "Total persona",
 					backgroundColor: '#ff9e27',
 					borderColor: 'rgb(23, 125, 255)',
-					data: arrayA,
+					data: arrayB,
 				}],
 			},
 			options: {

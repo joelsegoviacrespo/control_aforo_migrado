@@ -30,14 +30,27 @@ import datetime
 import pytz
 from datetime import date
 today = date.today()
+from camaras_historico.models import camaras_historico
+
 
 from aforoInfo.models import AforoInfo
 
+chall =  list(camaras_historico.objects.all())
 
 
+print(date)
 
 #from urllib.request import urlopen
 #from urllib.request.urlopen import urlopen
+
+
+
+
+
+
+
+
+
 
 def hfs(request):
     context = {'foo': 'bar'}
@@ -56,84 +69,18 @@ def index(request):
 
 
     
-    mond_info =0
-    tues_info = 0
-    wedn_info = 0
-    thur_info = 0
-    frid_info =0
-    satu_info = 0
-    sund_infor = 0
-    total_day_info =0
-    
-    
-
-
-
+  
+    zonas_camaras = []
+        
     for camaras in camarasAll:
-        
-        zonas_camaras = []
-        
-        grafica_info = [0,0,0,0,0,0,0,0,0,0]
-        total_day_info = 3
-        date =today.strftime("%Y, %m, %d")
-        print("the dateeeee")
-        print(date)
-        Date = calendar.weekday(2020,9,10)
-        print("the new date")
-        print(Date)
-        if Date==0:
-            total_day_info = 1
-            mond_info =total_day_info
-            grafica_info[1]=mond_info
-            print("l")
-        elif Date==1:
-            total_day_info =2
-            tues_info =total_day_info 
-            
-            print("m")
-            grafica_info[2]=tues_info
-            
-            print(grafica_info)
-        elif Date==2:
-            total_day_info = 3
-            wedn_info =total_day_info
-            print("m")
-            grafica_info[3]=wedn_info
-            print(grafica_info)
-            
-            
-        elif Date==3:
-            print("j")
-            total_day_info = 4
-            thur_info =total_day_info
-            grafica_info[4]=thur_info
-            print(grafica_info)
-            
-            
-            print(grafica_info)
-        elif Date==4:
-            total_day_info = 5
-            frid_info =total_day_info
-            print("v")
-            grafica_info[5]=frid_info
-            print(grafica_info)
-        elif Date==5:
-            total_day_info =6
-            satu_info =total_day_info
-            print("s")
-            grafica_info[6]=satu_info
-            print(grafica_info)
-        elif Date==6:
-            total_day_info = 7
-            sund_info =total_day_info
-            print("d") 
-            grafica_info[0]=sund_info
-            print(grafica_info)
-        
-        
+
         
         for zonas_camara in camaras.serial_camara:
             #print(camaras.serial_camara)
+            info_grafica_semana = [1,2,3,4,5,6,7,8,9,10]
+            formato_hora = ["H","H","H","H","H","H","H","H","H"]
+            formato_semana= ["D", "L", "M", "M", "J", "V", "S"]
+            info_grafica_horas = [10,9,8,7,6,5,4,3,2,1]
             url = "https://api.meraki.com/api/v1/devices/Q2HV-B24V-ZKN5/camera/generateSnapshot"
             url2 = "https://api.meraki.com/api/v1/devices/Q2GV-4YBM-YWWJ/camera/generateSnapshot"  
         
@@ -178,7 +125,7 @@ def index(request):
                 
                     #instalaciones = Instalacion.objects.filter('cliente':)
                     
-                    form = {'foo': 'staff', 'meraki' : extract, 'serial':serial, 'meraki2':extract2, 'grafica_info':grafica_info}
+                    form = {'foo': 'staff', 'meraki' : extract, 'serial':serial, 'meraki2':extract2 }
                     #form2 ={'foo':'staff','meraki': response2}
                 else:
                     
@@ -199,7 +146,7 @@ def index(request):
                        id_cliente = request.user.cliente.get_id()        
                        id_instalacion = Instalacion.objects.values('_id').filter(id_cliente_id=id_cliente, instalacion_estado=True)[0]       
                        monitores = Monitor.objects.filter(id_instalacion_id=id_instalacion, monitor_estado=True) 
-                       form = {'id_cliente': id_cliente, 'monitores' : monitores, 'estadisticas' : estadisticas, 'meraki' : extract, 'serial':serial, 'meraki2':extract,'grafica_info':grafica_info}
+                       form = {'id_cliente': id_cliente, 'monitores' : monitores, 'estadisticas' : estadisticas, 'meraki' : extract, 'serial':serial, 'meraki2':extract2}
                         #form2 = {'id_cliente' : id_cliente, 'monitores' : monitores, 'estadisticas' : estadisticas, 'meraki' : response2
                     #ninguno de los prints se imprimen
                     #print(post, flush=True)
@@ -208,7 +155,7 @@ def index(request):
                     #result = base64.b64encode(urlopen(urlResponse.get('url')).read(
                     #print(result, flush=True)  
                     #print(response2.text.encode('utf8', {'flush': form2})) 
-                return render(request, "index.html",  {'form': form,'camaras':camarasAll,'grafica_info':grafica_info})
+                return render(request, "index.html",  {'form': form,'camaras':camarasAll,'info_grafica_semana':info_grafica_semana,'info_grafica_horas':info_grafica_horas,'formatoa':formato_hora,'formatob':formato_semana})
                                 
 
                                 
