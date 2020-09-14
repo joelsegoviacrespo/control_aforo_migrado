@@ -63,7 +63,10 @@
                                 {% else %} Número 
                                 {% endif %}
                             </td>
-                            <td>{{ valores.mostrar_capacidad }}</td>
+                            <td>{% if valores.mostrar_capacidad %} Si
+								{% else %} No
+								{% endif %}
+							</td>
                             <td class="text-center">
                                 {% if valores.activo %}<i class="fa fa-check-square text-success"></i>
                                 {% else %}<i class="fa fa-times text-danger"></i>
