@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'app',
+    'camaras_historico',
     'cliente.apps.ClienteConfig',
     'instalacion.apps.InstalacionConfig',
     'camara_zona.apps.CamaraZonaConfig',
@@ -49,6 +50,7 @@ INSTALLED_APPS = [
     'valores.apps.ValoresConfig',
     'usuarios.apps.UsuariosConfig',
     'fondos.apps.FondosConfig',
+
     
 ]
 
@@ -96,7 +98,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {           
          'default': {
              'ENGINE': 'djongo',
-             'NAME': 'aforo',
+             'NAME': 'aforo_desarrollo',
              'ENFORCE_SCHEMA': False,
              'CLIENT': {
                  'host': 'mongodb://user_aforo_mongo:Af0r0smfC10uDM0n4O@5.196.27.225:27227',

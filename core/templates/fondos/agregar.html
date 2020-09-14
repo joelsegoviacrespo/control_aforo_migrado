@@ -56,13 +56,17 @@
 								<label for="cliente" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Cliente <span class="required-label">*</span></label>
 								<div class="col-lg-4 col-md-9 col-sm-8">
 									<div class="select2-input">
-										
+									  {% if user.profile.rol >= 2 %}
+             								<input type="hidden" name="instalacion-nif_cliente" id="instalacion-nif_cliente" value="{{user.profile.cliente.nif}}" />
+             								<input type="text" value="{{user.profile.cliente}}" disabled="disabled" class="form-control form-control-sm" />
+									  {% else%}
 										<select name="instalacion-nif_cliente" required id="instalacion-nif_cliente" class="form-control">
 						                    	<option value="" selected> --------- </option>
                     						{% for id, value in form.fields.cliente_nif.choices %}
                         						<option value="{{ id }}">{{ value }}</option>
                     						{% endfor %}																		
 										</select>
+									  {%endif%}
 									</div>
 								</div>
 							</div>	<input type="hidden" class="form-control" id="id_numero_cliente" name="numero_cliente" value="{{ form.numero_cliente.value }}" />
@@ -192,6 +196,33 @@
 <!-- Specific JS goes HERE -->
 {% block javascripts %}
 <script>
+    $( document ).ready(function() {
+		console.log('document.getElementById("instalacion-nif_cliente")')
+	    console.log(document.getElementById("instalacion-nif_cliente").value)
+		if (document.getElementById("instalacion-nif_cliente").value != "") {
+			console.log("trae valor")
+			nif_cliente = document.getElementById("instalacion-nif_cliente").value
+			if (nif_cliente != '') {
+                request_url = '/fondos/listar_por_nif_cliente/' + nif_cliente + '';
+                $.ajax({
+                    url: request_url,
+                    success: function(data){
+						instalaciones = data['instalaciones'];
+						cliente = data['cliente'];
+						console.log("numero_cliente: "+cliente.numero_cliente)
+						document.getElementById("id_numero_cliente").value =  cliente.numero_cliente
+                        $.each(instalaciones, function(index, text){                        
+                            $('select[name=instalacion-nombre]').append(
+                                 $('<option></option>').val(index).html(text)
+                             );
+                        });
+                    }
+                });
+            };
+            return false;
+		} 
+	});
+
     $(document).ready(function(){
         $('select[name=instalacion-nif_cliente]').change(function(){
             nif_cliente = $(this).val();			

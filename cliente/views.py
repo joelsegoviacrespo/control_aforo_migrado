@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required, user_passes_test,permission_required
 from django.core.exceptions import PermissionDenied
 from djongo import models
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
@@ -15,6 +15,7 @@ def mng(request):
 
 
 @login_required(login_url="/login/")
+@permission_required('cliente.add_cliente',login_url="/logout/")
 def cliente(request):
     activate('es')
     if request.method == "POST":
@@ -43,6 +44,7 @@ def cliente(request):
 
 
 @login_required(login_url="/login/")
+@permission_required('cliente.view_cliente',login_url="/logout/")
 def todos(request):
     activate('es')
     clientes =  Cliente.objects.all()
@@ -52,6 +54,7 @@ def todos(request):
 
 
 @login_required(login_url="/login/")
+@permission_required('cliente.change_cliente',login_url="/logout/")
 def editar(request, id):
     activate('es')
     cliente = get_object_or_404(Cliente, _id=id)
@@ -60,6 +63,7 @@ def editar(request, id):
 
 
 @login_required(login_url="/login/")
+@permission_required('cliente.change_cliente',login_url="/logout/")
 def actualizar(request, id):
     activate('es')
     cliente = get_object_or_404(Cliente, _id=id)
@@ -71,6 +75,7 @@ def actualizar(request, id):
 
 
 @login_required(login_url="/login/")
+@permission_required('cliente.delete_cliente',login_url="/logout/")
 def eliminar(request, id):
     activate('es')
     try:

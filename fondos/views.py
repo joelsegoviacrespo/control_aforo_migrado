@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 import simplejson as simplejson
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required,permission_required
 from django.http import HttpResponse
 from djongo import models
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
@@ -12,8 +12,10 @@ import os
 from django.conf import settings
 from instalacion.models import Instalacion
 from cliente.models import Cliente
+import Constantes
 
 @login_required(login_url="/login/")
+@permission_required('fondos.add_fondos',login_url="/logout/")
 def fondos(request):
     activate('es')
     url_media = request.build_absolute_uri('/mosayk/')
@@ -55,15 +57,21 @@ def fondos(request):
 
 
 @login_required(login_url="/login/")
+@permission_required('fondos.view_fondos',login_url="/logout/")
 def todos(request):
     activate('es')
     fondosTodos = {}
-    #if request.user.is_staff:
-    fondosTodos = Fondos.objects.all()
+    if (request.user.profile.rol== Constantes.SUPERUSUARIO):
+        fondosTodos = Fondos.objects.all()
         
-    #elif hasattr(request.user, 'cliente') and (request.user.cliente.get_id() is not None):
-        
-    #    instalaciones  = Instalacion.objects.filter(id_cliente=request.user.cliente.get_id())
+    elif (request.user.profile.rol == Constantes.ADMINISTRADOR) and hasattr(request.user.profile, 'cliente') and (request.user.profile.cliente.get_id() is not None):    
+            print(request.user.profile.cliente.nif)
+            fondosTodos = Fondos.objects.all().filter(instalacion={'nif_cliente': request.user.profile.cliente.nif})
+    
+    elif (request.user.profile.rol > Constantes.ADMINISTRADOR) and hasattr(request.user.profile, 'cliente') and (request.user.profile.cliente.get_id() is not None):         
+          if hasattr(request.user.profile, 'instalacion') and (request.user.profile.instalacion.get_id() is not None):
+              fondosTodos = Fondos.objects.all().filter(instalacion={'nif_cliente': request.user.profile.cliente.nif} and {'nombre': request.user.profile.instalacion.nombre_comercial})
+    
 
     for fondos in fondosTodos:
         fondos.id = str(fondos._id)
@@ -72,17 +80,25 @@ def todos(request):
 
 
 @login_required(login_url="/login/")
+@permission_required('fondos.change_fondos',login_url="/logout/")
 def editar(request, id):
     activate('es')
     url_media = request.build_absolute_uri('/mosayk/')
     fondos = get_object_or_404(Fondos, _id=id)
-    print(fondos)
+    #Aqui verifico si un cliente coloca una url en el navegador, 
+    #si la url que contienela instalacion no pertenece al cliente 
+    #logueado lo enviaa la url login
+    if (request.user.profile.rol == Constantes.ADMINISTRADOR) and hasattr(request.user.profile, 'cliente') and (request.user.profile.cliente.get_id() is not None):                
+        if (request.user.profile.cliente.nif != fondos.instalacion.nif_cliente):            
+            return redirect('/accounts/logout/')
+    
     form = FondosEditarForm(request.POST or None, instance=fondos)
  
     return render(request, 'fondos/editar.html', { 'form' : form, 'url_media':url_media  })
 
 
 @login_required(login_url="/login/")
+@permission_required('fondos.change_fondos',login_url="/logout/")
 def actualizar(request, id):
     activate('es')
     fondos = get_object_or_404(Fondos, _id=id)
@@ -123,10 +139,14 @@ def actualizar(request, id):
 
 
 @login_required(login_url="/login/")
+@permission_required('fondos.delete_fondos',login_url="/logout/")
 def eliminar(request, id):
     activate('es')
     try:
         fondos = Fondos.objects.get(_id=id)
+        if (request.user.profile.rol == Constantes.ADMINISTRADOR) and hasattr(request.user.profile, 'cliente') and (request.user.profile.cliente.get_id() is not None):                
+            if (request.user.profile.cliente.nif != fondos.instalacion.nif_cliente):            
+                return redirect('/accounts/logout/')
         fondos.delete()
     except Exception as e:
         print('%s (%s)' % (e, type(e)))

@@ -8,18 +8,11 @@
 							<li class="nav-item active">
 								<a data-toggle="collapse" href="#cliente" class="collapsed" aria-expanded="false">
 									<i class="fas fa-cog"></i>
-									<p>Configuración </p>
+									<p>Configuración</p>
 									<span class="caret"></span>
 								</a>
 								<div class="collapse" id="cliente">
 									<ul class="nav nav-collapse">
-										{% if user.is_staff %}
-										<li class="nav-item m-0 p-0 h-75">
-											<a href="/cliente/todos">
-												<i class="fas fa-users text-secondary"></i>
-												<span> Clientes </span>
-											</a>
-										</li>
 										<li class="nav-item m-0 p-0 h-75">
 											<a href="/instalacion/todos">
 												<i class="fas fa-map-marked-alt text-secondary"></i>
@@ -38,13 +31,18 @@
 												<span> Fondos </span>
 											</a>
 										</li>
-										{% endif %}
+										<li class="nav-item m-0 p-0 h-75">
+											<a href="/usuarios/todos">
+												<i class="far fa-address-card text-secondary"></i>
+												<span> Usuarios </span>
+											</a>
+										</li>
 									
 										{% if user.is_staff  %}
 											<li class="nav-item m-0 p-0 h-75">
-												<a href="/usuarios/todos">
-													<i class="far fa-address-card text-secondary"></i>
-													<span> Usuarios </span>
+												<a href="/cliente/todos">
+													<i class="fas fa-users text-secondary"></i>
+													<span> Clientes </span>
 												</a>
 											</li>
 											<li class="nav-item submenu m-0 p-0 h-75">
@@ -69,6 +67,7 @@
 												</div>
 											</li>
 										{% endif %}
+									
 									</ul>
 								</div>
 							</li>

@@ -34,7 +34,8 @@
                     <div class="card-title">Planta 7</div>
                     <div class="card-category">Capacidad actual</div>
                     <div class="d-flex justify-content-around h-30 w-100 pt-4 rounded">
-                        <div class="embed-responsive embed-responsive-16by9 h-30 w-100 m-0 p-2 rounded shadow "><!--4by9-->
+						<div class="embed-responsive embed-responsive-16by9 h-30 w-100 m-0 p-2 rounded shadow "><!--4by9-->
+							
                             <iframe class="embed-responsive-item" src="hfs" class="h-100 w-100" scrolling="no"  style="LINE-HEIGHT:20px;"></iframe>
                         </div>
                     </div>
@@ -72,21 +73,48 @@
                 <div class="container">
                   <div class="row">
                     <div class="col text-center mb-5 ">
-						<button type="button" class="btn btn-primary min-vw-25 mr-4">Basic</button>
-<button type="button" class="btn btn-primary min-vw-25 mr-4">Default</button>
-<button type="button" class="btn btn-primary min-vw-25 mr-4">Primary</button>
+						<button id= "1"type="button" class="btn btn-primary min-vw-25 mr-4">Hoy</button>	
+						<button id= "2" type="button" class="btn btn-primary min-vw-25 mr-4">Esta Semana</button>
+						<button id= "3" type="button" class="btn btn-primary min-vw-25 mr-4">Este Mes</button>
 						
                     </div>
                   </div>
                 </div>
-			
+			<script>
+				 
+			function ajax(){
+				const http = new XMLHttpRequest;
+				const url = "";
+alert("ok");
+				http.onreadystatechange =function(){
+					if(this.readyState ==4 && this.status==200){
+console.log(this.responseText);
+
+					}
+				}
+				http.open("Get",url);
+				http.send();
+			}
+document.getElementById("1").addEventListener("click", function(){
+ajax();
+document.getElementById("demo").id = "newid";
+});
+document.getElementById("2").addEventListener("click", function(){
+ajax();
+});
+document.getElementById("totalIncomeChart").id = "totalIncomeChart1";
+document.getElementById("3").addEventListener("click", function(){
+ajax();
+});
+document.getElementById("demo").id = "newid";
+			</script>
                 <div class="col-md-12" >
 					<p align="center">Total Aforo</p>
                   <div id="chart-container" style="max-height: 100px;" >
 					
                     <canvas id="totalIncomeChart" style=" width: 376px; height: 100px;"></canvas>
                   </div>
-                  <div>
+                  <div></div>
                     
 			     
                   </div>
@@ -99,7 +127,7 @@
                       
 					</div>
 			
-                </div>
+                
                 </div>
                 </div>
               </div>
@@ -152,7 +180,8 @@
                   </div>-->	
               </div>
             </div>
-          
+		  
+			
         
               <div class="col-md-3">
 				  
@@ -162,6 +191,7 @@
 					 
 						<div class="card-body">
 							<b><small>{{camara.nombre_camara}}</small></b>
+							
 							{% if  camara.serial_camara == "Q2HV-B24V-ZKN5" %}
 							<img class="card-img-top p-1 rounded" src="{{ url1 }}" onerror="this.src='/static/assets/img/onerrorQ2HV-B24V-ZKN5.jpg';">
 						
@@ -298,7 +328,9 @@
 					aforo_frase_ambar = data['aforo_frase_ambar'];
 					aforo_frase_rojo = data['aforo_frase_rojo'];										
 					camaras = JSON.parse(data['camaras'])		
-					
+					 
+
+					 
 					
 					/*console.log("camaras::")
 					console.log(camaras)

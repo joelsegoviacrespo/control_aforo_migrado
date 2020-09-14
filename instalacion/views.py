@@ -1,15 +1,17 @@
 # -*- encoding: utf-8 -*-
 import simplejson as simplejson
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required,permission_required
 from django.http import HttpResponse
 from djongo import models
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.utils.translation import activate
 from instalacion.forms import InstalacionForm,InstalacionEditarForm
 from instalacion.models import Instalacion
+import Constantes
 
 
 @login_required(login_url="/login/")
+@permission_required('instalacion.add_instalacion',login_url="/logout/")
 def instalacion(request):
     activate('es')
     if request.method == "POST":
@@ -36,15 +38,22 @@ def instalacion(request):
 
 
 @login_required(login_url="/login/")
+@permission_required('instalacion.view_instalacion',login_url="/logout/")
 def todos(request):
     activate('es')
-    instalaciones = {}
-    #if request.user.is_staff:
-    instalaciones = Instalacion.objects.all()
+    instalaciones = {}   
         
-    #elif hasattr(request.user, 'cliente') and (request.user.cliente.get_id() is not None):
+    
+    if (request.user.profile.rol== Constantes.SUPERUSUARIO):    
+        instalaciones = Instalacion.objects.all()
         
-    #    instalaciones  = Instalacion.objects.filter(id_cliente=request.user.cliente.get_id())
+    elif (request.user.profile.rol == Constantes.ADMINISTRADOR) and hasattr(request.user.profile, 'cliente') and (request.user.profile.cliente.get_id() is not None):      
+        instalaciones = Instalacion.objects.all().filter(cliente={'nif': request.user.profile.cliente.nif})
+      
+    elif (request.user.profile.rol > Constantes.ADMINISTRADOR) and hasattr(request.user.profile, 'cliente') and (request.user.profile.cliente.get_id() is not None): 
+
+          if hasattr(request.user.profile, 'instalacion') and (request.user.profile.instalacion.get_id() is not None):
+              instalaciones  = Instalacion.objects.all().filter(_id=request.user.profile.instalacion.get_id())
 
     for instalacion in instalaciones:
         instalacion.id = str(instalacion._id)
@@ -53,23 +62,28 @@ def todos(request):
 
 
 @login_required(login_url="/login/")
+@permission_required('instalacion.change_instalacion',login_url="/logout/")
 def editar(request, id):
     activate('es')
+    instalacion = {}    
     instalacion = get_object_or_404(Instalacion, _id=id)
-    #myObj = Instalacion.objects.values('cliente')
-    #print("instalacion.cliente.nif")
+    #Aqui verifico si un cliente coloca una url en el navegador, 
+    #si la url que contienela instalacion no pertenece al cliente 
+    #logueado lo enviaa la url login
+    if (request.user.profile.rol == Constantes.ADMINISTRADOR) and hasattr(request.user.profile, 'cliente') and (request.user.profile.cliente.get_id() is not None):        
+        if (request.user.profile.cliente.nif != instalacion.cliente.nif):            
+            return redirect('/accounts/logout/')
     
-    #print(instalacion.cliente.nif)
     
-    #print("myObj")
-    #print(myObj)
-    
+        
     form = InstalacionEditarForm(request.POST or None, instance=instalacion)
- 
     return render(request, 'instalacion/editar.html', { 'form' : form })
-
+    
+    #else:
+    #    return render('logout/')
 
 @login_required(login_url="/login/")
+@permission_required('instalacion.change_instalacion',login_url="/logout/")
 def actualizar(request, id):
     activate('es')
     instalacion = get_object_or_404(Instalacion, _id=id)
@@ -79,12 +93,15 @@ def actualizar(request, id):
         return redirect("/instalacion/todos")
     return render(request, 'instalacion/editar.html', { 'form' : form })
 
-
 @login_required(login_url="/login/")
+@permission_required('instalacion.delete_instalacion',login_url="/logout/")
 def eliminar(request, id):
-    activate('es')
+    activate('es')    
     try:
         instalacion = Instalacion.objects.get(_id=id)
+        if (request.user.profile.rol == Constantes.ADMINISTRADOR) and hasattr(request.user.profile, 'cliente') and (request.user.profile.cliente.get_id() is not None):        
+            if (request.user.profile.cliente.nif != instalacion.cliente.nif):                            
+                return redirect('/accounts/logout/')
         instalacion.delete()
     except Exception as e:
         print('%s (%s)' % (e, type(e)))
@@ -92,9 +109,8 @@ def eliminar(request, id):
     return redirect("/instalacion/todos")
 
 
+
 def listar_por_nif_cliente(request, nif_cliente):
-    print("listar_por_nif_cliente")
-    print("nif_cliente")
     print(nif_cliente)
     #instalaciones = Instalacion.objects.all().filter(id_cliente=id_cliente, instalacion_estado=True)
     #instalaciones = Instalacion.objects.values('cliente')
