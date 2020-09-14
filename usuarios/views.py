@@ -104,12 +104,12 @@ def user(request):
 def todos(request):
     activate('es')
     usuariosTodos = {}
-    #if request.user.is_staff:
-    usuariosTodos = Usuarios.objects.all()
+    if request.user.is_staff:
+        usuariosTodos = User.objects.all()
         
-    #elif hasattr(request.user, 'cliente') and (request.user.cliente.get_id() is not None):
+    elif hasattr(request.user, 'cliente') and (request.user.cliente.get_id() is not None):
         
-    #    instalaciones  = Instalacion.objects.filter(id_cliente=request.user.cliente.get_id())
+        usuariosTodos  = User.objects.filter(id_cliente=request.user.cliente.get_id())
 
     for usuarios in usuariosTodos:
         usuarios.id = str(usuarios._id)
