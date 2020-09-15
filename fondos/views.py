@@ -38,12 +38,12 @@ def fondos(request):
                 pass
     else:
         form = FondosForm()
-    if form.errors:
-        for field in form:
-            for error in field.errors:
+    #if form.errors:
+        #for field in form:
+            #for error in field.errors:
                 #print(field.name)
 
-                print(error)
+                #print(error)
         # for error in form.non_field_errors:
         #     print('NFE | ')
         #     print(error)
