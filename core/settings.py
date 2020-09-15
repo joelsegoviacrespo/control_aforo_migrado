@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'app',
+    'camaras_historico',
     'cliente.apps.ClienteConfig',
     'instalacion.apps.InstalacionConfig',
     'camara_zona.apps.CamaraZonaConfig',
@@ -49,6 +50,7 @@ INSTALLED_APPS = [
     'valores.apps.ValoresConfig',
     'usuarios.apps.UsuariosConfig',
     'fondos.apps.FondosConfig',
+
     
 ]
 

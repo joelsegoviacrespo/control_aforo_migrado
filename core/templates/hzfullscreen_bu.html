@@ -199,16 +199,16 @@
 				    if (aforo_formato=="PCT"){
 				    	nro_personas_show = ((nro_personas * 100)/aforo_maximo).toFixed(0) + "%";
 				    }
-				    else{
-				    	nro_personas_show = nro_personas;
+				    else{				    	
+						nro_personas_show = nro_personas.toString();
 				    }
 
 					Circles.create({
 						id:'circles-1',
-						radius:30,
+						radius:40,
 						value:nro_personas,
 						maxValue:aforo_maximo,
-						width:07,
+						width:10,
 						text: nro_personas_show,
 						colors:['#f1f1f1', '#FF9E27'], /*#FF9E27*/
 						duration:400,

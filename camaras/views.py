@@ -121,6 +121,7 @@ def configuracion_camaras(request, id_monitor):
             zona_numero = 0            
             nro_personas = 0       
             nro_aforo = 0
+            nombre_aforo = ""
             #random.randint(0, 50)
             #Obtiene el número de personas en el sitio
             try:
@@ -128,20 +129,25 @@ def configuracion_camaras(request, id_monitor):
                 monitor = Monitor.objects.values().filter(monitor_estado=True)[0]
                 aforoInfo =  AforoInfo.objects.first()
                   
-                if aforoInfo is not None:
-                    nro_aforo = aforoInfo.nro_aforo
+                #if aforoInfo is not None:
+                #    nro_aforo = aforoInfo.nro_aforo
                 
+                i = 0
                 for camaras in camarasAll:
-                    #print(camaras._id)                
-                    #print(camaras.nombre_camara)                
-                    #print(camaras.serial_camara)
+                
 
                     zonas_camaras = []
-                    for zonas_camara in camaras.zonas_camara:
+                    j=0
+                    if (i==1):
+                        nombre_aforo = camaras.nombre_camara                         
+                    for zonas_camara in camaras.zonas_camara:                        
+                                                
                         zonas_camara = model_to_dict(zonas_camara)
                         zonas_camaras.append(zonas_camara)
+                        j=j+1
                         
                     camaras.zonas_camara = zonas_camaras
+                    i=i+1
                    
                    
                 camaras_serialize = serializers.serialize('json', camarasAll)
@@ -165,7 +171,8 @@ def configuracion_camaras(request, id_monitor):
                 "aforo_frase_verde": monitor["aforo_frase_verde"],
                 "aforo_frase_ambar": monitor["aforo_frase_ambar"],
                 "aforo_frase_rojo": monitor["aforo_frase_rojo"],                
-                "camaras": camaras_serialize
+                "camaras": camaras_serialize,
+                "nombre_aforo":nombre_aforo                
             }
             return HttpResponse(simplejson.dumps(monitor_js), content_type='application/json')
         except Exception as e:
@@ -195,61 +202,24 @@ def configuracion(request, id_monitor):
             camarasAll =  Camaras.objects.all()
 
 
-            mond_info =0
-            tues_info = 0
-            wedn_info = 0
-            thur_info = 0
-            frid_info =0
-            satu_info = 0
-            sund_infor = 0
-            total_day_info =0
-            grafica_info = []
+           
             
 
             nro_aforo = 0
 
             try:
-                aforoInfo =  AforoInfo.objects.first()  
-                if aforoInfo is not None:                   
-                    nro_aforo = aforoInfo.nro_aforo
+                ##TODO ESTE CODIGO HAY QUE CAMBIARLO
+                i=0
+                for camaras in camarasAll:
+                    j=0                   
+                    for zonas_camara in camaras.zonas_camara:
+                        if (i==1 and j==0):                                                 
+                            nro_aforo = zonas_camara.nro_personas                            
+                        j = j+1
+                    i= i+1    
 
 
-                    total_day_info = aforoInfo.nro_aforo
-                    date =today.strftime("%d, %m, %Y")
-                    print(date)
-                    Date = datetime.datetime.strptime(date, '%d, %m, %Y').weekday()
                     
-
-
-                    print(Date)
-                    if Date==0:
-                        total_day_info = aforoInfo.nro_aforo
-                        mond_info =total_day_info
-                        print("l")
-                    elif Date==1:
-                        total_day_info = aforoInfo.nro_aforo
-                        tues_info =total_day_info 
-                        print("m")
-                    elif Date==2:
-                        total_day_info = aforoInfo.nro_aforo
-                        wedn_info =total_day_info
-                        print("m")
-                    elif Date==3:
-                        total_day_info = aforoInfo.nro_aforo
-                        thur_info =total_day_info
-                        print("j")
-                    elif Date==4:
-                        total_day_info = aforoInfo.nro_aforo
-                        frid_info =total_day_info
-                        print("v")
-                    elif Date==5:
-                        total_day_info = aforoInfo.nro_aforo
-                        satu_info =total_day_info
-                        print("s")
-                    elif Date==6:
-                        total_day_info = aforoInfo.nro_aforo
-                        sund_info =total_day_info
-                        print("d") 
 
 
                 

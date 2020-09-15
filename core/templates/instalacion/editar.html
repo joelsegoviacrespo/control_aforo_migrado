@@ -54,23 +54,27 @@
 								</div>
 							</div>											
 							<div class="form-group form-show-validation row">
-									<label for="cliente" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Cliente:<span class="required-label">*</span></label>
-									
-									<div class="col-lg-4 col-md-9 col-sm-8">
-										<div class="select2-input">
-											<select name="cliente-nif" required id="id_cliente-nif" class="form-control">
-							                    	<option value="" selected> --------- </option>
-                        						{% for id, value in form.fields.cliente_nif.choices %}
-                            						 {% if form.id_cliente_nif.value == id %}
-                                						<option value="{{ id }}" selected="selected">{{ value }}</option>
-                            						{% else %}
-                                						<option value="{{ id }}">{{ value }}</option>
-													{% endif %}
-                        						{% endfor %}																		
-											</select>
-										</div>
+								<label for="cliente" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Cliente:<span class="required-label">*</span></label>									
+								<div class="col-lg-4 col-md-9 col-sm-8">
+									<div class="select2-input">
+									{% if user.profile.rol >= 2 %}
+             							<input type="hidden" name="cliente-nif" id="id_cliente-nif" value="{{user.profile.cliente.nif}}" />
+             							<input type="text" value="{{user.profile.cliente}}" disabled="disabled" class="form-control form-control-sm" />
+									 {% else%}
+										<select name="cliente-nif" required id="id_cliente-nif" class="form-control">
+						                    	<option value="" selected> --------- </option>
+                    						{% for id, value in form.fields.cliente_nif.choices %}
+                        						 {% if form.id_cliente_nif.value == id %}
+                            						<option value="{{ id }}" selected="selected">{{ value }}</option>
+                        						{% else %}
+                            						<option value="{{ id }}">{{ value }}</option>
+												{% endif %}
+                    						{% endfor %}																		
+										</select>
+									{%endif%}
 									</div>
-								</div>															
+								</div>
+							</div>																								
 							<div class="form-group form-show-validation row">
 								<label for="nombre_comercial" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Nombre comercial<span class="required-label">*</span></label>
 								<div class="col-lg-4 col-md-9 col-sm-8">

@@ -23,6 +23,13 @@ from aforoInfo.models import AforoInfo
 from django.forms.models import model_to_dict
 from django.core import serializers
 
+
+import calendar
+import datetime
+import pytz
+from datetime import date
+today = date.today()
+
 from .serializers import MonitorSerializer, MonitorLinkSerializer, MonitorFSSerializer, MonitorShowSerializer
 
 
@@ -310,6 +317,11 @@ def configuracion_camaras(request, id_monitor):
             print("antes1")
             #random.randint(0, 50)
             #Obtiene el número de personas en el sitio
+         
+            
+
+
+
             try:
                 """print(settings.DB_IP)
                 print(settings.DB_PORT)
@@ -326,6 +338,10 @@ def configuracion_camaras(request, id_monitor):
                     nro_aforo = data2['nro_aforo']
                     print("nro_aforo")
                     print(nro_aforo)
+
+                   
+
+
                 else:
                     nro_aforo = 0
                 
