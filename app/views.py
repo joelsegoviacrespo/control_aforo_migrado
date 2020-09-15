@@ -66,7 +66,7 @@ def index(request):
         extract = urlResponse.get('url')
         extract2= urlResponse2.get('url')
 
-    return render(request, "index.html",  {'camaras':camarasAll,'url1':extract,'url2':extract2})
+    return render(request, "index.html",  {'camaras':camarasAll,'url1':extract,'url2':extract2,'info_grafica_semana': info_grafica_semana,'info_grafica_horas':info_grafica_horas})
  
 
 @login_required(login_url="/login/")
