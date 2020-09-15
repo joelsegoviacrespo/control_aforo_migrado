@@ -1,2 +1,5 @@
 /env
 *.pyc
+//*/_pycache_/
+//_pycache_/
+*/_pycache_/

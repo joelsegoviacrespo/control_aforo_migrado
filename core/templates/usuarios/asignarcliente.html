@@ -1,0 +1,85 @@
+{% extends "layouts/base-form.html" %}
+
+{% block title %} Asignar cliente {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+
+{% block content-form-page-header-title %} Asignar cliente {% endblock content-form-page-header-title %}
+{% block content-form-page-header %}
+
+    <ul class="breadcrumbs">
+        <li class="nav-home">
+            <a href="#">
+                <i class="fas fa-users"></i>
+            </a>
+        </li>
+        <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+        </li>
+        <li class="nav-item">
+            <a href="#">Usuario</a>
+        </li>
+        <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+        </li>
+        <li class="nav-item">
+            <a href="#">Asignar cliente</a>
+        </li>
+    </ul>
+{% endblock content-form-page-header %}
+{% block content-form-form-tag-begin %} {% endblock content-form-form-tag-begin %}
+{% block content-form-content %}
+<div class="card-body">
+	<div class="row">
+		<div class="col-md-12">			 
+				<form method="POST" class="post-form" action="/usuarios/asignarcliente/{{form.id.value}}/">
+					{% csrf_token %}
+					<div class="card bg-custom-gray p-1">
+				        <div class="card-header m-0 py-1">
+				            <h5>Datos de usuario</h5>
+				        </div>						
+					    <div class="card-body bg-light p-1">			
+							<div class="form-group form-show-validation row">
+								<label for="cliente" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Cliente:<span class="required-label">*</span></label>
+									
+								<div class="col-lg-4 col-md-9 col-sm-8">
+                                    <div class="form-group">
+                                        <label for="username">Nombre de usuario</label>
+                                        <h4>{{ request.user.profile }}</h4>
+                                    </div>
+									<div class="select2-input">
+										<select name="cliente-nif" required id="id_cliente-nif" class="form-control">
+							                   	<option value="" selected> --------- </option>
+                        					{% for id, value in form.fields.cliente_nif.choices %}
+                            					{% if form.id_cliente_nif.value == id %}
+                               						<option value="{{ id }}" selected="selected">{{ value }}</option>
+                           						{% else %}
+                               						<option value="{{ id }}">{{ value }}</option>
+												{% endif %}
+                        					{% endfor %}																		
+										</select>
+									</div>
+								</div>
+							</div>
+					    </div><!--fin card body-->
+					</div><!--fin "card bg-custom-gray p-1-->						
+				</form>			
+		</div>
+	</div>
+</div>	
+
+
+
+
+{% endblock content-form-content %}
+{% block content-form-form-tag-end %} {% endblock content-form-form-tag-end %}
+
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}{% endblock javascripts %}
+{% block javascripts-page %}
+    {% include 'includes/scripts_js_datatable.html' %}
+
+{% endblock javascripts-page %}

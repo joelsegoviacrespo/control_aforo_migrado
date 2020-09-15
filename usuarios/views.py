@@ -14,7 +14,6 @@ from django.contrib.auth import authenticate, login
 import datetime
 from django.contrib.auth.hashers import make_password, check_password
 
-
 @login_required(login_url="/login/")
 def usuarios(request):
     activate('es')
@@ -58,13 +57,11 @@ def todos(request):
     usuariosTodos = {}
     #if request.user.is_staff:
     usuariosTodos = User.objects.all()
-        
-    #elif hasattr(request.user, 'cliente') and (request.user.cliente.get_id() is not None):
-        
-    #    instalaciones  = Instalacion.objects.filter(id_cliente=request.user.cliente.get_id())
+    # elif hasattr(request.user, 'cliente') and (request.user.cliente.get_id() is not None):
+    #     usuarios  = User.objects.filter(id_cliente=request.user.cliente.get_id())
 
-    #for usuarios in usuariosTodos:
-    #    usuarios.id = str(usuarios._id)
+    # for usuarios in usuariosTodos:
+    #     usuarios.id = str(usuarios._id)
 
     return render(request, "usuarios/todos.html", {'usuariosTodos': usuariosTodos})
 

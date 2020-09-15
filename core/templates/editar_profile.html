@@ -1,0 +1,108 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Forms {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content-form-page-header-title %} Perfil {% endblock content-form-page-header-title %}
+{% block content-form-page-header %}
+
+    <ul class="breadcrumbs">
+        <li class="nav-home">
+            <a href="#">
+                <i class="flaticon-home"></i>
+            </a>
+        </li>
+        <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+        </li>
+        <li class="nav-item">
+            <a href="#">Perfil</a>
+        </li>
+        <li class="separator">
+            <i class="flaticon-right-arrow"></i>
+        </li>
+        <li class="nav-item">
+            <a href="#">Editar</a>
+        </li>
+    </ul>
+
+{% endblock content-form-page-header %}
+{% block content-form-form-tag-begin %} {% endblock content-form-form-tag-begin %}
+{% block content-form-content %}
+<div class="card-body">
+    <div class="row">
+        <div class="col-md-12">
+            <form method="POST" class="post-form" action="editar_profile/{{form.id.value}}/"></form>
+                {% csrf_token %}
+                <div class="card bg-custom-gray p-1">
+                    <div class="card-header">
+                        <h5>Datos de usuario</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 col-lg-4">
+                                <div class="form-group form-show-validation row"></div>
+                                    <label for="user">Usuario</label>
+                                    <h6><b>{{ request.user.profile.get_rol_display }}</b></h6>
+                                </div>
+                                <div class="form-group">
+                                    <label for="username">Nombre de usuario</label>
+                                    <div class="col-lg-4 col-md-9 col-sm-8">
+                                        <input type="text" class="form-control" id="id_username" name="username" placeholder="Usuario" required
+                                             maxlength="100"placeholder="usuario" required
+                                                 value="{{ form.username.value }}"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="first_name">Nombre</label>
+                                    <div class="col-lg-4 col-md-9 col-sm-8">
+                                        <input type="text" class="form-control" id="id_first_name" name="first_name" placeholder="Nombre" required
+                                             maxlength="100"placeholder="nombre" required
+                                                 value="{{ form.first_name.value }}"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="last_name">Apellido</label>
+                                    <div class="col-lg-4 col-md-9 col-sm-8">
+                                        <input type="text" class="form-control" id="id_last_name" name="last_name" placeholder="Apellido" required
+                                             maxlength="100"placeholder="apellido" required
+                                                 value="{{ form.last_name.value }}"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <div class="col-lg-4 col-md-9 col-sm-8">
+                                        <input type="email" class="form-control" id="id_email" name="email" placeholder="Email" required
+                                             maxlength="100"placeholder="E-mail" required
+                                                 value="{{ form.email.value }}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-action">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input class="btn btn-success" type="submit" value="Guardar">
+                                <a href="profile.html" class="btn btn-danger">Cancelar</a>
+                            </div>										
+                        </div>
+                    </div>
+                </div>
+            </form>
+		</div>
+	</div>
+</div>	
+
+{% endblock content-form-content %}
+{% block content-form-form-tag-end %} {% endblock content-form-form-tag-end %}
+
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}{% endblock javascripts %}
+{% block javascripts-page %}
+    {% include 'includes/scripts_js_datatable.html' %}
+
+{% endblock javascripts-page %}

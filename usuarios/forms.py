@@ -57,7 +57,7 @@ class UsuariosForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name', 'password1')
+        fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'cliente_nif')
 
     def __init__(self, *args, **kwargs):
         super(UsuariosForm, self).__init__(*args, **kwargs)
