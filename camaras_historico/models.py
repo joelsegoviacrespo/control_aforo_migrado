@@ -11,9 +11,13 @@ class camaras_historico(models.Model):
     zonas_camara = models.ArrayField (
     models.EmbeddedField('Info_zona_camara',null=True,blank=True)
     )
+    
+    def __str__(self):
+        return self.nombre_camara
 
 class instalacion(models.Model):
     nombre = models.CharField(max_length=200)
+
 
 class info_zona_camara(models.Model):
     nombre_zona_camara = models.CharField(max_length=200)
