@@ -23,14 +23,9 @@ def fondos(request):
         form = FondosForm(request.POST)        
         if form.is_valid():
             try:
-                #dir="F1000/panaderia1/imagen/" 
-                print("if")
-                print("@@@@@@@@@@@@@@@request.POST")
-                print(request.POST)
-                numero_cliente = form.cleaned_data['numero_cliente']                
-                print("numero_cliente: ",numero_cliente)
-                nombre_instalacion = request.POST['instalacion-nombre']
-                print("nombre_instalacion: ",nombre_instalacion)
+                #dir="F1000/panaderia1/imagen/"                
+                numero_cliente = form.cleaned_data['numero_cliente']             
+                nombre_instalacion = request.POST['instalacion-nombre']                
                 nombre_directorio = nombreDirCliente(numero_cliente, nombre_instalacion)               
                 createDirCliente(nombre_directorio)                        
                 UpLoadFile().send(request.FILES['uploadVerde'],nombre_directorio)
@@ -46,7 +41,7 @@ def fondos(request):
     if form.errors:
         for field in form:
             for error in field.errors:
-                print(field.name)
+                #print(field.name)
 
                 print(error)
         # for error in form.non_field_errors:
@@ -64,12 +59,11 @@ def todos(request):
     if (request.user.profile.rol== Constantes.SUPERUSUARIO):
         fondosTodos = Fondos.objects.all()
         
-    elif (request.user.profile.rol == Constantes.ADMINISTRADOR) and hasattr(request.user.profile, 'cliente') and (request.user.profile.cliente.get_id() is not None):    
-            print(request.user.profile.cliente.nif)
+    elif (request.user.profile.rol == Constantes.ADMINISTRADOR) and hasattr(request.user.profile, 'cliente') and (request.user.profile.cliente.get_id() is not None):        
             fondosTodos = Fondos.objects.all().filter(instalacion={'nif_cliente': request.user.profile.cliente.nif})
     
-    elif (request.user.profile.rol > Constantes.ADMINISTRADOR) and hasattr(request.user.profile, 'cliente') and (request.user.profile.cliente.get_id() is not None):         
-          if hasattr(request.user.profile, 'instalacion') and (request.user.profile.instalacion.get_id() is not None):
+    elif (request.user.profile.rol > Constantes.ADMINISTRADOR) and hasattr(request.user.profile, 'cliente') and (request.user.profile.cliente.get_id() is not None):          
+          if hasattr(request.user.profile, 'instalacion') and hasattr(request.user.profile.instalacion, 'get_id') and (request.user.profile.instalacion.get_id() is not None):
               fondosTodos = Fondos.objects.all().filter(instalacion={'nif_cliente': request.user.profile.cliente.nif} and {'nombre': request.user.profile.instalacion.nombre_comercial})
     
 
@@ -106,9 +100,9 @@ def actualizar(request, id):
     if form.is_valid():
         
         numero_cliente = form.cleaned_data['numero_cliente']                
-        print("numero_cliente: ",numero_cliente)
+        #print("numero_cliente: ",numero_cliente)
         nombre_instalacion = request.POST['instalacion-nombre']
-        print("nombre_instalacion: ",nombre_instalacion)
+        #print("nombre_instalacion: ",nombre_instalacion)
         nombre_directorio = nombreDirCliente(numero_cliente, nombre_instalacion)               
         createDirCliente(nombre_directorio)
                      
@@ -161,7 +155,7 @@ def nombreDirCliente(numero_cliente,nombre_instalacion):
     
     dir = numero_cliente+"/"+nombre_instalacion+"/"+"imagen/"
     dir = dir.replace(" ","_")
-    print("dir: ",dir)        
+    #print("dir: ",dir)        
     return dir
     
 def listar_por_nif_cliente(request, nif_cliente): 
