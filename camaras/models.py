@@ -6,7 +6,7 @@ from instalacion.models import Instalacion,InstalacionEmbebido
 class ZonaCamara(models.Model):
     #_id = models.ObjectIdField()
     nombre_zona_camara = models.CharField(max_length=250, blank=False, default='')
-    nro_personas = models.IntegerField(blank=True, default=0)
+    nro_personas = models.IntegerField(default=0)
     
     
     class Meta:        

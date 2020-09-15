@@ -73,10 +73,11 @@
                 <div class="container">
                   <div class="row">
                     <div class="col text-center mb-5 ">
-						<button id= "1"type="button" class="btn btn-primary min-vw-25 mr-4">Hoy</button>	
-						<button id= "2" type="button" class="btn btn-primary min-vw-25 mr-4">Esta Semana</button>
-						<button id= "3" type="button" class="btn btn-primary min-vw-25 mr-4">Este Mes</button>
-						
+						<div class="btn-group mr-2" role="group" aria-label="First group">
+						<button id= "1"type="button" class="btn btn-primary min-vw-25 mr-4  " >Hoy</button>	
+						<button id= "2" type="button" class="btn btn-primary min-vw-25 mr-4 "  >Esta Semana</button>
+						<button id= "3" type="button" class="btn btn-primary min-vw-25 mr-4 " >Este Mes</button>
+					</div>
                     </div>
                   </div>
                 </div>
@@ -110,24 +111,28 @@ document.getElementById("demo").id = "newid";
 			</script>
                 <div class="col-md-12" >
 					<p align="center">Total Aforo</p>
-                  <div id="chart-container" style="max-height: 100px;" >
+                  <div id="chart-container" style="max-height: 60px;" >
 					
-                    <canvas id="totalIncomeChart" style=" width: 376px; height: 100px;"></canvas>
+                    <canvas id="totalIncomeChart" style=" width: 376px; height: 90px;"></canvas>
                   </div>
-                  <div></div>
+                  
                     
 			     
-                  </div>
+				  </div>
+				  
                   <div class="col-md-12" >
+					  
 					<p align="center">Total Persona</p>
-                    <div id="chart-container" style="max-height: 100px;">
+                    <div id="chart-container" style="max-height: 60px;">
 						
-                      <canvas id="totalIncomeChart1"style=" width: 376px; height: 100px;"></canvas>
+                      <canvas id="totalIncomeChart1"style=" width: 376px; height: 90px;"></canvas>
                       
                       
 					</div>
-			
-                
+					<div align="center">
+						<b><small >Horario Activo:  8:00 am -a 5:00 pm para el público</small></b>
+					</div>
+                  
                 </div>
                 </div>
               </div>
@@ -160,7 +165,8 @@ document.getElementById("demo").id = "newid";
 					  <div class="card-header text-center pt-2 pb-4" style=" border-width:0px !important;">
 						<br>
 						
-                        <b><small>{{camara.nombre_camara}}</small></b>
+					   <!-- <b><small>{{camara.nombre_camara}}</small></b>-->
+					   <b><small>Total Aforo</small></b>
                     </div>
                   </div>
 				  <div class="card-footer " style=" border-width:0px !important;">
@@ -187,23 +193,28 @@ document.getElementById("demo").id = "newid";
 				  
                 <div class="card full-height">
 					
-                    <div class="card-header text-center pt-2 pb-3"style=" border-width:0px !important">                  
+                    <div class="card-header text-center pt-2 pb-3"style=" border-width:0px !important;">                  
 					 
 						<div class="card-body">
+							
 							<b><small>{{camara.nombre_camara}}</small></b>
 							
-							{% if  camara.serial_camara == "Q2HV-B24V-ZKN5" %}
-							<img class="card-img-top p-1 rounded" src="{{ url1 }}" onerror="this.src='/static/assets/img/onerrorQ2HV-B24V-ZKN5.jpg';">
-						
-							{%endif%}
-							{% if camara.serial_camara == "Q2GV-4YBM-YWWJ"%}
-							<img class="card-img-top p-1 rounded" src="{{ url2 }}" onerror="this.src='/static/assets/img/onerrorQ2GV-4YBM-YWWJ.jpg';">
-							{%endif%}
+							
 						  </div>
-						  <p>Total Personas: {{zonas_camara.nro_personas}}</p>
-					</div> <br><br>
+						 
+						  {% if  camara.serial_camara == "Q2HV-B24V-ZKN5" %}
+						  <img class="card-img-top rounded" src="{{ url1 }}" onerror="this.src='/static/assets/img/onerrorQ2HV-B24V-ZKN5.jpg';">
+					  
+						  {%endif%}
+						  {% if camara.serial_camara == "Q2GV-4YBM-YWWJ"%}
+						  <img class="card-img-top rounded" src="{{ url2 }}" onerror="this.src='/static/assets/img/onerrorQ2GV-4YBM-YWWJ.jpg'; ">
+						  {%endif%} 
+						  <br><br>
+						  Personas: {{zonas_camara.nro_personas}}</p>
+						  <br>
+					</div> 
 			
-
+				
 				<!--  {% if  form.serial == "Q2HV-B24V-ZKN5" %}
 				 
                   <img class="card-img-top p-4 rounded" src="{{ form.meraki }}">
@@ -233,20 +244,24 @@ document.getElementById("demo").id = "newid";
                 </div>
                
               </div>
-                     
-              <div class="col-md-12" >
+                    
+    
 				<!--<p>camara</p>-->
-                <br>
-                <div id="chart-container" >
-              
-                  <canvas id="barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}"style="display: block; width:262px; max-height: 100px;"></canvas>
-                </div>
-              </div>
-              
-        </div>
+                
+               
+		
+			
+		        <div class="card-footer "id="chart-container" style=" border-width:0px !important;">
+				</div>
+		<div class="col-md-12" >
+			       <canvas  id="barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}"style="display: block; width:262px; max-height: 100px;"></canvas>
+				
+			  </div>
+               
+            </div>
         
         </div>
-        
+   
        
       
       
@@ -513,7 +528,7 @@ document.getElementById("demo").id = "newid";
 		
 		Circles.create({
 			id:id_circle,
-			radius:35,
+			radius:50,
 			value:value,
 			maxValue:maxValue,
 			width:7,
@@ -527,7 +542,7 @@ document.getElementById("demo").id = "newid";
 		})
 		Circles.create({
 			id:id_circle_persona,
-			radius:35,
+			radius:50,
 			value:value,
 			maxValue:maxValue,
 			width:7,
