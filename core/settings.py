@@ -21,7 +21,8 @@ SECRET_KEY = config('SECRET_KEY', default='S#perS3crEt_1122')
 DEBUG = config('DEBUG', default=True)
 
 # load production server from .env
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '5.196.27.225', config('SERVER', default='127.0.0.1'),'mosayk.softwaremedifactory.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '5.196.27.225', config('SERVER', default='127.0.0.1'),'aforo.softwaremediafactory.com']
+
 
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
