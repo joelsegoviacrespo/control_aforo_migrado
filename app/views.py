@@ -24,10 +24,25 @@ from datetime import date
 today = date.today()
 from camaras_historico.models import camaras_historico
 from aforoInfo.models import AforoInfo
+from json import dumps
 
-def hfs(request):
-    context = {'foo': 'bar'}
-    return render(request, 'hzfullscreen_bu.html', context)
+
+def hfs(request):    
+     
+    data = { 
+        'embebido':False        
+    }     
+    dataJSON = dumps(data)    
+    return render(request, 'hzfullscreen_bu.html', {'data': dataJSON})
+
+def hfsEmbebido(request):
+       
+    data = { 
+        'embebido':True        
+    } 
+    
+    dataJSON = dumps(data)    
+    return render(request, 'hzfullscreen_bu.html', {'data': dataJSON})
 
 
 @login_required(login_url="/login/")
