@@ -21,6 +21,7 @@ class Camaras(models.Model):
        #model_form_class=ClienteEmbebidoForm
     )            
     nombre_camara = models.CharField(max_length=250, blank=False, default='')
+    snapshot = models.CharField(max_length=250, blank=False, default='')
     serial_camara = models.CharField(max_length=250, blank=False, default='')    
     zonas_camara = models.ArrayField(
       model_container=ZonaCamara,
