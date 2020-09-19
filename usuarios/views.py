@@ -58,17 +58,14 @@ def usuarios(request):
 def todos(request):
     activate('es')
     usuariosTodos = {}
+    client = getattr(request.user.profile, "cliente", None)
 
-    # if request.user.is_staff:
     if (request.user.profile.rol== Constantes.SUPERUSUARIO):
         usuariosTodos = User.objects.all()
 
-    # elif hasattr(request.user, 'cliente') and (request.user.cliente.get_id() is not None):
-    elif (request.user.profile.rol == Constantes.ADMINISTRADOR) and hasattr(request.user.profile, 'cliente') and (request.user.profile.cliente.get_id() is not None):
-        usuariosTodos  = User.objects.all().filter(id_=request.user.profile.cliente.get_id())
-
-    # for usuarios in usuariosTodos:
-    #     usuarios.id = str(usuarios._id)
+    elif (request.user.profile.rol == Constantes.ADMINISTRADOR) and client:
+        usuariosTodos = User.objects.filter(profile__cliente=client)
+        print(client)
 
     return render(request, "usuarios/todos.html", {'usuariosTodos': usuariosTodos})
 
