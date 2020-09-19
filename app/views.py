@@ -27,6 +27,7 @@ from rest_framework.renderers import JSONRenderer
 from camaras_historico.models import myCamaras
 from datetime import date
 from datetime import datetime, timedelta
+from json import dumps
 
 def hfs(request):
     data = {
