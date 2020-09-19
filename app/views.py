@@ -182,10 +182,25 @@ def grafica_horas():
 
 
 
+from json import dumps
 
-def hfs(request):
-    context = {'foo': 'bar'}
-    return render(request, 'hzfullscreen_bu.html', context)
+
+def hfs(request):    
+     
+    data = { 
+        'embebido':False        
+    }     
+    dataJSON = dumps(data)    
+    return render(request, 'hzfullscreen_bu.html', {'data': dataJSON})
+
+def hfsEmbebido(request):
+       
+    data = { 
+        'embebido':True        
+    } 
+    
+    dataJSON = dumps(data)    
+    return render(request, 'hzfullscreen_bu.html', {'data': dataJSON})
 
 @login_required(login_url="/login/")
 def index(request):

@@ -120,6 +120,8 @@
 	hzt_verde = "../static/assets/img/design/shv.png";
 	hzt_ambar ="../static/assets/img/design/sha.png";
 	hzt_rojo ="../static/assets/img/design/shr.png";
+	var data = JSON.parse("{{data|escapejs}}");
+	var embebido = data.embebido    
 
 	function revisar_cambios() {
 		id_monitor = $('#hdn_monitor').val();
@@ -202,10 +204,17 @@
 				    else{				    	
 						nro_personas_show = nro_personas.toString();
 				    }
-
+					
+					if (embebido == false) {						
+						radius = 80
+					}
+					else{						
+						radius = 40
+					}
+					
 					Circles.create({
 						id:'circles-1',
-						radius:40,
+						radius:radius,
 						value:nro_personas,
 						maxValue:aforo_maximo,
 						width:10,
