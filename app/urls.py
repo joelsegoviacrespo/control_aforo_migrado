@@ -19,4 +19,6 @@ urlpatterns = [
     path('valores/', include('valores.urls')),
     path('usuarios/', include('usuarios.urls')),
     path('fondos/', include('fondos.urls')),
+    path('camaras_historico/', include('camaras_historico.urls')),
+    
 ]
