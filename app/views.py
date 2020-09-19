@@ -55,13 +55,11 @@ def TimeConverter(millis):
 
 print(TimeConverter(13746338230108684000))
 def grafica_semana():
-   
     i =0
+    
     datos_semana=[]
-    comparativeDate = 0000
     for e in myCamaras.objects.all():
-         
-        
+        comparativeDate = 0000
         if (e.serial_camara == serial_camara):
             if(e.fecha==mydate and mydate2== 'Sunday'):
                 print(e.serial_camara)
@@ -87,8 +85,6 @@ def grafica_semana():
                         # print(e.zonas_camara[0].nro_personas)
                        
                         if comparativeDate != myrefDate:
-                            
-                            
                             datos_semana.insert(0,e.zonas_camara[0].nro_personas)
                             
                             print(datos_semana)
@@ -129,10 +125,10 @@ def grafica_horas():
     print(myhora)
     for e in myCamaras.objects.all():
         if (e.serial_camara == serial_camara):
-            #if(e.fecha==mydate):
-            if(myhora <= '01:30:00'):
+            if(e.fecha==mydate ):
+                
                 print(e.serial_camara)
-                #datos_horas.append(TimeConverter(e.ts))
+                datos_horas.append(e.zonas_camara[0].nro_personas)
                 print(datos_horas)
                 datos_horas.append(0)
                 datos_horas.append(0)
@@ -144,30 +140,36 @@ def grafica_horas():
                 datos_horas.append(0)
                 datos_horas.append(0)
                 return datos_horas
-            break
-        else:
-            myrefDate=mydate1
-            while myrefDate.strftime('%A') != 'Sunday':
-                print(myrefDate.strftime('%A'))
-                i =0
-                if not i == 6 :
-                    # print(e.zonas_camara[0].nro_personas)
-                    datos_horas.insert(0,e.zonas_camara[0].nro_personas)
-                    print(datos_horas)
-                    myrefDate = myrefDate-timedelta(i)
-                   #print("no")
-                    i=i+1
-                    if len(datos_horas) <9:
-                        print('no')
-                        print(datos_horas)
-                        datos_horas.append(0)
-                        print('resultado final')
-                        print(datos_horas)
-                        print('resultado final')
-                        print(datos_horas)
-                        break
-                    
                 break
+            else:
+                myrefDate=mydate1
+                while myrefDate.strftime('%A') != 'Sunday':
+                    print(myrefDate.strftime('%A'))
+                    i =0
+                    if not i == 6 :
+                        # print(e.zonas_camara[0].nro_personas)
+
+                        datos_horas.insert(0,e.zonas_camara[0].nro_personas)
+
+                        print(datos_horas)
+                        myrefDate = myrefDate-timedelta(i)
+
+
+                       #print("no")
+                        i=i+1
+
+
+                        if len(datos_horas) <9:
+                            print('no')
+                            print(datos_horas)
+                            datos_horas.append(0)
+                            print('resultado final')
+                            print(datos_horas)
+                            print('resultado final')
+                            print(datos_horas)
+                            break
+                        
+                    break
 
     return datos_horas
 
@@ -182,25 +184,10 @@ def grafica_horas():
 
 
 
-from json import dumps
 
-
-def hfs(request):    
-     
-    data = { 
-        'embebido':False        
-    }     
-    dataJSON = dumps(data)    
-    return render(request, 'hzfullscreen_bu.html', {'data': dataJSON})
-
-def hfsEmbebido(request):
-       
-    data = { 
-        'embebido':True        
-    } 
-    
-    dataJSON = dumps(data)    
-    return render(request, 'hzfullscreen_bu.html', {'data': dataJSON})
+def hfs(request):
+    context = {'foo': 'bar'}
+    return render(request, 'hzfullscreen_bu.html', context)
 
 @login_required(login_url="/login/")
 def index(request):
