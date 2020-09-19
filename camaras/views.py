@@ -66,7 +66,7 @@ def todos(request):
     if request.user.is_staff:
         camarasAll =  Camaras.objects.all()
     elif hasattr(request.user, 'cliente') and (request.user.cliente.get_id() is not None):
-        camaras  = Camara.objects.filter(id_cliente=request.user.cliente.get_id())
+        camaras  = Camaras.objects.filter(id_cliente=request.user.cliente.get_id())
         for camaras in camarasAll:
             camaras.id = str(camaras._id)
         return render(request, "camaras/todos.html", {'form': camarasAll})

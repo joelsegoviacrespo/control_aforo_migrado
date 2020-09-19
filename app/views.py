@@ -21,9 +21,167 @@ import calendar
 import datetime
 import pytz
 from datetime import date
-today = date.today()
-from camaras_historico.models import camaras_historico
+
+
 from aforoInfo.models import AforoInfo
+from django.core import serializers
+from rest_framework.renderers import JSONRenderer
+
+
+from camaras_historico.models import myCamaras
+from datetime import date
+from datetime import datetime, timedelta
+
+
+today = date.today()
+mydate = str(today.strftime("%Y-%m-%d"))
+mydate1 = datetime.today()
+
+mydate2 = datetime.today().strftime('%A')
+
+serial_camara = "Q2GV-4YBM-YWWJ"
+
+
+
+def TimeConverter(millis):
+    millis = int(millis)
+    seconds=(millis/1000)%60
+    seconds = int(seconds)
+    minutes=(millis/(1000*60))%60
+    minutes = int(minutes)
+    hours=(millis/(1000*60*60))%24
+    result =("%d:%d:%d" % (hours, minutes, seconds))
+    return result
+
+print(TimeConverter(13746338230108684000))
+def grafica_semana():
+   
+    i =0
+    datos_semana=[]
+    comparativeDate = 0000
+    for e in myCamaras.objects.all():
+         
+        
+        if (e.serial_camara == serial_camara):
+            if(e.fecha==mydate and mydate2== 'Sunday'):
+                print(e.serial_camara)
+                datos_semana.append(e.zonas_camara[0].nro_personas)
+                print(datos_semana)
+                datos_semana.append(0)
+                datos_semana.append(0)
+                datos_semana.append(0)
+                datos_semana.append(0)
+                datos_semana.append(0)
+                datos_semana.append(0)
+                datos_semana.append(0)
+                datos_semana.append(0)
+                datos_semana.append(0)
+                return datos_semana
+                break
+            else:
+                myrefDate=mydate1
+                while myrefDate.strftime('%A') != 'Sunday':
+                    print(myrefDate.strftime('%A'))
+                    
+                    if not i == 7 :
+                        # print(e.zonas_camara[0].nro_personas)
+                       
+                        if comparativeDate != myrefDate:
+                            
+                            
+                            datos_semana.insert(0,e.zonas_camara[0].nro_personas)
+                            
+                            print(datos_semana)
+                            myrefDate = myrefDate-timedelta(i)
+                            comparativeDate = myrefDate
+                            print('comparativeDate')
+                            print(comparativeDate)
+                            print('ingresando el valor:',e.zonas_camara[0].nro_personas, 'del dia:',myrefDate.strftime('%A') )
+                            i=i+1
+                            
+                        else:
+                            print('esta fecha se dejo pasar porque ya existe en la grafica')
+                            comparativeDate = myrefDate
+                           
+                       #print("no")
+                        
+
+
+                        if len(datos_semana) <9:
+                            print('no')
+                            print(datos_semana)
+                            datos_semana.append(0)
+                            print('resultado final')
+                            print(datos_semana)
+                            print('resultado final')
+                            print(datos_semana)
+                            break
+                        
+                    break
+
+    return datos_semana
+                    
+                
+def grafica_horas():
+    now = datetime.now()
+    myhora = now.strftime("%H:%M:%S")
+    datos_horas=[]
+    print(myhora)
+    for e in myCamaras.objects.all():
+        if (e.serial_camara == serial_camara):
+            #if(e.fecha==mydate):
+            if(myhora <= '01:30:00'):
+                print(e.serial_camara)
+                #datos_horas.append(TimeConverter(e.ts))
+                print(datos_horas)
+                datos_horas.append(0)
+                datos_horas.append(0)
+                datos_horas.append(0)
+                datos_horas.append(0)
+                datos_horas.append(0)
+                datos_horas.append(0)
+                datos_horas.append(0)
+                datos_horas.append(0)
+                datos_horas.append(0)
+                return datos_horas
+            break
+        else:
+            myrefDate=mydate1
+            while myrefDate.strftime('%A') != 'Sunday':
+                print(myrefDate.strftime('%A'))
+                i =0
+                if not i == 6 :
+                    # print(e.zonas_camara[0].nro_personas)
+                    datos_horas.insert(0,e.zonas_camara[0].nro_personas)
+                    print(datos_horas)
+                    myrefDate = myrefDate-timedelta(i)
+                   #print("no")
+                    i=i+1
+                    if len(datos_horas) <9:
+                        print('no')
+                        print(datos_horas)
+                        datos_horas.append(0)
+                        print('resultado final')
+                        print(datos_horas)
+                        print('resultado final')
+                        print(datos_horas)
+                        break
+                    
+                break
+
+    return datos_horas
+
+                
+            
+    
+
+        
+
+
+
+
+
+
 from json import dumps
 
 
@@ -44,15 +202,17 @@ def hfsEmbebido(request):
     dataJSON = dumps(data)    
     return render(request, 'hzfullscreen_bu.html', {'data': dataJSON})
 
-
 @login_required(login_url="/login/")
 def index(request):
     camarasAll =  Camaras.objects.all()
     
-    info_grafica_semana = [3,5,4,2,1,8,7,6,9,10]
+    info_grafica_semana = grafica_semana()
+    
+    print('info_grafica_semana')
+    print(info_grafica_semana)
     formato_hora = ["H","H","H","H","H","H","H","H","H"]
     formato_semana= ["D", "L", "M", "M", "J", "V", "S"]
-    info_grafica_horas = [10,2,5,9,6,8,4,3,2,7]
+    info_grafica_horas = grafica_horas()
 
 
     url = "https://api.meraki.com/api/v1/devices/Q2HV-B24V-ZKN5/camera/generateSnapshot"
