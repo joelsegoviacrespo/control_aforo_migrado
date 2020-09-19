@@ -21,16 +21,26 @@ import calendar
 import datetime
 import pytz
 from datetime import date
-
-
 from aforoInfo.models import AforoInfo
 from django.core import serializers
 from rest_framework.renderers import JSONRenderer
-
-
 from camaras_historico.models import myCamaras
 from datetime import date
 from datetime import datetime, timedelta
+from json import dumps
+
+def hfs(request):
+    data = {
+        'embebido':False
+    }
+    dataJSON = dumps(data)
+    return render(request, 'hzfullscreen_bu.html', {'data': dataJSON})
+def hfsEmbebido(request):
+    data = {
+        'embebido':True
+    }
+    dataJSON = dumps(data)
+    return render(request, 'hzfullscreen_bu.html', {'data': dataJSON})
 
 
 today = date.today()
@@ -203,33 +213,8 @@ def index(request):
     info_grafica_horas = grafica_horas()
 
 
-    url = "https://api.meraki.com/api/v1/devices/Q2HV-B24V-ZKN5/camera/generateSnapshot"
-    url2 = "https://api.meraki.com/api/v1/devices/Q2GV-4YBM-YWWJ/camera/generateSnapshot"  
 
-    payload = {}
-    headers = {
-    'X-Cisco-Meraki-API-Key': '920a310b87feb3832739a79d573845404c6825d0',
-    'Content-Type': 'application/json'
-    }
-
-    response = {}
-    response2 = {}
-   
-    response = requests.request("POST", url, headers=headers, data = payload)
-    response2= requests.request("POST",url2 ,headers=headers, data = payload)
-
-    if(not response and not response2):
-            
-        extract = "/static/assets/img/people.jpg"
-        extract2 = "/static/assets/img/people.jpg"
-      
-    else:
-        urlResponse = json.loads(response.text)
-        urlResponse2 = json.loads(response2.text)
-        extract = urlResponse.get('url')
-        extract2= urlResponse2.get('url')
-
-    return render(request, "index.html",  {'camaras':camarasAll,'url1':extract,'url2':extract2,'info_grafica_semana': info_grafica_semana,'info_grafica_horas':info_grafica_horas})
+    return render(request, "index.html",  {'camaras':camarasAll,'info_grafica_semana': info_grafica_semana,'info_grafica_horas':info_grafica_horas})
  
 
 @login_required(login_url="/login/")
