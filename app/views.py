@@ -126,50 +126,51 @@ def grafica_horas():
     for e in myCamaras.objects.all():
         if (e.serial_camara == serial_camara):
             if(e.fecha==mydate ):
+                if(myhora ==myhora):
+                    print(e.serial_camara)
+                    datos_horas.append(e.zonas_camara[0].nro_personas)
+                    print(datos_horas)
+                    datos_horas.append(0)
+                    datos_horas.append(0)
+                    datos_horas.append(0)
+                    datos_horas.append(0)
+                    datos_horas.append(0)
+                    datos_horas.append(0)
+                    datos_horas.append(0)
+                    datos_horas.append(0)
+                    datos_horas.append(0)
+                    print('se cumplio la primara condicional')
+                    return datos_horas
                 
-                print(e.serial_camara)
-                datos_horas.append(e.zonas_camara[0].nro_personas)
-                print(datos_horas)
-                datos_horas.append(0)
-                datos_horas.append(0)
-                datos_horas.append(0)
-                datos_horas.append(0)
-                datos_horas.append(0)
-                datos_horas.append(0)
-                datos_horas.append(0)
-                datos_horas.append(0)
-                datos_horas.append(0)
-                return datos_horas
-                break
-            else:
-                myrefDate=mydate1
-                while myrefDate.strftime('%A') != 'Sunday':
-                    print(myrefDate.strftime('%A'))
-                    i =0
-                    if not i == 6 :
-                        # print(e.zonas_camara[0].nro_personas)
-
-                        datos_horas.insert(0,e.zonas_camara[0].nro_personas)
-
-                        print(datos_horas)
-                        myrefDate = myrefDate-timedelta(i)
-
-
-                       #print("no")
-                        i=i+1
-
-
-                        if len(datos_horas) <9:
-                            print('no')
+                else:
+                    myrefDate=mydate1
+                    while myrefDate.strftime('%A') != 'Sunday':
+                        print(myrefDate.strftime('%A'))
+                        i =0
+                        if not i == 6 :
+                            # print(e.zonas_camara[0].nro_personas)
+    
+                            datos_horas.insert(0,e.zonas_camara[0].nro_personas)
+    
                             print(datos_horas)
-                            datos_horas.append(0)
-                            print('resultado final')
-                            print(datos_horas)
-                            print('resultado final')
-                            print(datos_horas)
-                            break
-                        
-                    break
+                            myrefDate = myrefDate-timedelta(i)
+    
+    
+                           #print("no")
+                            i=i+1
+    
+    
+                            if len(datos_horas) <9:
+                                print('no')
+                                print(datos_horas)
+                                datos_horas.append(0)
+                                print('resultado final')
+                                print(datos_horas)
+                                print('resultado final')
+                                print(datos_horas)
+                                break
+                            
+                        break
 
     return datos_horas
 
