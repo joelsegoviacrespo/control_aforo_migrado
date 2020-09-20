@@ -137,6 +137,13 @@ def grafica_semana():
     return datos_semana
                     
                 
+
+
+
+
+
+
+                
 def grafica_horas():
     now = datetime.now()
     myhora = now.strftime("%H:%M:%S")
@@ -145,51 +152,17 @@ def grafica_horas():
     for e in myCamaras.objects.all():
         if (e.serial_camara == serial_camara):
             if(e.fecha==mydate ):
-                if(myhora ==myhora):
-                    print(e.serial_camara)
-                    datos_horas.append(e.zonas_camara[0].nro_personas)
-                    print(datos_horas)
-                    datos_horas.append(0)
-                    datos_horas.append(0)
-                    datos_horas.append(0)
-                    datos_horas.append(0)
-                    datos_horas.append(0)
-                    datos_horas.append(0)
-                    datos_horas.append(0)
-                    datos_horas.append(0)
-                    datos_horas.append(0)
-                    print('se cumplio la primara condicional')
-                    return datos_horas
+                if (myhora >= '00:00:00' and myhora <= '03:59:59'):
+                    var =e.ts
+                    #varConverter = TimeConverter(var)
+                    #TimeConverter(str(e.ts))
+                    print('hey----------------')
+                    print(var)
+                    #print(varConverter)
+                  
+            
                 
-                else:
-                    myrefDate=mydate1
-                    while myrefDate.strftime('%A') != 'Sunday':
-                        print(myrefDate.strftime('%A'))
-                        i =0
-                        if not i == 6 :
-                            # print(e.zonas_camara[0].nro_personas)
-    
-                            datos_horas.insert(0,e.zonas_camara[0].nro_personas)
-    
-                            print(datos_horas)
-                            myrefDate = myrefDate-timedelta(i)
-    
-    
-                           #print("no")
-                            i=i+1
-    
-    
-                            if len(datos_horas) <9:
-                                print('no')
-                                print(datos_horas)
-                                datos_horas.append(0)
-                                print('resultado final')
-                                print(datos_horas)
-                                print('resultado final')
-                                print(datos_horas)
-                                break
-                            
-                        break
+                   
 
     return datos_horas
 
@@ -220,6 +193,8 @@ def index(request):
     formato_hora = ["H","H","H","H","H","H","H","H","H"]
     formato_semana= ["D", "L", "M", "M", "J", "V", "S"]
     info_grafica_horas = grafica_horas()
+    print('info_grafica_horas')
+    print(info_grafica_horas)
 
 
 
