@@ -29,18 +29,6 @@ from datetime import date
 from datetime import datetime, timedelta
 from json import dumps
 
-def hfs(request):
-    data = {
-        'embebido':False
-    }
-    dataJSON = dumps(data)
-    return render(request, 'hzfullscreen_bu.html', {'data': dataJSON})
-def hfsEmbebido(request):
-    data = {
-        'embebido':True
-    }
-    dataJSON = dumps(data)
-    return render(request, 'hzfullscreen_bu.html', {'data': dataJSON})
 
 
 today = date.today()
@@ -63,7 +51,7 @@ def TimeConverter(millis):
     result =("%d:%d:%d" % (hours, minutes, seconds))
     return result
 
-print(TimeConverter(13746338230108684000))
+#print(TimeConverter(13746338230108684000))
 def grafica_semana():
     i =0
     
@@ -74,9 +62,9 @@ def grafica_semana():
         if (e.serial_camara == serial_camara):
             if(e.fecha==mydate and mydate2== 'Sunday'):
                 
-                print(e.serial_camara)
+                #print(e.serial_camara)
                 datos_semana.append(e.zonas_camara[0].nro_personas)
-                print(datos_semana)
+                #print(datos_semana)
                 datos_semana.append(0)
                 datos_semana.append(0)
                 datos_semana.append(0)
@@ -91,7 +79,7 @@ def grafica_semana():
             else:
                 myrefDate=mydate1
                 while myrefDate.strftime('%A') != 'Sunday':
-                    print(myrefDate.strftime('%A'))
+                    #print(myrefDate.strftime('%A'))
                     
                     if not i == 7 :
                         
@@ -101,21 +89,21 @@ def grafica_semana():
                             
                             datos_semana.insert(0,e.zonas_camara[0].nro_personas)
                             
-                            print(datos_semana)
+                            #print(datos_semana)
                             myrefDate = myrefDate-timedelta(i)
                             comparativeDate = myrefDate
-                            print('comparativeDate')
-                            print(comparativeDate)
-                            print('ingresando el valor:',e.zonas_camara[0].nro_personas, 'del dia:',myrefDate.strftime('%A') )
+                            #print('comparativeDate')
+                            #print(comparativeDate)
+                            #print('ingresando el valor:',e.zonas_camara[0].nro_personas, 'del dia:',myrefDate.strftime('%A') )
                             weekday=(myrefDate.strftime('%A'))
                             dias_semana.insert(0,weekday)
-                            print(dias_semana)
+                            #print(dias_semana)
                             i=i+1
                             
                         else:
-                            print('se queria ingresar el valor :', e.zonas_camara[0].nro_personas,'del dia:',myrefDate.strftime('%A'))
+                            #print('se queria ingresar el valor :', e.zonas_camara[0].nro_personas,'del dia:',myrefDate.strftime('%A'))
                            
-                            print('esta fecha se dejo pasar porque ya existe en la grafica')
+                            #print('esta fecha se dejo pasar porque ya existe en la grafica')
                             comparativeDate = myrefDate
                            
                        #print("no")
@@ -123,13 +111,13 @@ def grafica_semana():
 
 
                         if len(datos_semana) <9:
-                            print('no')
-                            print(datos_semana)
+                            #print('no')
+                            #print(datos_semana)
                             datos_semana.append(0)
-                            print('resultado final')
-                            print(datos_semana)
-                            print('resultado final')
-                            print(datos_semana)
+                            #print('resultado final')
+                            #print(datos_semana)
+                            #print('resultado final')
+                            #print(datos_semana)
                             break
                         
                     break
@@ -148,7 +136,7 @@ def grafica_horas():
     now = datetime.now()
     myhora = now.strftime("%H:%M:%S")
     datos_horas=[]
-    print(myhora)
+    #print(myhora)
     for e in myCamaras.objects.all():
         if (e.serial_camara == serial_camara):
             if(e.fecha==mydate ):
@@ -188,8 +176,8 @@ def index(request):
     
     info_grafica_semana = grafica_semana()
     
-    print('info_grafica_semana')
-    print(info_grafica_semana)
+    #print('info_grafica_semana')
+    #print(info_grafica_semana)
     formato_hora = ["H","H","H","H","H","H","H","H","H"]
     formato_semana= ["D", "L", "M", "M", "J", "V", "S"]
     info_grafica_horas = grafica_horas()
@@ -221,3 +209,19 @@ def pages(request):
         html_template = loader.get_template( 'error-500.html' )
         return HttpResponse(html_template.render(context, request))
 
+
+
+def hfs(request):    
+    data = {
+        'embebido':False
+    }
+    dataJSON = dumps(data)    
+    return render(request, 'hzfullscreen_bu.html', {'data': dataJSON})
+
+def hfsEmbebido(request):
+    
+    data = {
+        'embebido':True
+    }
+    dataJSON = dumps(data)    
+    return render(request, 'hzfullscreen_bu.html', {'data': dataJSON})
