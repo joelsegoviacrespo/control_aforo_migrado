@@ -68,10 +68,12 @@ def grafica_semana():
     i =0
     
     datos_semana=[]
+    dias_semana=[]
     for e in myCamaras.objects.all():
         comparativeDate = 0000
         if (e.serial_camara == serial_camara):
             if(e.fecha==mydate and mydate2== 'Sunday'):
+                
                 print(e.serial_camara)
                 datos_semana.append(e.zonas_camara[0].nro_personas)
                 print(datos_semana)
@@ -92,9 +94,11 @@ def grafica_semana():
                     print(myrefDate.strftime('%A'))
                     
                     if not i == 7 :
-                        # print(e.zonas_camara[0].nro_personas)
+                        
                        
-                        if comparativeDate != myrefDate:
+                        if str(datetime.strptime(e.fecha,'%Y-%m-%d').strftime('%A')) != str(myrefDate.strftime('%A')):
+                           
+                            
                             datos_semana.insert(0,e.zonas_camara[0].nro_personas)
                             
                             print(datos_semana)
@@ -103,9 +107,14 @@ def grafica_semana():
                             print('comparativeDate')
                             print(comparativeDate)
                             print('ingresando el valor:',e.zonas_camara[0].nro_personas, 'del dia:',myrefDate.strftime('%A') )
+                            weekday=(myrefDate.strftime('%A'))
+                            dias_semana.insert(0,weekday)
+                            print(dias_semana)
                             i=i+1
                             
                         else:
+                            print('se queria ingresar el valor :', e.zonas_camara[0].nro_personas,'del dia:',myrefDate.strftime('%A'))
+                           
                             print('esta fecha se dejo pasar porque ya existe en la grafica')
                             comparativeDate = myrefDate
                            
