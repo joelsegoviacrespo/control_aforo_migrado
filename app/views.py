@@ -7,6 +7,8 @@ from camaras.models import Camaras
 from camara_zona.models import CamaraZona
 from django.forms.models import model_to_dict
 from instalacion.models import Instalacion
+from cliente.models import Cliente
+from display.models import Display
 from monitor.models import Monitor
 import sys
 import http.client
@@ -264,21 +266,6 @@ def grafica_horas():
 
     return datos_horas
 
-                
-            
-    
-
-        
-
-
-
-
-
-
-
-def hfs(request):
-    context = {'foo': 'bar'}
-    return render(request, 'hzfullscreen_bu.html', context)
 
 @login_required(login_url="/login/")
 def index(request):
@@ -291,8 +278,8 @@ def index(request):
     formato_hora = ["H","H","H","H","H","H","H","H","H"]
     formato_semana= ["D", "L", "M", "M", "J", "V", "S"]
     info_grafica_horas = grafica_horas()
-    print('info_grafica_horas')
-    print(info_grafica_horas)
+    #print('info_grafica_horas')
+    #print(info_grafica_horas)
 
 
 
@@ -322,16 +309,50 @@ def pages(request):
 
 
 def hfs(request):    
-    data = {
-        'embebido':False
-    }
+    if hasattr(request.user.profile, 'cliente') and hasattr(request.user.profile.cliente, 'get_id') and (request.user.profile.cliente.get_id() is not None):    
+        if hasattr(request.user.profile, 'instalacion') and hasattr(request.user.profile.instalacion, 'get_id') and (request.user.profile.instalacion.get_id() is not None):
+            id_instalacion = request.user.profile.instalacion.get_id()
+            display = Display.objects.filter(instalacion={'nif_cliente': request.user.profile.cliente.nif} and {'nombre': request.user.profile.instalacion.nombre_comercial}).first()            
+            id_display = display.get_id()
+        else:
+          display = Display.objects.filter(instalacion={'nif_cliente': request.user.profile.cliente.nif}).first()
+          id_display = display.get_id()
+    else:        
+        cliente = Cliente.objects.first()        
+        instalacion = Instalacion.objects.filter(cliente={'nif': cliente.nif}).first()
+        display = Display.objects.filter(instalacion={'nif_cliente': cliente.nif} and {'nombre': instalacion.nombre_comercial}).first()                
+        id_display = display.get_id()
+
+
+    data = { 
+        'embebido':False, 
+        'id_display': id_display       
+    }     
     dataJSON = dumps(data)    
     return render(request, 'hzfullscreen_bu.html', {'data': dataJSON})
 
-def hfsEmbebido(request):
+def hfsEmbebido(request):    
+    if hasattr(request.user.profile, 'cliente') and hasattr(request.user.profile.cliente, 'get_id') and (request.user.profile.cliente.get_id() is not None):    
+        if hasattr(request.user.profile, 'instalacion') and hasattr(request.user.profile.instalacion, 'get_id') and (request.user.profile.instalacion.get_id() is not None):
+            id_instalacion = request.user.profile.instalacion.get_id()
+            display = Display.objects.filter(instalacion={'nif_cliente': request.user.profile.cliente.nif} and {'nombre': request.user.profile.instalacion.nombre_comercial}).first()            
+            id_display = display.get_id()
+        else:
+          display = Display.objects.filter(instalacion={'nif_cliente': request.user.profile.cliente.nif}).first()
+          id_display = display.get_id()   
+    else:
+        cliente = Cliente.objects.first()        
+        instalacion = Instalacion.objects.filter(cliente={'nif': cliente.nif}).first()
+        display = Display.objects.filter(instalacion={'nif_cliente': cliente.nif} and {'nombre': instalacion.nombre_comercial}).first()                
+        id_display = display.get_id()
+     
     
-    data = {
-        'embebido':True
-    }
+       
+    data = { 
+        'embebido':True,
+        'id_display': id_display        
+    } 
+    
+    
     dataJSON = dumps(data)    
     return render(request, 'hzfullscreen_bu.html', {'data': dataJSON})

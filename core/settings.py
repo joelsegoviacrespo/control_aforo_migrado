@@ -51,6 +51,9 @@ INSTALLED_APPS = [
     'valores.apps.ValoresConfig',
     'usuarios.apps.UsuariosConfig',
     'fondos.apps.FondosConfig',
+    'posicion.apps.PosicionConfig',
+    'espacios.apps.EspaciosConfig',
+    'display.apps.DisplayConfig',     
 
     
 ]
