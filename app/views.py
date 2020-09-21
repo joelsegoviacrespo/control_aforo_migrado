@@ -47,24 +47,24 @@ serial_camara = "Q2GV-4YBM-YWWJ"
 def TimeConverter(millis):
     #si ven este codigo, si se que se puede hacer mucho mas corto pero por razones que desconozco por los momentos no quiere funcionar de esa manera
     tsToString =str(millis)
-    print('tsToString')
-    print(tsToString)
+    #print('tsToString')
+    #print(tsToString)
     x=re.split('Timestamp|,',tsToString)
-    print('x')
-    print(x)
+    #print('x')
+    #print(x)
     y= x[1]
-    print('y')
-    print(y)
+    #print('y')
+    #print(y)
     z=y.split('(')
-    print('z')
-    print(z)
+    #print('z')
+    #print(z)
     final =z[1]
-    print('final')
-    print(final)
+    #print('final')
+    #print(final)
    #aqui ya obtengo el resultado de ts en milisegundos para convertir a horas convenciales
 
     lasMillis = int(final)
-    print(lasMillis)
+    #print(lasMillis)
     seconds=(lasMillis/1000)%60
     seconds = int(seconds)
     minutes=(lasMillis/(1000*60))%60
@@ -72,7 +72,7 @@ def TimeConverter(millis):
     hours=(lasMillis/(1000*60*60))%24
     result =("%d:%d:%d" % (hours, minutes, seconds))
     
-    print("ts: '",final,"' convertida a hora convencial es: '", result,"'")
+    #print("ts: '",final,"' convertida a hora convencial es: '", result,"'")
     newResult = datetime.strptime(result, '%H:%M:%S')
     return newResult
 
@@ -176,8 +176,8 @@ def grafica_horas():
     myrefHour6=datetime.strptime('18:00:00',"%H:%M:%S")
     myrefHour7=datetime.strptime('21:00:00',"%H:%M:%S")
     myrefHour8=datetime.strptime('21:59:59',"%H:%M:%S")
-    print('si ves esto sobre una fecha...')
-    print(myrefHour)
+    #print('si ves esto sobre una fecha...')
+    #print(myrefHour)
     datos_horas=[0,0,0,0,0,0,0,0,0,0]
     #print(myhora)
     for e in myCamaras.objects.all():
@@ -198,7 +198,7 @@ def grafica_horas():
                     datos_horas.append(0)
                     datos_horas.append(0)
                     datos_horas.append(0)
-                    print('hey----------------se cumplio la primera condicion, esta temprano')
+                    #print('hey----------------se cumplio la primera condicion, esta temprano')
                     
                     #print(varConverter)
                 else: 
@@ -206,58 +206,58 @@ def grafica_horas():
                         
                         Time = TimeConverter(e.ts)
                         if myHoraDeecremental >= myrefHour and myHoraDeecremental <= myrefHour1:
-                            print('hey----------------se cumplio la segunda y la hora ronda la 1 y las 3')
+                            #print('hey----------------se cumplio la segunda y la hora ronda la 1 y las 3')
 
-                            print(Time)
+                            #print(Time)
                             myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
                             datos_horas.insert(0,e.zonas_camara[0].nro_personas)
-                            print(myHoraDeecremental)
-                            print('------myrefHour-----')
-                            print(myrefHour)
-                            print('se cumplio resto el valor')
+                            #print(myHoraDeecremental)
+                            #print('------myrefHour-----')
+                            #print(myrefHour)
+                            #print('se cumplio resto el valor')
                         #horaIncremental+timedelta('00:10:00')
                         #print(horaIncremental)
                         elif TimeConverter(e.ts) > myrefHour1 and myHoraDeecremental <= myrefHour2:
-                            print('lo que mando a imprimir')
-                            print(TimeConverter(e.ts))
-                            print('hey----------------se cumplio la segunda y la hora ronda la 3 y las 6')
+                            #print('lo que mando a imprimir')
+                            #print(TimeConverter(e.ts))
+                            #print('hey----------------se cumplio la segunda y la hora ronda la 3 y las 6')
                             datos_horas.insert(1,e.zonas_camara[0].nro_personas)
                             myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
                         elif TimeConverter(e.ts) > myrefHour2 and myHoraDeecremental <= myrefHour3:
-                            print('lo que mando a imprimir')
-                            print(TimeConverter(e.ts))
-                            print('hey----------------se cumplio la segunda y la hora ronda la 6 y las 9')
+                            #print('lo que mando a imprimir')
+                            #print(TimeConverter(e.ts))
+                            #print('hey----------------se cumplio la segunda y la hora ronda la 6 y las 9')
                             datos_horas.insert(2,e.zonas_camara[0].nro_personas)
                             myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
                         elif TimeConverter(e.ts) > myrefHour3 and myHoraDeecremental <= myrefHour4:
-                            print('lo que mando a imprimir')
-                            print(TimeConverter(e.ts))
-                            print('hey----------------se cumplio la segunda y la hora ronda la 9 y las 12')
+                            #print('lo que mando a imprimir')
+                            #print(TimeConverter(e.ts))
+                            #print('hey----------------se cumplio la segunda y la hora ronda la 9 y las 12')
                             myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
                             datos_horas.insert(3,e.zonas_camara[0].nro_personas)
                         elif TimeConverter(e.ts) > myrefHour4 and myHoraDeecremental <= myrefHour5:
-                            print('lo que mando a imprimir')
-                            print(TimeConverter(e.ts))
+                            #print('lo que mando a imprimir')
+                            #print(TimeConverter(e.ts))
                             
-                            print('hey----------------se cumplio la segunda y la hora ronda la 12 y las 15')
+                            #print('hey----------------se cumplio la segunda y la hora ronda la 12 y las 15')
                             myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
                             datos_horas.insert(4,e.zonas_camara[0].nro_personas)
                         elif TimeConverter(e.ts) > myrefHour5 and myHoraDeecremental <= myrefHour6:
-                            print('lo que mando a imprimir')
-                            print(TimeConverter(e.ts))
-                            print('hey----------------se cumplio la segunda y la hora ronda la 15 y las 18')
+                            #print('lo que mando a imprimir')
+                            #print(TimeConverter(e.ts))
+                            #print('hey----------------se cumplio la segunda y la hora ronda la 15 y las 18')
                             myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
                             datos_horas.insert(5,e.zonas_camara[0].nro_personas)
                         elif TimeConverter(e.ts) > myrefHour6 and myHoraDeecremental <= myrefHour7:
-                            print('lo que mando a imprimir')
-                            print(TimeConverter(e.ts))
-                            print('hey----------------se cumplio la segunda y la hora ronda la 18 y las 21')
+                            #print('lo que mando a imprimir')
+                            #print(TimeConverter(e.ts))
+                            #print('hey----------------se cumplio la segunda y la hora ronda la 18 y las 21')
                             myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
                             datos_horas.insert(6,e.zonas_camara[0].nro_personas)
                         elif TimeConverter(e.ts) > myrefHour4 and myHoraDeecremental <= myrefHour5:
-                            print('lo que mando a imprimir')
-                            print(TimeConverter(e.ts))
-                            print('hey----------------se cumplio la segunda y la hora ronda la 21 y las 11 y 59')
+                            #print('lo que mando a imprimir')
+                            #print(TimeConverter(e.ts))
+                            #print('hey----------------se cumplio la segunda y la hora ronda la 21 y las 11 y 59')
                             myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
                             datos_horas.insert(7,e.zonas_camara[0].nro_personas)
                             
