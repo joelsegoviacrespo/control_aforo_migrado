@@ -202,15 +202,14 @@ def hfs(request):
     if hasattr(request.user.profile, 'cliente') and hasattr(request.user.profile.cliente, 'get_id') and (request.user.profile.cliente.get_id() is not None):    
         if hasattr(request.user.profile, 'instalacion') and hasattr(request.user.profile.instalacion, 'get_id') and (request.user.profile.instalacion.get_id() is not None):
             id_instalacion = request.user.profile.instalacion.get_id()
-            display = Display.objects.filter(instalacion={'nif_cliente': request.user.profile.cliente.nif} and {'nombre': request.user.profile.instalacion.nombre_comercial}).first()
-            print("display: ",display)
+            display = Display.objects.filter(instalacion={'nif_cliente': request.user.profile.cliente.nif} and {'nombre': request.user.profile.instalacion.nombre_comercial}).first()            
             id_display = display.get_id()
-    else:
-        print("else")
+        else:
+          display = Display.objects.filter(instalacion={'nif_cliente': request.user.profile.cliente.nif}).first()
+          id_display = display.get_id()
+    else:        
         cliente = Cliente.objects.first()        
         instalacion = Instalacion.objects.filter(cliente={'nif': cliente.nif}).first()
-        print("cliente.nif: ",cliente.nif)
-        print("instalacion.nombre_comercial: ",instalacion.nombre_comercial)
         display = Display.objects.filter(instalacion={'nif_cliente': cliente.nif} and {'nombre': instalacion.nombre_comercial}).first()                
         id_display = display.get_id()
 
@@ -222,26 +221,23 @@ def hfs(request):
     dataJSON = dumps(data)    
     return render(request, 'hzfullscreen_bu.html', {'data': dataJSON})
 
-def hfsEmbebido(request):
-    print("hfsEmbebido")
-    
+def hfsEmbebido(request):    
     if hasattr(request.user.profile, 'cliente') and hasattr(request.user.profile.cliente, 'get_id') and (request.user.profile.cliente.get_id() is not None):    
         if hasattr(request.user.profile, 'instalacion') and hasattr(request.user.profile.instalacion, 'get_id') and (request.user.profile.instalacion.get_id() is not None):
             id_instalacion = request.user.profile.instalacion.get_id()
-            display = Display.objects.filter(instalacion={'nif_cliente': request.user.profile.cliente.nif} and {'nombre': request.user.profile.instalacion.nombre_comercial}).first()
-            print("display: ",display)
+            display = Display.objects.filter(instalacion={'nif_cliente': request.user.profile.cliente.nif} and {'nombre': request.user.profile.instalacion.nombre_comercial}).first()            
             id_display = display.get_id()
+        else:
+          display = Display.objects.filter(instalacion={'nif_cliente': request.user.profile.cliente.nif}).first()
+          id_display = display.get_id()   
     else:
-        print("else")
         cliente = Cliente.objects.first()        
         instalacion = Instalacion.objects.filter(cliente={'nif': cliente.nif}).first()
-        print("cliente.nif: ",cliente.nif)
-        print("instalacion.nombre_comercial: ",instalacion.nombre_comercial)
         display = Display.objects.filter(instalacion={'nif_cliente': cliente.nif} and {'nombre': instalacion.nombre_comercial}).first()                
         id_display = display.get_id()
      
     
-    print('id_display: ',id_display)   
+       
     data = { 
         'embebido':True,
         'id_display': id_display        
