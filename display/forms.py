@@ -1,30 +1,23 @@
 # -*- encoding: utf-8 -*-
 from django import forms
-from valores.models import Valores,ValoresEmbebido 
+from valores.models import Valores 
+from display.models import Display
 from cliente.models import Cliente
 from instalacion.models import Instalacion
 
 
-class ValoresForm(forms.ModelForm):
+class DisplayForm(forms.ModelForm):    
     
-    PERCENT = 'PCT'
-    NUMBER = 'NMB'
-
-    FORMAT = (
-        (PERCENT, 'Porcentaje'),
-        (NUMBER, 'Número'),
-    )
-
     id = forms.CharField(widget=forms.HiddenInput, required=False, initial=0)
     cliente_nif = forms.ChoiceField()
-    mostrar_valor = forms.ChoiceField(choices=FORMAT)
+    
     
     class Meta:
-        model = Valores
+        model = Display
         fields =  '__all__'
 
     def __init__(self, *args, **kwargs):
-        super(ValoresForm, self).__init__(*args, **kwargs)
+        super(DisplayForm, self).__init__(*args, **kwargs)
         instance = getattr(self, 'instance', None)
         if instance and instance._id:
             self.fields["id"].initial = str(instance._id)
@@ -38,14 +31,8 @@ class ValoresForm(forms.ModelForm):
         
          
 
-class ValoresEditarForm(forms.ModelForm):
-    PERCENT = 'PCT'
-    NUMBER = 'NMB'
-
-    FORMAT = (
-        (PERCENT, 'Porcentaje'),
-        (NUMBER, 'Número'),
-    )
+class DisplayFormEditarForm(forms.ModelForm):
+  
 
     
     id = forms.CharField(widget=forms.HiddenInput, required=False, initial=0)
@@ -53,15 +40,13 @@ class ValoresEditarForm(forms.ModelForm):
     id_cliente_nif = forms.CharField(widget=forms.HiddenInput, required=False, initial=0)
     instalacion_n = forms.CharField(widget=forms.HiddenInput, required=False, initial=0)
     instalacion_nombre = forms.ChoiceField()
-    id_mostrar_valor = forms.CharField(widget=forms.HiddenInput, required=False, initial=0)
-    mostrar_valor = forms.ChoiceField(choices=FORMAT)
     
     class Meta:
-        model = Valores
+        model = Display
         fields =  '__all__'
 
     def __init__(self, *args, **kwargs):
-        super(ValoresEditarForm, self).__init__(*args, **kwargs)
+        super(DisplayFormEditarForm, self).__init__(*args, **kwargs)
         instance = getattr(self, 'instance', None)
         if instance and instance._id:
             self.fields["id"].initial = str(instance._id)
@@ -70,7 +55,7 @@ class ValoresEditarForm(forms.ModelForm):
         #print(instance.cliente)
         self.fields["id_cliente_nif"].initial = str(instance.instalacion.nif_cliente)
         self.fields["instalacion_n"].initial = str(instance.instalacion.nombre)
-        self.fields["id_mostrar_valor"].initial = str(instance.mostrar_valor)    
+            
         choices = [(cliente.nif, cliente.razon_social)                   
                    for cliente in  Cliente.objects.all()]
                    #for cliente in  Cliente.objects.filter(cliente_estado=True)[0]]
@@ -82,14 +67,6 @@ class ValoresEditarForm(forms.ModelForm):
         
         self.fields["instalacion_nombre"] = forms.ChoiceField(choices=instalacion_choices,required=False)
         #self.fields["clientes"].choices = [(str(c.nif), c.razon_social) for c in Cliente.objects.all().filter(cliente_estado=True)]
-        
-class ValoresEmbebidoForm(forms.ModelForm):
-    
-
-    class Meta:
-        model = ValoresEmbebido
-        
-        fields =  ('descripcion','maximo_aforo','mostrar_valor','mostrar_capacidad','mostrar_ambar',)
         
 
   

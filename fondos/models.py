@@ -76,4 +76,16 @@ class Fondos(models.Model):
         db_table = "fondos"
     
     
-        
+class FondosEmbebido(models.Model):
+           
+    descripcion = models.CharField(max_length=255, blank=False, default='')
+    orientacion = models.CharField(max_length=20, blank=False, default='')
+    url_verde = models.CharField(max_length=255, blank=False, default='')    
+    url_ambar = models.CharField(max_length=255, blank=False, default='')    
+    url_rojo = models.CharField(max_length=255, blank=False, default='')    
+    url_cerrado = models.CharField(max_length=255, blank=False, default='')    
+    hora_apertura = models.TimeField(blank=False)
+    hora_cierre = models.TimeField(blank=False)
+    
+    class Meta:        
+        abstract = True        

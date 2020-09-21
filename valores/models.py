@@ -37,5 +37,16 @@ class Valores(models.Model):
     class Meta:
         db_table = "valores"
     
+class ValoresEmbebido(models.Model):       
+    descripcion = models.CharField(max_length=255, blank=False, default='')
+    maximo_aforo = models.IntegerField(blank=True, default=0)
+    mostrar_valor = models.CharField(max_length=255, blank=False, default='')
+    mostrar_capacidad = models.BooleanField(blank=False, default=True)
+    mostrar_ambar = models.BooleanField(blank=False, default=True)
+    
+    class Meta:        
+        abstract = True
+        
+    
     
         

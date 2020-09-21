@@ -21,5 +21,6 @@ urlpatterns = [
     path('usuarios/', include('usuarios.urls')),
     path('fondos/', include('fondos.urls')),
     path('camaras_historico/', include('camaras_historico.urls')),
+    path('display/', include('display.urls')),
     
 ]

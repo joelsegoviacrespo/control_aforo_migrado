@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 from django import forms
-from fondos.models import Fondos 
+from fondos.models import Fondos,FondosEmbebido 
 from cliente.models import Cliente
 from instalacion.models import Instalacion
 
@@ -94,8 +94,13 @@ class FondosEditarForm(forms.ModelForm):
         self.fields["instalacion_nombre"] = forms.ChoiceField(choices=instalacion_choices,required=False)
         #self.fields["clientes"].choices = [(str(c.nif), c.razon_social) for c in Cliente.objects.all().filter(cliente_estado=True)]
         
+class FondosEmbebidoForm(forms.ModelForm):
+    
+
+    class Meta:
+        model = FondosEmbebido        
+        fields =  ('descripcion','orientacion','url_verde','url_ambar','url_rojo','url_cerrado','hora_apertura','hora_cierre')
 
   
                 
          
-
