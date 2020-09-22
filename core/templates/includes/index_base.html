@@ -688,7 +688,7 @@ if (!boolean){
 
   
 	var totalIncomeChart = document.getElementById(id_barra_persona_acumulada).getContext('2d');
-
+	var arrayC=JSON.parse("{{info_grafica_horas_acumulado}}")
 var mytotalIncomeChart = new Chart(totalIncomeChart, {
   type: 'bar',
   data: {
@@ -697,7 +697,7 @@ var mytotalIncomeChart = new Chart(totalIncomeChart, {
       label: "Total Income",
       backgroundColor: '#ff9e27',
       borderColor: 'rgb(23, 125, 255)',
-      data: [6, 4, 9, 5, 4, 6, 4, 3, 8, 10],
+      data: arrayC,
     }],
   },
   options: {
@@ -728,7 +728,7 @@ var mytotalIncomeChart = new Chart(totalIncomeChart, {
 
 
 var totalIncomeChart = document.getElementById(id_barra).getContext('2d');
-
+var arrayD=JSON.parse("{{info_grafica_horas}}")
 var mytotalIncomeChart = new Chart(totalIncomeChart, {
   type: 'bar',
   data: {
@@ -737,7 +737,7 @@ var mytotalIncomeChart = new Chart(totalIncomeChart, {
       label: "Total Income",
       backgroundColor: '#ff9e27',
       borderColor: 'rgb(23, 125, 255)',
-      data: [6, 4, 9, 5, 4, 6, 4, 3, 8, 10],
+      data: arrayD,
     }],
   },
   options: {
@@ -769,7 +769,7 @@ var mytotalIncomeChart = new Chart(totalIncomeChart, {
 else{
 var totalIncomeChart = document.getElementById(id_barra_persona).getContext('2d');
 //alert(id_barra_persona)
-
+var arrayE=JSON.parse("{{info_grafica_semana}}")
 console.log(id_barra_persona) 
 var mytotalIncomeChart = new Chart(totalIncomeChart, {
   type: 'bar',
@@ -779,7 +779,7 @@ var mytotalIncomeChart = new Chart(totalIncomeChart, {
       label: "Total Income",
       backgroundColor: '#ff9e27',
       borderColor: 'rgb(23, 125, 255)',
-      data: [6, 4, 9, 5, 4, 6, 4, 3, 8, 10],
+      data: arrayE,
     }],
   },
   options: {

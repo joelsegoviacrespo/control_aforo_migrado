@@ -165,15 +165,24 @@ else:
     print('no se cumplio')
     
 def grafica_horas():
+    varTemporal1 = 0
+    varTemporal2 = 0
+    varTemporal3 = 0
+    varTemporal4 = 0
+    varTemporal5 = 0
+    varTemporal6 = 0
+    varTemporal7 = 0
+    varTemporal8 = 0
+    print('se esta ejecutandoooooooooooooooooooooo')
     now = datetime.now()
     #hora de referencia
     myhora = now.strftime("%H:%M:%S")
     #hora que va a decrementar
-    myHoraDeecremental = datetime.strptime('00:00:00',"%H:%M:%S")
+    myHoraDeecremental = datetime.strptime('23:00:00',"%H:%M:%S")
     #hora indice que aunmenta el decremento
     horaIncremental ='00:00:00'
     #hora de referencia
-    myrefHour=datetime.strptime('23:59:59',"%H:%M:%S")
+    #myrefHour=datetime.strptime('23:59:59',"%H:%M:%S")
     myrefHour=datetime.strptime('00:00:00',"%H:%M:%S")
     myrefHour1=datetime.strptime('03:00:00',"%H:%M:%S")
     myrefHour2=datetime.strptime('06:00:00',"%H:%M:%S")
@@ -185,14 +194,20 @@ def grafica_horas():
     myrefHour8=datetime.strptime('21:59:59',"%H:%M:%S")
     #print('si ves esto sobre una fecha...')
     #print(myrefHour)
-    datos_horas=[8,5,0,3,0,9,0,0,0,0]
-    datos_horas_acumuladas=[]
+    datos_horas=[0,0,0,0,0,0,0,0,0,0]
+    datos_horas_acumuladas=[1,2,3,4,5,6,7]
     #print(myhora)
     for e in myCamaras.objects.all():
+        
         if (e.serial_camara == serial_camara):
+            
             if(e.fecha==mydate ):
+                print('se esta ejecutandoooooooooooooooooooooo')
+                print(e.zonas_camara[0].nro_personas)
                 tiempo =(TimeConverter(e.ts))
-                if TimeConverter(e.ts) <=myrefHour and  TimeConverter(e.ts)> myrefHour8:
+                
+                if TimeConverter(e.ts) <=myrefHour1 and  TimeConverter(e.ts)> myrefHour8:
+                    print('se esta ejecutando la primera condicional')
                     
                     #varConverter = TimeConverter(var)
                     #TimeConverter(str(e.ts))
@@ -210,88 +225,314 @@ def grafica_horas():
                     
                     #print(varConverter)
                 else:
-                    while myHoraDeecremental >= myrefHour:
+                   
+                    #while myHoraDeecremental >= myrefHour:
+                    #for i in datos_horas_acumuladas:
+                    
+                    print(e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                    if TimeConverter(e.ts) >= myrefHour and TimeConverter(e.ts) <= myrefHour1:
+                        print('hey----------------se cumplio la segunda y la hora ronda la 1 y las 3')
+                        #print(Time)
+                        if varTemporal1 != (e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas):
+                            datos_horas.pop(0)
+                            myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
+                            datos_horas.insert(0,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                            varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
+                        else:
+                            pass
                         
-                        Time = TimeConverter(e.ts)
-                        if TimeConverter(e.ts) > myrefHour and TimeConverter(e.ts) <= myrefHour1:
-                            print('hey----------------se cumplio la segunda y la hora ronda la 1 y las 3')
-
-                            #print(Time)
+                    #horaIncremental+timedelta('00:10:00')
+                    #print(horaIncremental)
+                    if TimeConverter(e.ts) > myrefHour1 and TimeConverter(e.ts) <= myrefHour2:
+                        
+                        print('hey----------------se cumplio la segunda y la hora ronda la 3 y las 6')
+                        if varTemporal2 != (e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas):
+                            datos_horas.pop(1)
+                            datos_horas.insert(1,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
                             myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
-                            datos_horas.insert(0,e.zonas_camara[0].nro_personas)
-                            print(myHoraDeecremental)
-                            print('------myrefHour-----')
-                            print(myrefHour)
-                            print('se cumplio resto el valor')
-                            print('por ahora lleva dentro 1')
-                            print(datos_horas)
-                        #horaIncremental+timedelta('00:10:00')
-                        #print(horaIncremental)
-                        if TimeConverter(e.ts) > myrefHour1 and TimeConverter(e.ts) <= myrefHour2:
-                            print('lo que mando a imprimir ')
-                            print(TimeConverter(e.ts))
-                            print('hey----------------se cumplio la segunda y la hora ronda la 3 y las 6')
-                            datos_horas.insert(1,e.zonas_camara[0].nro_personas)
-                            myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
-                            print('por ahora lleva dentro 2')
-                            print(datos_horas)
-                        if TimeConverter(e.ts) > myrefHour2 and TimeConverter(e.ts) <= myrefHour3:
-                            print('lo que mando a imprimir 3')
-                            print(TimeConverter(e.ts))
-                            print('hey----------------se cumplio la segunda y la hora ronda la 6 y las 9')
-                            datos_horas.insert(2,e.zonas_camara[0].nro_personas)
-                            myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
-                            print('por ahora lleva dentro')
-                            print(datos_horas)
-                        if TimeConverter(e.ts) > myrefHour3 and TimeConverter(e.ts) <= myrefHour4:
-                            print('lo que mando a imprimir 4')
-                            print(TimeConverter(e.ts))
-                            print('hey----------------se cumplio la segunda y la hora ronda la 9 y las 12')
-                            myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
-                            print('por ahora lleva dentro 5')
-                            print(datos_horas)
-                            datos_horas.insert(3,e.zonas_camara[0].nro_personas)
-                        if TimeConverter(e.ts) > myrefHour4 and TimeConverter(e.ts) <= myrefHour5:
-                            print('lo que mando a imprimir 6')
-                            print(TimeConverter(e.ts))
-                            
-                            print('hey----------------se cumplio la segunda y la hora ronda la 12 y las 15')
-                            myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
-                            datos_horas.insert(4,e.zonas_camara[0].nro_personas)
-                            print('por ahora lleva dentro 7')
-                            print(datos_horas)
-                        if TimeConverter(e.ts) > myrefHour5 and TimeConverter(e.ts) <= myrefHour6:
-                            print('lo que mando a imprimir 8')
-                            print(TimeConverter(e.ts))
-                            print('hey----------------se cumplio la segunda y la hora ronda la 15 y las 18')
-                            myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
-                            
-                            datos_horas.insert(5,e.zonas_camara[0].nro_personas)
-                            print('por ahora lleva dentro 9')
-                            print(datos_horas)
-                        if TimeConverter(e.ts) > myrefHour6 and TimeConverter(e.ts) <= myrefHour7:
-                            print('lo que mando a imprimir 10')
-                            print(TimeConverter(e.ts))
-                            print('hey----------------se cumplio la segunda y la hora ronda la 18 y las 21')
-                            myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
-                            datos_horas.insert(6,e.zonas_camara[0].nro_personas)
-                            print('por ahora lleva dentro 12 ')
-                            print(datos_horas)
-                        if TimeConverter(e.ts) > myrefHour4 and TimeConverter(e.ts) <= myrefHour5:
-                            print('lo que mando a imprimir 13')
-                            print(TimeConverter(e.ts))
-                            print('hey----------------se cumplio la segunda y la hora ronda la 21 y las 11 y 59')
-                            myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
-                            datos_horas.insert(7,e.zonas_camara[0].nro_personas)
-                            print('por ahora lleva dentro 14')
-                            print(datos_horas)
+                            varTemporal2 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
                             
                         else:
+                            pass
+                        
+                        
+
+                    if TimeConverter(e.ts) > myrefHour2 and TimeConverter(e.ts) <= myrefHour3:
+                        
+                        print('hey----------------se cumplio la segunda y la hora ronda la 6 y las 9')
+                        if varTemporal3 != (e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas):
+                            datos_horas.pop(2)
+                            datos_horas.insert(2,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
                             myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
-                
+                            varTemporal3 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
+                            
+                        else:
+                            pass
+                    if TimeConverter(e.ts) > myrefHour3 and TimeConverter(e.ts) <= myrefHour4:
+                        
+                        print('hey----------------se cumplio la segunda y la hora ronda la 9 y las 12')
+                        if varTemporal4 != (e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas):
+                            myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
+                            
+                            
+                            datos_horas.pop(3)
+                            datos_horas.insert(3,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                            varTemporal4 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
+                        else:
+                            pass
+                    if TimeConverter(e.ts) > myrefHour4 and TimeConverter(e.ts) <= myrefHour5:
+                        
+                        
+                        print('hey----------------se cumplio la segunda y la hora ronda la 12 y las 15')
+                        if varTemporal5 != (e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas):
+                            myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
+                            datos_horas.pop(4)
+                            datos_horas.insert(4,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                            
+                            varTemporal5 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
+                        else:
+                            pass
+                    if TimeConverter(e.ts) > myrefHour5 and TimeConverter(e.ts) <= myrefHour6:
+                        
+                        print('hey----------------se cumplio la segunda y la hora ronda la 15 y las 18')
+                        if varTemporal6 != (e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas):
+                            myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
+                            datos_horas.pop(5)
+                            datos_horas.insert(5,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                            
+                            varTemporal6 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
+                        else:
+                            pass
+                    if TimeConverter(e.ts) > myrefHour6 and TimeConverter(e.ts) <= myrefHour7:
+                       
+                        print('hey----------------se cumplio la segunda y la hora ronda la 18 y las 21')
+                        if varTemporal7 != (e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas):
+                            myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
+                            datos_horas.pop(6)
+                            datos_horas.insert(6,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                            
+                            varTemporal7 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
+                        else:
+                            pass
+                    if TimeConverter(e.ts) > myrefHour7 and TimeConverter(e.ts) <= myrefHour8:
+                        
+                        print('hey----------------se cumplio la segunda y la hora ronda la 21 y las 11 y 59')
+                        if varTemporal8 != (e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas):
+                            myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
+                            datos_horas.pop(7)
+                            datos_horas.insert(7,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                            
+                            varTemporal8 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
+                        else:
+                            pass
+                        
+                    else:
+                        print('no se cumplieron ningunas de las anteriores')
+                        myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
+            
     return datos_horas
         
 
+        
+def grafica_horas_acumuladas():
+    
+    varTemporal1 = 0
+    varTemporal2 = 0
+    varTemporal3 = 0
+    varTemporal4 = 0
+    varTemporal5 = 0
+    varTemporal6 = 0
+    varTemporal7 = 0
+    varTemporal8 = 0
+    print('se esta ejecutandoooooooooooooooooooooo')
+    now = datetime.now()
+    #hora de referencia
+    myhora = now.strftime("%H:%M:%S")
+    #hora que va a decrementar
+    myHoraDeecremental = datetime.strptime('23:00:00',"%H:%M:%S")
+    #hora indice que aunmenta el decremento
+    horaIncremental ='00:00:00'
+    #hora de referencia
+    #myrefHour=datetime.strptime('23:59:59',"%H:%M:%S")
+    myrefHour=datetime.strptime('00:00:00',"%H:%M:%S")
+    myrefHour1=datetime.strptime('03:00:00',"%H:%M:%S")
+    myrefHour2=datetime.strptime('06:00:00',"%H:%M:%S")
+    myrefHour3=datetime.strptime('09:00:00',"%H:%M:%S")
+    myrefHour4=datetime.strptime('12:00:00',"%H:%M:%S")
+    myrefHour5=datetime.strptime('15:00:00',"%H:%M:%S")
+    myrefHour6=datetime.strptime('18:00:00',"%H:%M:%S")
+    myrefHour7=datetime.strptime('21:00:00',"%H:%M:%S")
+    myrefHour8=datetime.strptime('21:59:59',"%H:%M:%S")
+    #print('si ves esto sobre una fecha...')
+    #print(myrefHour)
+    datos_horas=[0,0,0,0,0,0,0,0,0,0]
+    
+    
+    i=0
+    #print(myhora)
+    for e in myCamaras.objects.all():
+        
+        if (e.serial_camara == serial_camara):
+            
+            if(e.fecha==mydate ):
+                print('se esta ejecutandoooooooooooooooooooooo')
+                print(e.zonas_camara[0].nro_personas)
+                tiempo =(TimeConverter(e.ts))
+                
+                if TimeConverter(e.ts) <=myrefHour1 and  TimeConverter(e.ts)> myrefHour8:
+                    print('se esta ejecutando la primera condicional')
+                    
+                    #varConverter = TimeConverter(var)
+                    #TimeConverter(str(e.ts))
+                    datos_horas.insert(0,e.zonas_camara[0].nro_personas)
+                    datos_horas.append(0)
+                    datos_horas.append(0)
+                    datos_horas.append(0)
+                    datos_horas.append(0)
+                    datos_horas.append(0)
+                    datos_horas.append(0)
+                    datos_horas.append(0)
+                    datos_horas.append(0)
+                    datos_horas.append(0)
+                    #print('hey----------------se cumplio la primera condicion, esta temprano')
+                    
+                    #print(varConverter)
+                else:
+                   
+                    #while myHoraDeecremental >= myrefHour:
+                    #for i in datos_horas_acumuladas:
+                    
+                    print(e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                    if TimeConverter(e.ts) >= myrefHour and TimeConverter(e.ts) <= myrefHour1:
+                        print('hey----------------se cumplio la segunda y la hora ronda la 1 y las 3')
+                        #print(Time)
+                        if varTemporal1 != (e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas):
+                            datos_horas.pop(0)
+                            myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
+                            datos_horas.insert(0,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                            varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
+                        else:
+                            pass
+                        
+                    #horaIncremental+timedelta('00:10:00')
+                    #print(horaIncremental)
+                    if TimeConverter(e.ts) > myrefHour1 and TimeConverter(e.ts) <= myrefHour2:
+                        
+                        print('hey----------------se cumplio la segunda y la hora ronda la 3 y las 6')
+                        if varTemporal2 != (e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas):
+                            datos_horas.pop(1)
+                            datos_horas.insert(1,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                            myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
+                            varTemporal2 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
+                            
+                        else:
+                            pass
+                        
+                        
+
+                    if TimeConverter(e.ts) > myrefHour2 and TimeConverter(e.ts) <= myrefHour3:
+                        
+                        print('hey----------------se cumplio la segunda y la hora ronda la 6 y las 9')
+                        if varTemporal3 != (e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas):
+                            datos_horas.pop(2)
+                            datos_horas.insert(2,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                            myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
+                            varTemporal3 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
+                            
+                        else:
+                            pass
+                    if TimeConverter(e.ts) > myrefHour3 and TimeConverter(e.ts) <= myrefHour4:
+                        
+                        print('hey----------------se cumplio la segunda y la hora ronda la 9 y las 12')
+                        if varTemporal4 != (e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas):
+                            myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
+                            
+                            
+                            datos_horas.pop(3)
+                            datos_horas.insert(3,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                            varTemporal4 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
+                        else:
+                            pass
+                    if TimeConverter(e.ts) > myrefHour4 and TimeConverter(e.ts) <= myrefHour5:
+                        
+                        
+                        print('hey----------------se cumplio la segunda y la hora ronda la 12 y las 15')
+                        if varTemporal5 != (e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas):
+                            myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
+                            datos_horas.pop(4)
+                            datos_horas.insert(4,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                            
+                            varTemporal5 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
+                        else:
+                            pass
+                    if TimeConverter(e.ts) > myrefHour5 and TimeConverter(e.ts) <= myrefHour6:
+                        
+                        print('hey----------------se cumplio la segunda y la hora ronda la 15 y las 18')
+                        if varTemporal6 != (e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas):
+                            myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
+                            datos_horas.pop(5)
+                            datos_horas.insert(5,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                            
+                            varTemporal6 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
+                        else:
+                            pass
+                    if TimeConverter(e.ts) > myrefHour6 and TimeConverter(e.ts) <= myrefHour7:
+                       
+                        print('hey----------------se cumplio la segunda y la hora ronda la 18 y las 21')
+                        if varTemporal7 != (e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas):
+                            myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
+                            datos_horas.pop(6)
+                            datos_horas.insert(6,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                            
+                            varTemporal7 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
+                        else:
+                            pass
+                    if TimeConverter(e.ts) > myrefHour7 and TimeConverter(e.ts) <= myrefHour8:
+                        
+                        print('hey----------------se cumplio la segunda y la hora ronda la 21 y las 11 y 59')
+                        if varTemporal8 != (e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas):
+                            myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
+                            datos_horas.pop(7)
+                            datos_horas.insert(7,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                            
+                            varTemporal8 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
+                        else:
+                            pass
+                        
+                    else:
+                        print('no se cumplieron ningunas de las anteriores')
+                        myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
+    datos_horas_acumuladas=[]
+    a=0
+    print('datos horas')
+    print(datos_horas)
+    for i in datos_horas:
+        print('hola esto se ejecuta')
+        if(a == 0):
+            print('primera condicional')
+
+            print(a)
+            datos_horas_acumuladas.append(datos_horas[a])
+            print(datos_horas_acumuladas)
+            a=a+1
+        elif (a>7):
+            print('segunda condicional')
+            print(a)
+            print(datos_horas_acumuladas)
+            
+            pass
+        else:
+            print('tercera condicional')
+            print(a)
+            datos_horas_acumuladas.append(datos_horas[a]+datos_horas_acumuladas[a-1])
+            print(datos_horas_acumuladas)
+            a=a+1
+        print(datos_horas_acumuladas)    
+
+    return datos_horas_acumuladas
+
+
+print(grafica_horas_acumuladas())
 @login_required(login_url="/login/")
 def index(request):
 
@@ -309,12 +550,13 @@ def index(request):
     formato_hora = ["H","H","H","H","H","H","H","H","H"]
     formato_semana= ["D", "L", "M", "M", "J", "V", "S"]
     info_grafica_horas = grafica_horas()
+    info_grafica_horas_acumulado= grafica_horas_acumuladas()
     #print('info_grafica_horas')
     #print(info_grafica_horas)
 
 
 
-    return render(request, "index.html",  {'camaras':camarasAll,'info_grafica_semana': info_grafica_semana,'info_grafica_horas':info_grafica_horas})
+    return render(request, "index.html",  {'camaras':camarasAll,'info_grafica_semana': info_grafica_semana,'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado})
  
 
 @login_required(login_url="/login/")
@@ -337,7 +579,13 @@ def pages(request):
         html_template = loader.get_template( 'error-500.html' )
         return HttpResponse(html_template.render(context, request))
 
+@login_required(login_url="/login/")
+def pitarnfo(request):
 
+    info_grafica_horas = grafica_horas()
+    info_grafica_horas_acumulado= grafica_horas_acumuladas()
+    info_grafica_semana = grafica_semana()
+    return render(request, "index_base.html",  {'info_grafica_semana': info_grafica_semana,'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado})
 
 def hfs(request):    
     if hasattr(request.user.profile, 'cliente') and hasattr(request.user.profile.cliente, 'get_id') and (request.user.profile.cliente.get_id() is not None):    
