@@ -47,24 +47,24 @@ serial_camara = "Q2GV-4YBM-YWWJ"
 def TimeConverter(millis):
     #si ven este codigo, si se que se puede hacer mucho mas corto pero por razones que desconozco por los momentos no quiere funcionar de esa manera
     tsToString =str(millis)
-    print('tsToString')
-    print(tsToString)
+    #print('tsToString')
+    #print(tsToString)
     x=re.split('Timestamp|,',tsToString)
-    print('x')
-    print(x)
+    #print('x')
+    #print(x)
     y= x[1]
-    print('y')
-    print(y)
+    #print('y')
+    #print(y)
     z=y.split('(')
-    print('z')
-    print(z)
+    #print('z')
+    #print(z)
     final =z[1]
-    print('final')
-    print(final)
+    #print('final')
+    #print(final)
    #aqui ya obtengo el resultado de ts en milisegundos para convertir a horas convenciales
 
     lasMillis = int(final)
-    print(lasMillis)
+    #print(lasMillis)
     seconds=(lasMillis/1000)%60
     seconds = int(seconds)
     minutes=(lasMillis/(1000*60))%60
@@ -163,6 +163,7 @@ if myHoraDeecremental ==  datetime.strptime('23:50:00',"%H:%M:%S"):
     print('se cumple la condicional')
 else:
     print('no se cumplio')
+    
 def grafica_horas():
     now = datetime.now()
     #hora de referencia
@@ -182,8 +183,8 @@ def grafica_horas():
     myrefHour6=datetime.strptime('18:00:00',"%H:%M:%S")
     myrefHour7=datetime.strptime('21:00:00',"%H:%M:%S")
     myrefHour8=datetime.strptime('21:59:59',"%H:%M:%S")
-    print('si ves esto sobre una fecha...')
-    print(myrefHour)
+    #print('si ves esto sobre una fecha...')
+    #print(myrefHour)
     datos_horas=[0,0,0,0,0,0,0,0,0,0]
     datos_horas_acumuladas=[]
     #print(myhora)
@@ -205,7 +206,7 @@ def grafica_horas():
                     datos_horas.append(0)
                     datos_horas.append(0)
                     datos_horas.append(0)
-                    print('hey----------------se cumplio la primera condicion, esta temprano')
+                    #print('hey----------------se cumplio la primera condicion, esta temprano')
                     
                     #print(varConverter)
                 else:
@@ -215,7 +216,7 @@ def grafica_horas():
                         if TimeConverter(e.ts) > myrefHour and TimeConverter(e.ts) <= myrefHour1:
                             print('hey----------------se cumplio la segunda y la hora ronda la 1 y las 3')
 
-                            print(Time)
+                            #print(Time)
                             myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
                             datos_horas.insert(0,e.zonas_camara[0].nro_personas)
                             print(myHoraDeecremental)
