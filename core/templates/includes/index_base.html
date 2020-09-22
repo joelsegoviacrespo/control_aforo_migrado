@@ -143,13 +143,13 @@ document.getElementById("demo").id = "newid";
 
 
         
-{% for camara in camaras %}
+{% for camara  in camaras %}
    <div class="row {{var}}">
     {% for zonas_camara in camara.zonas_camara %}
      
         
         
-        
+	
             <div class="col-md-3">
               <div class="card full-height">
                     			  
@@ -173,9 +173,10 @@ document.getElementById("demo").id = "newid";
 				  <div class="card-footer " style=" border-width:0px !important;">
 					
                     <div id="chart-container" >
+						<div id="CH-barras-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}">
+						
                   		<canvas id="barras-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" style="display: block; width:262px; max-height: 100px;"></canvas>
-                      
-                    
+					</div>
                   	</div>
 				  </div>
 					<!--					
@@ -257,13 +258,16 @@ document.getElementById("demo").id = "newid";
 		 <div class="card-footer "id="chart-container" style=" border-width:0px !important;">
 			</div>
 				<div class="col-md-12" style="max-height: 60px;">
+					<div id= 'CH-barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}'style="max-height: 60px;">
 			       <canvas  id="barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}"style="display: block; width:262px; max-height: 100px;"></canvas>
-				
+					</div>
 			  </div>
+			  
 			  <div class="col-md-12"style="max-height: 60px;"  >
+				<div id='CH-barras-persona-acumulada-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}'style="max-height: 60px;">
 				<canvas  id="barras-persona-acumulada-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}"style="display: block; width:262px; max-height: 100px;"></canvas>
 				<!--<canvas id="totalIncomeChart2" style=" width: 376px; height: 90px;"></canvas>-->
-			 
+			</div>
 		   </div>
                
             </div>
@@ -597,12 +601,35 @@ function crearBarra(camaras){
 				//console.log(zonas_camara[j].nombre_zona_camara)
 				//console.log("zonas_camara "+j+" nro_personas ")
 				//console.log(zonas_camara[j].nro_personas)
+				
 				id_barra = "barras"+"-"+nombre_camara+"-"+zonas_camara[j].nombre_zona_camara
 				id_barra_persona = "barras-persona"+"-"+nombre_camara+"-"+zonas_camara[j].nombre_zona_camara
 				id_barra_persona_acumulada = "barras-persona-acumulada"+"-"+nombre_camara+"-"+zonas_camara[j].nombre_zona_camara
-				setBarra(id_barra,100,zonas_camara[j].nro_personas)
-				setBarra(id_barra_persona,100,zonas_camara[j].nro_personas)
-				setBarra(id_barra_persona_acumulada,100,zonas_camara[j].nro_personas)
+				
+				var xContenido = document.getElementById('CH-'+id_barra);
+				xContenido.innerHTML = '';
+				xContenido.innerHTML = '<canvas id="'+id_barra+'"></canvas>';
+
+				var yContenido = document.getElementById('CH-'+id_barra_persona);
+				yContenido.innerHTML = '';
+				yContenido.innerHTML = '<canvas id="'+id_barra_persona+'"></canvas>';
+
+				var zContenido = document.getElementById('CH-'+id_barra_persona_acumulada);
+				zContenido.innerHTML = '';
+				zContenido.innerHTML = '<canvas id="'+id_barra_persona_acumulada+'"></canvas>';
+
+				setBarra(id_barra,100,zonas_camara[j].nro_personas,false)
+				setBarra(id_barra_persona_acumulada,100,zonas_camara[j].nro_personas,false)
+				//mytotalIncomeChart.destroy();
+				//$('.muestra').remove();
+				/**$(".chart-container").each(function(){
+					//$(this).html('<div class ="muestra"><canvas id="'+id_barra_persona+'"><canvas></div>');
+					console.log('alerta');
+				
+				});*/
+				
+				setBarra(id_barra_persona,100,zonas_camara[j].nro_personas,true)
+				
 				
 			} 
 			
@@ -612,7 +639,8 @@ function crearBarra(camaras){
 		
 	}
 	
-	function setBarra(id_barra_persona_acumulada,maxValue,value){
+	function setBarra(id_barra_persona_acumulada,maxValue,value,boolean){
+	
 		/*console.log("setCircle 100")
 		console.log("id_circle")
 		console.log(id_circle)
@@ -652,6 +680,11 @@ function crearBarra(camaras){
 		})
 	}*/
 
+
+	//evalua que se cree una sola grafica para que no choque barra persona con persona acumulada y barra
+if (!boolean){
+
+
   
 	var totalIncomeChart = document.getElementById(id_barra_persona_acumulada).getContext('2d');
 
@@ -690,44 +723,9 @@ var mytotalIncomeChart = new Chart(totalIncomeChart, {
       }]
     },
   }
-});var totalIncomeChart = document.getElementById(id_barra_persona).getContext('2d');
-
-var mytotalIncomeChart = new Chart(totalIncomeChart, {
-  type: 'bar',
-  data: {
-    labels: ["D", "L", "M", "M", "J", "V", "S"],
-    datasets : [{
-      label: "Total Income",
-      backgroundColor: '#ff9e27',
-      borderColor: 'rgb(23, 125, 255)',
-      data: [6, 4, 9, 5, 4, 6, 4, 3, 8, 10],
-    }],
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    legend: {
-      display: false,
-    },
-    scales: {
-      yAxes: [{
-        ticks: {
-          display: false //this will remove only the label
-        },
-        gridLines : {
-          drawBorder: false,
-          display : false
-        }
-      }],
-      xAxes : [ {
-        gridLines : {
-          drawBorder: false,
-          display : false
-        }
-      }]
-    },
-  }
 });
+
+
 var totalIncomeChart = document.getElementById(id_barra).getContext('2d');
 
 var mytotalIncomeChart = new Chart(totalIncomeChart, {
@@ -766,7 +764,50 @@ var mytotalIncomeChart = new Chart(totalIncomeChart, {
     },
   }
 });
+}
+else{
+var totalIncomeChart = document.getElementById(id_barra_persona).getContext('2d');
+//alert(id_barra_persona)
 
+console.log(id_barra_persona) 
+var mytotalIncomeChart = new Chart(totalIncomeChart, {
+  type: 'bar',
+  data: {
+    labels: ["D", "L", "M", "M", "J", "V", "S"],
+    datasets : [{
+      label: "Total Income",
+      backgroundColor: '#ff9e27',
+      borderColor: 'rgb(23, 125, 255)',
+      data: [6, 4, 9, 5, 4, 6, 4, 3, 8, 10],
+    }],
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    legend: {
+      display: false,
+    },
+    scales: {
+      yAxes: [{
+        ticks: {
+          display: false //this will remove only the label
+        },
+        gridLines : {
+          drawBorder: false,
+          display : false
+        }
+      }],
+      xAxes : [ {
+        gridLines : {
+          drawBorder: false,
+          display : false
+        }
+      }]
+    },
+  }
+});
+
+}
 
 }
     /*
