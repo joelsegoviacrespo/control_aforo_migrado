@@ -185,7 +185,7 @@ def grafica_horas():
     myrefHour8=datetime.strptime('21:59:59',"%H:%M:%S")
     #print('si ves esto sobre una fecha...')
     #print(myrefHour)
-    datos_horas=[0,0,0,0,0,0,0,0,0,0]
+    datos_horas=[8,5,0,3,0,9,0,0,0,0]
     datos_horas_acumuladas=[]
     #print(myhora)
     for e in myCamaras.objects.all():
