@@ -66,7 +66,7 @@ def todos(request):
     if request.user.is_staff:
         camarasAll =  Camaras.objects.all()
     elif hasattr(request.user, 'cliente') and (request.user.cliente.get_id() is not None):
-        camaras  = Camara.objects.filter(id_cliente=request.user.cliente.get_id())
+        camaras  = Camaras.objects.filter(id_cliente=request.user.cliente.get_id())
         for camaras in camarasAll:
             camaras.id = str(camaras._id)
         return render(request, "camaras/todos.html", {'form': camarasAll})
@@ -138,7 +138,7 @@ def configuracion_camaras(request, id_monitor):
 
                     zonas_camaras = []
                     j=0
-                    if (i==1):
+                    if (i==0):
                         nombre_aforo = camaras.nombre_camara                         
                     for zonas_camara in camaras.zonas_camara:                        
                                                 
@@ -213,7 +213,7 @@ def configuracion(request, id_monitor):
                 for camaras in camarasAll:
                     j=0                   
                     for zonas_camara in camaras.zonas_camara:
-                        if (i==1 and j==0):                                                 
+                        if (i==0 and j==0):                                                 
                             nro_aforo = zonas_camara.nro_personas                            
                         j = j+1
                     i= i+1    

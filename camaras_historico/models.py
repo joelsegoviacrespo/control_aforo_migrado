@@ -1,25 +1,32 @@
 from djongo import models
 from django.contrib import admin
-
-
-# Create your models here.
-class camaras_historico(models.Model):
-    instalacion = models.EmbeddedField('Instalacion',null=True,blank=True)
-    nombre_camara =  models.CharField(max_length=200)
-    serial_camara = models.CharField(max_length=200)
-    ts = models.CharField(max_length=200)
-    zonas_camara = models.ArrayField (
-    models.EmbeddedField('Info_zona_camara',null=True,blank=True)
+from djongo import models
+from instalacion.models import Instalacion,InstalacionEmbebido
+class ZonaCamara(models.Model):
+    #_id = models.ObjectIdField()
+    nombre_zona_camara = models.CharField(max_length=250, blank=False, default='')
+    nro_personas = models.IntegerField(default=0)
+    class Meta:
+       abstract = True
+class myCamaras(models.Model):
+    _id = models.ObjectIdField()
+    instalacion = models.EmbeddedField(
+       model_container=InstalacionEmbebido,
+       null=True,
+       blank=True,
     )
-    
-    def __str__(self):
+    nombre_camara = models.CharField(max_length=250, blank=False, default='')
+    serial_camara = models.CharField(max_length=250, blank=False, default='')
+    ts = models.TimeField(blank=False)
+    fecha = models.DateField(auto_now_add=True,blank=True, null=True)
+    zonas_camara = models.ArrayField(
+      model_container=ZonaCamara,
+      null=True,
+      blank=True,
+    )
+    def __unicode__(self):
         return self.nombre_camara
-
-class instalacion(models.Model):
-    nombre = models.CharField(max_length=200)
-
-
-class info_zona_camara(models.Model):
-    nombre_zona_camara = models.CharField(max_length=200)
-    nro_persoas = models.IntegerField() 
-    
+    def __str__(self,):
+        return str(self.nombre_camara)
+    class Meta:
+        db_table = "camaras_historico"

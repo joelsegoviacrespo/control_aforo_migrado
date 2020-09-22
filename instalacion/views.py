@@ -110,8 +110,7 @@ def eliminar(request, id):
 
 
 
-def listar_por_nif_cliente(request, nif_cliente):
-    print(nif_cliente)
+def listar_por_nif_cliente(request, nif_cliente):    
     #instalaciones = Instalacion.objects.all().filter(id_cliente=id_cliente, instalacion_estado=True)
     #instalaciones = Instalacion.objects.values('cliente')
     instalaciones = Instalacion.objects.all().filter(cliente={'nif': nif_cliente}, instalacion_estado=True)        

@@ -76,7 +76,8 @@
          style="position: absolute; z-index: 51;">
         <div class="d-flex align-items-start h-100">
 			<!--iMAGEN DE MERLIN-->
-            <img class="img-responsive w-75 h-100" src="../static/assets/img/design/fondo_merlin_001.png" alt="" srcset="">
+            <!--img class="img-responsive w-75 h-100" src="../static/assets/img/design/fondo_merlin_001.png" alt="" srcset=""-->
+			<img id="id_imagen_aforo" class="img-responsive w-75 h-100" src="" alt="" srcset="">
         </div>
     </div>
     <div class="d-flex justify-content-end h-100 w-100"
@@ -120,31 +121,49 @@
 	hzt_verde = "../static/assets/img/design/shv.png";
 	hzt_ambar ="../static/assets/img/design/sha.png";
 	hzt_rojo ="../static/assets/img/design/shr.png";
+	var data = JSON.parse("{{data|escapejs}}");
+	var embebido = data.embebido    
+	var id_display = data.id_display
 
 	function revisar_cambios() {
-		id_monitor = $('#hdn_monitor').val();
-		id_monitor = 10
-		if (id_monitor != '') {
-			request_url = '/camaras/configuracion/' + id_monitor + '';
+		//console.log("revisar_cambios")		
+		//console.log("id_display: "+id_display)
+		//id_instalacion = 10
+		if (id_display != '') {
+			request_url = '/display/configuracion/' + id_display + '';
 			$.ajax({
 				url: request_url,
 				success: function(data){
-					nro_personas = parseInt(data['nro_personas']);
-					aforo_maximo = parseInt(data['aforo_maximo']);
-					color_barra_cabecera = data['color_barra_cabecera'];
-					texto_barra_cabecera = data['texto_barra_cabecera'];
-					logotipo_archivo_nombre = data['logotipo_archivo_nombre'];
-					logotipo_posicion = data['logotipo_posicion'];
-					fondo_imagen_archivo_nombre = data['fondo_imagen_archivo_nombre'];
-					aforo_formato = data['aforo_formato'];
-					aforo_mostrar_maximo = data['aforo_mostrar_maximo'];
-					aforo_mostrar_casi_lleno = data['aforo_mostrar_casi_lleno'];
-					aforo_frase_verde = data['aforo_frase_verde'];
-					aforo_frase_ambar = data['aforo_frase_ambar'];
-					aforo_frase_rojo = data['aforo_frase_rojo'];
+					nro_personas = parseInt(data['nro_personas']);					
+					url_verde = data['url_verde'],
+					url_ambar = data['url_ambar'],
+					url_rojo = data['url_rojo'],
+					url_cerrado = data['url_cerrado'],     
+                    hora_apertura = data['hora_apertura'],
+                    hora_cierre = data['hora_cierre'],
+                    maximo_aforo = data['maximo_aforo'], 
+					mostrar_valor = data['mostrar_valor'],                 
+                    mostrar_capacidad = data['mostrar_capacidad'],
+                    mostrar_ambar = data['mostrar_ambar'],
+                	posicion_reloj = data['posicion_reloj'],
+                	color = data['color']
+					horario_laboral = data['horario_laboral']     
 
+					/*console.log("nro_personas: "+nro_personas)          
+                  	console.log("url_verde: "+url_verde)
+					console.log("url_ambar: "+url_ambar)
+					console.log("url_rojo: "+url_rojo)
+					console.log("url_cerrado: "+url_cerrado)
+					console.log("hora_apertura: "+hora_apertura)
+					console.log("hora_cierre: "+hora_cierre)
+					console.log("maximo_aforo: "+maximo_aforo)
+					console.log("mostrar_capacidad: "+mostrar_capacidad)
+					console.log("mostrar_ambar: "+mostrar_ambar)
+					console.log("posicion_reloj: "+posicion_reloj)
+					console.log("color: "+color)
+					console.log("horario_laboral: "+horario_laboral)*/
 
-					switch (color_barra_cabecera)
+					/*switch (color_barra_cabecera)
 					{
 						case "WTH":
 							color_barra_cabecera ="#FFFFFF";
@@ -158,56 +177,67 @@
 						case "BLK":
 							color_barra_cabecera ="#000000";
 							break;
+					}*/
+					
+					porcentaje_aforo = ((nro_personas * 100)/maximo_aforo).toFixed(0)
+					//console.log("porcentaje_aforo: "+porcentaje_aforo)
+					
+					if (horario_laboral == true) {
+						//console.log("dentro del horario laboral")
+						switch (true)
+						{
+						   case (porcentaje_aforo < 70):
+						   		//console.log("verde")
+								//console.log("url_verde: "+url_verde)
+								$('#id_imagen_aforo').attr('src',url_verde);
+								//console.log("verde2")								
+						   		break;
+						   case (porcentaje_aforo >= 70 && porcentaje_aforo <=99):
+								$('#id_imagen_aforo').attr('src',url_ambar);
+						   		//console.log("ambar")
+						   		break;
+						   case (nro_personas ==100):
+							   //console.log("rojo")
+								$('#id_imagen_aforo').attr('src',url_rojo);
+							   break;
+						   default:
+							   //console.log("verde")
+								$('#id_imagen_aforo').attr('src',url_verde);
+						}
+					}
+					else{
+						/*console.log("cerrado")
+						console.log("url_cerrado: "+url_cerrado)*/
+						$('#id_imagen_aforo').attr('src',url_cerrado);
 					}
 
-					switch (true)
-					{
-					   case (nro_personas < 18):
-					   		sem_color = hzt_verde;
-					   		frase = aforo_frase_verde;
-					   		break;
-					   case (nro_personas < 41):
-					   		sem_color = hzt_ambar;
-					   		frase = aforo_frase_ambar;
-					   		break;
-					   case (nro_personas > 40):
-						   sem_color = hzt_rojo;
-						   frase = aforo_frase_rojo;
-						   break;
-					   default:
-						   sem_color = hzt_verde;
-						   frase = aforo_frase_verde;
-					}
-
-				    $('#semaforo').attr('src',sem_color);
-				    $('#texto_barra_cabecera').html(texto_barra_cabecera);
-
-					if(aforo_mostrar_maximo==false){
+					if(mostrar_capacidad==false){
 						$("#msg_aforo_maximo").hide().html('');
 					}
 					else{
-						$("#msg_aforo_maximo").show().html(aforo_maximo);
-					}
-					if(aforo_mostrar_casi_lleno==false){
-						$("#msg_aforo_casi_lleno").hide().html('');
-					}
-					else{
-						$("#msg_aforo_casi_lleno").show().html(frase);
-					}
+						$("#msg_aforo_maximo").show().html(maximo_aforo);
+					}					
 				    /*color_barra_cabecera*/
 
-				    if (aforo_formato=="PCT"){
-				    	nro_personas_show = ((nro_personas * 100)/aforo_maximo).toFixed(0) + "%";
+				    if (mostrar_valor=="PCT"){
+				    	nro_personas_show = ((nro_personas * 100)/maximo_aforo).toFixed(0) + "%";
 				    }
 				    else{				    	
 						nro_personas_show = nro_personas.toString();
 				    }
-
+					
+					if (embebido == false) {						
+						radius = 80
+					}
+					else{						
+						radius = 40
+					}
+					
 					Circles.create({
 						id:'circles-1',
-						radius:40,
+						radius:radius,
 						value:nro_personas,
-						maxValue:aforo_maximo,
+						maxValue:maximo_aforo,
 						width:10,
 						text: nro_personas_show,
 						colors:['#f1f1f1', '#FF9E27'], /*#FF9E27*/
