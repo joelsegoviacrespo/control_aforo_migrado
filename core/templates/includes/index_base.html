@@ -67,34 +67,7 @@
                     <h3 class="fw-bold">1,248</h3>
                   </div>
                   
-                </div>--><script>
-				 
-			function ajax(){
-				const http = new XMLHttpRequest;
-				const url = "";
-alert("ok");
-				http.onreadystatechange =function(){
-					if(this.readyState ==4 && this.status==200){
-console.log(this.responseText);
-
-					}
-				}
-				http.open("Get",url);
-				http.send();
-			}
-document.getElementById("1").addEventListener("click", function(){
-ajax();
-document.getElementById("demo").id = "newid";
-});
-document.getElementById("2").addEventListener("click", function(){
-ajax();
-});
-document.getElementById("totalIncomeChart").id = "totalIncomeChart1";
-document.getElementById("3").addEventListener("click", function(){
-ajax();
-});
-document.getElementById("demo").id = "newid";
-			</script>
+                </div>-->
             <div class="btn-group text-center" role="group">
                 
                 </div>
@@ -103,16 +76,16 @@ document.getElementById("demo").id = "newid";
                 <div class="row">
                     <div class="col text-center mb-1 ">
 						<div class="btn-group mr-3  " role="group" aria-label="First group"style="center">
-						<button id= "1"type="button" class="btn btn-primary min-vw-25 mr-3  " >Hoy</button>	
-						<button id= "2" type="button" class="btn btn-primary min-vw-25 mr-3 "  >Esta Semana</button>
-						<button id= "3" type="button" class="btn btn-primary min-vw-25 mr-3 " >Este Mes</button>
+						<button id= "1"type="button" class="btn btn-primary min-vw-25 mr-3  "onclick="myFunctionToday()" >Hoy</button>	
+						<button id= "2" type="button" class="btn btn-primary min-vw-25 mr-3 "  onclick="myFunctionThisWeek()">Esta Semana</button>
+						<button id= "3" type="button" class="btn btn-primary min-vw-25 mr-3 "onclick="myFunctionThisMonth()" >Este Mes</button>
 					</div>
                 </div>
             </div>
                 
 			</div>
-			
-                <div class="col-md-12"style="max-height: 100px;" >
+			<!--primera tarjeta-->
+                <div class="col-md-12"style="max-height: 100px;" id="tarjeta1">
 					<p  align="center"><samall>Total Aforo</samall></p>
                   <div id="chart-container" style="max-height: 100px;" >
 					
@@ -125,7 +98,7 @@ document.getElementById("demo").id = "newid";
 				</div>
 				
 				
-                <div class="col-md-12" style="max-height: 160px;"><br>
+                <div class="col-md-12" style="max-height: 160px;"id="tarjeta2"><br>
 					<p  align="center"><samall>Total Persona</samall></p>
 					
                     <div id="chart-container" style="max-height: 66px;">
@@ -140,6 +113,67 @@ document.getElementById("demo").id = "newid";
                   
 				</div>
 				
+				<!--primera tarjeta-->
+				<!--segunda tarjeta-->
+				<div class="col-md-12"style="max-height: 100px;" id="tarjeta3">
+					<p  align="center"><samall>Total Aforo</samall></p>
+                  <div id="chart-container" style="max-height: 100px;" >
+					
+					<canvas id="totalIncomeChart2" style=" width: 49px; height: 90px; "></canvas>
+					
+                  </div>
+                  
+                    
+			     
+				</div>
+				
+				
+                <div class="col-md-12" style="max-height: 160px;"id="tarjeta4"><br>
+					<p  align="center"><samall>Total Persona</samall></p>
+					
+                    <div id="chart-container" style="max-height: 66px;">
+						
+                      <canvas id="totalIncomeChart3"style=" width: 49px; height: 90px;"></canvas>
+                      
+                      
+					</div>
+					<!--<div align="center">
+						<b><small >Horario Activo:  8:00 am -a 5:00 pm para el público</small></b>
+					</div>-->
+                  
+				</div>
+				<!--segunda tarjeta-->
+				<!--tercera tarjeta-->
+				<div class="col-md-12"style="max-height: 100px;" id="tarjeta5">
+					<p  align="center"><samall>Total Aforo</samall></p>
+                  <div id="chart-container" style="max-height: 100px;" >
+					
+					<canvas id="totalIncomeChart5" style=" width: 49px; height: 90px; "></canvas>
+					
+                  </div>
+                  
+                    
+			     
+				</div>
+				
+				
+                <div class="col-md-12" style="max-height: 160px;"id="tarjeta6"><br>
+					<p  align="center"><samall>Total Persona</samall></p>
+					
+                    <div id="chart-container" style="max-height: 66px;">
+						
+                      <canvas id="totalIncomeChart6"style=" width: 49px; height: 90px;"></canvas>
+                      
+                      
+					</div>
+					<!--<div align="center">
+						<b><small >Horario Activo:  8:00 am -a 5:00 pm para el público</small></b>
+					</div>-->
+                  
+				</div>
+				<!--tercera tarjeta-->
+
+
                 </div>
               </div>
               </div>
@@ -834,6 +868,101 @@ var mytotalIncomeChart = new Chart(totalIncomeChart, {
     });*/
 
 
-
+	
 
 </script>
+
+<script>
+var x = document.getElementById("tarjeta1");
+var y = document.getElementById("tarjeta2");
+var z = document.getElementById("tarjeta3");
+var a = document.getElementById("tarjeta4");
+var b = document.getElementById("tarjeta5");
+var c = document.getElementById("tarjeta6");
+ 
+
+	function myFunctionToday() {
+
+
+if (x.style.display === "none") {
+x.style.display = "block";
+y.style.display = "block";
+z.style.display = "none";
+a.style.display = "none";
+b.style.display = "none";
+c.style.display = "none";
+alert('hi');
+
+} else {
+x.style.display = "block";
+y.style.display = "block";
+z.style.display = "none";
+a.style.display = "none";
+b.style.display = "none";
+c.style.display = "none";
+alert('hi');
+
+}}
+
+
+
+function myFunctionThisWeek() {
+
+if (x.style.display === "none") {
+x.style.display = "none";
+y.style.display = "none";
+z.style.display = "block";
+a.style.display = "block";
+b.style.display = "none";
+c.style.display = "none";
+alert('hi');
+} else {
+x.style.display = "none";
+y.style.display = "none";
+z.style.display = "block";
+a.style.display = "block";
+b.style.display = "none";
+c.style.display = "none";
+alert('hi');
+}}
+
+
+
+function myFunctionThisMonth() {
+
+if (x.style.display === "none") {
+	y.style.display = "none";
+z.style.display = "none";
+a.style.display = "none";
+b.style.display = "none";
+c.style.display = "none";
+b.style.display = "block";
+
+alert('hi');
+} else {
+x.style.display = "none";
+x.style.display = "none";
+y.style.display = "none";
+z.style.display = "none";
+a.style.display = "none";
+b.style.display = "block";
+c.style.display = "block";
+alert('hi');
+}}
+
+</script>
+<style>
+#tarjeta3 {
+  display: none;
+}
+#tarjeta4 {
+  display: none;
+}
+#tarjeta5 {
+  display: none;
+}
+#tarjeta6 {
+  display: none;
+}
+					
+</style>
