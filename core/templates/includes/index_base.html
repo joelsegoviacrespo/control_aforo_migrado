@@ -48,7 +48,7 @@
           <div class="card full-height">
             <div class="card-body">
               <!--div class="card-title text-center pt-2 pb-1 ">Entrada Principal</div>-->
-				<div class="card-title text-center pt-2 pb-1 "></div>
+				<div class="card-title text-center  pb-1 "></div>
 
               
               <!--<div class="row py-1" >-->
@@ -67,17 +67,17 @@
                   </div>
                   
                 </div>-->
-                <div class="btn-group text-center" role="group">
+            <div class="btn-group text-center" role="group">
                 
                 </div>
 
                 <div class="container">
                   <div class="row">
-                    <div class="col text-center mb-5 ">
+                    <div class="col text-center mb-3 ">
 						<div class="btn-group mr-2" role="group" aria-label="First group">
-						<button id= "1"type="button" class="btn btn-primary min-vw-25 mr-4  " >Hoy</button>	
-						<button id= "2" type="button" class="btn btn-primary min-vw-25 mr-4 "  >Esta Semana</button>
-						<button id= "3" type="button" class="btn btn-primary min-vw-25 mr-4 " >Este Mes</button>
+						<button id= "1"type="button" class="btn btn-primary min-vw-25 mr-3  " >Hoy</button>	
+						<button id= "2" type="button" class="btn btn-primary min-vw-25 mr-3 "  >Esta Semana</button>
+						<button id= "3" type="button" class="btn btn-primary min-vw-25 mr-3 " >Este Mes</button>
 					</div>
                     </div>
                   </div>
@@ -110,29 +110,32 @@ ajax();
 });
 document.getElementById("demo").id = "newid";
 			</script>
-                <div class="col-md-12" >
+			
+                <div class="col-md-12" style="max-height: 40px;">
 					<p align="center">Total Aforo</p>
-                  <div id="chart-container" style="max-height: 46px;" >
+                  <div id="chart-container"  >
 					
-                    <canvas id="totalIncomeChart" style=" width: 47px; height: 100px;"></canvas>
+					<canvas id="totalIncomeChart" style=" width: 49px; height: 90px;"></canvas>
+					
                   </div>
                   
                     
 			     
 				</div>
-				  
-                <div class="col-md-12" >
-					  
+				<br><br><br>
+				
+                <div class="col-md-12"style="max-height: 40px;" ><br>
 					<p align="center">Total Persona</p>
-                    <div id="chart-container" style="max-height: 46px;">
+					
+                    <div id="chart-container" >
 						
-                      <canvas id="totalIncomeChart1"style=" width: 100px; height: 100px;"></canvas>
+                      <canvas id="totalIncomeChart1"style=" width: 49px; height: 90px;"></canvas>
                       
                       
 					</div>
-					<div align="center">
-						<!--<b><small >Horario Activo:  8:00 am -a 5:00 pm para el público</small></b>-->
-					</div>
+					<!--<div align="center">
+						<b><small >Horario Activo:  8:00 am -a 5:00 pm para el público</small></b>
+					</div>-->
                   
 				</div>
 				
@@ -141,6 +144,7 @@ document.getElementById("demo").id = "newid";
               </div>
               </div>
 			</div>
+		</div>
 
 
         
@@ -694,7 +698,7 @@ var mytotalIncomeChart = new Chart(totalIncomeChart, {
   data: {
     labels: ["1H", "4H", "8H", "12H", "16H", "20H", "24H"],
     datasets : [{
-      label: "Total Income",
+      label: "Total aforo",
       backgroundColor: '#ff9e27',
       borderColor: 'rgb(23, 125, 255)',
       data: arrayC,
@@ -734,7 +738,7 @@ var mytotalIncomeChart = new Chart(totalIncomeChart, {
   data: {
     labels:["1H", "4H", "8H", "12H", "16H", "20H", "24H"],
     datasets : [{
-      label: "Total Income",
+      label: "Total aforo",
       backgroundColor: '#ff9e27',
       borderColor: 'rgb(23, 125, 255)',
       data: arrayD,
@@ -776,7 +780,7 @@ var mytotalIncomeChart = new Chart(totalIncomeChart, {
   data: {
     labels: ["D", "L", "M", "M", "J", "V", "S"],
     datasets : [{
-      label: "Total Income",
+      label: "Total aforo",
       backgroundColor: '#ff9e27',
       borderColor: 'rgb(23, 125, 255)',
       data: arrayE,
