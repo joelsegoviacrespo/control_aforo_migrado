@@ -7,7 +7,8 @@ from django.shortcuts import render, redirect, get_object_or_404, get_list_or_40
 from django.utils.translation import activate
 from usuarios.forms import UsuariosForm,UsuariosEditarForm
 from django.contrib.auth.hashers import PBKDF2PasswordHasher
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission, Group
+from django.contrib.contenttypes.models import ContentType
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 from usuarios.forms import LoginForm
@@ -17,6 +18,7 @@ import Constantes
 from django.contrib.auth.hashers import make_password, check_password
 
 @login_required(login_url="/login/")
+@permission_required('usuarios.add_usuarios',login_url="/logout/")
 def usuarios(request):
     activate('es')
     if request.method == "POST":       
@@ -38,8 +40,13 @@ def usuarios(request):
             user.date_joined = datetime.datetime.now()
             user.first_name = form.cleaned_data.get("first_name")
             user.last_name = form.cleaned_data.get("last_name")
+            user.group = form.cleaned_data.get("group")
             user.password = make_password(user.password)
             user.save()
+
+            group = Group.objects.get(name='Usuarios')
+            user.groups.add(group)
+
             return redirect('/usuarios/todos')
             
         else:
@@ -112,7 +119,7 @@ def eliminar(request, id):
     try:
         usuarios = User.objects.get(_id=id)
         if (request.user.profile.rol == Constantes.ADMINISTRADOR) and hasattr(request.user.profile, 'cliente') and (request.user.profile.cliente.get_id() is not None):                
-            if (request.user.profile.cliente.nif != valores.instalacion.nif_cliente):            
+            if (request.user.profile.cliente.nif != user.cliente.nif_cliente):            
                 return redirect('/accounts/logout/')
         usuarios.delete()
     except Exception as e:
