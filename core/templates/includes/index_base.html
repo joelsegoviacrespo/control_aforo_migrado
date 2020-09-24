@@ -879,7 +879,15 @@ var z = document.getElementById("tarjeta3");
 var a = document.getElementById("tarjeta4");
 var b = document.getElementById("tarjeta5");
 var c = document.getElementById("tarjeta6");
- 
+$(document).ready(function(){
+	x.style.display = "block";
+y.style.display = "block";
+z.style.display = "none";
+a.style.display = "none";
+b.style.display = "none";
+c.style.display = "none";
+
+});
 
 	function myFunctionToday() {
 
@@ -891,7 +899,7 @@ z.style.display = "none";
 a.style.display = "none";
 b.style.display = "none";
 c.style.display = "none";
-alert('hi');
+
 
 } else {
 x.style.display = "block";
@@ -900,7 +908,7 @@ z.style.display = "none";
 a.style.display = "none";
 b.style.display = "none";
 c.style.display = "none";
-alert('hi');
+
 
 }}
 
@@ -915,7 +923,7 @@ z.style.display = "block";
 a.style.display = "block";
 b.style.display = "none";
 c.style.display = "none";
-alert('hi');
+
 } else {
 x.style.display = "none";
 y.style.display = "none";
@@ -923,7 +931,7 @@ z.style.display = "block";
 a.style.display = "block";
 b.style.display = "none";
 c.style.display = "none";
-alert('hi');
+
 }}
 
 
@@ -937,8 +945,8 @@ a.style.display = "none";
 b.style.display = "none";
 c.style.display = "none";
 b.style.display = "block";
+c.style.display = "block";
 
-alert('hi');
 } else {
 x.style.display = "none";
 x.style.display = "none";
@@ -947,22 +955,7 @@ z.style.display = "none";
 a.style.display = "none";
 b.style.display = "block";
 c.style.display = "block";
-alert('hi');
+
 }}
 
 </script>
-<style>
-#tarjeta3 {
-  display: none;
-}
-#tarjeta4 {
-  display: none;
-}
-#tarjeta5 {
-  display: none;
-}
-#tarjeta6 {
-  display: none;
-}
-					
-</style>
