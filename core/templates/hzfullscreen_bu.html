@@ -196,7 +196,7 @@
 								$('#id_imagen_aforo').attr('src',url_ambar);
 						   		//console.log("ambar")
 						   		break;
-						   case (nro_personas >=100):
+						   case (nro_personas ==100):
 							   //console.log("rojo")
 								$('#id_imagen_aforo').attr('src',url_rojo);
 							   break;
@@ -215,18 +215,15 @@
 						$("#msg_aforo_maximo").hide().html('');
 					}
 					else{
-						//$("#msg_aforo_maximo").show().html(maximo_aforo);
-						pass
+						$("#msg_aforo_maximo").show().html(maximo_aforo);
 					}					
 				    /*color_barra_cabecera*/
 
 				    if (mostrar_valor=="PCT"){
-				    	//nro_personas_show = ((nro_personas * 100)/maximo_aforo).toFixed(0) + "%";
-						pass
+				    	nro_personas_show = ((nro_personas * 100)/maximo_aforo).toFixed(0) + "%";
 				    }
 				    else{				    	
-						//nro_personas_show = nro_personas.toString();
-						pass
+						nro_personas_show = nro_personas.toString();
 				    }
 					
 					if (embebido == false) {						
