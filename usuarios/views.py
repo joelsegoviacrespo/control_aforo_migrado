@@ -40,12 +40,17 @@ def usuarios(request):
             user.date_joined = datetime.datetime.now()
             user.first_name = form.cleaned_data.get("first_name")
             user.last_name = form.cleaned_data.get("last_name")
-            user.group = form.cleaned_data.get("group")
             user.password = make_password(user.password)
-            user.save()
+            user.save()            
 
-            group = Group.objects.get(name='Usuarios')
+            # client = request.POST.get('cliente-nif')
+            # user.profile.cliente.add(client)
+
+            group = request.POST.get('group')
             user.groups.add(group)
+
+            # group = Group.objects.get(name='Usuarios')
+            # user.groups.add(group)
 
             return redirect('/usuarios/todos')
             
