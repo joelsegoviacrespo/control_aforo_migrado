@@ -201,7 +201,7 @@
 					label: "Total Income",
 					backgroundColor: '#ff9e27',
 					borderColor: 'rgb(23, 125, 255)',
-					data: [2, 4, 1, 5, 3, 2, 6, 7, 8, 10],
+					data: [2,2,2,2,2,2,2,2,2,2],
 				}],
 			},
 			options: {
@@ -231,15 +231,16 @@
 		});
 
 		var totalIncomeChart3 = document.getElementById('totalIncomeChart3').getContext('2d');
+		var arrayD=JSON.parse("{{info_grafica_semana_pasada}}")
 		var mytotalIncomeChart3 = new Chart(totalIncomeChart3, {
 			type: 'bar',
 			data: {
 				labels: ["D", "L", "M", "M", "J", "V", "S"],
 				datasets : [{
-					label: "Total Income",
+					label: "Total",
 					backgroundColor: '#ff9e27',
 					borderColor: 'rgb(23, 125, 255)',
-					data: [2, 4, 8, 5, 4, 2, 6, 7, 8, 10],
+					data: arrayD,
 				}],
 			},
 			options: {
@@ -276,7 +277,7 @@
 					label: "Total Income",
 					backgroundColor: '#ff9e27',
 					borderColor: 'rgb(23, 125, 255)',
-					data: [2, 4, 8, 5, 4, 2, 6, 7, 8, 10],
+					data: arrayA,
 				}],
 			},
 			options: {
@@ -305,15 +306,16 @@
 			}
 		});
 		var totalIncomeChart5 = document.getElementById('totalIncomeChart5').getContext('2d');
+		var arrayF=JSON.parse("{{estemes}}")
 		var mytotalIncomeChart5 = new Chart(totalIncomeChart5, {
 			type: 'bar',
 			data: {
-				labels: ["D", "L", "M", "M", "J", "V", "S"],
+				labels: ["1S", "2S", "3S", "4S"],
 				datasets : [{
-					label: "Total Income",
+					label: "Total Por Semana",
 					backgroundColor: '#ff9e27',
 					borderColor: 'rgb(23, 125, 255)',
-					data: [2, 4, 8, 5, 4, 2, 6, 7, 8, 10],
+					data: arrayF,
 				}],
 			},
 			options: {
@@ -342,15 +344,16 @@
 			}
 		});
 		var totalIncomeChart6 = document.getElementById('totalIncomeChart6').getContext('2d');
+		var arrayG=JSON.parse("{{mespasado}}")
 		var mytotalIncomeChart6 = new Chart(totalIncomeChart6, {
 			type: 'bar',
 			data: {
-				labels: ["D", "L", "M", "M", "J", "V", "S"],
+				labels: ["5S", "6S", "7S","8S"],
 				datasets : [{
 					label: "Total Income",
 					backgroundColor: '#ff9e27',
 					borderColor: 'rgb(23, 125, 255)',
-					data: [2, 4, 8, 5, 4, 2, 6, 7, 8, 10],
+					data: arrayG,
 				}],
 			},
 			options: {
