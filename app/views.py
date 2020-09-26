@@ -415,6 +415,7 @@ def mes_pasado():
     mesPasado.append(grafica_semana_acumulada(semana_a_restarC, semana_a_restar_strC,mydate51,fecha_limite3,fecha_limite_minima3))
     
 
+
     return mesPasado
 
 
