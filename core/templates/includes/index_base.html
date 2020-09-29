@@ -75,11 +75,14 @@
                 
                 <div class="row">
                     <div class="col text-center mb-1 ">
+						<table class=buttons> <tr>
 						<div class="btn-group m-3  " role="group" aria-label="First group"style="center">
-						<button id= "1"type="button" class="btn btn-primary min-vw-25 mr-3  "onclick="myFunctionToday()" >Hoy</button>	
-						<button id= "2" type="button" class="btn btn-primary min-vw-25 mr-3 "  onclick="myFunctionThisWeek()">Esta Semana</button>
-						<button id= "3" type="button" class="btn btn-primary min-vw-25  "onclick="myFunctionThisMonth()" >Este Mes</button>
-					</div>
+							<button id="1"class="btn success mr-3" type="button" onclick="myFunctionToday()">Hoy</button>
+							<button id="2"class="btn success mr-3" type="button"onclick="myFunctionThisWeek()" >Esta Semana</button>
+							<button id="3"class="btn success " type="button" onclick="myFunctionThisMonth()">Este Mes</button>
+						<!--<button id= "2" type="button" class="btn btn-primary min-vw-25 mr-3 "  onclick="myFunctionThisWeek()">Esta Semana</button>
+						<button id= "3" type="button" class="btn btn-primary min-vw-25  "onclick="myFunctionThisMonth()" >Este Mes</button>-->
+					</div></table>
                 </div>
             </div>
                 
@@ -960,3 +963,29 @@ c.style.display = "block";
 }}
 
 </script>
+<style>
+	
+.success{
+  border: 3px solid rgb(34, 92, 167);
+  background-color: rgb(45, 128, 234);
+  color: white;
+  padding: 08px 25px;
+  font-size: 16px;
+  cursor: pointer;
+  min-width: 115px;
+   
+  
+}
+.buttons{
+	white-space: normal;
+  table-layout: fixed;
+  border-collapse: collapse;
+  width: 100%;
+        
+}
+.buttons button {
+        width: 100%;
+    }
+	
+
+</style>
