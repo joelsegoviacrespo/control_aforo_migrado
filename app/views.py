@@ -31,9 +31,19 @@ from datetime import date
 from datetime import datetime, timedelta
 from json import dumps
 import re
+from operator import add
+cliente = Cliente.objects.all()
 
+for e in Cliente.objects.all():
+    print(e.nif)
+    
 
-
+for e in Instalacion.objects.all():
+    print(e.nombre_comercial)
+for e in Camaras.objects.all():
+    
+    print('serial de camaras')
+    print(e.serial_camara)
 
 serial_camara = "Q2GV-4YBM-YWWJ"
 
@@ -72,7 +82,9 @@ def TimeConverter(millis):
     return newResult
 
 #print(TimeConverter(13746338230108684000))
-def grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima ):
+def grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,seriales):
+    print('indiceeeeeeeeeeeeeeeeeee')
+    print(seriales)
     #print('estoy recibiendo de argumento:',mydate, mydate1 ,mydate2,)
     #mydate = str(today.strftime("%Y-%m-%d"))
     #mydate1 = datetime.today()
@@ -80,194 +92,200 @@ def grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima ):
     print('estoy recibiendo la siguente informacion: mi fecha dereferencia es:',mydate, 'mydate1:' ,mydate1, 'mydate2:', mydate2,'fecha limite:',fecha_limite,'fecha limite minima:',fecha_limite_minima)
     i =0
    
-    datos_semana=[0,0,0,0,0,0,0,0,0,0]
-    dias_semana=[]
-    varTemporal0= 0000
-    varTemporal1= 0000
-    varTemporal2= 0000
-    varTemporal3= 0000
-    varTemporal4= 0000
-    varTemporal5= 0000
-    varTemporal6= 0000
-    myLocalSunday=datetime.strptime(str(mydate), '%Y-%m-%d')
-    print('mylocalsunday')
-    print(myLocalSunday)
-    while myLocalSunday.strftime('%A') != 'Sunday':
-        myLocalSunday =(myLocalSunday-timedelta(days=1))
+    
+    dias_semana_total=[0,0,0,0,0,0,0,0,0,0]
+    for i in seriales:
+        datos_semana=[0,0,0,0,0,0,0,0,0,0]
+        varTemporal0= 0000
+        varTemporal1= 0000
+        varTemporal2= 0000
+        varTemporal3= 0000
+        varTemporal4= 0000
+        varTemporal5= 0000
+        varTemporal6= 0000
+        myLocalSunday=datetime.strptime(str(mydate), '%Y-%m-%d')
+        print('mylocalsunday')
         print(myLocalSunday)
-    print(myLocalSunday)
-    for e in myCamaras.objects.all():
-        comparativeDate = 0000
-        if (e.serial_camara == serial_camara):
-            if(e.fecha==mydate and mydate2== 'Sunday'):
-                if datetime.strptime(e.fecha, '%Y-%m-%d')  <= fecha_limite and datetime.strptime(e.fecha, '%Y-%m-%d') >= fecha_limite_minima:
-                    if datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Sunday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal1 :
+        while myLocalSunday.strftime('%A') != 'Sunday':
+            myLocalSunday =(myLocalSunday-timedelta(days=1))
+            print(myLocalSunday)
+        print(myLocalSunday)
+        for e in myCamaras.objects.all():
+            comparativeDate = 0000
+            if (e.serial_camara == serial_camara):
+                if(e.fecha==mydate and mydate2== 'Sunday'):
+                    if datetime.strptime(e.fecha, '%Y-%m-%d')  <= fecha_limite and datetime.strptime(e.fecha, '%Y-%m-%d') >= fecha_limite_minima:
+                        if datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Sunday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal1 :
+
+
+                            dias_semana.append(e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                            varTemporal0 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
+                            dias_semana.append(0)
+                            dias_semana.append(0)
+                            dias_semana.append(0)
+                            dias_semana.append(0)
+                            dias_semana.append(0)
+                            dias_semana.append(0)
+                            dias_semana.append(0)
+                            dias_semana.append(0)
+                            dias_semana.append(0)
+                            dias_semana.append(0)
+                            #print('------------------ esto es la lista en total---', dias_semana, 'de este dia', e.fecha,'este valor',e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                            return dias_semana
+                            break
+
+                        else:
+                            pass
                         
                         
-                        dias_semana.append(e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                        varTemporal0 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-                        dias_semana.append(0)
-                        dias_semana.append(0)
-                        dias_semana.append(0)
-                        dias_semana.append(0)
-                        dias_semana.append(0)
-                        dias_semana.append(0)
-                        dias_semana.append(0)
-                        dias_semana.append(0)
-                        dias_semana.append(0)
-                        dias_semana.append(0)
-                        #print('------------------ esto es la lista en total---', dias_semana, 'de este dia', e.fecha,'este valor',e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                        return dias_semana
-                        break
                         
-                    else:
-                        pass
-               
+                else:
+                    if datetime.strptime(e.fecha, '%Y-%m-%d')  <= fecha_limite and datetime.strptime(e.fecha, '%Y-%m-%d') >= fecha_limite_minima:
+                       # print('fechas segun el rango')
+                       # print(e.fecha)
+
+
+                        if datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Monday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal1 :
+                           # print('se agrego al dia lunes el valor',e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                            datos_semana.pop(1)
+
+                            datos_semana.insert(1,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                            varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
+
+                        if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Tuesday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal2) and (datetime.strptime(e.fecha, '%Y-%m-%d') >= myLocalSunday):
+                            datos_semana.pop(2)
+
+                            datos_semana.insert(2,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                            varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
+
+                        if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Thursday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal3) and (datetime.strptime(e.fecha, '%Y-%m-%d') >= myLocalSunday) :
+                            datos_semana.pop(3)
+
+                            datos_semana.insert(3,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                            varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
+
+                        if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Wednesday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal4) and (datetime.strptime(e.fecha, '%Y-%m-%d') >= myLocalSunday):
+                            datos_semana.pop(4)
+
+                            datos_semana.insert(4,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                            varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
+
+
+                        if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Friday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal5)and (datetime.strptime(e.fecha, '%Y-%m-%d') >= myLocalSunday) :
+                            datos_semana.pop(5)
+
+                            datos_semana.insert(5,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                            varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
+
+                        if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Saturday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal6)and (datetime.strptime(e.fecha, '%Y-%m-%d') >= myLocalSunday) :
+                            datos_semana.pop(6)
+
+                            datos_semana.insert(6,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                            varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
+
+                        if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Sunday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal0)and (datetime.strptime(e.fecha, '%Y-%m-%d') >= myLocalSunday) :
+                            datos_semana.pop(0)
+                            #print('se agrego al dia domingo el valor',e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                            datos_semana.insert(0,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                            varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
+            dias_semana_total= list( map(add, datos_semana, dias_semana_total) )
+
+                
                    
                     
-            else:
-                if datetime.strptime(e.fecha, '%Y-%m-%d')  <= fecha_limite and datetime.strptime(e.fecha, '%Y-%m-%d') >= fecha_limite_minima:
+    return dias_semana_total
+
+def grafica_semana_pasada(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,seriales ):
+    #print('estoy recibiendo de argumento:',mydate, mydate1 ,mydate2,)
+    #mydate = str(today.strftime("%Y-%m-%d"))
+    #mydate1 = datetime.today()
+    #mydate2 = datetime.today().strftime('%A')
+    print('semana pasada----------------------------------------')
+    print('estoy recibiendo la siguente informacion: mi fecha dereferencia es:',mydate, 'mydate1:' ,mydate1, 'mydate2:', mydate2,'fecha limite:',fecha_limite,'fecha limite minima:',fecha_limite_minima)
+    i =0
+   
+    dias_semana_total=[0,0,0,0,0,0,0,0,0,0,0]
+    for i in seriales:
+        
+        datos_semana=[0,0,0,0,0,0,0,0,0,0]
+        varTemporal0= 0000
+        varTemporal1= 0000
+        varTemporal2= 0000
+        varTemporal3= 0000
+        varTemporal4= 0000
+        varTemporal5= 0000
+        varTemporal6= 0000
+        while fecha_limite.strftime('%A') != 'Saturday':
+            fecha_limite =fecha_limite+timedelta(days=1)
+        print('fecha_limite')
+
+        print(fecha_limite)
+
+        while fecha_limite_minima.strftime('%A') != 'Sunday':
+           fecha_limite_minima =fecha_limite_minima-timedelta(days=1)
+        print('fecha_limite_minima')
+        print(fecha_limite_minima)
+        for e in myCamaras.objects.all():
+            comparativeDate = 0000
+            if (e.serial_camara == serial_camara):
+
+                if datetime.strptime(e.fecha, '%Y-%m-%d')  <= fecha_limite :
                    # print('fechas segun el rango')
                    # print(e.fecha)
-                    
-                    
+
+
                     if datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Monday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal1 :
                        # print('se agrego al dia lunes el valor',e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
                         datos_semana.pop(1)
-                        
+
                         datos_semana.insert(1,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
                         varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-                   
-                    if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Tuesday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal2) and (datetime.strptime(e.fecha, '%Y-%m-%d') >= myLocalSunday):
+
+                    if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Tuesday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal2):
                         datos_semana.pop(2)
-                        
+
                         datos_semana.insert(2,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
                         varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-                     
-                    if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Thursday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal3) and (datetime.strptime(e.fecha, '%Y-%m-%d') >= myLocalSunday) :
+
+                    if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Thursday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal3):
                         datos_semana.pop(3)
-                        
+
                         datos_semana.insert(3,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
                         varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-                     
-                    if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Wednesday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal4) and (datetime.strptime(e.fecha, '%Y-%m-%d') >= myLocalSunday):
+
+                    if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Wednesday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal4):
                         datos_semana.pop(4)
-                        
+
                         datos_semana.insert(4,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
                         varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-                   
 
-                    if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Friday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal5)and (datetime.strptime(e.fecha, '%Y-%m-%d') >= myLocalSunday) :
+                    if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Friday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal5):
                         datos_semana.pop(5)
-                        
+
                         datos_semana.insert(5,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
                         varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-                   
-                    if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Saturday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal6)and (datetime.strptime(e.fecha, '%Y-%m-%d') >= myLocalSunday) :
+
+                    if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Saturday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal6):
                         datos_semana.pop(6)
-                        
+
                         datos_semana.insert(6,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
                         varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-                    
-                    if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Sunday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal0)and (datetime.strptime(e.fecha, '%Y-%m-%d') >= myLocalSunday) :
+
+                    if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Sunday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal0):
                         datos_semana.pop(0)
                         #print('se agrego al dia domingo el valor',e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
                         datos_semana.insert(0,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
                         varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-                        
+
+            dias_semana_total= list( map(add, datos_semana, dias_semana_total) )
                     
                    
                     
-    return datos_semana
-
-def grafica_semana_pasada(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima ):
-    #print('estoy recibiendo de argumento:',mydate, mydate1 ,mydate2,)
-    #mydate = str(today.strftime("%Y-%m-%d"))
-    #mydate1 = datetime.today()
-    #mydate2 = datetime.today().strftime('%A')
-    print('semana pasada----------------------------------------')
-    print('estoy recibiendo la siguente informacion: mi fecha dereferencia es:',mydate, 'mydate1:' ,mydate1, 'mydate2:', mydate2,'fecha limite:',fecha_limite,'fecha limite minima:',fecha_limite_minima)
-    i =0
-   
-    datos_semana=[0,0,0,0,0,0,0,0,0,0]
-    dias_semana=[]
-    varTemporal0= 0000
-    varTemporal1= 0000
-    varTemporal2= 0000
-    varTemporal3= 0000
-    varTemporal4= 0000
-    varTemporal5= 0000
-    varTemporal6= 0000
-    while fecha_limite.strftime('%A') != 'Saturday':
-        fecha_limite =fecha_limite+timedelta(days=1)
-    print('fecha_limite')
-
-    print(fecha_limite)
-
-    while fecha_limite_minima.strftime('%A') != 'Sunday':
-       fecha_limite_minima =fecha_limite_minima-timedelta(days=1)
-    print('fecha_limite_minima')
-    print(fecha_limite_minima)
-    for e in myCamaras.objects.all():
-        comparativeDate = 0000
-        if (e.serial_camara == serial_camara):
-            
-            if datetime.strptime(e.fecha, '%Y-%m-%d')  <= fecha_limite :
-               # print('fechas segun el rango')
-               # print(e.fecha)
-                
-                
-                if datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Monday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal1 :
-                   # print('se agrego al dia lunes el valor',e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                    datos_semana.pop(1)
-                    
-                    datos_semana.insert(1,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                    varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-               
-                if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Tuesday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal2):
-                    datos_semana.pop(2)
-                    
-                    datos_semana.insert(2,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                    varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-                 
-                if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Thursday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal3):
-                    datos_semana.pop(3)
-                    
-                    datos_semana.insert(3,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                    varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-                 
-                if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Wednesday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal4):
-                    datos_semana.pop(4)
-                    
-                    datos_semana.insert(4,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                    varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-               
-                if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Friday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal5):
-                    datos_semana.pop(5)
-                    
-                    datos_semana.insert(5,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                    varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-               
-                if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Saturday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal6):
-                    datos_semana.pop(6)
-                    
-                    datos_semana.insert(6,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                    varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-                
-                if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Sunday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal0):
-                    datos_semana.pop(0)
-                    #print('se agrego al dia domingo el valor',e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                    datos_semana.insert(0,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                    varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-                    
-                    
-                   
-                    
-    return datos_semana
+    return dias_semana_total
 
  
     
-def grafica_semana_acumulada(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima ):
+def grafica_semana_acumulada(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,seriales ):
     #print('estoy recibiendo de argumento:',mydate, mydate1 ,mydate2,)
     #mydate = str(today.strftime("%Y-%m-%d"))
     #mydate1 = datetime.today()
@@ -276,77 +294,79 @@ def grafica_semana_acumulada(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_
     print('estoy recibiendo la siguente informacion: mi fecha dereferencia es:',mydate, 'mydate1:' ,mydate1, 'mydate2:', mydate2,'fecha limite:',fecha_limite,'fecha limite minima:',fecha_limite_minima)
     i =0
    
-    datos_semana=[0,0,0,0,0,0,0,0,0,0]
-    dias_semana=[]
-    varTemporal0= 0000
-    varTemporal1= 0000
-    varTemporal2= 0000
-    varTemporal3= 0000
-    varTemporal4= 0000
-    varTemporal5= 0000
-    varTemporal6= 0000
-    while fecha_limite.strftime('%A') != 'Saturday':
-        fecha_limite =fecha_limite+timedelta(days=1)
-    print('fecha_limite')
+    
+    dias_semana_total=[0,0,0,0,0,0,0,0,0,0]
+    for i in seriales:
+        datos_semana=[0,0,0,0,0,0,0,0,0,0]
+        varTemporal0= 0000
+        varTemporal1= 0000
+        varTemporal2= 0000
+        varTemporal3= 0000
+        varTemporal4= 0000
+        varTemporal5= 0000
+        varTemporal6= 0000
+        while fecha_limite.strftime('%A') != 'Saturday':
+            fecha_limite =fecha_limite+timedelta(days=1)
+        print('fecha_limite')
 
-    print(fecha_limite)
+        print(fecha_limite)
 
-    while fecha_limite_minima.strftime('%A') != 'Sunday':
-       fecha_limite_minima =fecha_limite_minima-timedelta(days=1)
-    print('fecha_limite_minima')
-    print(fecha_limite_minima)
-    for e in myCamaras.objects.all():
-        comparativeDate = 0000
-        if (e.serial_camara == serial_camara):
-            
-            if datetime.strptime(e.fecha, '%Y-%m-%d')  <= fecha_limite :
-               # print('fechas segun el rango')
-               # print(e.fecha)
-                
-                
-                if datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Monday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal1 :
-                   # print('se agrego al dia lunes el valor',e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                    datos_semana.pop(1)
-                    
-                    datos_semana.insert(1,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                    varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-               
-                if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Tuesday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal2):
-                    datos_semana.pop(2)
-                    
-                    datos_semana.insert(2,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                    varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-                 
-                if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Thursday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal3):
-                    datos_semana.pop(3)
-                    
-                    datos_semana.insert(3,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                    varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-                 
-                if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Wednesday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal4):
-                    datos_semana.pop(4)
-                    
-                    datos_semana.insert(4,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                    varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-               
-                if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Friday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal5):
-                    datos_semana.pop(5)
-                    
-                    datos_semana.insert(5,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                    varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-               
-                if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Saturday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal6):
-                    datos_semana.pop(6)
-                    
-                    datos_semana.insert(6,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                    varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-                
-                if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Sunday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal0):
-                    datos_semana.pop(0)
-                    #print('se agrego al dia domingo el valor',e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                    datos_semana.insert(0,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                    varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
+        while fecha_limite_minima.strftime('%A') != 'Sunday':
+           fecha_limite_minima =fecha_limite_minima-timedelta(days=1)
+        print('fecha_limite_minima')
+        print(fecha_limite_minima)
+        for e in myCamaras.objects.all():
+            comparativeDate = 0000
+            if (e.serial_camara == serial_camara):
 
+                if datetime.strptime(e.fecha, '%Y-%m-%d')  <= fecha_limite :
+                   # print('fechas segun el rango')
+                   # print(e.fecha)
+
+
+                    if datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Monday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal1 :
+                       # print('se agrego al dia lunes el valor',e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        datos_semana.pop(1)
+
+                        datos_semana.insert(1,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
+
+                    if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Tuesday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal2):
+                        datos_semana.pop(2)
+
+                        datos_semana.insert(2,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
+
+                    if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Thursday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal3):
+                        datos_semana.pop(3)
+
+                        datos_semana.insert(3,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
+
+                    if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Wednesday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal4):
+                        datos_semana.pop(4)
+
+                        datos_semana.insert(4,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
+
+                    if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Friday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal5):
+                        datos_semana.pop(5)
+
+                        datos_semana.insert(5,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
+
+                    if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Saturday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal6):
+                        datos_semana.pop(6)
+
+                        datos_semana.insert(6,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
+
+                    if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Sunday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal0):
+                        datos_semana.pop(0)
+                        #print('se agrego al dia domingo el valor',e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        datos_semana.insert(0,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
+            dias_semana_total= list( map(add, datos_semana, dias_semana_total) )
     
     a=0
     total=0
@@ -377,7 +397,7 @@ def grafica_semana_acumulada(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_
     return total     
                 
 
-def este_mes():
+def este_mes(mylist):
      #para el primer parametro
     hoy = date.today()
     hoy0= datetime.today()
@@ -437,19 +457,19 @@ def este_mes():
 
     esteMes=[]  
 
-    esteMes.append(grafica_semana_acumulada(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0))
+    esteMes.append(grafica_semana_acumulada(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist))
    
     #print('result1')
     #print(grafica_semana_acumulada(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0))
-    esteMes.append(grafica_semana_acumulada(semana_a_restarA, semana_a_restar_strA,mydate31,fecha_limite,fecha_limite_minima))
+    esteMes.append(grafica_semana_acumulada(semana_a_restarA, semana_a_restar_strA,mydate31,fecha_limite,fecha_limite_minima,mylist))
     
     #print('result2')
     #print( grafica_semana_acumulada(semana_a_restarA, semana_a_restar_strA,mydate31,fecha_limite,fecha_limite_minima))
-    esteMes.append(grafica_semana_acumulada(semana_a_restarB, semana_a_restar_strB,mydate41,fecha_limite1,fecha_limite_minima1))
+    esteMes.append(grafica_semana_acumulada(semana_a_restarB, semana_a_restar_strB,mydate41,fecha_limite1,fecha_limite_minima1,mylist))
     #print('result3')
     #print(    grafica_semana_acumulada(semana_a_restarB, semana_a_restar_strB,mydate41,fecha_limite1,fecha_limite_minima1)
 #)
-    esteMes.append(grafica_semana_acumulada(semana_a_restarC, semana_a_restar_strC,mydate51,fecha_limite2,fecha_limite_minima2))
+    esteMes.append(grafica_semana_acumulada(semana_a_restarC, semana_a_restar_strC,mydate51,fecha_limite2,fecha_limite_minima2,mylist))
     
     #print('result4')
     #print(grafica_semana_acumulada(semana_a_restarC, semana_a_restar_strC,mydate51,fecha_limite2,fecha_limite_minima2))
@@ -457,7 +477,7 @@ def este_mes():
     #print(esteMes)
     return esteMes
 
-def mes_pasado():
+def mes_pasado(mylist):
      #para el primer parametro
     hoy = date.today()
     
@@ -518,15 +538,15 @@ def mes_pasado():
 
     mesPasado=[]  
 
-    mesPasado.append(grafica_semana_acumulada(semana_a_restar, semana_a_restar_str,mydate21,fecha_limite,fecha_limite_minima))
-    mesPasado.append(grafica_semana_acumulada(semana_a_restarA, semana_a_restar_strA,mydate31,fecha_limite1,fecha_limite_minima1))
-    mesPasado.append(grafica_semana_acumulada(semana_a_restarB, semana_a_restar_strB,mydate41,fecha_limite2,fecha_limite_minima2))
+    mesPasado.append(grafica_semana_acumulada(semana_a_restar, semana_a_restar_str,mydate21,fecha_limite,fecha_limite_minima,mylist))
+    mesPasado.append(grafica_semana_acumulada(semana_a_restarA, semana_a_restar_strA,mydate31,fecha_limite1,fecha_limite_minima1,mylist))
+    mesPasado.append(grafica_semana_acumulada(semana_a_restarB, semana_a_restar_strB,mydate41,fecha_limite2,fecha_limite_minima2,mylist))
     #print('result de hace 7 semanas')
-    var = grafica_semana_acumulada(semana_a_restarB, semana_a_restar_strB,mydate41,fecha_limite2,fecha_limite_minima2)
+    var = grafica_semana_acumulada(semana_a_restarB, semana_a_restar_strB,mydate41,fecha_limite2,fecha_limite_minima2,mylist)
     #print('se va a ejecutar la iteracion que me da problemas')
     #print(grafica_semana_acumulada(semana_a_restarB, semana_a_restar_strB,mydate41,fecha_limite2,fecha_limite_minima2))
     #print(var)
-    mesPasado.append(grafica_semana_acumulada(semana_a_restarC, semana_a_restar_strC,mydate51,fecha_limite3,fecha_limite_minima3))
+    mesPasado.append(grafica_semana_acumulada(semana_a_restarC, semana_a_restar_strC,mydate51,fecha_limite3,fecha_limite_minima3,mylist))
     
     #print('----------resultado del mes pasado del la septima semana-----')
     #print(var)
@@ -941,10 +961,48 @@ def index(request):
     #para el quinto parametro
     fecha_limite_minima0 =(hoy0-timedelta(weeks=1))
     fecha_limite_minima1 =(hoy1-timedelta(weeks=1))
+     
+    '''for e in Cliente.objects.all():
+        if(Cliente.objects.filter(nif=request.user.profile.cliente.nif).first() is not None ):
 
+            display = Cliente.objects.filter(nif=request.user.profile.cliente.nif).first()            
+            id_display = e.nif
+            print('que imprime esto')
+            print(request.user.profile.cliente.nif)'''
+    
+    mySerial=[]
+    for e in Cliente.objects.all():
+        if(Cliente.objects.filter(nif=request.user.profile.cliente.nif).first() is not None ):
+            id_display = e.nif
+           
+           
+            for i in Instalacion.objects.all():
+                for o in Camaras. objects.all():
+                    print('pasa algo')
+                    if (Instalacion.objects.filter(cliente__startswith={'nif': request.user.profile.cliente.nif}) is not None):
+                        if(i.cliente.nif ==request.user.profile.cliente.nif):
+                        #display = Instalacion.objects.filter(nif=id_display).first()            
+            
+                            print('----------que imprime esto--------------------')
+                            print(request.user.profile.cliente.nif)
+                            MyInstalacion= i.nombre_comercial
+                            print(MyInstalacion)
+                        else:
+                            print('***************************no se parece')
+                            pass
 
-
-
+                    
+                        if (Camaras.objects.filter(instalacion__startswith={'nombre': MyInstalacion}) is not None):
+                            print('intalacion.nombre',o.instalacion.nombre,'mi instalacion var',MyInstalacion )
+                           
+                            if str(o.instalacion.nombre) == MyInstalacion:
+                                print('------tenemos una camara con esas caracteristicas')
+                                mySerial.append(o.serial_camara)
+                    else:
+                        print('no encontro nada--------------------')
+    print('el serial es:')
+    mylist=list(dict.fromkeys(mySerial))
+    print(mylist)
     
     
     
@@ -953,9 +1011,9 @@ def index(request):
 
     camarasAll =  Camaras.objects.all()
     #print(mydate2)
-    info_grafica_semana = grafica_semana(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0)
+    info_grafica_semana = grafica_semana(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist)
     
-    info_grafica_semana_pasada = grafica_semana_pasada(semana_a_restar, semana_a_restar_str,mydate3,fecha_limite,fecha_limite_minima1)
+    info_grafica_semana_pasada = grafica_semana_pasada(semana_a_restar, semana_a_restar_str,mydate3,fecha_limite,fecha_limite_minima1,mylist)
     
     #print('info_grafica_semana')
     #print(info_grafica_semana)
@@ -975,13 +1033,13 @@ def index(request):
     #print(grafica_semana(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0))
     #print('---------------------grafica semanal acumulada--------------------------------')
     #print(grafica_semana_acumulada(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0))
-    esteMes = este_mes()
+    esteMes = este_mes(mylist)
     #print('-----------------este mes---------------------')
     #print(este_mes())
     #print('-------------------mes pasado----------------')
     #print(mes_pasado())
-
-    return render(request, "index.html",  {'camaras':camarasAll,'info_grafica_semana': info_grafica_semana,'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado,'info_grafica_semana_pasada':info_grafica_semana_pasada,'estemes':esteMes,'mespasado':mes_pasado})
+    mesPasado = mes_pasado(mylist)
+    return render(request, "index.html",  {'camaras':camarasAll,'info_grafica_semana': info_grafica_semana,'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado,'info_grafica_semana_pasada':info_grafica_semana_pasada,'estemes':esteMes,'mespasado':mesPasado})
  
 
 @login_required(login_url="/login/")
@@ -1040,6 +1098,7 @@ def hfs(request):
         'id_display': id_display       
     }     
     dataJSON = dumps(data)    
+    
     return render(request, 'hzfullscreen_bu.html', {'data': dataJSON})
 
 def hfsEmbebido(request):    
