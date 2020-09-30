@@ -90,9 +90,9 @@ def grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,ser
     #mydate1 = datetime.today()
     #mydate2 = datetime.today().strftime('%A')
     print('estoy recibiendo la siguente informacion: mi fecha dereferencia es:',mydate, 'mydate1:' ,mydate1, 'mydate2:', mydate2,'fecha limite:',fecha_limite,'fecha limite minima:',fecha_limite_minima)
-    i =0
-   
-    
+    #no me queria funcionar el indice i
+    contador= 0
+    int(contador)
     dias_semana_total=[0,0,0,0,0,0,0,0,0,0]
     for i in seriales:
         datos_semana=[0,0,0,0,0,0,0,0,0,0]
@@ -112,7 +112,7 @@ def grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,ser
         print(myLocalSunday)
         for e in myCamaras.objects.all():
             comparativeDate = 0000
-            if (e.serial_camara == serial_camara):
+            if (e.serial_camara == seriales[contador]):
                 if(e.fecha==mydate and mydate2== 'Sunday'):
                     if datetime.strptime(e.fecha, '%Y-%m-%d')  <= fecha_limite and datetime.strptime(e.fecha, '%Y-%m-%d') >= fecha_limite_minima:
                         if datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Sunday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal1 :
@@ -189,7 +189,7 @@ def grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,ser
                             datos_semana.insert(0,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
                             varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
             dias_semana_total= list( map(add, datos_semana, dias_semana_total) )
-
+            
                 
                    
                     
@@ -205,6 +205,8 @@ def grafica_semana_pasada(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_min
     i =0
    
     dias_semana_total=[0,0,0,0,0,0,0,0,0,0,0]
+    contador= 0
+    int(contador)
     for i in seriales:
         
         datos_semana=[0,0,0,0,0,0,0,0,0,0]
@@ -227,7 +229,7 @@ def grafica_semana_pasada(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_min
         print(fecha_limite_minima)
         for e in myCamaras.objects.all():
             comparativeDate = 0000
-            if (e.serial_camara == serial_camara):
+            if (e.serial_camara == seriales[contador]):
 
                 if datetime.strptime(e.fecha, '%Y-%m-%d')  <= fecha_limite :
                    # print('fechas segun el rango')
@@ -278,7 +280,7 @@ def grafica_semana_pasada(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_min
                         varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
 
             dias_semana_total= list( map(add, datos_semana, dias_semana_total) )
-                    
+        contador=contador+1                
                    
                     
     return dias_semana_total
@@ -294,7 +296,8 @@ def grafica_semana_acumulada(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_
     print('estoy recibiendo la siguente informacion: mi fecha dereferencia es:',mydate, 'mydate1:' ,mydate1, 'mydate2:', mydate2,'fecha limite:',fecha_limite,'fecha limite minima:',fecha_limite_minima)
     i =0
    
-    
+    contador= 0
+    int(contador)           
     dias_semana_total=[0,0,0,0,0,0,0,0,0,0]
     for i in seriales:
         datos_semana=[0,0,0,0,0,0,0,0,0,0]
@@ -367,7 +370,7 @@ def grafica_semana_acumulada(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_
                         datos_semana.insert(0,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
                         varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
             dias_semana_total= list( map(add, datos_semana, dias_semana_total) )
-    
+            contador=contador+1           
     a=0
     total=0
     for i in datos_semana:
