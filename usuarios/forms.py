@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission, Group
 from cliente.models import Cliente
 import datetime
 
@@ -53,10 +53,13 @@ class UsuariosForm(forms.ModelForm):
             }
         ))
     
+    group = forms.ModelChoiceField(queryset=Group.objects.all(),
+                               required=True)
+    
     cliente_nif = forms.ChoiceField()
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name', 'password1')
+        fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'group', 'cliente_nif')
 
     def __init__(self, *args, **kwargs):
         super(UsuariosForm, self).__init__(*args, **kwargs)
