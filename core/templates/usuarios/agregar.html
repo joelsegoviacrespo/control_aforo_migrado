@@ -10,7 +10,7 @@
 {% block content-form-page-header %}
         <ul class="breadcrumbs">
             <li class="nav-home">
-                <a href="/usuarios/todos">
+                <a href="#">
                     <i class="fas fa-address-card"></i>
                 </a>
             </li>
@@ -101,7 +101,7 @@
                                 </div>
                             </div>
                             <div class="form-group form-show-validation row">
-                                <label for="group" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Grupo</label>
+                                <label for="group" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Grupo<span class="required-label">*</span></label>
                                 <div class="col-lg-4 col-md-9 col-sm-8">
                                     <div class="select2-imput">
                                         <select name="group" class="form-control">
@@ -113,14 +113,40 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div class="form-group form-show-validation row">
-                                <label for="cliente" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Cliente</label>
+                            <div class="form-group form-show-validation row">
+                                <label for="cliente" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Cliente<span class="required-label">*</span></label>
                                 <div class="col-lg-4 col-md-9 col-sm-8">
                                     <div class="select2-input">
-                                        <select name="cliente-nif" required id="cliente-nif" class="form-control">
+                                        <select name="cliente" class="form-control">
+                                            <option value="" selected> --------- </option>
+                                            {% for cliente, value in form.fields.cliente.choices %}
+                                                <option value="{{ cliente }}">{{ value }}</option>
+                                            {% endfor %}																		
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group form-show-validation row">
+                                <label for="instalacion" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Instalaciones</label>
+                                <div class="col-lg-4 col-md-9 col-sm-8">
+                                    <div class="select2-input">
+                                        <select name="instalacion" class="form-control">
+                                            <option value="" selected> --------- </option>
+                                            {% for instalacion, value in form.fields.instalacion.choices %}
+                                                <option value="{{ instalacion }}">{{ value }}</option>
+                                            {% endfor %}																		
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="form-group form-show-validation row">
+                                <label for="rol" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Rol de usuario<span class="required-label">*</span></label>
+                                <div class="col-lg-4 col-md-9 col-sm-8">
+                                    <div class="select2-input">
+                                        <select name="rol" required id="rol" class="form-control">
                                                 <option value="" selected> --------- </option>
-                                            {% for id, value in form.fields.cliente_nif.choices %}
-                                                <option value="{{ id }}">{{ value }}</option>
+                                            {% for rol, value in form.fields.rol.Profile.choices %}
+                                                <option value="{{ rol }}">{{ value }}</option>
                                             {% endfor %}																		
                                         </select>
                                     </div>

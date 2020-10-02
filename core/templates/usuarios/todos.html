@@ -53,9 +53,9 @@
                     <th>Cliente</th>
                     <th>Staff</th> 
                     <th>Activo</th> 
-                    {% if user.is_staff %}
+                    <!-- {% if user.is_staff %}
                     <th class="text-center">Opciones</th>
-                    {% endif %}
+                    {% endif %} -->
                 </tr>
                 </thead>
                 <tbody>
@@ -76,7 +76,7 @@
                       	{% else %}<i class="fa fa-times text-danger"></i>
                         {% endif %}      
                     </td>
-                    {% if user.is_staff %}
+                    <!-- {% if user.is_staff %}
 					 <td>						
                         <div class="form-button-action">
                             {% if user.profile.rol <= 2 %}
@@ -95,7 +95,7 @@
                             {% endif %}				
                         </div>
                     </td>
-                    {% endif %}
+                    {% endif %} -->
                 </tr>
                 {% endfor %}
                 </tbody>

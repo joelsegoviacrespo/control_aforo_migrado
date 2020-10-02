@@ -5,12 +5,15 @@ from django.http import HttpResponse
 from djongo import models
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.utils.translation import activate
-from usuarios.forms import UsuariosForm,UsuariosEditarForm
+from usuarios.forms import UsuariosForm,UsuariosEditarForm,UsuariosAsignarForm
 from django.contrib.auth.hashers import PBKDF2PasswordHasher
 from django.contrib.auth.models import User, Permission, Group
 from django.contrib.contenttypes.models import ContentType
 from django.template import RequestContext
 from django.shortcuts import render_to_response
+from app.models import Profile
+from cliente.models import Cliente
+from instalacion.models import Instalacion
 from usuarios.forms import LoginForm
 from django.contrib.auth import authenticate, login
 import datetime
@@ -40,19 +43,54 @@ def usuarios(request):
             user.date_joined = datetime.datetime.now()
             user.first_name = form.cleaned_data.get("first_name")
             user.last_name = form.cleaned_data.get("last_name")
+            
             user.password = make_password(user.password)
-            user.save()            
+            user.save()
 
-            # client = request.POST.get('cliente-nif')
-            # user.profile.cliente.add(client)
+            print(user)
+            print(user.pk)
 
-            group = request.POST.get('group')
-            user.groups.add(group)
+            client = request.POST.get('cliente')
+            client_in = Cliente.objects.get(_id = client)
+            instalation = request.POST.get('instalacion')
+            instalation_in = Instalacion.objects.get(_id = instalation)
+            perfil = Profile(
+                user = user,
+                cliente = client_in,
+                instalacion = instalation_in,
+                rol = 3
+            )
+            perfil.save()
+
+            print(client)
+            groups = request.POST.get('group')
+            user.groups.add(groups)
+
+            # def read_groups(request,id):
+            #     grupos = group.objects.all()
+            #     stringval=""
+            #     for grupo in grupos:
+            #         stringval += "Usuarios: " + grupo.auth_group
+                
+            #     return HttpResponse(stringval)
+            #     print (grupo, stringval)
 
             # group = Group.objects.get(name='Usuarios')
             # user.groups.add(group)
 
+            # client = request.POST.get('cliente')
+            # user.profile.add(client)
+
+            # def read_cliente(request,id):
+            #     cliente = cliente.objects.get(id=id)
+            #     stringval="numero_cliente: "+cliente.numero_cliente
+            #     return HttpResponse(stringval)
+
+            
             return redirect('/usuarios/todos')
+            
+            # client = request.POST.get('cliente-nif')
+            # user.profile.cliente.add(client)
             
         else:
             form = UsuariosForm()
@@ -62,8 +100,6 @@ def usuarios(request):
         #     print('NFE | ')
         #     print(error)
     return render(request, 'usuarios/agregar.html', {'form': form})
-
-
 
 @login_required(login_url="/login/")
 @permission_required('usuarios.view_user',login_url="/logout/")
