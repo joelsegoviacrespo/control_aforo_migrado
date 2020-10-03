@@ -221,7 +221,7 @@
                     <div id="chart-container" >
 						<div id="CH-barras-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}">
 						
-                  		<canvas id="barras-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" style="display: block; width:262px; max-height: 80px;"></canvas>
+                  		<canvas id="barras-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" style="display: block; width:150px; max-height: 80px;"></canvas>
 					</div>
                   	</div>
 				  </div>
@@ -300,25 +300,25 @@
                 
                
 		
-			
-		    <div class="card-footer "id="chart-container" style=" border-width:0px !important;">
-			  </div>
-			  <div id="chart-container" >
-					<div id= 'CH-barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}'>
-			             <canvas  id="barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}"style="display: block; width:262px; max-height: 80px;"></canvas>
+				<div class="card-footer "id="chart-container" style=" border-width:0px !important;">
+					<div id="chart-container" >
+						  <div id= 'CH-barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}'>
+							   <canvas  id="barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}"style="display: block; width:150px; max-height: 80px;"></canvas>
+						  
+						  </div>
+					  </div>
+					<!--<br>
 					
-					</div>
-				</div>
-			  <!--<br>
-			  
-			  <div class="col-md-12"style="max-height: 60px;"  >
-				<div id='CH-barras-persona-acumulada-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}'style="max-height: 90px;">
-				<canvas  id="barras-persona-acumulada-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}"style="display: block; width:262px; max-height: 80px;"></canvas>
-				<<canvas id="totalIncomeChart2" style=" width: 376px; height: 90px;"></canvas>
-			   </div>
-		       </div>-->
-               
-            </div>
+					<div class="col-md-12"style="max-height: 60px;"  >
+					  <div id='CH-barras-persona-acumulada-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}'style="max-height: 90px;">
+					  <canvas  id="barras-persona-acumulada-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}"style="display: block; width:262px; max-height: 80px;"></canvas>
+					  <<canvas id="totalIncomeChart2" style=" width: 376px; height: 90px;"></canvas>
+					 </div>
+					 </div>-->
+					 
+				  </div>
+		    
+			  </div>
         
         </div>
    
@@ -775,11 +775,11 @@ var mytotalIncomeChart = new Chart(totalIncomeChart, {
 }*/
 if(boolean ==1){
 var totalIncomeChart = document.getElementById(id_barra).getContext('2d');
-var arrayD=JSON.parse("{{info_grafica_horas}}")
+var arrayD=JSON.parse("{{info_grafica_semana_acumulada}}")
 var mytotalIncomeChart = new Chart(totalIncomeChart, {
   type: 'bar',
   data: {
-    labels:["1H", "4H", "8H", "12H", "16H", "20H", "24H"],
+    labels:["D", "L", "M", "M", "J", "V", "S"],
     datasets : [{
       label: "Total aforo",
       backgroundColor: '#ff9e27',
