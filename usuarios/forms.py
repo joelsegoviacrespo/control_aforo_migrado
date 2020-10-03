@@ -3,9 +3,20 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User, Permission, Group
 from cliente.models import Cliente
+from instalacion.models import Instalacion, InstalacionEmbebido
+from app.models import Profile
 import datetime
 
 class UsuariosForm(forms.ModelForm):
+    # SUPERUSUARIO = 1
+    # ADMINISTRADOR = 2
+    # USUARIO = 3
+    # ROLE_CHOICES = (     
+    #     (SUPERUSUARIO, 'Superusuario'),
+    #     (ADMINISTRADOR, 'Administrador'),
+    #     (USUARIO, 'Usuario'),
+    # )
+
     id = forms.CharField(widget=forms.HiddenInput, required=False, initial=0)
     
     is_active = forms.BooleanField(
@@ -53,26 +64,16 @@ class UsuariosForm(forms.ModelForm):
             }
         ))
     
-    group = forms.ModelChoiceField(queryset=Group.objects.all(),
-                               required=True)
+    group = forms.ModelChoiceField(queryset=Group.objects.all(), required=True)
     
-    cliente_nif = forms.ChoiceField()
+    cliente = forms.ModelChoiceField(queryset=Cliente.objects.all(), required=True)
+
+    instalacion = forms.ModelChoiceField(queryset=Instalacion.objects.all(), required=True)
+
+    # rol = forms.ChoiceField(choices=ROLE_CHOICES)
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'group', 'cliente_nif')
-
-    def __init__(self, *args, **kwargs):
-        super(UsuariosForm, self).__init__(*args, **kwargs)
-        instance = getattr(self, 'instance', None)
-        # if instance and instance._id:
-        #     self.fields["id"].initial = str(instance._id)
-            
-        choices = [(cliente.nif, cliente.razon_social)                   
-                   for cliente in  Cliente.objects.all()]
-                   #for cliente in  Cliente.objects.filter(cliente_estado=True)[0]]
-        
-        self.fields['cliente_nif'] = forms.ChoiceField(choices=choices,required=False)
-        #self.fields["clientes"].choices = [(str(c.nif), c.razon_social) for c in Cliente.objects.all().filter(cliente_estado=True)]
+        fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'group')    
 
 # class ProfileForm(forms.ModelForm):
 #     id = forms.CharField(widget=forms.HiddenInput, required=False, initial=0)
