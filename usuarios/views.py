@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from djongo import models
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.utils.translation import activate
-from usuarios.forms import UsuariosForm,UsuariosEditarForm,UsuariosAsignarForm
+#from usuarios.forms import UsuariosForm,UsuariosEditarForm,UsuariosAsignarForm
 from django.contrib.auth.hashers import PBKDF2PasswordHasher
 from django.contrib.auth.models import User, Permission, Group
 from django.contrib.contenttypes.models import ContentType
