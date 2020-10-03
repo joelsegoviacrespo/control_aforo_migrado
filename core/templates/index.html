@@ -19,10 +19,30 @@
 	<script src="../../static/assets/js/demo.js"></script>
 
 	<script>
-
+		function daysInMonth (month, year) {
+    return new Date(year, month, 0).getDate();
+}
+var d = new Date();
+		var month = parseInt(d.getMonth());
+		var year = parseInt(d.getFullYear());
 		
+		var date = daysInMonth(month +1 ,year);
+		
+		var formato;
 
+		if(date == 31){
+			var formato =  ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"];
 
+		}
+		else if (date == 30){
+			formato =  ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"];
+		}
+		else if( date == 29){
+			formato =  ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29"];
+		}
+		else if(date ==28){
+			formato =  ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28"];
+		}
 
 
 		Circles.create({
@@ -114,12 +134,12 @@
 
 
 		var totalIncomeChart = document.getElementById('totalIncomeChart').getContext('2d');
-		var arrayA=JSON.parse("{{info_grafica_semana}}")
+		var arrayA=JSON.parse("{{info_grafica_horas}}")
 		
 		var mytotalIncomeChart = new Chart(totalIncomeChart, {
 			type: 'bar',
 			data: {
-				labels:["D", "L", "M", "M", "J", "V", "S"],
+				labels: ["1-3H", "3-6H", "6-9H", "9-12H", "12-15H", "15-18H", "18-21H","21-24H"],
 				datasets : [{
 					label: "Total aforo",
 					backgroundColor: '#ff9e27',
@@ -155,11 +175,11 @@
 
 
 		var totalIncomeChart1 = document.getElementById('totalIncomeChart1').getContext('2d');
-		var arrayB=JSON.parse("{{info_grafica_horas}}")
+		var arrayB=JSON.parse("{{info_grafica_horas_acumulado}}")
 		var mytotalIncomeChart1 = new Chart(totalIncomeChart1, {
 			type: 'bar',
 			data: {
-				labels: ["1-3H", "3-6H", "6-9H", "9-12H", "12-15H", "15-18H", "18-21H","21-24H"],
+				labels:  ["1-3H", "3-6H", "6-9H", "9-12H", "12-15H", "15-18H", "18-21H","21-24H"],
 				datasets : [{
 					label: "Total persona",
 					backgroundColor: '#ff9e27',
@@ -193,6 +213,7 @@
 			}
 		});
 		var totalIncomeChart2 = document.getElementById('totalIncomeChart2').getContext('2d');
+		var arrayC=JSON.parse("{{info_grafica_semana}}")
 		var mytotalIncomeChart2 = new Chart(totalIncomeChart2, {
 			type: 'bar',
 			data: {
@@ -201,7 +222,7 @@
 					label: "Total Income",
 					backgroundColor: '#ff9e27',
 					borderColor: 'rgb(23, 125, 255)',
-					data: [2,2,2,2,2,2,2,2,2,2],
+					data: arrayC,
 				}],
 			},
 			options: {
@@ -231,7 +252,7 @@
 		});
 
 		var totalIncomeChart3 = document.getElementById('totalIncomeChart3').getContext('2d');
-		var arrayD=JSON.parse("{{info_grafica_semana_pasada}}")
+		var arrayD=JSON.parse("{{info_grafica_semana_acumulada}}")
 		var mytotalIncomeChart3 = new Chart(totalIncomeChart3, {
 			type: 'bar',
 			data: {
@@ -305,12 +326,16 @@
 				},
 			}
 		});
+		
 		var totalIncomeChart5 = document.getElementById('totalIncomeChart5').getContext('2d');
 		var arrayF=JSON.parse("{{estemes}}")
+
+		
+		
 		var mytotalIncomeChart5 = new Chart(totalIncomeChart5, {
 			type: 'bar',
 			data: {
-				labels: ["1S", "2S", "3S", "4S"],
+				labels:formato,
 				datasets : [{
 					label: "Total Por Semana",
 					backgroundColor: '#ff9e27',
@@ -343,12 +368,16 @@
 				},
 			}
 		});
+		
 		var totalIncomeChart6 = document.getElementById('totalIncomeChart6').getContext('2d');
-		var arrayG=JSON.parse("{{mespasado}}")
+		var arrayG=JSON.parse("{{estemesacumulado}}")
+		
+		
+		
 		var mytotalIncomeChart6 = new Chart(totalIncomeChart6, {
 			type: 'bar',
 			data: {
-				labels: ["5S", "6S", "7S","8S"],
+				labels:formato,
 				datasets : [{
 					label: "Total Income",
 					backgroundColor: '#ff9e27',

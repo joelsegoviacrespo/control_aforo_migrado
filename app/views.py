@@ -32,42 +32,18 @@ from datetime import datetime, timedelta
 from json import dumps
 import re
 from operator import add
-cliente = Cliente.objects.all()
-
-for e in Cliente.objects.all():
-    print(e.nif)
-    
-
-for e in Instalacion.objects.all():
-    print(e.nombre_comercial)
-for e in Camaras.objects.all():
-    
-    print('serial de camaras')
-    print(e.serial_camara)
+import Constantes
+from calendar import monthrange
 
 serial_camara = "Q2GV-4YBM-YWWJ"
-
-
 
 def TimeConverter(millis):
     #si ven este codigo, si se que se puede hacer mucho mas corto pero por razones que desconozco por los momentos no quiere funcionar de esa manera
     tsToString =str(millis)
-    #print('tsToString')
-    #print(tsToString)
     x=re.split('Timestamp|,',tsToString)
-    #print('x')
-    #print(x)
     y= x[1]
-    #print('y')
-    #print(y)
     z=y.split('(')
-    #print('z')
-    #print(z)
     final =z[1]
-    #print('final')
-    #print(final)
-   #aqui ya obtengo el resultado de ts en milisegundos para convertir a horas convenciales
-
     lasMillis = int(final)
     #print(lasMillis)
     seconds=(lasMillis/1000)%60
@@ -76,12 +52,9 @@ def TimeConverter(millis):
     minutes = int(minutes)
     hours=(lasMillis/(1000*60*60))%24
     result =("%d:%d:%d" % (hours, minutes, seconds))
-    
-    #print("ts: '",final,"' convertida a hora convencial es: '", result,"'")
     newResult = datetime.strptime(result, '%H:%M:%S')
     return newResult
 
-#print(TimeConverter(13746338230108684000))
 def grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,seriales):
     print('indiceeeeeeeeeeeeeeeeeee')
     print(seriales)
@@ -137,8 +110,6 @@ def grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,ser
                         else:
                             pass
                         
-                        
-                        
                 else:
                     if datetime.strptime(e.fecha, '%Y-%m-%d')  <= fecha_limite and datetime.strptime(e.fecha, '%Y-%m-%d') >= fecha_limite_minima:
                        # print('fechas segun el rango')
@@ -189,372 +160,658 @@ def grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,ser
                             datos_semana.insert(0,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
                             varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
             dias_semana_total= list( map(add, datos_semana, dias_semana_total) )
-            
-                
-                   
-                    
+                         
     return dias_semana_total
 
-def grafica_semana_pasada(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,seriales ):
-    #print('estoy recibiendo de argumento:',mydate, mydate1 ,mydate2,)
-    #mydate = str(today.strftime("%Y-%m-%d"))
-    #mydate1 = datetime.today()
-    #mydate2 = datetime.today().strftime('%A')
-    print('semana pasada----------------------------------------')
-    print('estoy recibiendo la siguente informacion: mi fecha dereferencia es:',mydate, 'mydate1:' ,mydate1, 'mydate2:', mydate2,'fecha limite:',fecha_limite,'fecha limite minima:',fecha_limite_minima)
-    i =0
-   
-    dias_semana_total=[0,0,0,0,0,0,0,0,0,0,0]
-    contador= 0
-    int(contador)
-    for i in seriales:
-        
-        datos_semana=[0,0,0,0,0,0,0,0,0,0]
-        varTemporal0= 0000
-        varTemporal1= 0000
-        varTemporal2= 0000
-        varTemporal3= 0000
-        varTemporal4= 0000
-        varTemporal5= 0000
-        varTemporal6= 0000
-        while fecha_limite.strftime('%A') != 'Saturday':
-            fecha_limite =fecha_limite+timedelta(days=1)
-        print('fecha_limite')
-
-        print(fecha_limite)
-
-        while fecha_limite_minima.strftime('%A') != 'Sunday':
-           fecha_limite_minima =fecha_limite_minima-timedelta(days=1)
-        print('fecha_limite_minima')
-        print(fecha_limite_minima)
-        for e in myCamaras.objects.all():
-            comparativeDate = 0000
-            if (e.serial_camara == seriales[contador]):
-
-                if datetime.strptime(e.fecha, '%Y-%m-%d')  <= fecha_limite :
-                   # print('fechas segun el rango')
-                   # print(e.fecha)
-
-
-                    if datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Monday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal1 :
-                       # print('se agrego al dia lunes el valor',e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                        datos_semana.pop(1)
-
-                        datos_semana.insert(1,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                        varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-
-                    if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Tuesday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal2):
-                        datos_semana.pop(2)
-
-                        datos_semana.insert(2,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                        varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-
-                    if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Thursday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal3):
-                        datos_semana.pop(3)
-
-                        datos_semana.insert(3,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                        varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-
-                    if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Wednesday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal4):
-                        datos_semana.pop(4)
-
-                        datos_semana.insert(4,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                        varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-
-                    if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Friday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal5):
-                        datos_semana.pop(5)
-
-                        datos_semana.insert(5,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                        varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-
-                    if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Saturday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal6):
-                        datos_semana.pop(6)
-
-                        datos_semana.insert(6,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                        varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-
-                    if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Sunday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal0):
-                        datos_semana.pop(0)
-                        #print('se agrego al dia domingo el valor',e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                        datos_semana.insert(0,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                        varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-
-            dias_semana_total= list( map(add, datos_semana, dias_semana_total) )
-        contador=contador+1                
-                   
-                    
-    return dias_semana_total
-
- 
-    
-def grafica_semana_acumulada(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,seriales ):
-    #print('estoy recibiendo de argumento:',mydate, mydate1 ,mydate2,)
-    #mydate = str(today.strftime("%Y-%m-%d"))
-    #mydate1 = datetime.today()
-    #mydate2 = datetime.today().strftime('%A')
-    print('semana pasada----------------------------------------')
-    print('estoy recibiendo la siguente informacion: mi fecha dereferencia es:',mydate, 'mydate1:' ,mydate1, 'mydate2:', mydate2,'fecha limite:',fecha_limite,'fecha limite minima:',fecha_limite_minima)
-    i =0
-   
-    contador= 0
-    int(contador)           
-    dias_semana_total=[0,0,0,0,0,0,0,0,0,0]
-    for i in seriales:
-        datos_semana=[0,0,0,0,0,0,0,0,0,0]
-        varTemporal0= 0000
-        varTemporal1= 0000
-        varTemporal2= 0000
-        varTemporal3= 0000
-        varTemporal4= 0000
-        varTemporal5= 0000
-        varTemporal6= 0000
-        while fecha_limite.strftime('%A') != 'Saturday':
-            fecha_limite =fecha_limite+timedelta(days=1)
-        print('fecha_limite')
-
-        print(fecha_limite)
-
-        while fecha_limite_minima.strftime('%A') != 'Sunday':
-           fecha_limite_minima =fecha_limite_minima-timedelta(days=1)
-        print('fecha_limite_minima')
-        print(fecha_limite_minima)
-        for e in myCamaras.objects.all():
-            comparativeDate = 0000
-            if (e.serial_camara == serial_camara):
-
-                if datetime.strptime(e.fecha, '%Y-%m-%d')  <= fecha_limite :
-                   # print('fechas segun el rango')
-                   # print(e.fecha)
-
-
-                    if datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Monday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal1 :
-                       # print('se agrego al dia lunes el valor',e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                        datos_semana.pop(1)
-
-                        datos_semana.insert(1,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                        varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-
-                    if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Tuesday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal2):
-                        datos_semana.pop(2)
-
-                        datos_semana.insert(2,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                        varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-
-                    if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Thursday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal3):
-                        datos_semana.pop(3)
-
-                        datos_semana.insert(3,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                        varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-
-                    if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Wednesday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal4):
-                        datos_semana.pop(4)
-
-                        datos_semana.insert(4,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                        varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-
-                    if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Friday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal5):
-                        datos_semana.pop(5)
-
-                        datos_semana.insert(5,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                        varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-
-                    if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Saturday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal6):
-                        datos_semana.pop(6)
-
-                        datos_semana.insert(6,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                        varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-
-                    if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Sunday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal0):
-                        datos_semana.pop(0)
-                        #print('se agrego al dia domingo el valor',e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                        datos_semana.insert(0,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                        varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-            dias_semana_total= list( map(add, datos_semana, dias_semana_total) )
-            contador=contador+1           
+def grafica_semana_actual_acumulada(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,seriales):
+    datos_semana_acumuladas= grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,seriales)
+    datosSemana=[]
     a=0
-    total=0
-    for i in datos_semana:
-        #print('hola esto se ejecuta')
+    today = date.today()
+    nw=today.weekday()
+    print(nw)
+    diaDeHoy = (int(today.strftime("%d")))
+    for i in datos_semana_acumuladas:
+        
         if(a == 0):
-            #print('primera condicional')
-            total =total+ datos_semana[a]
-            #print(total)
-            a=a+1
-            
-            total =total+ datos_semana[a]
-            print(total)
-            a=a+1
-        elif (a>=7):
-            #print('segunda condicional')
-            #print(a)
+            print('primera condicional')
+
            
+            datosSemana.append(datos_semana_acumuladas[a])
+           
+            a=a+1
+        elif (a>nw+1):
+        
             
             pass
         else:
-            total =total+ datos_semana[a]
-            #print(total)
+           
+            datosSemana.append(datos_semana_acumuladas[a]+datosSemana[a-1])
+           
             a=a+1
-    #print('semana')
-    #print(datos_semana)      
-    #print(total)
-    return total     
+
+    print(datosSemana)      
+                   
+                    
+    return datosSemana
+
+
+def esteMesActual(seriales):
+    #inicio el array
+    
+    #obtengo la cantidad de dias por mes
+    
+    today = date.today()
+    weekDay,myMonthrange=monthrange(int(today.strftime("%Y")), int(today.strftime("%m")))
+    #obtengo el dia de hoy
+    diaDeHoy = (int(today.strftime("%d")))
+
+    print(int(today.strftime("%Y")))
+    print(int(today.strftime("%m")))
+    
+    print(myMonthrange)
+    print("el dia de hoy tiene esta cantidad de dias en su mes", myMonthrange)
+    #una vez obtenida la cantidad de dias de este me se hacen las condicionales respectivas
+
+    switch_casos = {
+	31: dias31(today,seriales),
+	30: dias30(today,seriales),
+	29: dias29(today,seriales),
+	28: dias28(today,seriales),
+    }
+    esteMes = switch_casos.get(myMonthrange,default())
+    print ('total')
+    print (esteMes)
+    #alamcenar lo que retorne en una variable y retornarla
+    datosMes=[]
+    a=0
+    
+    for i in esteMes:
+        if(a == 0):
+            print('primera condicional')
+            datosMes.append(esteMes[a])
+            a=a+1
+        elif (a>diaDeHoy-1):
+            pass
+        else:   
+            datosMes.append(esteMes[a])  
+            a=a+1
+    print(datosMes)
+    return datosMes
+
+def esteMesAcumulado(seriales):
+    #inicio el array
+    
+    #obtengo la cantidad de dias por mes
+    
+    today = date.today()
+    weekDay,myMonthrange=monthrange(int(today.strftime("%Y")), int(today.strftime("%m")))
+    #obtengo el dia de hoy
+    diaDeHoy = (int(today.strftime("%d")))
+
+    print(int(today.strftime("%Y")))
+    print(int(today.strftime("%m")))
+    
+    print(myMonthrange)
+    print("el dia de hoy tiene esta cantidad de dias en su mes", myMonthrange)
+    #una vez obtenida la cantidad de dias de este me se hacen las condicionales respectivas
+
+    switch_casos = {
+	31: dias31(today,seriales),
+	30: dias30(today,seriales),
+	29: dias29(today,seriales),
+	28: dias28(today,seriales),
+    }
+    esteMes = switch_casos.get(myMonthrange,default())
+    print ('total')
+    print (esteMes)
+    #alamcenar lo que retorne en una variable y retornarla
+    datosSemanaAcum=[]
+    a=0
+    
+    for i in esteMes:
+        if(a == 0):
+            print('primera condicional')
+            datosSemanaAcum.append(esteMes[a])
+            a=a+1
+        elif (a>diaDeHoy-1):
+            pass
+        else:
+            datosSemanaAcum.append(esteMes[a]+datosSemanaAcum[a-1])
+            a=a+1
+    print(datosSemanaAcum)
+    return datosSemanaAcum
+
+
+
+def dias31(today,seriales):
+    contador= 0
+    int(contador)
+    
+    datos_semana_total=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    for i in seriales:
+        datos_semana=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        for e in myCamaras.objects.all():
+            print('fecha e')
+            #separar la fecha para usar el mes
+            if e.fecha is not None :
+                fechaASeparar = str(e.fecha)
+                separado=    fechaASeparar.split('-')
+                print('fecha a separar')
+                print(separado)
+                date = separado[1]
                 
+            else:
+                pass
 
-def este_mes(mylist):
-     #para el primer parametro
-    hoy = date.today()
-    hoy0= datetime.today()
-    hoy1= datetime.today()
-    today = date.today()
-    newtoday = datetime.today()
-    mydate = str(today.strftime("%Y-%m-%d"))
-    #mydateA = str(newtoday-timedelta(weeks=2).strtime("%Y-%m-%d"))
-    #para esta semana
-
-    mydate1 = datetime.today()
-    mydate2 = datetime.today().strftime('%A')
-    fecha_limite0 = hoy0
-    fecha_limite_minima =(hoy1-timedelta(weeks=2))
-    fecha_limite_minima0 =(hoy0-timedelta(weeks=2))
-    fecha_limite_minima1 =(hoy0-timedelta(weeks=3))
-    fecha_limite_minima2 =(hoy0-timedelta(weeks=5))
-    
-    
-    #para la semana anterior
-
-    hoy0= datetime.today()
-    today = date.today()
-    newtoday = datetime.today()
-    mydate = str(today.strftime("%Y-%m-%d"))
-    #mydateA = str(newtoday-timedelta(weeks=2).strftime("%Y-%m-%d"))
-    fecha_limite =(hoy1-timedelta(weeks=1))
-    fecha_limite1 =(hoy1-timedelta(weeks=2))
-    fecha_limite2 =(hoy1-timedelta(weeks=3))
-    
-    
-
-    
-    
-    semana_a_restarA = (hoy-timedelta(weeks=1))
-    semana_a_restarB = (hoy-timedelta(weeks=2))
-    semana_a_restarC = (hoy-timedelta(weeks=3))
-    
-    
-
-    semana_a_restar_strA = datetime.strptime(str(hoy-timedelta(weeks=1)),"%Y-%m-%d")
-    semana_a_restar_strB = datetime.strptime(str(hoy-timedelta(weeks=2)),"%Y-%m-%d")
-    semana_a_restar_strC = datetime.strptime(str(hoy-timedelta(weeks=3)),"%Y-%m-%d")
-    
-    mydate2 = datetime.today().strftime('%A')
-
-    mydate3 = (datetime.today()-timedelta(weeks=1))
-    mydate31 =mydate3.strftime('%A')
-    mydate4 = (datetime.today()-timedelta(weeks=2))
-    mydate41 =mydate4.strftime('%A')
-    mydate5 = (datetime.today()-timedelta(weeks=3))
-    mydate51 = mydate5.strftime('%A')
-    
-    
-
-
-
-    esteMes=[]  
-
-    esteMes.append(grafica_semana_acumulada(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist))
+              
+            comparative = str(today.strftime("%m"))
+            print('fecha',date, 'a comparar', comparative)
+            if (e.serial_camara == seriales[contador] and date !=0):
+                print(seriales[contador])
+                if date == comparative:
+                    #obtener el dia de esa fecha 
+                    diaASeparar =str(e.fecha)
+                    diaSeparado = diaASeparar.split('-')
+                    dia = diaSeparado[2]
+                    #aqui se filtra por dias
+                    if(int(dia)==1):
+                        datos_semana.insert(0,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                    elif(int(dia)==2):
+                        print('esto pasa')
+                        datos_semana.insert(1,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==3):
+                        datos_semana.insert(2,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==4):
+                        datos_semana.insert(3,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==5):
+                        datos_semana.insert(4,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==6):
+                        datos_semana.insert(5,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==7):
+                        datos_semana.insert(6,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==8):
+                        datos_semana.insert(7,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==9):
+                        datos_semana.insert(8,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==10):
+                        datos_semana.insert(9,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==11):
+                        datos_semana.insert(10,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==12):
+                        datos_semana.insert(11,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==13):
+                        datos_semana.insert(12,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==14):
+                        datos_semana.insert(13,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==15):
+                        datos_semana.insert(14,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==16):
+                        datos_semana.insert(15,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==17):
+                        datos_semana.insert(16,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==18):
+                        datos_semana.insert(17,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==19):
+                        datos_semana.insert(18,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==20):
+                        datos_semana.insert(19,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==21):
+                        datos_semana.insert(20,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==22):
+                        datos_semana.insert(21,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==23):
+                        datos_semana.insert(22,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==24):
+                        datos_semana.insert(23,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==25):
+                        datos_semana.insert(24,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==26):
+                        datos_semana.insert(25,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==27):
+                        datos_semana.insert(26,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==28):
+                        datos_semana.insert(27,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==29):
+                        datos_semana.insert(28,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==30):
+                        datos_semana.insert(29,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==31):
+                        datos_semana.insert(30,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                else:
+                    print(datos_semana)
+                    pass
+            total= list( map(add, datos_semana, datos_semana_total) )
+            
+        contador=contador+1
+            
+    print('total')
+    print(total)   
+    return total   
    
-    #print('result1')
-    #print(grafica_semana_acumulada(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0))
-    esteMes.append(grafica_semana_acumulada(semana_a_restarA, semana_a_restar_strA,mydate31,fecha_limite,fecha_limite_minima,mylist))
+def dias30(today,seriales):
+    contador= 0
+    int(contador)
     
-    #print('result2')
-    #print( grafica_semana_acumulada(semana_a_restarA, semana_a_restar_strA,mydate31,fecha_limite,fecha_limite_minima))
-    esteMes.append(grafica_semana_acumulada(semana_a_restarB, semana_a_restar_strB,mydate41,fecha_limite1,fecha_limite_minima1,mylist))
-    #print('result3')
-    #print(    grafica_semana_acumulada(semana_a_restarB, semana_a_restar_strB,mydate41,fecha_limite1,fecha_limite_minima1)
-#)
-    esteMes.append(grafica_semana_acumulada(semana_a_restarC, semana_a_restar_strC,mydate51,fecha_limite2,fecha_limite_minima2,mylist))
-    
-    #print('result4')
-    #print(grafica_semana_acumulada(semana_a_restarC, semana_a_restar_strC,mydate51,fecha_limite2,fecha_limite_minima2))
-    #print('este mes-----')
-    #print(esteMes)
-    return esteMes
+    datos_semana_total=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    for i in seriales:
+        datos_semana=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        for e in myCamaras.objects.all():
+            print('fecha e')
+            #separar la fecha para usar el mes
+            if e.fecha is not None :
+                fechaASeparar = str(e.fecha)
+                separado=    fechaASeparar.split('-')
+                print('fecha a separar')
+                print(separado)
+                date = separado[1]
+                
+            else:
+                pass
 
-def mes_pasado(mylist):
-     #para el primer parametro
-    hoy = date.today()
-    
-    hoy1= datetime.today()
-    today = date.today()
-    newtoday = datetime.today()
-    mydate = str(today.strftime("%Y-%m-%d"))
-    #mydateA = str(newtoday-timedelta(weeks=2).strtime("%Y-%m-%d"))
-    #para esta semana
+              
+            comparative = str(today.strftime("%m"))
+            print('fecha',date, 'a comparar', comparative)
+            if (e.serial_camara == seriales[contador] and date !=0):
+                print(seriales[contador])
+                if date == comparative:
+                    #obtener el dia de esa fecha 
+                    diaASeparar =str(e.fecha)
+                    diaSeparado = diaASeparar.split('-')
+                    dia = diaSeparado[2]
+                    #aqui se filtra por dias
+                    if(int(dia)==1):
+                        datos_semana.insert(0,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                    elif(int(dia)==2):
+                        print('esto pasa')
+                        datos_semana.insert(1,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==3):
+                        datos_semana.insert(2,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==4):
+                        datos_semana.insert(3,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==5):
+                        datos_semana.insert(4,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==6):
+                        datos_semana.insert(5,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==7):
+                        datos_semana.insert(6,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==8):
+                        datos_semana.insert(7,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==9):
+                        datos_semana.insert(8,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==10):
+                        datos_semana.insert(9,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==11):
+                        datos_semana.insert(10,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==12):
+                        datos_semana.insert(11,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==13):
+                        datos_semana.insert(12,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==14):
+                        datos_semana.insert(13,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==15):
+                        datos_semana.insert(14,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==16):
+                        datos_semana.insert(15,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==17):
+                        datos_semana.insert(16,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==18):
+                        datos_semana.insert(17,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==19):
+                        datos_semana.insert(18,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==20):
+                        datos_semana.insert(19,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==21):
+                        datos_semana.insert(20,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==22):
+                        datos_semana.insert(21,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==23):
+                        datos_semana.insert(22,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==24):
+                        datos_semana.insert(23,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==25):
+                        datos_semana.insert(24,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==26):
+                        datos_semana.insert(25,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==27):
+                        datos_semana.insert(26,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==28):
+                        datos_semana.insert(27,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==29):
+                        datos_semana.insert(28,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==30):
+                        datos_semana.insert(29,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    
+                else:
+                    print(datos_semana)
+                    pass
+            total= list( map(add, datos_semana, datos_semana_total) )
+            
+        contador=contador+1
+            
+    print('total')
+    print(total)   
+    return total   
 
-    mydate1 = datetime.today()
-    mydate2 = datetime.today().strftime('%A')
+def dias29(today,seriales):
+    contador= 0
+    int(contador)
     
-    fecha_limite_minima =(hoy1-timedelta(weeks=6))
-    fecha_limite_minima1 =(hoy1-timedelta(weeks=7))
-    fecha_limite_minima2 =(hoy1-timedelta(weeks=8))
-    fecha_limite_minima3 =(hoy1-timedelta(weeks=9))
-    
-    #para la semana anterior
+    datos_semana_total=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    for i in seriales:
+        datos_semana=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        for e in myCamaras.objects.all():
+            print('fecha e')
+            #separar la fecha para usar el mes
+            if e.fecha is not None :
+                fechaASeparar = str(e.fecha)
+                separado=    fechaASeparar.split('-')
+                print('fecha a separar')
+                print(separado)
+                date = separado[1]
+                
+            else:
+                pass
 
-    hoy0= datetime.today()
-    today = date.today()
-    newtoday = datetime.today()
+              
+            comparative = str(today.strftime("%m"))
+            print('fecha',date, 'a comparar', comparative)
+            if (e.serial_camara == seriales[contador] and date !=0):
+                print(seriales[contador])
+                if date == comparative:
+                    #obtener el dia de esa fecha 
+                    diaASeparar =str(e.fecha)
+                    diaSeparado = diaASeparar.split('-')
+                    dia = diaSeparado[2]
+                    #aqui se filtra por dias
+                    if(int(dia)==1):
+                        datos_semana.insert(0,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                    elif(int(dia)==2):
+                        print('esto pasa')
+                        datos_semana.insert(1,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==3):
+                        datos_semana.insert(2,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==4):
+                        datos_semana.insert(3,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==5):
+                        datos_semana.insert(4,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==6):
+                        datos_semana.insert(5,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==7):
+                        datos_semana.insert(6,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==8):
+                        datos_semana.insert(7,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==9):
+                        datos_semana.insert(8,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==10):
+                        datos_semana.insert(9,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==11):
+                        datos_semana.insert(10,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==12):
+                        datos_semana.insert(11,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==13):
+                        datos_semana.insert(12,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==14):
+                        datos_semana.insert(13,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==15):
+                        datos_semana.insert(14,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==16):
+                        datos_semana.insert(15,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==17):
+                        datos_semana.insert(16,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==18):
+                        datos_semana.insert(17,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==19):
+                        datos_semana.insert(18,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==20):
+                        datos_semana.insert(19,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==21):
+                        datos_semana.insert(20,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==22):
+                        datos_semana.insert(21,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==23):
+                        datos_semana.insert(22,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==24):
+                        datos_semana.insert(23,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==25):
+                        datos_semana.insert(24,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==26):
+                        datos_semana.insert(25,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==27):
+                        datos_semana.insert(26,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==28):
+                        datos_semana.insert(27,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==29):
+                        datos_semana.insert(28,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    
+                else:
+                    print(datos_semana)
+                    pass
+            total= list( map(add, datos_semana, datos_semana_total) )
+            
+        contador=contador+1
+            
+    print('total')
+    print(total)   
+    return total   
+
+def dias28(today,seriales):
+    contador= 0
+    int(contador)
     
-    #mydateA = str(newtoday-timedelta(weeks=2).strftime("%Y-%m-%d"))
-    fecha_limite =(hoy1-timedelta(weeks=5))
-    fecha_limite1 =(hoy1-timedelta(weeks=6))
-    fecha_limite2 =(hoy1-timedelta(weeks=7))
-    fecha_limite3 =(hoy1-timedelta(weeks=8))
-    
+    datos_semana_total=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    for i in seriales:
+        datos_semana=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        for e in myCamaras.objects.all():
+            print('fecha e')
+            #separar la fecha para usar el mes
+            if e.fecha is not None :
+                fechaASeparar = str(e.fecha)
+                separado=    fechaASeparar.split('-')
+                print('fecha a separar')
+                print(separado)
+                date = separado[1]
+                
+            else:
+                pass
+
+              
+            comparative = str(today.strftime("%m"))
+            print('fecha',date, 'a comparar', comparative)
+            if (e.serial_camara == seriales[contador] and date !=0):
+                print(seriales[contador])
+                if date == comparative:
+                    #obtener el dia de esa fecha 
+                    diaASeparar =str(e.fecha)
+                    diaSeparado = diaASeparar.split('-')
+                    dia = diaSeparado[2]
+                    #aqui se filtra por dias
+                    if(int(dia)==1):
+                        datos_semana.insert(0,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                    elif(int(dia)==2):
+                        print('esto pasa')
+                        datos_semana.insert(1,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==3):
+                        datos_semana.insert(2,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==4):
+                        datos_semana.insert(3,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==5):
+                        datos_semana.insert(4,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==6):
+                        datos_semana.insert(5,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==7):
+                        datos_semana.insert(6,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==8):
+                        datos_semana.insert(7,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==9):
+                        datos_semana.insert(8,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==10):
+                        datos_semana.insert(9,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==11):
+                        datos_semana.insert(10,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==12):
+                        datos_semana.insert(11,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==13):
+                        datos_semana.insert(12,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==14):
+                        datos_semana.insert(13,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==15):
+                        datos_semana.insert(14,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==16):
+                        datos_semana.insert(15,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==17):
+                        datos_semana.insert(16,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==18):
+                        datos_semana.insert(17,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==19):
+                        datos_semana.insert(18,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==20):
+                        datos_semana.insert(19,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==21):
+                        datos_semana.insert(20,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==22):
+                        datos_semana.insert(21,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==23):
+                        datos_semana.insert(22,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==24):
+                        datos_semana.insert(23,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==25):
+                        datos_semana.insert(24,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==26):
+                        datos_semana.insert(25,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==27):
+                        datos_semana.insert(26,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    elif(int(dia)==28):
+                        datos_semana.insert(27,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                        print(datos_semana)
+                    
+                else:
+                    print(datos_semana)
+                    pass
+            total= list( map(add, datos_semana, datos_semana_total) )
+            
+        contador=contador+1
+            
+    print('total')
+    print(total)   
+    return total   
+def default():
+    print('algo malo paso')
     
 
-    
-    semana_a_restar = (hoy-timedelta(weeks=5))
-    semana_a_restarA = (hoy-timedelta(weeks=6))
-    semana_a_restarB = (hoy-timedelta(weeks=7))
-    semana_a_restarC = (hoy-timedelta(weeks=8))
-    
-    
-    semana_a_restar_str = datetime.strptime(str(hoy-timedelta(weeks=5)),"%Y-%m-%d")
-    semana_a_restar_strA = datetime.strptime(str(hoy-timedelta(weeks=6)),"%Y-%m-%d")
-    semana_a_restar_strB = datetime.strptime(str(hoy-timedelta(weeks=7)),"%Y-%m-%d")
-    semana_a_restar_strC = datetime.strptime(str(hoy-timedelta(weeks=8)),"%Y-%m-%d")
-
-    mydate = str(today.strftime("%Y-%m-%d"))
-    mydate2 = (datetime.today()-timedelta(weeks=5))
-    mydate21 = mydate2.strftime('%A')
-    mydate3 = (datetime.today()-timedelta(weeks=6))
-    mydate31 =mydate3.strftime('%A')
-    mydate4 = (datetime.today()-timedelta(weeks=7))
-    mydate41 =mydate4.strftime('%A')
-    mydate5 = (datetime.today()-timedelta(weeks=8))
-    mydate51 = mydate5.strftime('%A')
-    
-    
-
-
-
-    mesPasado=[]  
-
-    mesPasado.append(grafica_semana_acumulada(semana_a_restar, semana_a_restar_str,mydate21,fecha_limite,fecha_limite_minima,mylist))
-    mesPasado.append(grafica_semana_acumulada(semana_a_restarA, semana_a_restar_strA,mydate31,fecha_limite1,fecha_limite_minima1,mylist))
-    mesPasado.append(grafica_semana_acumulada(semana_a_restarB, semana_a_restar_strB,mydate41,fecha_limite2,fecha_limite_minima2,mylist))
-    #print('result de hace 7 semanas')
-    var = grafica_semana_acumulada(semana_a_restarB, semana_a_restar_strB,mydate41,fecha_limite2,fecha_limite_minima2,mylist)
-    #print('se va a ejecutar la iteracion que me da problemas')
-    #print(grafica_semana_acumulada(semana_a_restarB, semana_a_restar_strB,mydate41,fecha_limite2,fecha_limite_minima2))
-    #print(var)
-    mesPasado.append(grafica_semana_acumulada(semana_a_restarC, semana_a_restar_strC,mydate51,fecha_limite3,fecha_limite_minima3,mylist))
-    
-    #print('----------resultado del mes pasado del la septima semana-----')
-    #print(var)
-
-    return mesPasado
 
 
 
@@ -568,6 +825,7 @@ if myHoraDeecremental ==  datetime.strptime('23:50:00',"%H:%M:%S"):
 else:
     print('no se cumplio')
     
+# HORAS---------------------------------------------------------------------------------------------------------------------
 def grafica_horas(mydate):
     varTemporal1 = 0
     varTemporal2 = 0
@@ -736,7 +994,7 @@ def grafica_horas(mydate):
             
     return datos_horas
         
-
+#HORAS ACUMULADAS--------------------------------------------------------------------------------------------------------------------------------
         
 def grafica_horas_acumuladas(mydate):
     
@@ -972,40 +1230,40 @@ def index(request):
             id_display = e.nif
             print('que imprime esto')
             print(request.user.profile.cliente.nif)'''
-    
-    mySerial=[]
-    for e in Cliente.objects.all():
-        if(Cliente.objects.filter(nif=request.user.profile.cliente.nif).first() is not None ):
-            id_display = e.nif
-           
-           
-            for i in Instalacion.objects.all():
-                for o in Camaras. objects.all():
-                    print('pasa algo')
-                    if (Instalacion.objects.filter(cliente__startswith={'nif': request.user.profile.cliente.nif}) is not None):
-                        if(i.cliente.nif ==request.user.profile.cliente.nif):
-                        #display = Instalacion.objects.filter(nif=id_display).first()            
-            
-                            print('----------que imprime esto--------------------')
-                            print(request.user.profile.cliente.nif)
-                            MyInstalacion= i.nombre_comercial
-                            print(MyInstalacion)
-                        else:
-                            print('***************************no se parece')
-                            pass
+    if (request.user.profile.rol== Constantes.SUPERUSUARIO):
+        mySerial=['Q2GV-4YBM-YWWJ']
+        mylist= mySerial
 
-                    
-                        if (Camaras.objects.filter(instalacion__startswith={'nombre': MyInstalacion}) is not None):
-                            print('intalacion.nombre',o.instalacion.nombre,'mi instalacion var',MyInstalacion )
-                           
-                            if str(o.instalacion.nombre) == MyInstalacion:
-                                print('------tenemos una camara con esas caracteristicas')
-                                mySerial.append(o.serial_camara)
-                    else:
-                        print('no encontro nada--------------------')
-    print('el serial es:')
-    mylist=list(dict.fromkeys(mySerial))
-    print(mylist)
+       
+    else:
+        mySerial=[]
+        for e in Cliente.objects.all():
+            if(Cliente.objects.filter(nif=request.user.profile.cliente.nif).first() is not None ):
+                id_display = e.nif
+                for i in Instalacion.objects.all():
+                    for o in Camaras. objects.all():
+                        print('pasa algo')
+                        if (Instalacion.objects.filter(cliente__startswith={'nif': request.user.profile.cliente.nif}) is not None):
+                            if(i.cliente.nif ==request.user.profile.cliente.nif):
+                            #display = Instalacion.objects.filter(nif=id_display).first()            
+                                print('----------que imprime esto--------------------')
+                                print(request.user.profile.cliente.nif)
+                                MyInstalacion= i.nombre_comercial
+                                print(MyInstalacion)
+                            else:
+                                print('***************************no se parece')
+                                pass
+                            
+                            if (Camaras.objects.filter(instalacion__startswith={'nombre': MyInstalacion}) is not None):
+                                print('intalacion.nombre',o.instalacion.nombre,'mi instalacion var',MyInstalacion )
+                                if str(o.instalacion.nombre) == MyInstalacion:
+                                    print('------tenemos una camara con esas caracteristicas')
+                                    mySerial.append(o.serial_camara)
+                        else:
+                            print('no encontro nada--------------------')
+        print('el serial es:')
+        mylist=list(dict.fromkeys(mySerial))
+        print(mylist)
     
     
     
@@ -1013,36 +1271,24 @@ def index(request):
     fecha_limite =(hoy1-timedelta(weeks=1))
 
     camarasAll =  Camaras.objects.all()
-    #print(mydate2)
-    info_grafica_semana = grafica_semana(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist)
+ 
+    #info_grafica_semana = grafica_semana(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist)
     
-    info_grafica_semana_pasada = grafica_semana_pasada(semana_a_restar, semana_a_restar_str,mydate3,fecha_limite,fecha_limite_minima1,mylist)
+    #info_grafica_semana_pasada = grafica_semana_pasada(semana_a_restar, semana_a_restar_str,mydate3,fecha_limite,fecha_limite_minima1,mylist)
     
-    #print('info_grafica_semana')
-    #print(info_grafica_semana)
-    formato_hora = ["H","H","H","H","H","H","H","H","H"]
-    formato_semana= ["D", "L", "M", "M", "J", "V", "S"]
+    #----------------Para las graficas de la tarjeta superior derecha (HOY)------------------
     info_grafica_horas = grafica_horas(mydate)
-    #print('INFO DE GRAFICAS DE ESTA SEMANA Y LASIGUIENTE')
-   # print(info_grafica_semana)
-   # print('---------------------grafica semana pasada--------------------------------')
-   # print( grafica_semana(semana_a_restar, semana_a_restar_str,mydate3,fecha_limite,fecha_limite_minima1))
-    #print('-----------fin grafica pasada----------------------------')
     info_grafica_horas_acumulado= grafica_horas_acumuladas(mydate)
-    #print('info_grafica_horas')
-    #print(info_grafica_horas)
-    #print('info a imprimir mosca raull')
-   # print('---------------------grafica semanal--------------------------------')
-    #print(grafica_semana(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0))
-    #print('---------------------grafica semanal acumulada--------------------------------')
-    #print(grafica_semana_acumulada(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0))
-    esteMes = este_mes(mylist)
-    #print('-----------------este mes---------------------')
-    #print(este_mes())
-    #print('-------------------mes pasado----------------')
-    #print(mes_pasado())
-    mesPasado = mes_pasado(mylist)
-    return render(request, "index.html",  {'camaras':camarasAll,'info_grafica_semana': info_grafica_semana,'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado,'info_grafica_semana_pasada':info_grafica_semana_pasada,'estemes':esteMes,'mespasado':mesPasado})
+    #----------------Para las graficas de la tarjeta superior derecha (ESTA SEMANA)------------------
+    info_grafica_semana = grafica_semana(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist)
+    info_grafica_semana_acumulada = grafica_semana_actual_acumulada(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist)
+    #-------------Para las graficas de la tarjeta superior derecha (ESTE MES)------------------------
+    MyesteMesAcumulado = esteMesAcumulado(mylist)
+    esteMes = esteMesActual(mylist)
+    
+    
+
+    return render(request, "index.html",  {'camaras':camarasAll,'info_grafica_semana': info_grafica_semana,'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado,'info_grafica_semana_acumulada':info_grafica_semana_acumulada,'estemes':esteMes,'estemesacumulado':MyesteMesAcumulado})
  
 
 @login_required(login_url="/login/")
@@ -1065,20 +1311,27 @@ def pages(request):
         html_template = loader.get_template( 'error-500.html' )
         return HttpResponse(html_template.render(context, request))
 
+#--------------------------------Informacion Para index_base.html
 @login_required(login_url="/login/")
 def pitarnfo(request):
     
     today = date.today()
     mydate = str(today.strftime("%Y-%m-%d"))
     mydate1 = datetime.today()
-
     mydate2 = datetime.today().strftime('%A')
-    
+
+    #graficas horas y horas acumuladas para las tarjeta Inferiores-----------------------------------------------------------------
     info_grafica_horas = grafica_horas()
     info_grafica_horas_acumulado= grafica_horas_acumuladas(mydate)
-    info_grafica_semana = grafica_semana(mydate, mydate1 ,mydate2)
+    #------------------------------------------------------------------------------------------------------------------------------
+    info_grafica_semana = grafica_semana_acumulada(mydate, mydate1 ,mydate2)
     
     return render(request, "index_base.html",  {'info_grafica_semana': info_grafica_semana,'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado})
+
+
+
+
+
 
 def hfs(request):    
     if hasattr(request.user.profile, 'cliente') and hasattr(request.user.profile.cliente, 'get_id') and (request.user.profile.cliente.get_id() is not None):    

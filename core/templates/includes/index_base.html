@@ -89,25 +89,27 @@
                 
 			</div>
 			<!--primera tarjeta-->
-                <div class="col-md-12"style="max-height: 116px;" id="tarjeta1">
+                <div class="col-md-12"style="max-height: 20%;z-index:1;" id="tarjeta1">
 					<p  align="center"><samall>Total Aforo</samall></p>
-                  <div id="chart-container" style="max-height: 66px;" >
+                  <div id="chart-container" style="max-height: 100%;z-index:2;" >
 					
-					<canvas id="totalIncomeChart" style=" width: 49px; height: 90px; "></canvas>
-					
+					<canvas id="totalIncomeChart" style=" width: 49px; height: 100%; z-index:3;  "></canvas>
+					<br>
+				  
                   </div>
-                  
+				  
+
                     
 			     
 				</div>
 				
 				
-                <div class="col-md-12" style="max-height: 160px;"id="tarjeta2"><br>
+                <div class="col-md-12" style="max-height: 20%;z-index:1;"id="tarjeta2"><br>
 					<p  align="center"><samall>Total Persona</samall></p>
 					
-                    <div id="chart-container" style="max-height: 66px;">
+                    <div id="chart-container" style="max-height: 100% ;z-index:2;">
 						
-                      <canvas id="totalIncomeChart1"style=" width: 49px; height: 90px;"></canvas>
+                      <canvas id="totalIncomeChart1"style=" width: 49px; height:100%;z-index:3;  "></canvas>
                       
                       
 					</div>
@@ -119,9 +121,9 @@
 				
 				<!--primera tarjeta-->
 				<!--segunda tarjeta-->
-				<div class="col-md-12"style="max-height: 100px;" id="tarjeta3">
+				<div class="col-md-12"style="max-height: 114px;" id="tarjeta3">
 					<p  align="center"><samall>Esta Semana</samall></p>
-                  <div id="chart-container" style="max-height: 100px;" >
+                  <div id="chart-container" style="max-height: 66px;" >
 					
 					<canvas id="totalIncomeChart2" style=" width: 49px; height: 90px; "></canvas>
 					
@@ -133,7 +135,7 @@
 				
 				
                 <div class="col-md-12" style="max-height: 160px;"id="tarjeta4"><br>
-					<p  align="center"><samall>La Semana Pasada</samall></p>
+					<p  align="center"><samall>Esta Semana Acumulada</samall></p>
 					
                     <div id="chart-container" style="max-height: 66px;">
 						
@@ -219,7 +221,7 @@
                     <div id="chart-container" >
 						<div id="CH-barras-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}">
 						
-                  		<canvas id="barras-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" style="display: block; width:262px; max-height: 100px;"></canvas>
+                  		<canvas id="barras-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" style="display: block; width:262px; max-height: 80px;"></canvas>
 					</div>
                   	</div>
 				  </div>
@@ -299,21 +301,22 @@
                
 		
 			
-		 <div class="card-footer "id="chart-container" style=" border-width:0px !important;">
-			</div>
-				<div class="col-md-12" style="max-height: 60px;">
-					<div id= 'CH-barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}'style="max-height: 90px;">
-			       <canvas  id="barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}"style="display: block; width:262px; max-height: 80px;"></canvas>
-					</div>
+		    <div class="card-footer "id="chart-container" style=" border-width:0px !important;">
 			  </div>
-			  <br>
+			  <div id="chart-container" >
+					<div id= 'CH-barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}'>
+			             <canvas  id="barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}"style="display: block; width:262px; max-height: 80px;"></canvas>
+					
+					</div>
+				</div>
+			  <!--<br>
 			  
 			  <div class="col-md-12"style="max-height: 60px;"  >
 				<div id='CH-barras-persona-acumulada-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}'style="max-height: 90px;">
 				<canvas  id="barras-persona-acumulada-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}"style="display: block; width:262px; max-height: 80px;"></canvas>
-				<!--<canvas id="totalIncomeChart2" style=" width: 376px; height: 90px;"></canvas>-->
-			</div>
-		   </div>
+				<<canvas id="totalIncomeChart2" style=" width: 376px; height: 90px;"></canvas>
+			   </div>
+		       </div>-->
                
             </div>
         
@@ -659,12 +662,12 @@ function crearBarra(camaras){
 				yContenido.innerHTML = '';
 				yContenido.innerHTML = '<canvas id="'+id_barra_persona+'"></canvas>';
 
-				var zContenido = document.getElementById('CH-'+id_barra_persona_acumulada);
+				/**var zContenido = document.getElementById('CH-'+id_barra_persona_acumulada);
 				zContenido.innerHTML = '';
-				zContenido.innerHTML = '<canvas id="'+id_barra_persona_acumulada+'"></canvas>';
+				zContenido.innerHTML = '<canvas id="'+id_barra_persona_acumulada+'"></canvas>';*/
 
 				setBarra(id_barra,100,zonas_camara[j].nro_personas,3)
-				setBarra(id_barra_persona_acumulada,100,zonas_camara[j].nro_personas,2)
+				//setBarra(id_barra_persona_acumulada,100,zonas_camara[j].nro_personas,2)
 				//mytotalIncomeChart.destroy();
 				//$('.muestra').remove();
 				/**$(".chart-container").each(function(){
@@ -727,7 +730,7 @@ function crearBarra(camaras){
 
 
 	//evalua que se cree una sola grafica para que no choque barra persona con persona acumulada y barra
-if (boolean ==2){
+/**if (boolean ==2){
 
 
   
@@ -769,7 +772,7 @@ var mytotalIncomeChart = new Chart(totalIncomeChart, {
     },
   }
 });
-}
+}*/
 if(boolean ==1){
 var totalIncomeChart = document.getElementById(id_barra).getContext('2d');
 var arrayD=JSON.parse("{{info_grafica_horas}}")
@@ -921,18 +924,18 @@ c.style.display = "none";
 
 function myFunctionThisWeek() {
 
-if (x.style.display === "none") {
-x.style.display = "block";
+if (x.style.display === "block") {
+x.style.display = "none";
 y.style.display = "none";
-z.style.display = "none";
+z.style.display = "block";
 a.style.display = "block";
 b.style.display = "none";
 c.style.display = "none";
 
 } else {
-x.style.display = "block";
+x.style.display = "none";
 y.style.display = "none";
-z.style.display = "none";
+z.style.display = "block";
 a.style.display = "block";
 b.style.display = "none";
 c.style.display = "none";
