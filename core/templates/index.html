@@ -19,6 +19,12 @@
 	<script src="../../static/assets/js/demo.js"></script>
 
 	<script>
+		var arrayA=JSON.parse("{{info_grafica_horas}}")
+		var arrayB=JSON.parse("{{info_grafica_horas_acumulado}}")
+		var arrayC=JSON.parse("{{info_grafica_semana}}")
+		var arrayD=JSON.parse("{{info_grafica_semana_acumulada}}")
+		var arrayE=JSON.parse("{{estemes}}")
+		var arrayF=JSON.parse("{{estemesacumulado}}")
 		function daysInMonth (month, year) {
     return new Date(year, month, 0).getDate();
 }
@@ -134,7 +140,7 @@ var d = new Date();
 
 
 		var totalIncomeChart = document.getElementById('totalIncomeChart').getContext('2d');
-		var arrayA=JSON.parse("{{info_grafica_horas}}")
+		
 		
 		var mytotalIncomeChart = new Chart(totalIncomeChart, {
 			type: 'bar',
@@ -175,7 +181,7 @@ var d = new Date();
 
 
 		var totalIncomeChart1 = document.getElementById('totalIncomeChart1').getContext('2d');
-		var arrayB=JSON.parse("{{info_grafica_horas_acumulado}}")
+		
 		var mytotalIncomeChart1 = new Chart(totalIncomeChart1, {
 			type: 'bar',
 			data: {
@@ -213,7 +219,7 @@ var d = new Date();
 			}
 		});
 		var totalIncomeChart2 = document.getElementById('totalIncomeChart2').getContext('2d');
-		var arrayC=JSON.parse("{{info_grafica_semana}}")
+		
 		var mytotalIncomeChart2 = new Chart(totalIncomeChart2, {
 			type: 'bar',
 			data: {
@@ -252,7 +258,7 @@ var d = new Date();
 		});
 
 		var totalIncomeChart3 = document.getElementById('totalIncomeChart3').getContext('2d');
-		var arrayD=JSON.parse("{{info_grafica_semana_acumulada}}")
+		
 		var mytotalIncomeChart3 = new Chart(totalIncomeChart3, {
 			type: 'bar',
 			data: {
@@ -289,16 +295,16 @@ var d = new Date();
 				},
 			}
 		});
-		var totalIncomeChart4 = document.getElementById('totalIncomeChart2').getContext('2d');
+		var totalIncomeChart4 = document.getElementById('totalIncomeChart4').getContext('2d');
 		var mytotalIncomeChart4 = new Chart(totalIncomeChart4, {
 			type: 'bar',
 			data: {
-				labels: ["D", "L", "M", "M", "J", "V", "S"],
+				labels: formato,
 				datasets : [{
 					label: "Total Income",
 					backgroundColor: '#ff9e27',
 					borderColor: 'rgb(23, 125, 255)',
-					data: arrayA,
+					data: arrayE,
 				}],
 			},
 			options: {
@@ -328,7 +334,7 @@ var d = new Date();
 		});
 		
 		var totalIncomeChart5 = document.getElementById('totalIncomeChart5').getContext('2d');
-		var arrayF=JSON.parse("{{estemes}}")
+		
 
 		
 		
@@ -369,48 +375,7 @@ var d = new Date();
 			}
 		});
 		
-		var totalIncomeChart6 = document.getElementById('totalIncomeChart6').getContext('2d');
-		var arrayG=JSON.parse("{{estemesacumulado}}")
 		
-		
-		
-		var mytotalIncomeChart6 = new Chart(totalIncomeChart6, {
-			type: 'bar',
-			data: {
-				labels:formato,
-				datasets : [{
-					label: "Total Income",
-					backgroundColor: '#ff9e27',
-					borderColor: 'rgb(23, 125, 255)',
-					data: arrayG,
-				}],
-			},
-			options: {
-				responsive: true,
-				maintainAspectRatio: false,
-				legend: {
-					display: false,
-				},
-				scales: {
-					yAxes: [{
-						ticks: {
-							display: false //this will remove only the label
-						},
-						gridLines : {
-							drawBorder: false,
-							display : false
-						}
-					}],
-					xAxes : [ {
-						gridLines : {
-							drawBorder: false,
-							display : false
-						}
-					}]
-				},
-			}
-		});
-
 		$('#lineChart').sparkline([105,103,123,100,95,105,115], {
 			type: 'line',
 			height: '70',

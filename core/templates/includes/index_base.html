@@ -78,9 +78,9 @@
                     <div class="col text-center mb-1 " style="max-height: 30%; max-width: 100%;">
 						<table class=buttons> <tr>
 						<div class="btn-group m-3  " role="group" aria-label="First group"style="center">
-							<button id="1"class="btn success mr-3" type="button" onclick="myFunctionToday()">Hoy</button>
-							<button id="2"class="btn success mr-3" type="button"onclick="myFunctionThisWeek()" >Esta Semana</button>
-							<button id="3"class="btn success " type="button" onclick="myFunctionThisMonth()">Este Mes</button>
+							<button id="1"class="btn success mr-3 btn-lg" type="button" onclick="myFunctionToday()">Hoy</button>
+							<button id="2"class="btn success mr-3 btn-lg" type="button"onclick="myFunctionThisWeek()" >Esta Semana</button>
+							<button id="3"class="btn success btn-lg" type="button" onclick="myFunctionThisMonth()">Este Mes</button>
 						<!--<button id= "2" type="button" class="btn btn-primary min-vw-25 mr-3 "  onclick="myFunctionThisWeek()">Esta Semana</button>
 						<button id= "3" type="button" class="btn btn-primary min-vw-25  "onclick="myFunctionThisMonth()" >Este Mes</button>-->
 					</div></table>
@@ -154,7 +154,7 @@
 					<p  align="center"><samall>Este Mes</samall></p>
                   <div id="chart-container" style="max-height: 50% ;z-index:2;" >
 					
-					<canvas id="totalIncomeChart5" style=" width: 100%; height:50%;z-index:3;  "></canvas>
+					<canvas id="totalIncomeChart4" style=" width: 100%; height:50%;z-index:3;  "></canvas>
 					
                   </div>
                   
@@ -168,7 +168,7 @@
 					
                     <div id="chart-container" style="max-height: 50% ;z-index:2;">
 						
-                      <canvas id="totalIncomeChart6" style=" width: 100%; height:50%;z-index:3;  "></canvas>
+                      <canvas id="totalIncomeChart5" style=" width: 100%; height:50%;z-index:3;  "></canvas>
                       
                       
 					</div>
@@ -218,13 +218,13 @@
                   </div>
 				  <div class="card-footer " style=" border-width:0px !important;">
 					
-                    <div id="chart-container" >
+                    <div id="chart-container">
 						<div id="CH-barras-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}">
 						
-                  		<canvas id="barras-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" style="display: block; width:150px; max-height: 80px;"></canvas>
-					</div>
+                  		    <canvas id="barras-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" style="width: 100%; height: 50%; z-index:3;"></canvas>
+					    </div>
                   	</div>
-				  </div>
+				 </div>
 					<!--					
                   <div class="col-md-12"  >
                     <div id="chart-container" >
@@ -302,8 +302,8 @@
 		
 				<div class="card-footer "id="chart-container" style=" border-width:0px !important;">
 					<div id="chart-container" >
-						  <div id= 'CH-barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}'>
-							   <canvas  id="barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}"style="display: block; width:150px; max-height: 80px;"></canvas>
+						  <div id= 'CH-barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}' style="max-height: 80%; z-index:1;">
+							   <canvas  id="barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}"style="width: 100%; height: 100%; z-index:3;"></canvas>
 						  
 						  </div>
 					  </div>
