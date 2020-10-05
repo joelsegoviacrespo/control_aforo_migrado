@@ -86,7 +86,7 @@ def grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,ser
 
     dias_semana_total=[0,0,0,0,0,0,0,0,0,0]
     for i in seriales:
-        dias_semana=[]
+        dias_semana=[0,0,0,0,0,0,0]
         varTemporal0= 0000
         varTemporal1= 0000
         varTemporal2= 0000
