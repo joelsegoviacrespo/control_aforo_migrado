@@ -86,14 +86,14 @@
 					</div></table>
 					
 					<div class="row">
-						<div class="col-lg-12">
+						<div class="col-lg-12" >
 							
-							<button class="btn btn-dark float-right fas fa-angle-right btn-sm "style="margin-right:13%;"></button>
+							<button class="btn btn-dark float-right fas fa-angle-right btn-sm "style="margin-right:13%; "></button>
 							<button class="btn btn-dark float-left fas fa-angle-left btn-sm "style="margin-left:13%;"></button>
 						</div>
 					</div>
 				</div>
-				
+			</div>
 				
 				
 				
@@ -101,19 +101,19 @@
 				<!--primera tarjeta-->
 					<div class="col-md-12"style="max-height: 35%; z-index:1;" id="tarjeta1">
 						<p  align="center"><samall>Total Aforo</samall></p>
-					  <div id="chart-container" style="max-height: 50%;z-index:2;" >
+						<div id="chart-container" style="max-height: 50%;z-index:2;" >
 						
-						<canvas id="totalIncomeChart" style=" width: 100%; height: 50%; z-index:3;  "></canvas>
+							<canvas id="totalIncomeChart" style=" width: 100%; height: 50%; z-index:3;  "></canvas>
 						
 					  
-					  </div>
-			</div>
+						</div>
+					</div>
 		
 				  
 
                     
 			     
-				</div>
+				
 				
 				
                 <div class="col-md-12" style="max-height: 35%; z-index:1;"id="tarjeta2"><br>
@@ -121,7 +121,7 @@
 					
                     <div id="chart-container" style="max-height: 50% ;z-index:2;">
 						
-                      <canvas id="totalIncomeChart1" style=" width: 100%; height:50%;z-index:3;  "></canvas>
+                    	<canvas id="totalIncomeChart1" style=" width: 100%; height:50%;z-index:3;  "></canvas>
                       
                       
 					</div>
@@ -235,8 +235,9 @@
                   </div>
 				<div class="card-footer " style=" border-width:0px !important;">
 					
-                    <div id="chart-container" style="display: block; max-height:70%; width: 100%;">
-						<div id="CH-barras-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}">
+					<div id="chart-container" style="display: block; max-height:70%; width: 100%;">
+						<!--problemas con esta tarjeta para cambiar el tamano de la grafica, no obedece a porsentaje de altura y arruina a las otras tarjetass-->
+						<div id="CH-barras-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" style=" max-height:105px;">
 							
                   		    <canvas id="barras-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}"></canvas>
 					    </div>
