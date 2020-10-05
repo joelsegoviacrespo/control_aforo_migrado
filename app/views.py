@@ -1422,6 +1422,7 @@ def pitarnfo(request):
     print('info grafica de la semana acumulada-----------------------------------------------------------------------------------------')
     print(info_grafica_semana_acumulada)
     
+  
     return render(request, "index_base.html",  {'info_grafica_semana': info_grafica_semana,'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado,'info_grafica_semana_acumulada':info_grafica_semana_acumulada})
 
 
