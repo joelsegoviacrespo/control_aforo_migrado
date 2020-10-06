@@ -35,6 +35,7 @@ from operator import add
 import Constantes
 from calendar import monthrange
 
+
 serial_camara = "Q2GV-4YBM-YWWJ"
 
 def TimeConverter(millis):
@@ -1031,201 +1032,68 @@ def grafica_horas(mydate):
 #HORAS ACUMULADAS--------------------------------------------------------------------------------------------------------------------------------
         
 def grafica_horas_acumuladas(mydate):
-    
-    varTemporal1 = 0
-    varTemporal2 = 0
-    varTemporal3 = 0
-    varTemporal4 = 0
-    varTemporal5 = 0
-    varTemporal6 = 0
-    varTemporal7 = 0
-    varTemporal8 = 0
-    #print('se esta ejecutandoooooooooooooooooooooo')
+    datosHoras=[]
+    datos_horas_acumuladas = grafica_horas(mydate)
     now = datetime.now()
     #hora de referencia
     myhora = now.strftime("%H:%M:%S")
-    #hora que va a decrementar
-    myHoraDeecremental = datetime.strptime('23:00:00',"%H:%M:%S")
-    #hora indice que aunmenta el decremento
-    horaIncremental ='00:00:00'
-    #hora de referencia
-    #myrefHour=datetime.strptime('23:59:59',"%H:%M:%S")
-    myrefHour=datetime.strptime('00:00:00',"%H:%M:%S")
-    myrefHour1=datetime.strptime('03:00:00',"%H:%M:%S")
-    myrefHour2=datetime.strptime('06:00:00',"%H:%M:%S")
-    myrefHour3=datetime.strptime('09:00:00',"%H:%M:%S")
-    myrefHour4=datetime.strptime('12:00:00',"%H:%M:%S")
-    myrefHour5=datetime.strptime('15:00:00',"%H:%M:%S")
-    myrefHour6=datetime.strptime('18:00:00',"%H:%M:%S")
-    myrefHour7=datetime.strptime('21:00:00',"%H:%M:%S")
-    myrefHour8=datetime.strptime('21:59:59',"%H:%M:%S")
-    #print('si ves esto sobre una fecha...')
-    #print(myrefHour)
-    datos_horas=[0,0,0,0,0,0,0,0,0,0]
+    myHoraDeecremental = datetime.strptime(myhora,"%H:%M:%S").time()
+    print(myHoraDeecremental)
+    #horas de referencia para comparar
+    myrefHour=datetime.strptime('00:00:00',"%H:%M:%S").time()
+    myrefHour1=datetime.strptime('03:00:00',"%H:%M:%S").time()
+    myrefHour2=datetime.strptime('06:00:00',"%H:%M:%S").time()
+    myrefHour3=datetime.strptime('09:00:00',"%H:%M:%S").time()
+    myrefHour4=datetime.strptime('12:00:00',"%H:%M:%S").time()
+    myrefHour5=datetime.strptime('15:00:00',"%H:%M:%S").time()
+    myrefHour6=datetime.strptime('18:00:00',"%H:%M:%S").time()
+    myrefHour7=datetime.strptime('21:00:00',"%H:%M:%S").time()
+    myrefHour8=datetime.strptime('21:59:59',"%H:%M:%S").time()
+    nw=3
+    print(myHoraDeecremental, '      ',myrefHour)
+    if (myHoraDeecremental >= myrefHour and myHoraDeecremental < myrefHour1):
+        nw = 1
+    elif (myHoraDeecremental >= myrefHour1 and myHoraDeecremental < myrefHour2):
+        nw =2
+    elif (myHoraDeecremental >= myrefHour2 and myHoraDeecremental < myrefHour3):
+        nw = 3
+        print('se estan comparando')
+    elif (myHoraDeecremental >= myrefHour3 and myHoraDeecremental < myrefHour4):
+        nw = 4
+    elif (myHoraDeecremental >= myrefHour4 and myHoraDeecremental < myrefHour5):
+        nw = 5
+        print('se estan comparando')
+    elif (myHoraDeecremental >= myrefHour5 and myHoraDeecremental < myrefHour6):
+        nw = 6
+        print('se estan comparando')
+    elif (myHoraDeecremental >= myrefHour6 and myHoraDeecremental < myrefHour7):
+        nw = 7
+        print('se estan comparando')
+    elif (myHoraDeecremental >= myrefHour7 and myHoraDeecremental < myrefHour8):
+        nw = 8
     
-    
-    i=0
-    #print(myhora)
-    for e in myCamaras.objects.all():
-        
-        if (e.serial_camara == serial_camara):
-            
-            if(e.fecha==mydate ):
-                #print('se esta ejecutandoooooooooooooooooooooo')
-                #print(e.zonas_camara[0].nro_personas)
-                tiempo =(TimeConverter(e.ts))
-                
-                if TimeConverter(e.ts) <=myrefHour1 and  TimeConverter(e.ts)> myrefHour8:
-                    #print('se esta ejecutando la primera condicional')
-                    
-                    #varConverter = TimeConverter(var)
-                    #TimeConverter(str(e.ts))
-                    datos_horas.insert(0,e.zonas_camara[0].nro_personas)
-                    datos_horas.append(0)
-                    datos_horas.append(0)
-                    datos_horas.append(0)
-                    datos_horas.append(0)
-                    datos_horas.append(0)
-                    datos_horas.append(0)
-                    datos_horas.append(0)
-                    datos_horas.append(0)
-                    datos_horas.append(0)
-                    #print('hey----------------se cumplio la primera condicion, esta temprano')
-                    
-                    #print(varConverter)
-                else:
-                   
-                    #while myHoraDeecremental >= myrefHour:
-                    #for i in datos_horas_acumuladas:
-                    
-                    #print(e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                    if TimeConverter(e.ts) >= myrefHour and TimeConverter(e.ts) <= myrefHour1:
-                        #print('hey----------------se cumplio la segunda y la hora ronda la 1 y las 3')
-                        #print(Time)
-                        if varTemporal1 != (e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas):
-                            datos_horas.pop(0)
-                            myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
-                            datos_horas.insert(0,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                            varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-                        else:
-                            pass
-                        
-                    #horaIncremental+timedelta('00:10:00')
-                    #print(horaIncremental)
-                    if TimeConverter(e.ts) > myrefHour1 and TimeConverter(e.ts) <= myrefHour2:
-                        
-                        #print('hey----------------se cumplio la segunda y la hora ronda la 3 y las 6')
-                        if varTemporal2 != (e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas):
-                            datos_horas.pop(1)
-                            datos_horas.insert(1,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                            myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
-                            varTemporal2 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-                            
-                        else:
-                            pass
-                        
-                        
-
-                    if TimeConverter(e.ts) > myrefHour2 and TimeConverter(e.ts) <= myrefHour3:
-                        
-                        #print('hey----------------se cumplio la segunda y la hora ronda la 6 y las 9')
-                        if varTemporal3 != (e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas):
-                            datos_horas.pop(2)
-                            datos_horas.insert(2,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                            myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
-                            varTemporal3 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-                            
-                        else:
-                            pass
-                    if TimeConverter(e.ts) > myrefHour3 and TimeConverter(e.ts) <= myrefHour4:
-                        
-                        #print('hey----------------se cumplio la segunda y la hora ronda la 9 y las 12')
-                        if varTemporal4 != (e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas):
-                            myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
-                            
-                            
-                            datos_horas.pop(3)
-                            datos_horas.insert(3,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                            varTemporal4 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-                        else:
-                            pass
-                    if TimeConverter(e.ts) > myrefHour4 and TimeConverter(e.ts) <= myrefHour5:
-                        
-                        
-                        #print('hey----------------se cumplio la segunda y la hora ronda la 12 y las 15')
-                        if varTemporal5 != (e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas):
-                            myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
-                            datos_horas.pop(4)
-                            datos_horas.insert(4,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                            
-                            varTemporal5 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-                        else:
-                            pass
-                    if TimeConverter(e.ts) > myrefHour5 and TimeConverter(e.ts) <= myrefHour6:
-                        
-                        #print('hey----------------se cumplio la segunda y la hora ronda la 15 y las 18')
-                        if varTemporal6 != (e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas):
-                            myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
-                            datos_horas.pop(5)
-                            datos_horas.insert(5,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                            
-                            varTemporal6 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-                        else:
-                            pass
-                    if TimeConverter(e.ts) > myrefHour6 and TimeConverter(e.ts) <= myrefHour7:
-                       
-                        #print('hey----------------se cumplio la segunda y la hora ronda la 18 y las 21')
-                        if varTemporal7 != (e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas):
-                            myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
-                            datos_horas.pop(6)
-                            datos_horas.insert(6,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                            
-                            varTemporal7 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-                        else:
-                            pass
-                    if TimeConverter(e.ts) > myrefHour7 and TimeConverter(e.ts) <= myrefHour8:
-                        
-                        #print('hey----------------se cumplio la segunda y la hora ronda la 21 y las 11 y 59')
-                        if varTemporal8 != (e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas):
-                            myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
-                            datos_horas.pop(7)
-                            datos_horas.insert(7,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
-                            
-                            varTemporal8 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
-                        else:
-                            pass
-                        
-                    else:
-                        #print('no se cumplieron ningunas de las anteriores')
-                        myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
-    datos_horas_acumuladas=[]
     a=0
-    #print('datos horas')
-    #print(datos_horas)
-    for i in datos_horas:
-        #print('hola esto se ejecuta')
+    for i in datos_horas_acumuladas:
+        
         if(a == 0):
             #print('primera condicional')
 
-            #print(a)
-            datos_horas_acumuladas.append(datos_horas[a])
-            #print(datos_horas_acumuladas)
+           
+            datosHoras.append(datos_horas_acumuladas[a])
+           
             a=a+1
-        elif (a>7):
-           # print('segunda condicional')
-           # #print(a)
-            #print(datos_horas_acumuladas)
+        elif (a>nw+1):
+        
             
             pass
         else:
-           # print('tercera condicional')
-            #print(a)
-            datos_horas_acumuladas.append(datos_horas[a]+datos_horas_acumuladas[a-1])
-           # print(datos_horas_acumuladas)
+           
+            datosHoras.append(datos_horas_acumuladas[a]+datosHoras[a-1])
+           
             a=a+1
-        #print(datos_horas_acumuladas)    
-
-    return datos_horas_acumuladas
+    print('datosHoras')
+    print(datosHoras)
+    return datosHoras
 
 
 #print(grafica_horas_acumuladas(mydate))
@@ -1326,6 +1194,7 @@ def index(request):
  
 
 @login_required(login_url="/login/")
+
 def pages(request):
     context = {}
     # All resource paths end in .html.
@@ -1344,7 +1213,13 @@ def pages(request):
     
         html_template = loader.get_template( 'error-500.html' )
         return HttpResponse(html_template.render(context, request))
-
+@login_required(login_url="/login/")
+def home(request):
+    print('HEEEEEEEEEEEEEEY')
+    return render(request,"index_base.html", {'variable': 'world'})
+@login_required(login_url="/login/")
+def hello(request):
+    return HttpResponse('Hello World!')
 #--------------------------------Informacion Para index_base.html
 @login_required(login_url="/login/")
 def pitarnfo(request):
@@ -1404,7 +1279,7 @@ def pitarnfo(request):
     #para el quinto parametro
     fecha_limite_minima0 =(hoy0-timedelta(weeks=1))
     fecha_limite_minima1 =(hoy1-timedelta(weeks=1))
-
+    fecha_limite0 =(hoy0)
 
 
     today = date.today()
@@ -1413,17 +1288,17 @@ def pitarnfo(request):
     mydate2 = datetime.today().strftime('%A')
 
     #graficas horas y horas acumuladas para las tarjeta Inferiores-----------------------------------------------------------------
-    info_grafica_horas = grafica_horas()
+    info_grafica_horas = grafica_horas(mydate)
     info_grafica_horas_acumulado= grafica_horas_acumuladas(mydate)
     #------------------------------------------------------------------------------------------------------------------------------
-    info_grafica_semana = grafica_semana_acumulada(mydate, mydate1 ,mydate2)
+   
     #------------------------------------------------------------------------------------------------------------------------------
     info_grafica_semana_acumulada = grafica_semana_actual_acumulada(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist)
     print('info grafica de la semana acumulada-----------------------------------------------------------------------------------------')
     print(info_grafica_semana_acumulada)
     
   
-    return render(request, "index_base.html",  {'info_grafica_semana': info_grafica_semana,'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado,'info_grafica_semana_acumulada':info_grafica_semana_acumulada})
+    return render(request, "index_base.html",  {'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado,'info_grafica_semana_acumulada':info_grafica_semana_acumulada,'variable': 'world'})
 
 
 

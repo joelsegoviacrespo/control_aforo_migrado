@@ -10,4 +10,5 @@ urlpatterns = [
     path('actualizar/<str:id>/', views.actualizar),
     path('eliminar/<str:id>/', views.eliminar),
     path('listar_por_id_instalacion/<str:id_instalacion>/', views.listar_por_id_instalacion),
+    
 ]
