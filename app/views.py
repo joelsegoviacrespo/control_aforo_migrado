@@ -34,16 +34,16 @@ import re
 from operator import add
 cliente = Cliente.objects.all()
 
-for e in Cliente.objects.all():
-    print(e.nif)
+#for e in Cliente.objects.all():
+    #print(e.nif)
     
 
-for e in Instalacion.objects.all():
-    print(e.nombre_comercial)
-for e in Camaras.objects.all():
+#for e in Instalacion.objects.all():
+    #print(e.nombre_comercial)
+#for e in Camaras.objects.all():
     
-    print('serial de camaras')
-    print(e.serial_camara)
+    #print('serial de camaras')
+    #print(e.serial_camara)
 
 serial_camara = "Q2GV-4YBM-YWWJ"
 
@@ -83,13 +83,13 @@ def TimeConverter(millis):
 
 #print(TimeConverter(13746338230108684000))
 def grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,seriales):
-    print('indiceeeeeeeeeeeeeeeeeee')
-    print(seriales)
+    #print('indiceeeeeeeeeeeeeeeeeee')
+    #print(seriales)
     #print('estoy recibiendo de argumento:',mydate, mydate1 ,mydate2,)
     #mydate = str(today.strftime("%Y-%m-%d"))
     #mydate1 = datetime.today()
     #mydate2 = datetime.today().strftime('%A')
-    print('estoy recibiendo la siguente informacion: mi fecha dereferencia es:',mydate, 'mydate1:' ,mydate1, 'mydate2:', mydate2,'fecha limite:',fecha_limite,'fecha limite minima:',fecha_limite_minima)
+    #print('estoy recibiendo la siguente informacion: mi fecha dereferencia es:',mydate, 'mydate1:' ,mydate1, 'mydate2:', mydate2,'fecha limite:',fecha_limite,'fecha limite minima:',fecha_limite_minima)
     #no me queria funcionar el indice i
     contador= 0
     int(contador)
@@ -104,12 +104,12 @@ def grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,ser
         varTemporal5= 0000
         varTemporal6= 0000
         myLocalSunday=datetime.strptime(str(mydate), '%Y-%m-%d')
-        print('mylocalsunday')
-        print(myLocalSunday)
+        #print('mylocalsunday')
+        #print(myLocalSunday)
         while myLocalSunday.strftime('%A') != 'Sunday':
             myLocalSunday =(myLocalSunday-timedelta(days=1))
-            print(myLocalSunday)
-        print(myLocalSunday)
+            #print(myLocalSunday)
+        #print(myLocalSunday)
         for e in myCamaras.objects.all():
             comparativeDate = 0000
             if (e.serial_camara == seriales[contador]):
@@ -200,8 +200,8 @@ def grafica_semana_pasada(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_min
     #mydate = str(today.strftime("%Y-%m-%d"))
     #mydate1 = datetime.today()
     #mydate2 = datetime.today().strftime('%A')
-    print('semana pasada----------------------------------------')
-    print('estoy recibiendo la siguente informacion: mi fecha dereferencia es:',mydate, 'mydate1:' ,mydate1, 'mydate2:', mydate2,'fecha limite:',fecha_limite,'fecha limite minima:',fecha_limite_minima)
+    #print('semana pasada----------------------------------------')
+    #print('estoy recibiendo la siguente informacion: mi fecha dereferencia es:',mydate, 'mydate1:' ,mydate1, 'mydate2:', mydate2,'fecha limite:',fecha_limite,'fecha limite minima:',fecha_limite_minima)
     i =0
    
     dias_semana_total=[0,0,0,0,0,0,0,0,0,0,0]
@@ -219,14 +219,14 @@ def grafica_semana_pasada(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_min
         varTemporal6= 0000
         while fecha_limite.strftime('%A') != 'Saturday':
             fecha_limite =fecha_limite+timedelta(days=1)
-        print('fecha_limite')
+        #print('fecha_limite')
 
-        print(fecha_limite)
+        #print(fecha_limite)
 
         while fecha_limite_minima.strftime('%A') != 'Sunday':
            fecha_limite_minima =fecha_limite_minima-timedelta(days=1)
-        print('fecha_limite_minima')
-        print(fecha_limite_minima)
+        #print('fecha_limite_minima')
+        #print(fecha_limite_minima)
         for e in myCamaras.objects.all():
             comparativeDate = 0000
             if (e.serial_camara == seriales[contador]):
@@ -292,8 +292,8 @@ def grafica_semana_acumulada(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_
     #mydate = str(today.strftime("%Y-%m-%d"))
     #mydate1 = datetime.today()
     #mydate2 = datetime.today().strftime('%A')
-    print('semana pasada----------------------------------------')
-    print('estoy recibiendo la siguente informacion: mi fecha dereferencia es:',mydate, 'mydate1:' ,mydate1, 'mydate2:', mydate2,'fecha limite:',fecha_limite,'fecha limite minima:',fecha_limite_minima)
+    #print('semana pasada----------------------------------------')
+    #print('estoy recibiendo la siguente informacion: mi fecha dereferencia es:',mydate, 'mydate1:' ,mydate1, 'mydate2:', mydate2,'fecha limite:',fecha_limite,'fecha limite minima:',fecha_limite_minima)
     i =0
    
     contador= 0
@@ -310,14 +310,14 @@ def grafica_semana_acumulada(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_
         varTemporal6= 0000
         while fecha_limite.strftime('%A') != 'Saturday':
             fecha_limite =fecha_limite+timedelta(days=1)
-        print('fecha_limite')
+        #print('fecha_limite')
 
-        print(fecha_limite)
+        #print(fecha_limite)
 
         while fecha_limite_minima.strftime('%A') != 'Sunday':
            fecha_limite_minima =fecha_limite_minima-timedelta(days=1)
-        print('fecha_limite_minima')
-        print(fecha_limite_minima)
+        #print('fecha_limite_minima')
+        #print(fecha_limite_minima)
         for e in myCamaras.objects.all():
             comparativeDate = 0000
             if (e.serial_camara == serial_camara):
@@ -382,7 +382,7 @@ def grafica_semana_acumulada(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_
             a=a+1
             
             total =total+ datos_semana[a]
-            print(total)
+            #print(total)
             a=a+1
         elif (a>=7):
             #print('segunda condicional')
@@ -563,10 +563,10 @@ myHoraDeecremental = datetime.strptime('00:00:00',"%H:%M:%S")
 myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
 #print('Hora decremental de prueba')
 #print(myHoraDeecremental)
-if myHoraDeecremental ==  datetime.strptime('23:50:00',"%H:%M:%S"):
-    print('se cumple la condicional')
-else:
-    print('no se cumplio')
+#if myHoraDeecremental ==  datetime.strptime('23:50:00',"%H:%M:%S"):
+    #print('se cumple la condicional')
+#else:
+    #print('no se cumplio')
     
 def grafica_horas(mydate):
     varTemporal1 = 0
@@ -577,7 +577,7 @@ def grafica_horas(mydate):
     varTemporal6 = 0
     varTemporal7 = 0
     varTemporal8 = 0
-    print('se esta ejecutandoooooooooooooooooooooo')
+    #print('se esta ejecutandoooooooooooooooooooooo')
     now = datetime.now()
     #hora de referencia
     myhora = now.strftime("%H:%M:%S")
@@ -913,7 +913,7 @@ def grafica_horas_acumuladas(mydate):
     for i in datos_horas:
         #print('hola esto se ejecuta')
         if(a == 0):
-            print('primera condicional')
+            #print('primera condicional')
 
             #print(a)
             datos_horas_acumuladas.append(datos_horas[a])
@@ -981,31 +981,31 @@ def index(request):
            
             for i in Instalacion.objects.all():
                 for o in Camaras. objects.all():
-                    print('pasa algo')
+                    #print('pasa algo')
                     if (Instalacion.objects.filter(cliente__startswith={'nif': request.user.profile.cliente.nif}) is not None):
                         if(i.cliente.nif ==request.user.profile.cliente.nif):
                         #display = Instalacion.objects.filter(nif=id_display).first()            
             
-                            print('----------que imprime esto--------------------')
-                            print(request.user.profile.cliente.nif)
+                            #print('----------que imprime esto--------------------')
+                            #print(request.user.profile.cliente.nif)
                             MyInstalacion= i.nombre_comercial
-                            print(MyInstalacion)
+                            #print(MyInstalacion)
                         else:
-                            print('***************************no se parece')
+                            #print('***************************no se parece')
                             pass
 
                     
                         if (Camaras.objects.filter(instalacion__startswith={'nombre': MyInstalacion}) is not None):
-                            print('intalacion.nombre',o.instalacion.nombre,'mi instalacion var',MyInstalacion )
+                            #print('intalacion.nombre',o.instalacion.nombre,'mi instalacion var',MyInstalacion )
                            
                             if str(o.instalacion.nombre) == MyInstalacion:
-                                print('------tenemos una camara con esas caracteristicas')
+                                #print('------tenemos una camara con esas caracteristicas')
                                 mySerial.append(o.serial_camara)
-                    else:
-                        print('no encontro nada--------------------')
-    print('el serial es:')
+                    #else:
+                        #print('no encontro nada--------------------')
+    #print('el serial es:')
     mylist=list(dict.fromkeys(mySerial))
-    print(mylist)
+    #print(mylist)
     
     
     
