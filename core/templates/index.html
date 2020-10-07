@@ -19,6 +19,7 @@
 	<script src="../../static/assets/js/demo.js"></script>
 
 	<script>
+		
 		var arrayA=JSON.parse("{{info_grafica_horas}}")
 		var arrayB=JSON.parse("{{info_grafica_horas_acumulado}}")
 		var arrayC=JSON.parse("{{info_grafica_semana}}")
@@ -29,6 +30,7 @@
     return new Date(year, month, 0).getDate();
 }
 var d = new Date();
+
 		var month = parseInt(d.getMonth());
 		var year = parseInt(d.getFullYear());
 		
@@ -138,9 +140,7 @@ var d = new Date();
 			styleText:true
 		})
 
-
 		var totalIncomeChart = document.getElementById('totalIncomeChart').getContext('2d');
-		
 		
 		var mytotalIncomeChart = new Chart(totalIncomeChart, {
 			type: 'bar',
@@ -385,6 +385,76 @@ var d = new Date();
 			fillColor: 'rgba(255, 165, 52, .14)'
 		});
 		
+	</script>
+	<script>
+	var chartInfo=[];
+	var myhtml= '<div class="col-md-12"style="max-height: 35%; z-index:1;" id="tarjeta1">'+
+						'<p  align="center"><samall>Total Aforo</samall></p>'+
+						'<div id="chart-container" style="max-height: 50%;z-index:2;" >'+
+						
+							'<canvas id="totalIncomeChart" style=" width: 100%; height: 50%; z-index:3;  "></canvas>'+
+							
+							
+						'</div>'+
+					'</div>'+
+		
+				  
+
+                    
+			     
+				
+				
+				
+                '<div class="col-md-12" style="max-height: 35%; z-index:1;"id="tarjeta2"><br>'+
+					'<p  align="center"><samall>Total Persona</samall></p>'+
+					
+                    '<div id="chart-container" style="max-height: 50% ;z-index:2;">'+
+						
+                    	'<canvas id="totalIncomeChart1" style=" width: 100%; height:50%;z-index:3;  "></canvas>'+
+                      
+                      
+					'</div>'+
+					
+                  
+				'</div>'
+
+	
+
+
+
+
+
+	
+
+		function timeFunction(){
+			$.ajax({
+		url: '127.0.0.1:8000/hello',
+		type: 'get', // This is the default though, you don't actually need to always mention it
+		
+		success: function(data) {
+			var obj = JSON.parse(data)
+			alert(obj)
+			alert(JSON.stringify(obj));
+			
+
+
+			$.each(obj, function(i, item){
+				var myJSON = JSON.stringify(item);
+				chartInfo.push(myJSON);
+    			alert(chartInfo);
+});
+
+			alert(chartInfo);
+			$('#cambio').html(myhtml)
+			myFunctionToday()
+			return chartInfo;
+			
+		},
+		failure: function(data) { 
+			alert('Got an error dude');
+		}
+	}); }
+	
 	</script>
 
 {% endblock javascripts %}

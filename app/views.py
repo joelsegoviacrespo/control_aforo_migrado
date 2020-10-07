@@ -1213,14 +1213,31 @@ def pages(request):
     
         html_template = loader.get_template( 'error-500.html' )
         return HttpResponse(html_template.render(context, request))
+
+
 @login_required(login_url="/login/")
 def home(request):
     print('HEEEEEEEEEEEEEEY')
-    return render(request,"index_base.html", {'variable': 'world'})
+    hoy = date.today()
+    today = date.today()
+    mydate = str((today-timedelta(weeks=1)).strftime("%Y-%m-%d"))
+
+    info_grafica_horas = grafica_horas(mydate)
+    info_grafica_horas_acumulado= grafica_horas_acumuladas(mydate)
+
+    return_sub_array = {'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado}
+            
+    
+    return HttpResponse( json.dumps(return_sub_array))
+
+
 @login_required(login_url="/login/")
 def hello(request):
     return HttpResponse('Hello World!')
 #--------------------------------Informacion Para index_base.html
+
+
+
 @login_required(login_url="/login/")
 def pitarnfo(request):
     if (request.user.profile.rol== Constantes.SUPERUSUARIO):
@@ -1298,7 +1315,7 @@ def pitarnfo(request):
     print(info_grafica_semana_acumulada)
     
   
-    return render(request, "index_base.html",  {'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado,'info_grafica_semana_acumulada':info_grafica_semana_acumulada,'variable': 'world'})
+    return render(request, "index_base.html",  {'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado,'info_grafica_semana_acumulada':info_grafica_semana_acumulada})
 
 
 
