@@ -388,35 +388,21 @@ var d = new Date();
 	</script>
 	<script>
 	var chartInfo=[];
-	var myhtml= '<div class="col-md-12"style="max-height: 35%; z-index:1;" id="tarjeta1">'+
-						'<p  align="center"><samall>Total Aforo</samall></p>'+
+	var myhtml= 
+						'<p  align="center"><samall>Total AAAAAforo</samall></p>'+
 						'<div id="chart-container" style="max-height: 50%;z-index:2;" >'+
 						
 							'<canvas id="totalIncomeChart" style=" width: 100%; height: 50%; z-index:3;  "></canvas>'+
 							
 							
-						'</div>'+
-					'</div>'+
+						'</div>'
+					
 		
 				  
 
                     
 			     
-				
-				
-				
-                '<div class="col-md-12" style="max-height: 35%; z-index:1;"id="tarjeta2"><br>'+
-					'<p  align="center"><samall>Total Persona</samall></p>'+
-					
-                    '<div id="chart-container" style="max-height: 50% ;z-index:2;">'+
-						
-                    	'<canvas id="totalIncomeChart1" style=" width: 100%; height:50%;z-index:3;  "></canvas>'+
-                      
-                      
-					'</div>'+
-					
-                  
-				'</div>'
+
 
 	
 
@@ -435,7 +421,7 @@ var d = new Date();
 			var obj = JSON.parse(data)
 			alert(obj)
 			alert(JSON.stringify(obj));
-			
+			mytotalIncomeChart.update();
 
 
 			$.each(obj, function(i, item){
@@ -445,7 +431,10 @@ var d = new Date();
 });
 
 			alert(chartInfo);
-			$('#cambio').html(myhtml)
+			
+			$('#tarjeta1').html(myhtml)
+			
+
 			myFunctionToday()
 			return chartInfo;
 			

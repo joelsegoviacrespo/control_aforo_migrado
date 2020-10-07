@@ -57,7 +57,7 @@ def TimeConverter(millis):
     return newResult
 
 def grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,seriales):
-    print('la fecha actual es',mydate2)
+    #print('la fecha actual es',mydate2)
     
     #print('indiceeeeeeeeeeeeeeeeeee')
     #print(seriales)
@@ -73,13 +73,13 @@ def grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,ser
     if fecha_limite_minima.strftime('%A') == 'Saturday' and datetime.strptime(mydate, '%Y-%m-%d').strftime('%A') == 'Saturday':
         while fecha_limite_minima <= datetime.strptime(mydate, '%Y-%m-%d'):
             fecha_limite_minima =fecha_limite_minima+timedelta(days=1)
-            print(fecha_limite_minima)
+            #print(fecha_limite_minima)
 
     else:
         while fecha_limite_minima.strftime('%A') != 'Sunday':
             fecha_limite_minima =fecha_limite_minima+timedelta(days=1)
-            print('fecha_limite_minima')
-            print(fecha_limite_minima)
+            #print('fecha_limite_minima')
+            #print(fecha_limite_minima)
     
 
 
@@ -106,19 +106,19 @@ def grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,ser
             comparativeDate = 0000
             if (e.serial_camara == seriales[contador]):
                 if(mydate2== 'Sunday'):
-                    print('la fecha del documento es:',e.fecha , 'y la de referencia es:',mydate)
+                    #print('la fecha del documento es:',e.fecha , 'y la de referencia es:',mydate)
                     if(str(e.fecha)==str(mydate) ):
-                        print("DIOS MIO SE ESTA EJECUTANDO")
-                        print(e.fecha)
+                       
+                        
                         if datetime.strptime(e.fecha, '%Y-%m-%d')  <= fecha_limite and datetime.strptime(e.fecha, '%Y-%m-%d') >= fecha_limite_minima:
-                            print("DIOS MIO SE ESTA EJECUTANDO OTRA VEZ")
+                            
                             if datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Sunday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal1 :
-                                print("DIOS MIO SE ESTA EJECUTANDO POR TECERA VEZ")
+                                
 
 
                                 dias_semana.append(e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
 
-                                print('esto viene de ese documento',e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas, 'de la fecha',e.fecha, 'con el id', e._id)
+                                #print('esto viene de ese documento',e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas, 'de la fecha',e.fecha, 'con el id', e._id)
                                 varTemporal0 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
                                 dias_semana.append(0)
                                 dias_semana.append(0)
@@ -140,7 +140,7 @@ def grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,ser
                                 pass
                         
                 else:
-                    print("WTF SE ESTA EJECUTANDO ESTO")
+                   
                     if datetime.strptime(e.fecha, '%Y-%m-%d')  <= fecha_limite and datetime.strptime(e.fecha, '%Y-%m-%d') >= fecha_limite_minima:
                        # print('fechas segun el rango')
                        # print(e.fecha)
@@ -191,7 +191,7 @@ def grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,ser
                             varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
             else:
                 pass
-            print(dias_semana)
+            #print(dias_semana)
             dias_semana_total= list( map(add, dias_semana, dias_semana_total) )
                          
     return dias_semana_total
@@ -306,7 +306,7 @@ def esteMesAcumulado(seriales):
     
     for i in esteMes:
         if(a == 0):
-            print('primera condicional')
+           # print('primera condicional')
             datosSemanaAcum.append(esteMes[a])
             a=a+1
         elif (a>diaDeHoy-1):
@@ -314,7 +314,7 @@ def esteMesAcumulado(seriales):
         else:
             datosSemanaAcum.append(esteMes[a]+datosSemanaAcum[a-1])
             a=a+1
-    print(datosSemanaAcum)
+    #print(datosSemanaAcum)
     return datosSemanaAcum
 
 
@@ -844,7 +844,7 @@ def dias28(today,seriales):
     #print(total)   
     return total   
 def default():
-    print('algo malo paso')
+    print('')
     
 
 
@@ -856,9 +856,12 @@ myHoraDeecremental = myHoraDeecremental-timedelta(minutes=10)
 #print('Hora decremental de prueba')
 #print(myHoraDeecremental)
 if myHoraDeecremental ==  datetime.strptime('23:50:00',"%H:%M:%S"):
-    print('se cumple la condicional')
+    pass
+    #print('se cumple la condicional')
 else:
-    print('no se cumplio')
+    pass
+    #print('no se cumplio')
+    
     
 # HORAS---------------------------------------------------------------------------------------------------------------------
 def grafica_horas(mydate):
@@ -870,7 +873,7 @@ def grafica_horas(mydate):
     varTemporal6 = 0
     varTemporal7 = 0
     varTemporal8 = 0
-    print('se esta ejecutandoooooooooooooooooooooo')
+    #print('se esta ejecutandoooooooooooooooooooooo')
     now = datetime.now()
     #hora de referencia
     myhora = now.strftime("%H:%M:%S")
@@ -1038,7 +1041,7 @@ def grafica_horas_acumuladas(mydate):
     #hora de referencia
     myhora = now.strftime("%H:%M:%S")
     myHoraDeecremental = datetime.strptime(myhora,"%H:%M:%S").time()
-    print(myHoraDeecremental)
+    #print(myHoraDeecremental)
     #horas de referencia para comparar
     myrefHour=datetime.strptime('00:00:00',"%H:%M:%S").time()
     myrefHour1=datetime.strptime('03:00:00',"%H:%M:%S").time()
@@ -1050,25 +1053,25 @@ def grafica_horas_acumuladas(mydate):
     myrefHour7=datetime.strptime('21:00:00',"%H:%M:%S").time()
     myrefHour8=datetime.strptime('21:59:59',"%H:%M:%S").time()
     nw=3
-    print(myHoraDeecremental, '      ',myrefHour)
+    #print(myHoraDeecremental, '      ',myrefHour)
     if (myHoraDeecremental >= myrefHour and myHoraDeecremental < myrefHour1):
         nw = 1
     elif (myHoraDeecremental >= myrefHour1 and myHoraDeecremental < myrefHour2):
         nw =2
     elif (myHoraDeecremental >= myrefHour2 and myHoraDeecremental < myrefHour3):
         nw = 3
-        print('se estan comparando')
+        #print('se estan comparando')
     elif (myHoraDeecremental >= myrefHour3 and myHoraDeecremental < myrefHour4):
         nw = 4
     elif (myHoraDeecremental >= myrefHour4 and myHoraDeecremental < myrefHour5):
         nw = 5
-        print('se estan comparando')
+        #print('se estan comparando')
     elif (myHoraDeecremental >= myrefHour5 and myHoraDeecremental < myrefHour6):
         nw = 6
-        print('se estan comparando')
+        #print('se estan comparando')
     elif (myHoraDeecremental >= myrefHour6 and myHoraDeecremental < myrefHour7):
         nw = 7
-        print('se estan comparando')
+        #print('se estan comparando')
     elif (myHoraDeecremental >= myrefHour7 and myHoraDeecremental < myrefHour8):
         nw = 8
     
@@ -1091,8 +1094,8 @@ def grafica_horas_acumuladas(mydate):
             datosHoras.append(datos_horas_acumuladas[a]+datosHoras[a-1])
            
             a=a+1
-    print('datosHoras')
-    print(datosHoras)
+    #print('datosHoras')
+   # print(datosHoras)
     return datosHoras
 
 
@@ -1144,7 +1147,7 @@ def index(request):
                 id_display = e.nif
                 for i in Instalacion.objects.all():
                     for o in Camaras. objects.all():
-                        print('pasa algo')
+                        #print('pasa algo')
                         if (Instalacion.objects.filter(cliente__startswith={'nif': request.user.profile.cliente.nif}) is not None):
                             if(i.cliente.nif ==request.user.profile.cliente.nif):
                             #display = Instalacion.objects.filter(nif=id_display).first()            
@@ -1217,7 +1220,7 @@ def pages(request):
 
 @login_required(login_url="/login/")
 def home(request):
-    print('HEEEEEEEEEEEEEEY')
+    #print('HEEEEEEEEEEEEEEY')
     hoy = date.today()
     today = date.today()
     mydate = str((today-timedelta(weeks=1)).strftime("%Y-%m-%d"))
@@ -1267,10 +1270,11 @@ def pitarnfo(request):
                             if (Camaras.objects.filter(instalacion__startswith={'nombre': MyInstalacion}) is not None):
                                 #print('intalacion.nombre',o.instalacion.nombre,'mi instalacion var',MyInstalacion )
                                 if str(o.instalacion.nombre) == MyInstalacion:
-                                    print('------tenemos una camara con esas caracteristicas')
+                                   # print('------tenemos una camara con esas caracteristicas')
                                     mySerial.append(o.serial_camara)
                         else:
-                            print('no encontro nada--------------------')
+                            #print('no encontro nada--------------------')
+                            pass
         #print('el serial es:')
         mylist=list(dict.fromkeys(mySerial))
         #print(mylist)
@@ -1311,8 +1315,8 @@ def pitarnfo(request):
    
     #------------------------------------------------------------------------------------------------------------------------------
     info_grafica_semana_acumulada = grafica_semana_actual_acumulada(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist)
-    print('info grafica de la semana acumulada-----------------------------------------------------------------------------------------')
-    print(info_grafica_semana_acumulada)
+    #print('info grafica de la semana acumulada-----------------------------------------------------------------------------------------')
+    #print(info_grafica_semana_acumulada)
     
   
     return render(request, "index_base.html",  {'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado,'info_grafica_semana_acumulada':info_grafica_semana_acumulada})
