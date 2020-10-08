@@ -1225,10 +1225,14 @@ def home(request):
     today = date.today()
     mydate = str((today-timedelta(weeks=1)).strftime("%Y-%m-%d"))
 
-    info_grafica_horas = grafica_horas(mydate)
+    info_grafica_horas = [1,2,3,4,5,6,7,8]
     info_grafica_horas_acumulado= grafica_horas_acumuladas(mydate)
 
-    return_sub_array = {'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado}
+    info_grafica_semana=[1,2,3,4,5,6,7]
+    info_grafica_semana_acumulada=[1,2,3,4,5,6,7]
+    esteMes=[1,2,3,4,5,6,7,8,9,10,11,12,13,15,11,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+    MyesteMesAcumulado=[1,2,3,4,5,6,7,8,9,10,11,12,13,15,11,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+    return_sub_array = {'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado,' info_grafica_semana': info_grafica_semana,'info_grafica_semana_acumulada':info_grafica_semana_acumulada,'estemes':esteMes,'estemesacumulado':MyesteMesAcumulado}
             
     
     return HttpResponse( json.dumps(return_sub_array))

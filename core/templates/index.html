@@ -19,6 +19,16 @@
 	<script src="../../static/assets/js/demo.js"></script>
 
 	<script>
+		var x = document.getElementById("tarjeta1");
+		var y = document.getElementById("tarjeta2");
+		var z = document.getElementById("tarjeta3");
+		var a = document.getElementById("tarjeta4");
+		var b = document.getElementById("tarjeta5");
+		var c = document.getElementById("tarjeta6");	
+
+
+
+
 		
 		var arrayA=JSON.parse("{{info_grafica_horas}}")
 		var arrayB=JSON.parse("{{info_grafica_horas_acumulado}}")
@@ -388,20 +398,62 @@ var d = new Date();
 	</script>
 	<script>
 	var chartInfo=[];
-	var myhtml= 
-						'<p  align="center"><samall>Total AAAAAforo</samall></p>'+
+	var myhtml1= 
+						'<p  align="center"><samall>Total Aforo</samall></p>'+
 						'<div id="chart-container" style="max-height: 50%;z-index:2;" >'+
 						
 							'<canvas id="totalIncomeChart" style=" width: 100%; height: 50%; z-index:3;  "></canvas>'+
 							
 							
 						'</div>'
-					
-		
-				  
+						var myhtml2= 
 
-                    
-			     
+						'<p  align="center"><samall>Total Persona</samall></p>'+
+						'<div id="chart-container" style="max-height: 50%;z-index:2;" >'+
+						
+							'<canvas id="totalIncomeChart1" style=" width: 100%; height: 50%; z-index:3;  "></canvas>'+
+							
+							
+						'</div>'
+					
+					
+						var myhtml3= 
+						'<p  align="center"><samall>Esta Semana</samall></p>'+
+						'<div id="chart-container" style="max-height: 50%;z-index:2;" >'+
+						
+							'<canvas id="totalIncomeChart2" style=" width: 100%; height: 50%; z-index:3;  "></canvas>'+
+							
+							
+						'</div>'
+						var myhtml4= 
+					
+						'<p  align="center"><samall>Esta Semana Acumulada</samall></p>'+
+						'<div id="chart-container" style="max-height: 50%;z-index:2;" >'+
+						
+							'<canvas id="totalIncomeChart3" style=" width: 100%; height: 50%; z-index:3;  "></canvas>'+
+							
+							
+						'</div>'
+						var myhtml5= 
+					
+						'<p  align="center"><samall>Este Mes</samall></p>'+
+						'<div id="chart-container" style="max-height: 50%;z-index:2;" >'+
+						
+							'<canvas id="totalIncomeChart4" style=" width: 100%; height: 50%; z-index:3;  "></canvas>'+
+							
+							
+						'</div>'
+						var myhtml6= 
+						 
+						'<p  align="center"><samall>Este Mes Acumulado</samall></p>'+
+						'<div id="chart-container" style="max-height: 50%;z-index:2;" >'+
+						
+							'<canvas id="totalIncomeChart5" style=" width: 100%; height: 50%; z-index:3;  "></canvas>'+
+							
+							
+						'</div>'
+
+
 
 
 	
@@ -419,32 +471,369 @@ var d = new Date();
 		
 		success: function(data) {
 			var obj = JSON.parse(data)
-			alert(obj)
-			alert(JSON.stringify(obj));
-			mytotalIncomeChart.update();
+			
+			
 
 
 			$.each(obj, function(i, item){
 				var myJSON = JSON.stringify(item);
 				chartInfo.push(myJSON);
-    			alert(chartInfo);
+    			
 });
 
-			alert(chartInfo);
-			
-			$('#tarjeta1').html(myhtml)
-			
 
-			myFunctionToday()
-			return chartInfo;
+		
+		
+		
+			
+		//mytotalIncomeChart.update();
+		
+		var array1 = chartInfo[0]
+		var splitarray = array1.split('[');
+
+		var splitarrayToString = splitarray.toString();
+
+		var splitarray2 = splitarrayToString.split(']');
+		var splitarrayToString2 = splitarray2.toString();
+
+		var splitarray3 = splitarrayToString2.split(',')
+	
+		splitarray3.shift()
+
+
+		var array = chartInfo[1]
+		var splitarray = array1.split('[');
+	
+		var splitarrayToString = splitarray.toString();
+	
+		var splitarray2 = splitarrayToString.split(']');
+		var splitarrayToString2 = splitarray2.toString();
+	
+		var splitarray6 = splitarrayToString2.split(',')
+	
+		splitarray6.shift()
+
+
+		var array1 = chartInfo[2]
+		var splitarray = array1.split('[');
+		
+		var splitarrayToString = splitarray.toString();
+	
+		var splitarray2 = splitarrayToString.split(']');
+		var splitarrayToString2 = splitarray2.toString();
+	
+		var splitarray9 = splitarrayToString2.split(',')
+		
+		splitarray9.shift()
+
+		var array1 = chartInfo[3]
+		var splitarray = array1.split('[');
+
+		var splitarrayToString = splitarray.toString();
+	
+		var splitarray2 = splitarrayToString.split(']');
+		var splitarrayToString2 = splitarray2.toString();
+	
+		var splitarray12 = splitarrayToString2.split(',')
+	
+		splitarray12.shift()
+
+		var array1 = chartInfo[4]
+		var splitarray = array1.split('[');
+	
+		var splitarrayToString = splitarray.toString();
+	
+		var splitarray2 = splitarrayToString.split(']');
+		var splitarrayToString2 = splitarray2.toString();
+	
+		var splitarray15 = splitarrayToString2.split(',')
+	
+		splitarray15.shift()
+
+		var array1 = chartInfo[5]
+		var splitarray = array1.split('[');
+
+		var splitarrayToString = splitarray.toString();
+
+		var splitarray2 = splitarrayToString.split(']');
+		var splitarrayToString2 = splitarray2.toString();
+	
+		var splitarray18 = splitarrayToString2.split(',')
+		
+
+		splitarray18.shift()
+$('#tarjeta1').html(myhtml1);
+ Recargar(splitarray3,splitarray6,splitarray9,splitarray12,splitarray15,splitarray18)
+$('#tarjeta2').html(myhtml2);
+Recargar(splitarray3,splitarray6,splitarray9,splitarray12,splitarray15,splitarray18)
+$('#tarjeta3').html(myhtml3);
+Recargar(splitarray3,splitarray6,splitarray9,splitarray12,splitarray15,splitarray18)
+$('#tarjeta4').html(myhtml4);
+Recargar(splitarray3,splitarray6,splitarray9,splitarray12,splitarray15,splitarray18)
+$('#tarjeta5').html(myhtml5);
+Recargar(splitarray3,splitarray6,splitarray9,splitarray12,splitarray15,splitarray18)
+$('#tarjeta6').html(myhtml6);
+Recargar(splitarray3,splitarray6,splitarray9,splitarray12,splitarray15,splitarray18)
+		
+
+
+
+
+	
+		
+			
+return chartInfo;
 			
 		},
 		failure: function(data) { 
 			alert('Got an error dude');
 		}
 	}); }
-	
-	</script>
+
+function Recargar(array,array1,array2,array3,array4,array5){
+
+
+	arrayA=array
+	var totalIncomeChart = document.getElementById('totalIncomeChart').getContext('2d');
+		
+		var mytotalIncomeChart = new Chart(totalIncomeChart, {
+			type: 'bar',
+			data: {
+				labels: ["1-3H", "3-6H", "6-9H", "9-12H", "12-15H", "15-18H", "18-21H","21-24H"],
+				datasets : [{
+					label: "Total aforo",
+					backgroundColor: '#ff9e27',
+					borderColor: 'rgb(23, 125, 255)',
+					data:  arrayA,
+				}],
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				legend: {
+					display: false,
+				},
+				scales: {
+					yAxes: [{
+						ticks: {
+							display: false //this will remove only the label
+						},
+						gridLines : {
+							drawBorder: false,
+							display : false
+						}
+					}],
+					xAxes : [ {
+						gridLines : {
+							drawBorder: false,
+							display : false
+						}
+					}]
+				},
+			}
+		});
+arrayB=array1
+
+		var totalIncomeChart1 = document.getElementById('totalIncomeChart1').getContext('2d');
+		
+		var mytotalIncomeChart1 = new Chart(totalIncomeChart1, {
+			type: 'bar',
+			data: {
+				labels:  ["1-3H", "3-6H", "6-9H", "9-12H", "12-15H", "15-18H", "18-21H","21-24H"],
+				datasets : [{
+					label: "Total persona",
+					backgroundColor: '#ff9e27',
+					borderColor: 'rgb(23, 125, 255)',
+					data:  arrayB,
+				}],
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				legend: {
+					display: false,
+				},
+				scales: {
+					yAxes: [{
+						ticks: {
+							display: false //this will remove only the label
+						},
+						gridLines : {
+							drawBorder: false,
+							display : false
+						}
+					}],
+					xAxes : [ {
+						gridLines : {
+							drawBorder: false,
+							display : false
+						}
+					}]
+				},
+			}
+		});
+		arrayC = array2
+		var totalIncomeChart2 = document.getElementById('totalIncomeChart2').getContext('2d');
+		
+		var mytotalIncomeChart2 = new Chart(totalIncomeChart2, {
+			type: 'bar',
+			data: {
+				labels: ["D", "L", "M", "M", "J", "V", "S"],
+				datasets : [{
+					label: "Total Income",
+					backgroundColor: '#ff9e27',
+					borderColor: 'rgb(23, 125, 255)',
+					data: arrayC,
+				}],
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				legend: {
+					display: false,
+				},
+				scales: {
+					yAxes: [{
+						ticks: {
+							display: false //this will remove only the label
+						},
+						gridLines : {
+							drawBorder: false,
+							display : false
+						}
+					}],
+					xAxes : [ {
+						gridLines : {
+							drawBorder: false,
+							display : false
+						}
+					}]
+				},
+			}
+		});
+arrayD = array3
+		var totalIncomeChart3 = document.getElementById('totalIncomeChart3').getContext('2d');
+		
+		var mytotalIncomeChart3 = new Chart(totalIncomeChart3, {
+			type: 'bar',
+			data: {
+				labels: ["D", "L", "M", "M", "J", "V", "S"],
+				datasets : [{
+					label: "Total",
+					backgroundColor: '#ff9e27',
+					borderColor: 'rgb(23, 125, 255)',
+					data: arrayD,
+				}],
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				legend: {
+					display: false,
+				},
+				scales: {
+					yAxes: [{
+						ticks: {
+							display: false //this will remove only the label
+						},
+						gridLines : {
+							drawBorder: false,
+							display : false
+						}
+					}],
+					xAxes : [ {
+						gridLines : {
+							drawBorder: false,
+							display : false
+						}
+					}]
+				},
+			}
+		});
+		arrayE = array4;
+		var totalIncomeChart4 = document.getElementById('totalIncomeChart4').getContext('2d');
+		var mytotalIncomeChart4 = new Chart(totalIncomeChart4, {
+			type: 'bar',
+			data: {
+				labels: formato,
+				datasets : [{
+					label: "Total Income",
+					backgroundColor: '#ff9e27',
+					borderColor: 'rgb(23, 125, 255)',
+					data: arrayE,
+				}],
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				legend: {
+					display: false,
+				},
+				scales: {
+					yAxes: [{
+						ticks: {
+							display: false //this will remove only the label
+						},
+						gridLines : {
+							drawBorder: false,
+							display : false
+						}
+					}],
+					xAxes : [ {
+						gridLines : {
+							drawBorder: false,
+							display : false
+						}
+					}]
+				},
+			}
+		});
+		arrayF = array5;
+		var totalIncomeChart5 = document.getElementById('totalIncomeChart5').getContext('2d');
+		
+
+		
+		
+		var mytotalIncomeChart5 = new Chart(totalIncomeChart5, {
+			type: 'bar',
+			data: {
+				labels:formato,
+				datasets : [{
+					label: "Total Por Semana",
+					backgroundColor: '#ff9e27',
+					borderColor: 'rgb(23, 125, 255)',
+					data: arrayF,
+				}],
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				legend: {
+					display: false,
+				},
+				scales: {
+					yAxes: [{
+						ticks: {
+							display: false //this will remove only the label
+						},
+						gridLines : {
+							drawBorder: false,
+							display : false
+						}
+					}],
+					xAxes : [ {
+						gridLines : {
+							drawBorder: false,
+							display : false
+						}
+					}]
+				},
+			}
+		});
+		
+
+}
+</script>
 
 {% endblock javascripts %}
 

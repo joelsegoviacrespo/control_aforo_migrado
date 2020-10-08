@@ -89,8 +89,8 @@
 					<div class="row">
 						<div class="col-lg-12" >
 							
-							<button class="btn btn-dark float-right fas fa-angle-right btn-sm "style="margin-right:13%; "></button>
-							<button class="btn btn-dark float-left fas fa-angle-left btn-sm "style="margin-left:13%;" onclick="timeFunction()"></button>
+							<button class="btn btn-dark float-right fas fa-angle-right btn-sm "style="margin-right:13%; "id="right"></button>
+							<button class="btn btn-dark float-left fas fa-angle-left btn-sm "style="margin-left:13%;" onclick="timeFunction();ButtonPressed();" id="left"></button>
 						</div>
 					</div>
 				</div>
@@ -98,7 +98,7 @@
 				
 				
 				
-	
+	<div id="cambio1">
 					<p>{{variable}}</p>
 				
 				<!--primera tarjeta-->
@@ -112,8 +112,7 @@
 						</div>
 					</div>
 		
-				  
-
+				
                     
 			     
 				
@@ -132,10 +131,12 @@
 						<b><small >Horario Activo:  8:00 am -a 5:00 pm para el público</small></b>
 					</div>-->
                   
-				</div>
-	
+				</div></div>
+
+			
 				<!--primera tarjeta-->
 				<!--segunda tarjeta-->
+				<div id="cambio2">
 				<div class="col-md-12" style="max-height: 35%; z-index:1;" id="tarjeta3">
 					<p  align="center"><samall>Esta Semana</samall></p>
                   <div id="chart-container" style="max-height: 50% ;z-index:2;" >
@@ -161,10 +162,11 @@
 					<!--<div align="center">
 						<b><small >Horario Activo:  8:00 am -a 5:00 pm para el público</small></b>
 					</div>-->
-                  
+				</div>
 				</div>
 				<!--segunda tarjeta-->
 				<!--tercera tarjeta-->
+				<div id="cambio3">
 				<div class="col-md-12" style="max-height: 35%; z-index:1;" id="tarjeta5">
 					<p  align="center"><samall>Este Mes</samall></p>
                   <div id="chart-container" style="max-height: 50% ;z-index:2;" >
@@ -193,10 +195,10 @@
                   
 				</div>
 				<!--tercera tarjeta-->
-	
+			
 				</div>
 						
-					
+			</div>
 			</div>		
 				
 				
@@ -903,12 +905,20 @@ var mytotalIncomeChart = new Chart(totalIncomeChart, {
 </script>
 
 <script>
+
 var x = document.getElementById("tarjeta1");
 var y = document.getElementById("tarjeta2");
 var z = document.getElementById("tarjeta3");
 var a = document.getElementById("tarjeta4");
 var b = document.getElementById("tarjeta5");
 var c = document.getElementById("tarjeta6");
+var buttonL =document.getElementById("left");
+var buttonR =document.getElementById("right");
+var isPressed= false
+function ButtonPressed(){
+
+	isPressed = true;}
+
 $(document).ready(function(){
 	x.style.display = "block";
 y.style.display = "block";
@@ -920,9 +930,13 @@ c.style.display = "none";
 });
 
 	function myFunctionToday() {
-
+		
+		if (isPressed == true){
+		timeFunction()
+	}
 
 if (x.style.display === "none") {
+	
 x.style.display = "block";
 y.style.display = "block";
 z.style.display = "none";
@@ -945,6 +959,10 @@ c.style.display = "none";
 
 
 function myFunctionThisWeek() {
+	
+	if (isPressed == true){
+		timeFunction()
+	}
 
 if (x.style.display === "block") {
 x.style.display = "none";
@@ -968,6 +986,9 @@ c.style.display = "none";
 
 function myFunctionThisMonth() {
 
+	if (isPressed == true){
+		timeFunction()
+	}
 if (x.style.display === "none") {
 	y.style.display = "none";
 z.style.display = "none";
@@ -987,6 +1008,8 @@ b.style.display = "block";
 c.style.display = "block";
 
 }}
+
+		
 
 </script>
 <style>
