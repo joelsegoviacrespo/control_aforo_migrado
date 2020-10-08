@@ -25,7 +25,7 @@ class UpLoadFile():
         try:                        
             fs = OverwriteStorage()                                  
             ruta_archivo = self.getRutaArchivo(fs,archivo.name,path)   
-            print("ruta_archivo: "+ruta_archivo)                     
+            #print("ruta_archivo: "+ruta_archivo)                     
             self.upload(fs,ruta_archivo,archivo)                            
             self.sendXFTP(ruta_archivo,path)         
                
