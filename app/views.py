@@ -32,6 +32,7 @@ from datetime import datetime, timedelta
 from json import dumps
 import re
 from operator import add
+import Constantes
 cliente = Cliente.objects.all()
 
 #for e in Cliente.objects.all():
@@ -974,74 +975,85 @@ def index(request):
             print(request.user.profile.cliente.nif)'''
     
     mySerial=[]
-    for e in Cliente.objects.all():
-        if(Cliente.objects.filter(nif=request.user.profile.cliente.nif).first() is not None ):
-            id_display = e.nif
-           
-           
-            for i in Instalacion.objects.all():
-                for o in Camaras. objects.all():
-                    #print('pasa algo')
-                    if (Instalacion.objects.filter(cliente__startswith={'nif': request.user.profile.cliente.nif}) is not None):
-                        if(i.cliente.nif ==request.user.profile.cliente.nif):
-                        #display = Instalacion.objects.filter(nif=id_display).first()            
-            
-                            #print('----------que imprime esto--------------------')
-                            #print(request.user.profile.cliente.nif)
-                            MyInstalacion= i.nombre_comercial
-                            #print(MyInstalacion)
-                        else:
-                            #print('***************************no se parece')
-                            pass
-
-                    
-                        if (Camaras.objects.filter(instalacion__startswith={'nombre': MyInstalacion}) is not None):
-                            #print('intalacion.nombre',o.instalacion.nombre,'mi instalacion var',MyInstalacion )
-                           
-                            if str(o.instalacion.nombre) == MyInstalacion:
-                                #print('------tenemos una camara con esas caracteristicas')
-                                mySerial.append(o.serial_camara)
-                    #else:
-                        #print('no encontro nada--------------------')
-    #print('el serial es:')
-    mylist=list(dict.fromkeys(mySerial))
-    #print(mylist)
     
+    if (request.user.profile.rol== Constantes.SUPERUSUARIO):    
+        camarasAll =  Camaras.objects.all()
+        info_grafica_semana = {}
+        info_grafica_horas = {}
+        info_grafica_horas_acumulado = {}
+        info_grafica_semana_pasada = {}
+        esteMes = {}
+        mesPasado = {}
+        
+    elif (request.user.profile.rol == Constantes.ADMINISTRADOR) and hasattr(request.user.profile, 'cliente') and (request.user.profile.cliente.get_id() is not None): 
+        for e in Cliente.objects.all():
+            if(Cliente.objects.filter(nif=request.user.profile.cliente.nif).first() is not None ):
+                id_display = e.nif
+               
+               
+                for i in Instalacion.objects.all():
+                    for o in Camaras. objects.all():
+                        #print('pasa algo')
+                        if (Instalacion.objects.filter(cliente__startswith={'nif': request.user.profile.cliente.nif}) is not None):
+                            if(i.cliente.nif ==request.user.profile.cliente.nif):
+                            #display = Instalacion.objects.filter(nif=id_display).first()            
+                
+                                #print('----------que imprime esto--------------------')
+                                #print(request.user.profile.cliente.nif)
+                                MyInstalacion= i.nombre_comercial
+                                #print(MyInstalacion)
+                            else:
+                                #print('***************************no se parece')
+                                pass
     
+                        
+                            if (Camaras.objects.filter(instalacion__startswith={'nombre': MyInstalacion}) is not None):
+                                #print('intalacion.nombre',o.instalacion.nombre,'mi instalacion var',MyInstalacion )
+                               
+                                if str(o.instalacion.nombre) == MyInstalacion:
+                                    #print('------tenemos una camara con esas caracteristicas')
+                                    mySerial.append(o.serial_camara)
+                        #else:
+                            #print('no encontro nada--------------------')
+        #print('el serial es:')
+        mylist=list(dict.fromkeys(mySerial))
+        #print(mylist)
+        
+        
+        
+        fecha_limite0 = hoy0
+        fecha_limite =(hoy1-timedelta(weeks=1))
     
-    fecha_limite0 = hoy0
-    fecha_limite =(hoy1-timedelta(weeks=1))
-
-    camarasAll =  Camaras.objects.all()
-    #print(mydate2)
-    info_grafica_semana = grafica_semana(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist)
-    
-    info_grafica_semana_pasada = grafica_semana_pasada(semana_a_restar, semana_a_restar_str,mydate3,fecha_limite,fecha_limite_minima1,mylist)
-    
-    #print('info_grafica_semana')
-    #print(info_grafica_semana)
-    formato_hora = ["H","H","H","H","H","H","H","H","H"]
-    formato_semana= ["D", "L", "M", "M", "J", "V", "S"]
-    info_grafica_horas = grafica_horas(mydate)
-    #print('INFO DE GRAFICAS DE ESTA SEMANA Y LASIGUIENTE')
-   # print(info_grafica_semana)
-   # print('---------------------grafica semana pasada--------------------------------')
-   # print( grafica_semana(semana_a_restar, semana_a_restar_str,mydate3,fecha_limite,fecha_limite_minima1))
-    #print('-----------fin grafica pasada----------------------------')
-    info_grafica_horas_acumulado= grafica_horas_acumuladas(mydate)
-    #print('info_grafica_horas')
-    #print(info_grafica_horas)
-    #print('info a imprimir mosca raull')
-   # print('---------------------grafica semanal--------------------------------')
-    #print(grafica_semana(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0))
-    #print('---------------------grafica semanal acumulada--------------------------------')
-    #print(grafica_semana_acumulada(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0))
-    esteMes = este_mes(mylist)
-    #print('-----------------este mes---------------------')
-    #print(este_mes())
-    #print('-------------------mes pasado----------------')
-    #print(mes_pasado())
-    mesPasado = mes_pasado(mylist)
+        camarasAll =  Camaras.objects.all()
+        #print(mydate2)
+        info_grafica_semana = grafica_semana(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist)
+        
+        info_grafica_semana_pasada = grafica_semana_pasada(semana_a_restar, semana_a_restar_str,mydate3,fecha_limite,fecha_limite_minima1,mylist)
+        
+        #print('info_grafica_semana')
+        #print(info_grafica_semana)
+        formato_hora = ["H","H","H","H","H","H","H","H","H"]
+        formato_semana= ["D", "L", "M", "M", "J", "V", "S"]
+        info_grafica_horas = grafica_horas(mydate)
+        #print('INFO DE GRAFICAS DE ESTA SEMANA Y LASIGUIENTE')
+       # print(info_grafica_semana)
+       # print('---------------------grafica semana pasada--------------------------------')
+       # print( grafica_semana(semana_a_restar, semana_a_restar_str,mydate3,fecha_limite,fecha_limite_minima1))
+        #print('-----------fin grafica pasada----------------------------')
+        info_grafica_horas_acumulado= grafica_horas_acumuladas(mydate)
+        #print('info_grafica_horas')
+        #print(info_grafica_horas)
+        #print('info a imprimir mosca raull')
+       # print('---------------------grafica semanal--------------------------------')
+        #print(grafica_semana(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0))
+        #print('---------------------grafica semanal acumulada--------------------------------')
+        #print(grafica_semana_acumulada(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0))
+        esteMes = este_mes(mylist)
+        #print('-----------------este mes---------------------')
+        #print(este_mes())
+        #print('-------------------mes pasado----------------')
+        #print(mes_pasado())
+        mesPasado = mes_pasado(mylist)
     return render(request, "index.html",  {'camaras':camarasAll,'info_grafica_semana': info_grafica_semana,'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado,'info_grafica_semana_pasada':info_grafica_semana_pasada,'estemes':esteMes,'mespasado':mesPasado})
  
 
