@@ -23,7 +23,45 @@
 <div class="page-inner mt--5 ">
 
         
-        
+     <div class="row mt--2 " >
+		<div class="col-md-3">
+            <div class="card full-height ">
+                <div class="card-body">					
+					</br>
+					</br>
+					<div class="row" style="width: 200px; height: 200px;">						
+						<div class="col-md-12">
+							<p class="font-weight-bold text-center;" style="color:#59d05d">&#8212 Aforo</p>							
+						</div>
+						<div class="col-md-12">
+							<p class="font-weight-bold text-center;" style="color:#f3545d">&#8212 Usuarios RED</p>							
+						</div>
+						<div class="col-md-12">
+							<p class="font-weight-bold text-center;" style="color:#1d7af3">&#8212 Usuarios Wifi</p>							
+						</div>
+						<div class="col-md-12">
+							<p class="font-weight-bold text-center;" style="color:#fdaf4b">&#8212 Usuarios Ethernet</p>														
+						</div>
+					</div>
+                </div>
+            </div>
+		</div>
+    
+	  	<div class="col-md-9">
+            <div class="card full-height ">
+                <div class="card-body">
+                    
+				<p  align="center"><samall>Estadisticas</samall></p>	
+				<div class="row" style="width: 200px; height: 200px;">					
+					<div class="chart-container" style="max-height: 200px;">
+						<canvas id="LCPresionArterial" style="width: 560px;"></canvas>
+					</div>
+	 			</div>		
+                 
+            	</div>
+        	</div>		
+    	</div>
+    </div>
 
     <div class="row mt--2 " >
 
@@ -963,6 +1001,103 @@ c.style.display = "block";
 
 }}
 
+/*Grafica de Red*/
+
+var LCPresionArterial = document.getElementById('LCPresionArterial').getContext('2d')
+function createGraficaPresionArterial(array_aforo,array_usuarios_red,array_wifi,array_ethernet){
+	console.log("createGraficaPresionArterial")
+	
+		var myLCPresionArterial = new Chart(LCPresionArterial, {
+		type: 'line',
+		data: {
+			labels: ["9", "10", "11", "12", "13", "14", "15", "16", "17", "18"],
+			datasets: [{
+				label: "Aforo ",
+				borderColor: "#59d05d",
+				pointBorderColor: "#FFF",
+				pointBackgroundColor: "#59d05d",
+				pointBorderWidth: 2,
+				pointHoverRadius: 4,
+				pointHoverBorderWidth: 1,
+				pointRadius: 4,
+				backgroundColor: 'transparent',
+				fill: true,
+				borderWidth: 2,
+				data: array_aforo
+			},
+			{
+				label: "Usuarios red",
+				borderColor: "#f3545d",
+				pointBorderColor: "#FFF",
+				pointBackgroundColor: "#f3545d",
+				pointBorderWidth: 2,
+				pointHoverRadius: 4,
+				pointHoverBorderWidth: 1,
+				pointRadius: 4,
+				backgroundColor: 'transparent',
+				fill: true,
+				borderWidth: 2,
+				data: array_usuarios_red	
+			},
+			{
+				label: "Usuarios wifi",
+				borderColor: "#1d7af3",
+				pointBorderColor: "#FFF",
+				pointBackgroundColor: "#1d7af3",
+				pointBorderWidth: 2,
+				pointHoverRadius: 4,
+				pointHoverBorderWidth: 1,
+				pointRadius: 4,
+				backgroundColor: 'transparent',
+				fill: true,
+				borderWidth: 2,
+				data: array_wifi	
+			},
+			{
+				label: "Usuarios ethernet",
+				borderColor: "#fdaf4b",
+				pointBorderColor: "#FFF",
+				pointBackgroundColor: "#fdaf4b",
+				pointBorderWidth: 2,
+				pointHoverRadius: 4,
+				pointHoverBorderWidth: 1,
+				pointRadius: 4,
+				backgroundColor: 'transparent',
+				fill: true,
+				borderWidth: 2,
+				data: array_ethernet	
+			}
+			]
+		},
+		options : {
+			responsive: true, 
+			maintainAspectRatio: false,
+			legend: {
+				display: false,
+			},
+			tooltips: {
+				bodySpacing: 1,
+				mode:"nearest",
+				intersect: 0,
+				position:"nearest",
+				xPadding:10,
+				yPadding:10,
+				caretPadding:10
+			},
+			layout:{
+				padding:{left:15,right:15,top:15,bottom:15}
+			}
+		}
+	});
+
+}
+window.onload = function() {
+		array_aforo = [21, 27, 28, 31, 35, 25, 18, 23, 19, 4]
+		array_usuarios_red = [19, 26, 25,30, 35,24,19,20,19,4]
+		array_wifi = [14,17,21,24,29,19,16,15,13,1]
+		array_ethernet = [5, 9, 4, 6, 6, 6, 5, 5, 6, 3]  		
+  		createGraficaPresionArterial(array_aforo,array_usuarios_red,array_wifi,array_ethernet);
+	};
 </script>
 <style>
 	
@@ -989,4 +1124,10 @@ c.style.display = "block";
     }
 	
 
+
+
 </style>
+
+
+
+
