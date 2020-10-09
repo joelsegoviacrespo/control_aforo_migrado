@@ -1219,7 +1219,7 @@ def pages(request):
 
 
 @login_required(login_url="/login/")
-def home(request):
+def back(request):
     #print('HEEEEEEEEEEEEEEY')
     hoy = date.today()
     today = date.today()
@@ -1233,6 +1233,25 @@ def home(request):
     esteMes=[1,2,3,4,5,6,7,8,9,10,11,12,13,15,11,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
     MyesteMesAcumulado=[1,2,3,4,5,6,7,8,9,10,11,12,13,15,11,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
     return_sub_array = {'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado,' info_grafica_semana': info_grafica_semana,'info_grafica_semana_acumulada':info_grafica_semana_acumulada,'estemes':esteMes,'estemesacumulado':MyesteMesAcumulado}
+            
+    
+    return HttpResponse( json.dumps(return_sub_array))
+
+@login_required(login_url="/login/")
+def ahead(request):
+    #print('HEEEEEEEEEEEEEEY')
+    hoy = date.today()
+    today = date.today()
+    mydate = str((today-timedelta(weeks=1)).strftime("%Y-%m-%d"))
+
+    info_grafica_horas = [8,7,6,5,4,3,2,1]
+    info_grafica_horas_acumulado= grafica_horas_acumuladas(mydate)
+
+    info_grafica_semana=[7,6,5,4,3,2,1]
+    info_grafica_semana_acumulada=[7,6,5,4,3,2,1]
+    esteMes=[1,2,3,4,5,6,7,8,9,10,11,12,13,15,11,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9]
+    MyesteMesAcumulado=[1,2,3,4,5,6,7,8,9,10,11,12,13,15,11,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9]
+    return_sub_array = {'info_grafica_horas1':info_grafica_horas,'info_grafica_horas_acumulado1':info_grafica_horas_acumulado,' info_grafica_semana1': info_grafica_semana,'info_grafica_semana_acumulada1':info_grafica_semana_acumulada,'estemes1':esteMes,'estemesacumulado1':MyesteMesAcumulado}
             
     
     return HttpResponse( json.dumps(return_sub_array))

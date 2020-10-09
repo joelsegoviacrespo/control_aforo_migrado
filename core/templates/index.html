@@ -464,13 +464,14 @@ var d = new Date();
 
 	
 
-		function timeFunction(){
+		function backFunction(){
 			$.ajax({
-		url: '127.0.0.1:8000/hello',
+		url: '127.0.0.1:8000/back',
 		type: 'get', // This is the default though, you don't actually need to always mention it
 		
 		success: function(data) {
 			var obj = JSON.parse(data)
+
 			
 			
 
@@ -480,6 +481,7 @@ var d = new Date();
 				chartInfo.push(myJSON);
     			
 });
+
 
 
 		
@@ -581,7 +583,6 @@ Recargar(splitarray3,splitarray6,splitarray9,splitarray12,splitarray15,splitarra
 
 	
 		
-			
 return chartInfo;
 			
 		},
@@ -589,6 +590,137 @@ return chartInfo;
 			alert('Got an error dude');
 		}
 	}); }
+
+
+function aheadFunction(){
+			$.ajax({
+		url: '127.0.0.1:8000/ahead',
+		type: 'get', // This is the default though, you don't actually need to always mention it
+		
+		success: function(data) {
+			var obj = JSON.parse(data)
+			
+			
+
+
+			$.each(obj, function(i, item){
+				var myJSON = JSON.stringify(item);
+				chartInfo.push(myJSON);
+    			
+});
+
+
+
+		
+		
+		
+			
+		//mytotalIncomeChart.update();
+		
+		var array1 = chartInfo[0]
+		var splitarray = array1.split('[');
+
+		var splitarrayToString = splitarray.toString();
+
+		var splitarray2 = splitarrayToString.split(']');
+		var splitarrayToString2 = splitarray2.toString();
+
+		var splitarray3 = splitarrayToString2.split(',')
+	
+		splitarray3.shift()
+
+
+		var array = chartInfo[1]
+		var splitarray = array1.split('[');
+	
+		var splitarrayToString = splitarray.toString();
+	
+		var splitarray2 = splitarrayToString.split(']');
+		var splitarrayToString2 = splitarray2.toString();
+	
+		var splitarray6 = splitarrayToString2.split(',')
+	
+		splitarray6.shift()
+
+
+		var array1 = chartInfo[2]
+		var splitarray = array1.split('[');
+		
+		var splitarrayToString = splitarray.toString();
+	
+		var splitarray2 = splitarrayToString.split(']');
+		var splitarrayToString2 = splitarray2.toString();
+	
+		var splitarray9 = splitarrayToString2.split(',')
+		
+		splitarray9.shift()
+
+		var array1 = chartInfo[3]
+		var splitarray = array1.split('[');
+
+		var splitarrayToString = splitarray.toString();
+	
+		var splitarray2 = splitarrayToString.split(']');
+		var splitarrayToString2 = splitarray2.toString();
+	
+		var splitarray12 = splitarrayToString2.split(',')
+	
+		splitarray12.shift()
+
+		var array1 = chartInfo[4]
+		var splitarray = array1.split('[');
+	
+		var splitarrayToString = splitarray.toString();
+	
+		var splitarray2 = splitarrayToString.split(']');
+		var splitarrayToString2 = splitarray2.toString();
+	
+		var splitarray15 = splitarrayToString2.split(',')
+	
+		splitarray15.shift()
+
+		var array1 = chartInfo[5]
+		var splitarray = array1.split('[');
+
+		var splitarrayToString = splitarray.toString();
+
+		var splitarray2 = splitarrayToString.split(']');
+		var splitarrayToString2 = splitarray2.toString();
+	
+		var splitarray18 = splitarrayToString2.split(',')
+		
+
+		splitarray18.shift()
+$('#tarjeta1').html(myhtml1);
+ Recargar(splitarray3,splitarray6,splitarray9,splitarray12,splitarray15,splitarray18)
+$('#tarjeta2').html(myhtml2);
+Recargar(splitarray3,splitarray6,splitarray9,splitarray12,splitarray15,splitarray18)
+$('#tarjeta3').html(myhtml3);
+Recargar(splitarray3,splitarray6,splitarray9,splitarray12,splitarray15,splitarray18)
+$('#tarjeta4').html(myhtml4);
+Recargar(splitarray3,splitarray6,splitarray9,splitarray12,splitarray15,splitarray18)
+$('#tarjeta5').html(myhtml5);
+Recargar(splitarray3,splitarray6,splitarray9,splitarray12,splitarray15,splitarray18)
+$('#tarjeta6').html(myhtml6);
+Recargar(splitarray3,splitarray6,splitarray9,splitarray12,splitarray15,splitarray18)
+		
+
+
+
+
+	
+
+return chartInfo;
+			
+		},
+		failure: function(data) { 
+			alert('Got an error dude');
+		}
+	}); }
+
+
+
+
 
 function Recargar(array,array1,array2,array3,array4,array5){
 
@@ -833,6 +965,7 @@ arrayD = array3
 		
 
 }
+
 </script>
 
 {% endblock javascripts %}
