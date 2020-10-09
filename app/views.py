@@ -976,7 +976,7 @@ def index(request):
     
     mySerial=[]
     
-    if (request.user.profile.rol== Constantes.SUPERUSUARIO):    
+    if (request.user.profile.rol== Constantes.SUPERUSUARIO or  request.user.profile.rol== Constantes.ADMINISTRADOR):    
         camarasAll =  Camaras.objects.all()
         info_grafica_semana = {}
         info_grafica_horas = {}
@@ -984,8 +984,9 @@ def index(request):
         info_grafica_semana_pasada = {}
         esteMes = {}
         mesPasado = {}
+
         
-    elif (request.user.profile.rol == Constantes.ADMINISTRADOR) and hasattr(request.user.profile, 'cliente') and (request.user.profile.cliente.get_id() is not None): 
+    elif (request.user.profile.rol == 4) and hasattr(request.user.profile, 'cliente') and (request.user.profile.cliente.get_id() is not None): 
         for e in Cliente.objects.all():
             if(Cliente.objects.filter(nif=request.user.profile.cliente.nif).first() is not None ):
                 id_display = e.nif

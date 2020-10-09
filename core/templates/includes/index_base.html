@@ -1,4 +1,4 @@
-
+es
 <div class="panel-header bg-primary-gradient" style ="height:85px;" >
     <div class="page-inner py-3" >
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
@@ -78,6 +78,11 @@
 						<div class="embed-responsive embed-responsive-16by9 h-30 w-100 m-0 p-2 rounded shadow "><!--4by9-->
 							
                             <iframe class="embed-responsive-item" src="hfsEmbebido" class="h-100 w-100" scrolling="no"  style="LINE-HEIGHT:20px;"></iframe>
+							</br>
+							</br>
+							</br>
+							</br>
+							</br>							
                         </div>
                     </div>
                 </div>
@@ -107,9 +112,7 @@
                   </div>
                   
                 </div>-->
-            <div class="btn-group text-center" role="group">
-                
-                </div>
+
 
                 
                 <div class="row">
@@ -117,8 +120,8 @@
 						<table class=buttons> <tr>
 						<div class="btn-group m-3  " role="group" aria-label="First group"style="center">
 							<button id="1"class="btn success mr-3" type="button" onclick="myFunctionToday()">Hoy</button>
-							<button id="2"class="btn success mr-3" type="button"onclick="myFunctionThisWeek()" >Esta Semana</button>
-							<button id="3"class="btn success " type="button" onclick="myFunctionThisMonth()">Este Mes</button>
+							<button id="2"class="btn success mr-3" type="button"onclick="myFunctionThisWeek()" disabled >Esta Semana</button>
+							<button id="3"class="btn success " type="button" onclick="myFunctionThisMonth()" disabled>Este Mes</button>
 						<!--<button id= "2" type="button" class="btn btn-primary min-vw-25 mr-3 "  onclick="myFunctionThisWeek()">Esta Semana</button>
 						<button id= "3" type="button" class="btn btn-primary min-vw-25  "onclick="myFunctionThisMonth()" >Este Mes</button>-->
 					</div></table>
@@ -129,7 +132,7 @@
 			<!--primera tarjeta-->
                 <div class="col-md-12"style="max-height: 116px;" id="tarjeta1">
 					<p  align="center"><samall>Total Aforo</samall></p>
-                  <div id="chart-container" style="max-height: 66px;" >
+                  <div id="chart-container" style="max-height: 85px;" >
 					
 					<canvas id="totalIncomeChart" style=" width: 49px; height: 90px; "></canvas>
 					
@@ -143,7 +146,7 @@
                 <div class="col-md-12" style="max-height: 160px;"id="tarjeta2"><br>
 					<p  align="center"><samall>Total Persona</samall></p>
 					
-                    <div id="chart-container" style="max-height: 66px;">
+                    <div id="chart-container" style="max-height: 85px;">
 						
                       <canvas id="totalIncomeChart1"style=" width: 49px; height: 90px;"></canvas>
                       
@@ -337,21 +340,24 @@
                
 		
 			
-		 <div class="card-footer "id="chart-container" style=" border-width:0px !important;">
-			</div>
+		 
+			
+				
+			
 				<div class="col-md-12" style="max-height: 60px;">
-					<div id= 'CH-barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}'style="max-height: 90px;">
-			       <canvas  id="barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}"style="display: block; width:262px; max-height: 80px;"></canvas>
+				</br>
+			</br>
+			</br>
+			</br>
+			
+				
+					<div id= 'CH-barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}'>
+			       <canvas  id="barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}"></canvas>
 					</div>
 			  </div>
 			  <br>
 			  
-			  <div class="col-md-12"style="max-height: 60px;"  >
-				<div id='CH-barras-persona-acumulada-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}'style="max-height: 90px;">
-				<canvas  id="barras-persona-acumulada-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}"style="display: block; width:262px; max-height: 80px;"></canvas>
-				<!--<canvas id="totalIncomeChart2" style=" width: 376px; height: 90px;"></canvas>-->
-			</div>
-		   </div>
+
                
             </div>
         
@@ -697,12 +703,38 @@ function crearBarra(camaras){
 				yContenido.innerHTML = '';
 				yContenido.innerHTML = '<canvas id="'+id_barra_persona+'"></canvas>';
 
-				var zContenido = document.getElementById('CH-'+id_barra_persona_acumulada);
+				/*var zContenido = document.getElementById('CH-'+id_barra_persona_acumulada);
 				zContenido.innerHTML = '';
-				zContenido.innerHTML = '<canvas id="'+id_barra_persona_acumulada+'"></canvas>';
-
-				setBarra(id_barra,100,zonas_camara[j].nro_personas,3)
-				setBarra(id_barra_persona_acumulada,100,zonas_camara[j].nro_personas,2)
+				zContenido.innerHTML = '<canvas id="'+id_barra_persona_acumulada+'"></canvas>';*/				
+				if(j == 0){
+					data = ["3", "4", "4", "18", "13", "19", "15","16","17","18","19","20"]
+					data2 = ["3", "10", "14", "22", "36", "39", "52","16","17","18","19","20"]	
+				} 
+				
+				if(j == 1){
+					data = ["2", "12", "8", "17", "16", "25", "18","13","12","11","10","9"]
+					data2 = ["2", "19", "25", "29", "48", "52", "69","13","12","11","10","9"]	
+				} 
+				if(j == 2){
+					data = ["4", "1", "2", "17", "9", "15", "6","11","12","11","10","9"]
+					data2 = ["4", "21", "38", "49", "85", "92", "105","13","12","11","10","9"]	
+				} 
+				if(j == 3){
+					data = ["9", "17", "14", "52", "38", "15", "35","13","12","11","10","9"]
+					data2 = ["15", "19", "38", "108", "140", "155", "192","13","12","11","10","9"]	
+				} 
+				
+				if(j == 4){
+					data = ["3", "19", "18", "17", "16", "15", "14","13","12","11","10","9"]
+					data2 = ["3", "19", "18", "17", "16", "15", "14","13","12","11","10","9"]	
+				} 
+				if(j == 5){
+					data = ["2", "19", "18", "17", "16", "15", "14","13","12","11","10","9"]
+					data2 = ["2", "19", "18", "17", "16", "15", "14","13","12","11","10","9"]	
+				} 								
+				
+				setBarra(id_barra,100,zonas_camara[j].nro_personas,3,data)
+				//setBarra(id_barra_persona_acumulada,100,zonas_camara[j].nro_personas,2)
 				//mytotalIncomeChart.destroy();
 				//$('.muestra').remove();
 				/**$(".chart-container").each(function(){
@@ -711,7 +743,7 @@ function crearBarra(camaras){
 				
 				});*/
 				
-				setBarra(id_barra_persona,100,zonas_camara[j].nro_personas,1)
+				setBarra(id_barra_persona,100,zonas_camara[j].nro_personas,1,data2)
 				
 				
 			} 
@@ -722,7 +754,7 @@ function crearBarra(camaras){
 		
 	}
 	
-	function setBarra(id_barra_persona_acumulada,maxValue,value,boolean){
+	function setBarra(id_barra_persona_acumulada,maxValue,value,boolean,array){
 	
 		/*console.log("setCircle 100")
 		console.log("id_circle")
@@ -774,7 +806,7 @@ if (boolean ==2){
 var mytotalIncomeChart = new Chart(totalIncomeChart, {
   type: 'bar',
   data: {
-    labels: ["1H", "4H", "8H", "12H", "16H", "20H", "24H"],
+    labels: ["9", "10", "11", "12", "13", "14", "15","16","17","18","19","20"],
     datasets : [{
       label: "Total aforo",
       backgroundColor: '#ff9e27',
@@ -809,17 +841,19 @@ var mytotalIncomeChart = new Chart(totalIncomeChart, {
 });
 }
 if(boolean ==1){
+	console.log(array)
 var totalIncomeChart = document.getElementById(id_barra).getContext('2d');
 var arrayD=JSON.parse("{{info_grafica_horas}}")
 var mytotalIncomeChart = new Chart(totalIncomeChart, {
   type: 'bar',
+  
   data: {
-    labels:["1H", "4H", "8H", "12H", "16H", "20H", "24H"],
+    labels: ["9", "11", "13", "15", "17", "19", "21"],
     datasets : [{
-      label: "Total aforo",
+      label: "Total Persona",
       backgroundColor: '#ff9e27',
       borderColor: 'rgb(23, 125, 255)',
-      data: arrayD,
+      data: array,
     }],
   },
   options: {
@@ -855,13 +889,13 @@ var arrayE=JSON.parse("{{info_grafica_semana}}")
 console.log(id_barra_persona) 
 var mytotalIncomeChart = new Chart(totalIncomeChart, {
   type: 'bar',
-  data: {
-    labels: ["D", "L", "M", "M", "J", "V", "S"],
+  data: {    
+	labels: ["9", "11", "13", "15", "17", "19", "21"],
     datasets : [{
       label: "Total aforo",
       backgroundColor: '#ff9e27',
       borderColor: 'rgb(23, 125, 255)',
-      data: arrayE,
+      data: array,
     }],
   },
   options: {
