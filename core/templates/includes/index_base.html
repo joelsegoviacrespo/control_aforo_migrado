@@ -96,11 +96,7 @@
 				</div>
 				</div>
 				
-				
-				
-
-					<p>{{variable}}</p>
-				
+				<div style = "height: 54%;">
 				<!--primera tarjeta-->
 					<div class="col-md-12"style="max-height: 55%; z-index:1;" id="tarjeta1">
 						<p  align="center"><samall>Total Aforo</samall></p>
@@ -194,7 +190,7 @@
                   
 				</div>
 				<!--tercera tarjeta-->
-			
+				<div>
 				
 						
 			</div>
@@ -236,17 +232,19 @@
 					   <!-- <b><small>{{camara.nombre_camara}}</small></b>-->
 					   <b><small>Total Aforo</small></b>
                     </div>
-                  </div>
-				<div class="card-footer " style=" border-width:0px !important;">
+				  </div>
+				 
+				<div class="card-footer " style=" border-width:0px !important; height: 50%;">
 					
-					<div id="chart-container" style="display: block; max-height:70%; width: 100%;">
+					<div id="chart-container">
 						<!--problemas con esta tarjeta para cambiar el tamano de la grafica, no obedece a porsentaje de altura y arruina a las otras tarjetass-->
-						<div id="CH-barras-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" style=" max-height:105px;">
+						<div id="CH-barras-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}">
 							
-                  		    <canvas id="barras-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}"></canvas>
+                  		    <canvas id="barras-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" style=" height: 100%; z-index:3;"></canvas>
 					    </div>
-                  	</div>
+					  </div>
 				</div>
+				
 					<!--					
                   <div class="col-md-12"  >
                     <div id="chart-container" >
@@ -283,6 +281,7 @@
 					</div> 
 					
 					<div align="center">
+					
 						Personas: {{zonas_camara.nro_personas}}</p>
 						
 					  </div>
@@ -323,13 +322,15 @@
                 
                 
 		
-				<div class="card-footer "id="chart-container" style=" border-width:0px !important;">
+				<div class="card-footer "id="chart-container" style=" border-width:0px !important; height: 50%;">
+					
 					<div id="chart-container" >
-						  <div id= 'CH-barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}' style="max-height: 90%; z-index:1;">
-							   <canvas  id="barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}"style="width: 100%; height: 105px; z-index:3;"></canvas>
+						  <div id= 'CH-barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}'  >
+							   <canvas  id="barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}"style=" height: 100%; z-index:3;"></canvas>
 						  
 						  </div>
 					  </div>
+					
 					<!--<br>
 					
 					<div class="col-md-12"style="max-height: 60px;"  >
