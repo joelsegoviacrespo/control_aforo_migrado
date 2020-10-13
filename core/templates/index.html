@@ -421,7 +421,7 @@ var d = new Date();
 		
 	</script>
 	<script>
-	var chartInfo=[];
+	
 	var myhtml1= 
 						'<p  align="center"><samall>Total Aforo</samall></p>'+
 						'<div id="chart-container" style="max-height: 50%;z-index:2;" >'+
@@ -489,8 +489,10 @@ var d = new Date();
 	
 
 		function backFunction(){
+			var chartInfo=[];
 			$.ajax({
 		url: '127.0.0.1:8000/back',
+		cache: false,
 		type: 'get', // This is the default though, you don't actually need to always mention it
 		
 		success: function(data) {
@@ -589,15 +591,15 @@ var d = new Date();
 
 		splitarray18.shift()
 $('#tarjeta1').html(myhtml1);
- Recargar(splitarray3,splitarray6,splitarray9,splitarray12,splitarray15,splitarray18)
+ 
 $('#tarjeta2').html(myhtml2);
-Recargar(splitarray3,splitarray6,splitarray9,splitarray12,splitarray15,splitarray18)
+
 $('#tarjeta3').html(myhtml3);
-Recargar(splitarray3,splitarray6,splitarray9,splitarray12,splitarray15,splitarray18)
+
 $('#tarjeta4').html(myhtml4);
-Recargar(splitarray3,splitarray6,splitarray9,splitarray12,splitarray15,splitarray18)
+
 $('#tarjeta5').html(myhtml5);
-Recargar(splitarray3,splitarray6,splitarray9,splitarray12,splitarray15,splitarray18)
+
 $('#tarjeta6').html(myhtml6);
 Recargar(splitarray3,splitarray6,splitarray9,splitarray12,splitarray15,splitarray18)
 		
@@ -614,11 +616,15 @@ return chartInfo;
 			alert('Got an error dude');
 		}
 	}); }
+
+
 
 
 function aheadFunction(){
+	var chartInfo=[];
 			$.ajax({
 		url: '127.0.0.1:8000/ahead',
+		cache: false,
 		type: 'get', // This is the default though, you don't actually need to always mention it
 		
 		success: function(data) {
@@ -649,9 +655,9 @@ function aheadFunction(){
 		var splitarray2 = splitarrayToString.split(']');
 		var splitarrayToString2 = splitarray2.toString();
 
-		var splitarray3 = splitarrayToString2.split(',')
+		var splitarrayA = splitarrayToString2.split(',')
 	
-		splitarray3.shift()
+		splitarrayA.shift()
 
 
 		var array = chartInfo[1]
@@ -662,9 +668,9 @@ function aheadFunction(){
 		var splitarray2 = splitarrayToString.split(']');
 		var splitarrayToString2 = splitarray2.toString();
 	
-		var splitarray6 = splitarrayToString2.split(',')
+		var splitarrayB = splitarrayToString2.split(',')
 	
-		splitarray6.shift()
+		splitarrayB.shift()
 
 
 		var array1 = chartInfo[2]
@@ -675,9 +681,9 @@ function aheadFunction(){
 		var splitarray2 = splitarrayToString.split(']');
 		var splitarrayToString2 = splitarray2.toString();
 	
-		var splitarray9 = splitarrayToString2.split(',')
+		var splitarrayC = splitarrayToString2.split(',')
 		
-		splitarray9.shift()
+		splitarrayC.shift()
 
 		var array1 = chartInfo[3]
 		var splitarray = array1.split('[');
@@ -687,9 +693,9 @@ function aheadFunction(){
 		var splitarray2 = splitarrayToString.split(']');
 		var splitarrayToString2 = splitarray2.toString();
 	
-		var splitarray12 = splitarrayToString2.split(',')
+		var splitarrayD = splitarrayToString2.split(',')
 	
-		splitarray12.shift()
+		splitarrayD.shift()
 
 		var array1 = chartInfo[4]
 		var splitarray = array1.split('[');
@@ -699,9 +705,9 @@ function aheadFunction(){
 		var splitarray2 = splitarrayToString.split(']');
 		var splitarrayToString2 = splitarray2.toString();
 	
-		var splitarray15 = splitarrayToString2.split(',')
+		var splitarrayE = splitarrayToString2.split(',')
 	
-		splitarray15.shift()
+		splitarrayE.shift()
 
 		var array1 = chartInfo[5]
 		var splitarray = array1.split('[');
@@ -711,22 +717,24 @@ function aheadFunction(){
 		var splitarray2 = splitarrayToString.split(']');
 		var splitarrayToString2 = splitarray2.toString();
 	
-		var splitarray18 = splitarrayToString2.split(',')
+		var splitarrayF = splitarrayToString2.split(',')
 		
 
-		splitarray18.shift()
+		splitarrayF.shift()
+
 $('#tarjeta1').html(myhtml1);
- Recargar(splitarray3,splitarray6,splitarray9,splitarray12,splitarray15,splitarray18)
+
 $('#tarjeta2').html(myhtml2);
-Recargar(splitarray3,splitarray6,splitarray9,splitarray12,splitarray15,splitarray18)
+
 $('#tarjeta3').html(myhtml3);
-Recargar(splitarray3,splitarray6,splitarray9,splitarray12,splitarray15,splitarray18)
+
 $('#tarjeta4').html(myhtml4);
-Recargar(splitarray3,splitarray6,splitarray9,splitarray12,splitarray15,splitarray18)
+
 $('#tarjeta5').html(myhtml5);
-Recargar(splitarray3,splitarray6,splitarray9,splitarray12,splitarray15,splitarray18)
+
 $('#tarjeta6').html(myhtml6);
-Recargar(splitarray3,splitarray6,splitarray9,splitarray12,splitarray15,splitarray18)
+
+Recargar(splitarrayA,splitarrayB,splitarrayC,splitarrayD,splitarrayE,splitarrayF)
 		
 
 
@@ -746,10 +754,9 @@ return chartInfo;
 
 
 
-function Recargar(array,array1,array2,array3,array4,array5){
+function Recargar1(arrayA1,arrayB2,arrayC3,arrayD4,arrayE5,arrayF6){
 
-
-	arrayA=array
+arrayA=arrayA1
 	var totalIncomeChart = document.getElementById('totalIncomeChart').getContext('2d');
 		
 		var mytotalIncomeChart = new Chart(totalIncomeChart, {
@@ -787,7 +794,52 @@ function Recargar(array,array1,array2,array3,array4,array5){
 					}]
 				},
 			}
+			
 		});
+}
+function Recargar(array,array1,array2,array3,array4,array5){
+
+arrayA=array
+var totalIncomeChart = document.getElementById('totalIncomeChart').getContext('2d');
+		
+		var mytotalIncomeChart = new Chart(totalIncomeChart, {
+			type: 'bar',
+			data: {
+				labels: ["1-3H", "3-6H", "6-9H", "9-12H", "12-15H", "15-18H", "18-21H","21-24H"],
+				datasets : [{
+					label: "Total aforo",
+					backgroundColor: '#ff9e27',
+					borderColor: 'rgb(23, 125, 255)',
+					data:  arrayA,
+				}],
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				legend: {
+					display: false,
+				},
+				scales: {
+					yAxes: [{
+						ticks: {
+							display: false //this will remove only the label
+						},
+						gridLines : {
+							drawBorder: false,
+							display : false
+						}
+					}],
+					xAxes : [ {
+						gridLines : {
+							drawBorder: false,
+							display : false
+						}
+					}]
+				},
+			}
+			
+		});
+		
 arrayB=array1
 
 		var totalIncomeChart1 = document.getElementById('totalIncomeChart1').getContext('2d');
@@ -828,6 +880,9 @@ arrayB=array1
 				},
 			}
 		});
+		mytotalIncomeChart.update();
+	mytotalIncomeChart1.update();
+		
 		arrayC = array2
 		var totalIncomeChart2 = document.getElementById('totalIncomeChart2').getContext('2d');
 		
@@ -986,8 +1041,6 @@ arrayD = array3
 				},
 			}
 		});
-		
-
 }
 
 </script>
