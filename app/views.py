@@ -204,11 +204,19 @@ def grafica_semana_actual_acumulada(mydate, mydate1 ,mydate2,fecha_limite,fecha_
     datos_semana_acumuladas= grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,seriales)
     print(datos_semana_acumuladas)
     datosSemana=[]
+    
     a=0
+
     today = date.today()
+    myLocalDate = str(today.strftime("%Y-%m-%d"))
     nw=today.weekday()
-    if nw == 6:
-        nw= -1
+
+    if (mydate != myLocalDate):
+        print('no es el dia de hoy')
+        nw= 5
+    else:
+        if nw == 6:
+            nw= -1
     #print(nw)
     diaDeHoy = (int(today.strftime("%d")))
     for i in datos_semana_acumuladas:
@@ -1040,6 +1048,8 @@ def grafica_horas(mydate):
 #HORAS ACUMULADAS--------------------------------------------------------------------------------------------------------------------------------
         
 def grafica_horas_acumuladas(mydate):
+    today = date.today()
+    myLocalDate = str(today.strftime("%Y-%m-%d"))
     datosHoras=[]
     datos_horas_acumuladas = grafica_horas(mydate)
     now = datetime.now()
@@ -1059,26 +1069,30 @@ def grafica_horas_acumuladas(mydate):
     myrefHour8=datetime.strptime('21:59:59',"%H:%M:%S").time()
     nw=3
     #print(myHoraDeecremental, '      ',myrefHour)
-    if (myHoraDeecremental >= myrefHour and myHoraDeecremental < myrefHour1):
-        nw = 1
-    elif (myHoraDeecremental >= myrefHour1 and myHoraDeecremental < myrefHour2):
-        nw =2
-    elif (myHoraDeecremental >= myrefHour2 and myHoraDeecremental < myrefHour3):
-        nw = 3
-        #print('se estan comparando')
-    elif (myHoraDeecremental >= myrefHour3 and myHoraDeecremental < myrefHour4):
-        nw = 4
-    elif (myHoraDeecremental >= myrefHour4 and myHoraDeecremental < myrefHour5):
-        nw = 5
-        #print('se estan comparando')
-    elif (myHoraDeecremental >= myrefHour5 and myHoraDeecremental < myrefHour6):
-        nw = 6
-        #print('se estan comparando')
-    elif (myHoraDeecremental >= myrefHour6 and myHoraDeecremental < myrefHour7):
-        nw = 7
-        #print('se estan comparando')
-    elif (myHoraDeecremental >= myrefHour7 and myHoraDeecremental < myrefHour8):
-        nw = 8
+    if(mydate == myLocalDate ):
+        if (myHoraDeecremental >= myrefHour and myHoraDeecremental < myrefHour1):
+            nw = 1
+        elif (myHoraDeecremental >= myrefHour1 and myHoraDeecremental < myrefHour2):
+            nw =2
+        elif (myHoraDeecremental >= myrefHour2 and myHoraDeecremental < myrefHour3):
+            nw = 3
+            #print('se estan comparando')
+        elif (myHoraDeecremental >= myrefHour3 and myHoraDeecremental < myrefHour4):
+            nw = 4
+        elif (myHoraDeecremental >= myrefHour4 and myHoraDeecremental < myrefHour5):
+            nw = 5
+            #print('se estan comparando')
+        elif (myHoraDeecremental >= myrefHour5 and myHoraDeecremental < myrefHour6):
+            nw = 6
+            #print('se estan comparando')
+        elif (myHoraDeecremental >= myrefHour6 and myHoraDeecremental < myrefHour7):
+            nw = 7
+            #print('se estan comparando')
+        elif (myHoraDeecremental >= myrefHour7 and myHoraDeecremental < myrefHour8):
+            nw = 8
+    else:
+        print('es otra fecha')
+        nw=8
     
     a=0
     for i in datos_horas_acumuladas:
@@ -1101,6 +1115,7 @@ def grafica_horas_acumuladas(mydate):
             a=a+1
     #print('datosHoras')
    # print(datosHoras)
+    print(datosHoras)
     return datosHoras
 
 
@@ -1193,9 +1208,9 @@ def index(request):
     info_grafica_semana = grafica_semana(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist)
     info_grafica_semana_acumulada = grafica_semana_actual_acumulada(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist)
     #-------------Para las graficas de la tarjeta superior derecha (ESTE MES)------------------------
-    MyesteMesAcumulado = esteMesAcumulado(mylist)
-    esteMes = esteMesActual(mylist)
     
+    esteMes = esteMesActual(mylist)
+    MyesteMesAcumulado = esteMesAcumulado(mylist)
     
 
     return render(request, "index.html",  {'camaras':camarasAll,'info_grafica_semana': info_grafica_semana,'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado,'info_grafica_semana_acumulada':info_grafica_semana_acumulada,'estemes':esteMes,'estemesacumulado':MyesteMesAcumulado})
@@ -1223,33 +1238,66 @@ def pages(request):
         return HttpResponse(html_template.render(context, request))
 
 
+
+
+indiceTiempo=0 
 @login_required(login_url="/login/")
 def back(request):
-  
-    #print('HEEEEEEEEEEEEEEY')
-    hoy = date.today()
-    today = date.today()
-    mydate = str((today-timedelta(weeks=1)).strftime("%Y-%m-%d"))
+    global indiceTiempo
+    indiceTiempo = indiceTiempo -1
+    indiceTiempoNP= abs(indiceTiempo)
 
-    info_grafica_horas = [1,2,3,4,5,6,7,8]
+    mySerial=['Q2GV-4YBM-YWWJ']
+    mylist= mySerial
+
+
+    hoy = date.today()
+    hoy0= datetime.today()
+    hoy1= datetime.today()
+    today = date.today()
+    mydate = str((today-timedelta(days=indiceTiempoNP)).strftime("%Y-%m-%d"))
+    mydate1 = (datetime.today()-timedelta(days=indiceTiempoNP))
+    mydate2 = (datetime.today()-timedelta(days=indiceTiempoNP)).strftime('%A')
+    fecha_limite0 = hoy0-timedelta(days=indiceTiempoNP)
+    fecha_limite_minima0 =(hoy0-timedelta(days=indiceTiempo))
+    fecha_limite_minima1 =(hoy1-timedelta(days=indiceTiempo))
+    
+    fecha_limite =(hoy1-timedelta(days=indiceTiempo))
+
+
+    info_grafica_horas = grafica_horas(mydate)
     info_grafica_horas_acumulado= grafica_horas_acumuladas(mydate)
 
-    info_grafica_semana=[1,2,3,4,5,6,7]
-    info_grafica_semana_acumulada=[1,2,3,4,5,6,7]
-    esteMes=[1,2,3,4,5,6,7,8,9,10,11,12,13,15,11,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-    MyesteMesAcumulado=[1,2,3,4,5,6,7,8,9,10,11,12,13,15,11,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+
+
+    info_grafica_semana= grafica_semana(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist)
+    info_grafica_semana_acumulada= grafica_semana_actual_acumulada(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist)
+
+
+    esteMes= esteMesActual(mylist)
+  
+    MyesteMesAcumulado= esteMesAcumulado(mylist)
     #print(info_grafica_horas)
     #print(info_grafica_horas_acumulado)
+    print('HOLAAAAAAAAAAAAAAAAAAA')
+    print( info_grafica_horas)
+    print(info_grafica_horas_acumulado)
     return_sub_array = {'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado,' info_grafica_semana': info_grafica_semana,'info_grafica_semana_acumulada':info_grafica_semana_acumulada,'estemes':esteMes,'estemesacumulado':MyesteMesAcumulado}
-   
+    print('return_sub_array')
+    print(return_sub_array)
     return HttpResponse( json.dumps(return_sub_array))
 
 @login_required(login_url="/login/")
 def ahead(request):
-    #print('HEEEEEEEEEEEEEEY')
+    global indiceTiempo
+    indiceTiempo = indiceTiempo +1
+    indiceTiempoPN= abs(indiceTiempo)
+    print('indiceTiempo')
+    print( indiceTiempo)
     hoy = date.today()
     today = date.today()
     mydate = str((today-timedelta(weeks=1)).strftime("%Y-%m-%d"))
+
 
     info_grafica_horas = [8,7,6,5,4,3,2,1]
     info_grafica_horas_acumulado= grafica_horas_acumuladas(mydate)

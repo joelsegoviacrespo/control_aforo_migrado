@@ -25,8 +25,8 @@
 		var a = document.getElementById("tarjeta4");
 		var b = document.getElementById("tarjeta5");
 		var c = document.getElementById("tarjeta6");	
-
-
+		 
+		var buttonCounter = 0
 
 
 		
@@ -423,47 +423,51 @@ var d = new Date();
 	<script>
 	
 	var myhtml1= 
-						'<p  align="center"><samall>Total Aforo</samall></p>'+
-						'<div id="chart-container" style="max-height: 50%;z-index:2;" >'+
+	'<p  align="center"><samall>Total Persona</samall></p>'+
+					
+                   ' <div id="chart-container" style="max-height: 68% ;z-index:2;">'+
 						
-							'<canvas id="totalIncomeChart" style=" width: 100%; height: 50%; z-index:3;  "></canvas>'+
+                    	'<canvas id="totalIncomeChart" style=" width: 100%; height:100%;z-index:3;  "></canvas>'+
 							
 							
 						'</div>'
+
 						var myhtml2= 
 
-						'<p  align="center"><samall>Total Persona</samall></p>'+
-						'<div id="chart-container" style="max-height: 50%;z-index:2;" >'+
-						
-							'<canvas id="totalIncomeChart1" style=" width: 100%; height: 50%; z-index:3;  "></canvas>'+
+						'<p  align="center"><samall>Esta Semana</samall></p>'+
+                ' <div id="chart-container" style="max-height: 68% ;z-index:2;" >'+
+					
+					'<canvas id="totalIncomeChart1" style=" width: 100%; height:100%;z-index:3;  "></canvas>'+
 							
 							
 						'</div>'
 					
 					
 						var myhtml3= 
-						'<p  align="center"><samall>Esta Semana</samall></p>'+
-						'<div id="chart-container" style="max-height: 50%;z-index:2;" >'+
+						'<p  align="center"><samall>Esta Semana Acumulada</samall></p>'+
+					
+                  '<div id="chart-container" style="max-height: 68% ;z-index:2;">'+
 						
-							'<canvas id="totalIncomeChart2" style=" width: 100%; height: 50%; z-index:3;  "></canvas>'+
+                      '<canvas id="totalIncomeChart2" style=" width: 100%; height:100%;z-index:3;  "></canvas>'+
 							
 							
 						'</div>'
 						var myhtml4= 
 					
-						'<p  align="center"><samall>Esta Semana Acumulada</samall></p>'+
-						'<div id="chart-container" style="max-height: 50%;z-index:2;" >'+
-						
-							'<canvas id="totalIncomeChart3" style=" width: 100%; height: 50%; z-index:3;  "></canvas>'+
+						'<p  align="center"><samall>Este Mes</samall></p>'+
+                  '<div id="chart-container" style="max-height: 68% ;z-index:2;" >'+
+					
+					'<canvas id="totalIncomeChart3" style=" width: 100%; height:100%;z-index:3;  "></canvas>'+
 							
 							
 						'</div>'
 						var myhtml5= 
 					
-						'<p  align="center"><samall>Este Mes</samall></p>'+
-						'<div id="chart-container" style="max-height: 50%;z-index:2;" >'+
+						'<p  align="center"><samall>El Mes Pasado</samall></p>'+
+					
+                    '<div id="chart-container" style="max-height: 68% ;z-index:2;">'+
 						
-							'<canvas id="totalIncomeChart4" style=" width: 100%; height: 50%; z-index:3;  "></canvas>'+
+                      '<canvas id="totalIncomeChart4" style=" width: 100%; height:100%;z-index:3;  "></canvas>'+
 							
 							
 						'</div>'
@@ -489,6 +493,10 @@ var d = new Date();
 	
 
 		function backFunction(){
+			
+			buttonCounter = buttonCounter-1
+			
+	
 			var chartInfo=[];
 			$.ajax({
 		url: '127.0.0.1:8000/back',
@@ -529,7 +537,8 @@ var d = new Date();
 		splitarray3.shift()
 
 
-		var array = chartInfo[1]
+
+		var array1 = chartInfo[1]
 		var splitarray = array1.split('[');
 	
 		var splitarrayToString = splitarray.toString();
@@ -565,7 +574,8 @@ var d = new Date();
 		var splitarray12 = splitarrayToString2.split(',')
 	
 		splitarray12.shift()
-
+	
+		
 		var array1 = chartInfo[4]
 		var splitarray = array1.split('[');
 	
@@ -577,6 +587,7 @@ var d = new Date();
 		var splitarray15 = splitarrayToString2.split(',')
 	
 		splitarray15.shift()
+	
 
 		var array1 = chartInfo[5]
 		var splitarray = array1.split('[');
@@ -590,6 +601,7 @@ var d = new Date();
 		
 
 		splitarray18.shift()
+		
 $('#tarjeta1').html(myhtml1);
  
 $('#tarjeta2').html(myhtml2);
@@ -601,6 +613,8 @@ $('#tarjeta4').html(myhtml4);
 $('#tarjeta5').html(myhtml5);
 
 $('#tarjeta6').html(myhtml6);
+
+
 Recargar(splitarray3,splitarray6,splitarray9,splitarray12,splitarray15,splitarray18)
 		
 
@@ -615,12 +629,16 @@ return chartInfo;
 		failure: function(data) { 
 			alert('Got an error dude');
 		}
-	}); }
+	}); 
+	}
 
 
 
 
 function aheadFunction(){
+	buttonCounter = buttonCounter+1
+	
+	
 	var chartInfo=[];
 			$.ajax({
 		url: '127.0.0.1:8000/ahead',
@@ -748,58 +766,18 @@ return chartInfo;
 		failure: function(data) { 
 			alert('Got an error dude');
 		}
-	}); }
+	});
+	}
 
 
 
 
 
-function Recargar1(arrayA1,arrayB2,arrayC3,arrayD4,arrayE5,arrayF6){
 
-arrayA=arrayA1
-	var totalIncomeChart = document.getElementById('totalIncomeChart').getContext('2d');
-		
-		var mytotalIncomeChart = new Chart(totalIncomeChart, {
-			type: 'bar',
-			data: {
-				labels: ["1-3H", "3-6H", "6-9H", "9-12H", "12-15H", "15-18H", "18-21H","21-24H"],
-				datasets : [{
-					label: "Total aforo",
-					backgroundColor: '#ff9e27',
-					borderColor: 'rgb(23, 125, 255)',
-					data:  arrayA,
-				}],
-			},
-			options: {
-				responsive: true,
-				maintainAspectRatio: false,
-				legend: {
-					display: false,
-				},
-				scales: {
-					yAxes: [{
-						ticks: {
-							display: false //this will remove only the label
-						},
-						gridLines : {
-							drawBorder: false,
-							display : false
-						}
-					}],
-					xAxes : [ {
-						gridLines : {
-							drawBorder: false,
-							display : false
-						}
-					}]
-				},
-			}
-			
-		});
-}
 function Recargar(array,array1,array2,array3,array4,array5){
 
 arrayA=array
+
 var totalIncomeChart = document.getElementById('totalIncomeChart').getContext('2d');
 		
 		var mytotalIncomeChart = new Chart(totalIncomeChart, {
