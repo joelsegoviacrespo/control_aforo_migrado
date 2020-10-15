@@ -24,7 +24,8 @@
 		var z = document.getElementById("tarjeta3");
 		var a = document.getElementById("tarjeta4");
 		var b = document.getElementById("tarjeta5");
-		var c = document.getElementById("tarjeta6");	
+		var c = document.getElementById("tarjeta6");
+		document.getElementById("right").disabled=true;	
 		 
 		var buttonCounter = 0
 
@@ -494,7 +495,17 @@ var d = new Date();
 
 		function backFunction(){
 			
-			buttonCounter = buttonCounter-1
+			if(document.getElementById('1').clicked == true || document.getElementById('2').clicked == true||document.getElementById('3').clicked == true){
+		pass
+	}
+
+	else{ 
+		
+	buttonCounter = buttonCounter-1
+	if (buttonCounter < 0){
+		document.getElementById("right").disabled=false;
+	}
+	}
 			
 	
 			var chartInfo=[];
@@ -636,8 +647,16 @@ return chartInfo;
 
 
 function aheadFunction(){
+	if(document.getElementById('1').clicked == true || document.getElementById('2').clicked == true||document.getElementById('3').clicked == true){
+		pass
+	}
+
+	else{ 
 	buttonCounter = buttonCounter+1
-	
+	if (buttonCounter >= 0){
+		document.getElementById("right").disabled=true;
+	}
+	}
 	
 	var chartInfo=[];
 			$.ajax({
