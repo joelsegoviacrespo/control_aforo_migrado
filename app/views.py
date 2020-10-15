@@ -244,15 +244,50 @@ def grafica_semana_actual_acumulada(mydate, mydate1 ,mydate2,fecha_limite,fecha_
     return datosSemana
 
 
-def esteMesActual(seriales):
+def esteMesActual(seriales, mydate, boolean):
     #inicio el array
-    
-    #obtengo la cantidad de dias por mes
-    
     today = date.today()
-    weekDay,myMonthrange=monthrange(int(today.strftime("%Y")), int(today.strftime("%m")))
-    #obtengo el dia de hoy
-    diaDeHoy = (int(today.strftime("%d")))
+    i = 0
+    aux = 0
+    myLocalDate = str(today.strftime("%m"))
+    fechaAComparar = datetime.strptime(mydate, '%Y-%m-%d')
+    ready = str(fechaAComparar.strftime("%m"))
+    print(myLocalDate, '*******', ready)
+    if (myLocalDate != ready and boolean == True ):
+        
+        print('NO ESTAMOS EN LA MISMA SEMANA')
+        if(i == aux):
+            i=i+1
+            date_time_obj = datetime.strptime(mydate, '%Y-%m-%d')
+            #obtengo la cantidad de dias por mes
+            weekDay,myMonthrange=monthrange(int(date_time_obj.strftime("%Y")),int(date_time_obj.strftime("%m")))
+            print('NWeekDay,NMonthRange')
+            print(weekDay,myMonthrange)
+            dateToFunction(today-timedelta(month=i))
+        else:
+            myLocalDate = ready
+            aux = i
+
+    elif(myLocalDate != ready and boolean == False ):
+        print('NO ESTAMOS EN LA MISMA SEMANA')
+        if(i == aux):
+            i=i+1
+            date_time_obj = datetime.strptime(mydate, '%Y-%m-%d')
+            #obtengo la cantidad de dias por mes
+            weekDay,myMonthrange=monthrange(int(date_time_obj.strftime("%Y")),int(date_time_obj.strftime("%m")))
+            print('NWeekDay,NMonthRange')
+            print(weekDay,myMonthrange)
+            dateToFunction(today+timedelta(month=i))
+        else:
+            myLocalDate = ready
+            aux = i     
+
+    else:
+        print('ESTAMOS EN LA MISMA SEMANA')    
+        today = date.today()
+        weekDay,myMonthrange=monthrange(int(today.strftime("%Y")), int(today.strftime("%m")))
+        #obtengo el dia de hoy
+        diaDeHoy = (int(today.strftime("%d")))
 
     #print(int(today.strftime("%Y")))
     #print(int(today.strftime("%m")))
@@ -287,9 +322,13 @@ def esteMesActual(seriales):
     #print(datosMes)
     return datosMes
 
-def esteMesAcumulado(seriales):
+def esteMesAcumulado(seriales,mydate,state):
     #inicio el array
-    
+    date_time_obj = datetime.strptime(mydate, '%Y-%m-%d')
+    #obtengo la cantidad de dias por mes
+    NWeekDay,NMonthRange=monthrange(int(date_time_obj.strftime("%Y")),int(date_time_obj.strftime("%m")))
+    print('NWeekDay,NMonthRange')
+    print(NWeekDay,NMonthRange)
     #obtengo la cantidad de dias por mes
     
     today = date.today()
@@ -1209,8 +1248,8 @@ def index(request):
     info_grafica_semana_acumulada = grafica_semana_actual_acumulada(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist)
     #-------------Para las graficas de la tarjeta superior derecha (ESTE MES)------------------------
     
-    esteMes = esteMesActual(mylist)
-    MyesteMesAcumulado = esteMesAcumulado(mylist)
+    esteMes = esteMesActual(mylist,mydate,1)
+    MyesteMesAcumulado = esteMesAcumulado(mylist,mydate,1)
     
 
     return render(request, "index.html",  {'camaras':camarasAll,'info_grafica_semana': info_grafica_semana,'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado,'info_grafica_semana_acumulada':info_grafica_semana_acumulada,'estemes':esteMes,'estemesacumulado':MyesteMesAcumulado})
@@ -1274,41 +1313,53 @@ def back(request):
     info_grafica_semana_acumulada= grafica_semana_actual_acumulada(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist)
 
 
-    esteMes= esteMesActual(mylist)
+    esteMes= esteMesActual(mylist,mydate,False)
   
-    MyesteMesAcumulado= esteMesAcumulado(mylist)
+    MyesteMesAcumulado= esteMesAcumulado(mylist,mydate,False)
     #print(info_grafica_horas)
     #print(info_grafica_horas_acumulado)
-    print('HOLAAAAAAAAAAAAAAAAAAA')
-    print( info_grafica_horas)
-    print(info_grafica_horas_acumulado)
+    #print('HOLAAAAAAAAAAAAAAAAAAA')
+    #print( info_grafica_horas)
+    #print(info_grafica_horas_acumulado)
     return_sub_array = {'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado,' info_grafica_semana': info_grafica_semana,'info_grafica_semana_acumulada':info_grafica_semana_acumulada,'estemes':esteMes,'estemesacumulado':MyesteMesAcumulado}
-    print('return_sub_array')
-    print(return_sub_array)
+    #print('return_sub_array')
+    #print(return_sub_array)
     return HttpResponse( json.dumps(return_sub_array))
 
 @login_required(login_url="/login/")
 def ahead(request):
     global indiceTiempo
     indiceTiempo = indiceTiempo +1
-    indiceTiempoPN= abs(indiceTiempo)
-    print('indiceTiempo')
-    print( indiceTiempo)
+    indiceTiempoNP= abs(indiceTiempo)   
+    mySerial=['Q2GV-4YBM-YWWJ']
+    mylist= mySerial    
     hoy = date.today()
+    hoy0= datetime.today()
+    hoy1= datetime.today()
     today = date.today()
-    mydate = str((today-timedelta(weeks=1)).strftime("%Y-%m-%d"))
+    mydate = str((today+timedelta(days=indiceTiempoNP)).strftime("%Y-%m-%d"))
+    mydate1 = (datetime.today()+timedelta(days=indiceTiempoNP))
+    mydate2 = (datetime.today()+timedelta(days=indiceTiempoNP)).strftime('%A')
+    fecha_limite0 = hoy0-timedelta(days=indiceTiempoNP)
+    fecha_limite_minima0 =(hoy0+timedelta(days=indiceTiempo))
+    fecha_limite_minima1 =(hoy1+timedelta(days=indiceTiempo))
 
+    fecha_limite =(hoy1-timedelta(days=indiceTiempo))   
+    info_grafica_horas = grafica_horas(mydate)
+    info_grafica_horas_acumulado= grafica_horas_acumuladas(mydate)  
+    info_grafica_semana= grafica_semana(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist)
+    info_grafica_semana_acumulada= grafica_semana_actual_acumulada(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist)  
+    esteMes= esteMesActual(mylist,mydate,True)
 
-    info_grafica_horas = [8,7,6,5,4,3,2,1]
-    info_grafica_horas_acumulado= grafica_horas_acumuladas(mydate)
-
-    info_grafica_semana=[7,6,5,4,3,2,1]
-    info_grafica_semana_acumulada=[7,6,5,4,3,2,1]
-    esteMes=[1,2,3,4,5,6,7,8,9,10,11,12,13,15,11,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9]
-    MyesteMesAcumulado=[1,2,3,4,5,6,7,8,9,10,11,12,13,15,11,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9]
+    MyesteMesAcumulado= esteMesAcumulado(mylist,mydate,True)
     #print(info_grafica_horas)
     #print(info_grafica_horas_acumulado)
-    return_sub_array = {'info_grafica_horas1':info_grafica_horas,'info_grafica_horas_acumulado1':info_grafica_horas_acumulado,' info_grafica_semana1': info_grafica_semana,'info_grafica_semana_acumulada1':info_grafica_semana_acumulada,'estemes1':esteMes,'estemesacumulado1':MyesteMesAcumulado}
+    #print('HOLAAAAAAAAAAAAAAAAAAA')
+    #print( info_grafica_horas)
+    #print(info_grafica_horas_acumulado)
+    return_sub_array = {'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado,' info_grafica_semana': info_grafica_semana,'info_grafica_semana_acumulada':info_grafica_semana_acumulada,'estemes':esteMes,'estemesacumulado':MyesteMesAcumulado}
+    #print('return_sub_array')
+    #print(return_sub_array)
             
     
     return HttpResponse( json.dumps(return_sub_array))
