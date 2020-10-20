@@ -130,7 +130,7 @@ def grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,ser
                                 dias_semana.append(0)
                                 dias_semana.append(0)
                                 dias_semana.append(0)
-                                print(dias_semana)
+                                
                                 #print('------------------ esto es la lista en total---', dias_semana, 'de este dia', e.fecha,'este valor',e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
                                 return dias_semana
 
@@ -148,7 +148,7 @@ def grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,ser
 
                         if datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Monday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal1 :
                           
-                            print('se ejecuta el lunes') # print('se agrego al dia lunes el valor',e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
+                            # print('se agrego al dia lunes el valor',e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
                             dias_semana.pop(1)
 
                             dias_semana.insert(1,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
@@ -156,14 +156,14 @@ def grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,ser
 
                         if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Tuesday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal2) :
                             dias_semana.pop(2)
-                            print('se ejecuta el martes')
+                            
 
                             dias_semana.insert(2,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
                             varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
 
                         if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Thursday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal3)  :
                             dias_semana.pop(3)
-                            print('se ejecuta el miercoles')
+                           
 
                             dias_semana.insert(3,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
                             varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
@@ -188,7 +188,7 @@ def grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,ser
                             varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
 
                         if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Sunday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal0):
-                            print('se ejecuta el domingo')
+                           
                             dias_semana.pop(0)
                             #print('se agrego al dia domingo el valor',e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
                             dias_semana.insert(0,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
@@ -202,7 +202,7 @@ def grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,ser
 
 def grafica_semana_actual_acumulada(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,seriales):
     datos_semana_acumuladas= grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,seriales)
-    print(datos_semana_acumuladas)
+    
     datosSemana=[]
     
     a=0
@@ -212,7 +212,7 @@ def grafica_semana_actual_acumulada(mydate, mydate1 ,mydate2,fecha_limite,fecha_
     nw=today.weekday()
 
     if (mydate != myLocalDate):
-        print('no es el dia de hoy')
+        #print('no es el dia de hoy')
         nw= 5
     else:
         if nw == 6:
@@ -252,38 +252,36 @@ def esteMesActual(seriales, mydate, boolean):
     myLocalDate = str(today.strftime("%m"))
     fechaAComparar = datetime.strptime(mydate, '%Y-%m-%d')
     ready = str(fechaAComparar.strftime("%m"))
-    print(myLocalDate, '*******', ready)
+    
     if (myLocalDate != ready and boolean == True ):
         
-        print('NO ESTAMOS EN LA MISMA SEMANA')
+ 
         if(i == aux):
             i=i+1
             date_time_obj = datetime.strptime(mydate, '%Y-%m-%d')
             #obtengo la cantidad de dias por mes
             weekDay,myMonthrange=monthrange(int(date_time_obj.strftime("%Y")),int(date_time_obj.strftime("%m")))
-            print('NWeekDay,NMonthRange')
-            print(weekDay,myMonthrange)
+         
             dateToFunction(today-timedelta(month=i))
         else:
             myLocalDate = ready
             aux = i
 
     elif(myLocalDate != ready and boolean == False ):
-        print('NO ESTAMOS EN LA MISMA SEMANA')
+        
         if(i == aux):
             i=i+1
             date_time_obj = datetime.strptime(mydate, '%Y-%m-%d')
             #obtengo la cantidad de dias por mes
             weekDay,myMonthrange=monthrange(int(date_time_obj.strftime("%Y")),int(date_time_obj.strftime("%m")))
-            print('NWeekDay,NMonthRange')
-            print(weekDay,myMonthrange)
+            
             dateToFunction(today+timedelta(month=i))
         else:
             myLocalDate = ready
             aux = i     
 
     else:
-        print('ESTAMOS EN LA MISMA SEMANA')    
+         
         today = date.today()
         weekDay,myMonthrange=monthrange(int(today.strftime("%Y")), int(today.strftime("%m")))
         #obtengo el dia de hoy
@@ -327,8 +325,7 @@ def esteMesAcumulado(seriales,mydate,state):
     date_time_obj = datetime.strptime(mydate, '%Y-%m-%d')
     #obtengo la cantidad de dias por mes
     NWeekDay,NMonthRange=monthrange(int(date_time_obj.strftime("%Y")),int(date_time_obj.strftime("%m")))
-    print('NWeekDay,NMonthRange')
-    print(NWeekDay,NMonthRange)
+    
     #obtengo la cantidad de dias por mes
     
     today = date.today()
@@ -1130,7 +1127,7 @@ def grafica_horas_acumuladas(mydate):
         elif (myHoraDeecremental >= myrefHour7 and myHoraDeecremental < myrefHour8):
             nw = 8
     else:
-        print('es otra fecha')
+        
         nw=8
     
     a=0
@@ -1154,7 +1151,7 @@ def grafica_horas_acumuladas(mydate):
             a=a+1
     #print('datosHoras')
    # print(datosHoras)
-    print(datosHoras)
+    #print(datosHoras)
     return datosHoras
 
 
@@ -1215,7 +1212,7 @@ def index(request):
                                 MyInstalacion= i.nombre_comercial
                                 #print(MyInstalacion)
                             else:
-                                print('***************************no se parece')
+                                print('')
                                 pass
                             
                             if (Camaras.objects.filter(instalacion__startswith={'nombre': MyInstalacion}) is not None):

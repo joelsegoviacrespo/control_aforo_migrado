@@ -89,9 +89,9 @@
 
 
 							<div class="input-group">
-								<button class="btn btn-dark float-left fas fa-angle-left btn-sm "style="margin-left:13%;" onclick="leftPressed();backFunction();" id="left"></button>
-									<input id="date" type="textbox" placeholder="City or Zipcode" class="form-control" readonly="true"    value="hola">
-								<button class="btn btn-dark float-right fas fa-angle-right btn-sm "style="margin-right:13%;" onclick="rightPressed();aheadFunction();"id="right"></button>	
+								<button class="btn  float-left fas fa-angle-left btn-sm "style="margin-left:13%;color:white;" onclick="leftPressed();backFunction();" id="left"></button>
+									<input id="date" type="textbox" placeholder="City or Zipcode" class="form-control" readonly="true"   style="text-align: center; " value="hola">
+								<button class="btn  float-right fas fa-angle-right btn-sm "style="margin-right:13%;color:white;" onclick="rightPressed();aheadFunction();"id="right"></button>	
 							</div>
 
 							<button id="1"class="btn success " type="button" onclick="myFunctionToday()">Día</button>
@@ -106,7 +106,8 @@
 					
 				</div>
 				</div>
-				
+				<br>
+				<br>
 				<div style = "height: 54%;">
 				<!--primera tarjeta-->
 					<div class="col-md-12"style="max-height: 55%; z-index:1;" id="tarjeta1">
@@ -1045,17 +1046,21 @@ c.style.display = "block";
 <style>
 	
 .success{
-  border: 3px solid rgb(34, 92, 167);
-  background-color: rgb(45, 128, 234);
-  color: white;
+  border: 0px solid rgb(34, 92, 167);
+  background-color: rgb(34, 92, 167);
+  color: rgb(77, 157, 232);
   
   font-size: 16px;
+  color:aliceblue;
   cursor: pointer;
   
    
   
 }
-
+.float-left, .float-right{
+border:none;
+background-color: rgb(34, 92, 167);
+}
 
 	
 
