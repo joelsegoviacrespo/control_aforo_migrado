@@ -37,6 +37,11 @@
 		var arrayD=JSON.parse("{{info_grafica_semana_acumulada}}")
 		var arrayE=JSON.parse("{{estemes}}")
 		var arrayF=JSON.parse("{{estemesacumulado}}")
+		var today = new Date();
+
+		var dateString = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
+		$('#date').val(dateString);
+		
 		function daysInMonth (month, year) {
     return new Date(year, month, 0).getDate();
 }
@@ -422,6 +427,10 @@ var d = new Date();
 		
 	</script>
 	<script>
+var today = new Date();
+var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+$('#date').val(stringify(date));
+
 	
 	var myhtml1= 
 	'<p  align="center"><samall>Total Persona</samall></p>'+
@@ -485,6 +494,7 @@ var d = new Date();
 
 
 
+
 	
 
 
@@ -501,7 +511,7 @@ var d = new Date();
 
 	else{ 
 		
-	buttonCounter = buttonCounter-1
+		buttonCounter = buttonCounter-1
 	if (buttonCounter < 0){
 		document.getElementById("right").disabled=false;
 	}
@@ -509,6 +519,7 @@ var d = new Date();
 			
 	
 			var chartInfo=[];
+			
 			$.ajax({
 		url: '127.0.0.1:8000/back',
 		cache: false,
@@ -612,6 +623,20 @@ var d = new Date();
 		
 
 		splitarray18.shift()
+
+		var array10 = chartInfo[6]
+		var splitarray = array10.split('"');
+		var splitarrayToString = splitarray.toString();
+		var splitarray2 = splitarrayToString.split('"');
+		var splitarrayToString2 = splitarray2.toString();
+		var splitarray20 = splitarrayToString2.split(',')
+		splitarray20.shift()
+		splitarray20.pop()
+
+
+		alert(splitarray20)
+		
+		
 		
 $('#tarjeta1').html(myhtml1);
  
@@ -624,6 +649,12 @@ $('#tarjeta4').html(myhtml4);
 $('#tarjeta5').html(myhtml5);
 
 $('#tarjeta6').html(myhtml6);
+
+
+$('#date').val(splitarray20);
+
+
+
 
 
 Recargar(splitarray3,splitarray6,splitarray9,splitarray12,splitarray15,splitarray18)

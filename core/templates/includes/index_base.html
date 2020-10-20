@@ -77,22 +77,33 @@
                 
                 <div class="row">
                     <div class="col text-center mb-1 " style="max-height: 30%; max-width: 100%;">
-						<table class=buttons> <tr>
-						<div class="btn-group m-3  " role="group" aria-label="First group"style="center">
-							<button id="1"class="btn success mr-3 btn-lg" type="button" onclick="myFunctionToday()">Hoy</button>
-							<button id="2"class="btn success mr-3 btn-lg" type="button"onclick="myFunctionThisWeek()" >Esta Semana</button>
-							<button id="3"class="btn success btn-lg" type="button" onclick="myFunctionThisMonth()">Este Mes</button>
+						
+
+
+							
+								
+
+
+
+						<div class="btn-group   " role="group" aria-label="Basic example">
+
+
+							<div class="input-group">
+								<button class="btn btn-dark float-left fas fa-angle-left btn-sm "style="margin-left:13%;" onclick="leftPressed();backFunction();" id="left"></button>
+									<input id="date" type="textbox" placeholder="City or Zipcode" class="form-control" readonly="true"    value="hola">
+								<button class="btn btn-dark float-right fas fa-angle-right btn-sm "style="margin-right:13%;" onclick="rightPressed();aheadFunction();"id="right"></button>	
+							</div>
+
+							<button id="1"class="btn success " type="button" onclick="myFunctionToday()">Día</button>
+							<button id="2"class="btn success" type="button"onclick="myFunctionThisWeek()">Semana</button>
+							<button id="3"class="btn success " type="button" onclick="myFunctionThisMonth()">Mes</button>
 						<!--<button id= "2" type="button" class="btn btn-primary min-vw-25 mr-3 "  onclick="myFunctionThisWeek()">Esta Semana</button>
 						<button id= "3" type="button" class="btn btn-primary min-vw-25  "onclick="myFunctionThisMonth()" >Este Mes</button>-->
-					</div></table>
-					
-					<div class="row">
-						<div class="col-lg-12" >
-							
-							<button class="btn btn-dark float-right fas fa-angle-right btn-sm "style="margin-right:13%;" onclick="rightPressed();aheadFunction();"id="right"></button>
-							<button class="btn btn-dark float-left fas fa-angle-left btn-sm "style="margin-left:13%;" onclick="leftPressed();backFunction();" id="left"></button>
-						</div>
 					</div>
+					
+					
+						
+					
 				</div>
 				</div>
 				
@@ -187,8 +198,9 @@
 					<!--<div align="center">
 						<b><small >Horario Activo:  8:00 am -a 5:00 pm para el público</small></b>
 					</div>-->
-                  
+					
 				</div>
+				
 				<!--tercera tarjeta-->
 				<div>
 				
@@ -396,6 +408,7 @@
 
 
   <script>
+	  
 	/*let searchParams = new URLSearchParams(window.location.search)
 	if searchParams.has('m');
 	let param = searchParams.get('sent')
@@ -1035,23 +1048,15 @@ c.style.display = "block";
   border: 3px solid rgb(34, 92, 167);
   background-color: rgb(45, 128, 234);
   color: white;
-  padding: 08px 25px;
+  
   font-size: 16px;
   cursor: pointer;
-  min-width: 115px;
+  
    
   
 }
-.buttons{
-	white-space: normal;
-  table-layout: fixed;
-  border-collapse: collapse;
-  width: 100%;
-        
-}
-.buttons button {
-        width: 100%;
-    }
+
+
 	
 
 </style>

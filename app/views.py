@@ -1295,6 +1295,7 @@ def back(request):
     hoy1= datetime.today()
     today = date.today()
     mydate = str((today-timedelta(days=indiceTiempoNP)).strftime("%Y-%m-%d"))
+    mydateToShow = str((today-timedelta(days=indiceTiempoNP)).strftime("%d-%m-%Y"))
     mydate1 = (datetime.today()-timedelta(days=indiceTiempoNP))
     mydate2 = (datetime.today()-timedelta(days=indiceTiempoNP)).strftime('%A')
     fecha_limite0 = hoy0-timedelta(days=indiceTiempoNP)
@@ -1321,7 +1322,11 @@ def back(request):
     #print('HOLAAAAAAAAAAAAAAAAAAA')
     #print( info_grafica_horas)
     #print(info_grafica_horas_acumulado)
-    return_sub_array = {'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado,' info_grafica_semana': info_grafica_semana,'info_grafica_semana_acumulada':info_grafica_semana_acumulada,'estemes':esteMes,'estemesacumulado':MyesteMesAcumulado}
+    
+
+    fecha = mydateToShow
+    
+    return_sub_array = {'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado,' info_grafica_semana': info_grafica_semana,'info_grafica_semana_acumulada':info_grafica_semana_acumulada,'estemes':esteMes,'estemesacumulado':MyesteMesAcumulado,'fecha':fecha}
     #print('return_sub_array')
     #print(return_sub_array)
     return HttpResponse( json.dumps(return_sub_array))
@@ -1338,6 +1343,7 @@ def ahead(request):
     hoy1= datetime.today()
     today = date.today()
     mydate = str((today+timedelta(days=indiceTiempoNP)).strftime("%Y-%m-%d"))
+    mydateToShow = str((today+timedelta(days=indiceTiempoNP)).strftime("%d-%m-%Y"))
     mydate1 = (datetime.today()+timedelta(days=indiceTiempoNP))
     mydate2 = (datetime.today()+timedelta(days=indiceTiempoNP)).strftime('%A')
     fecha_limite0 = hoy0-timedelta(days=indiceTiempoNP)
@@ -1352,12 +1358,13 @@ def ahead(request):
     esteMes= esteMesActual(mylist,mydate,True)
 
     MyesteMesAcumulado= esteMesAcumulado(mylist,mydate,True)
+    fecha = mydateToShow
     #print(info_grafica_horas)
     #print(info_grafica_horas_acumulado)
     #print('HOLAAAAAAAAAAAAAAAAAAA')
     #print( info_grafica_horas)
     #print(info_grafica_horas_acumulado)
-    return_sub_array = {'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado,' info_grafica_semana': info_grafica_semana,'info_grafica_semana_acumulada':info_grafica_semana_acumulada,'estemes':esteMes,'estemesacumulado':MyesteMesAcumulado}
+    return_sub_array = {'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado,' info_grafica_semana': info_grafica_semana,'info_grafica_semana_acumulada':info_grafica_semana_acumulada,'estemes':esteMes,'estemesacumulado':MyesteMesAcumulado,'fecha':fecha}
     #print('return_sub_array')
     #print(return_sub_array)
             
