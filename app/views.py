@@ -200,6 +200,9 @@ def grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,ser
                          
     return dias_semana_total
 
+
+    
+
 def grafica_semana_actual_acumulada(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,seriales):
     datos_semana_acumuladas= grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,seriales)
     
@@ -1247,6 +1250,9 @@ def index(request):
     
     esteMes = esteMesActual(mylist,mydate,1)
     MyesteMesAcumulado = esteMesAcumulado(mylist,mydate,1)
+
+
+
     
 
     return render(request, "index.html",  {'camaras':camarasAll,'info_grafica_semana': info_grafica_semana,'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado,'info_grafica_semana_acumulada':info_grafica_semana_acumulada,'estemes':esteMes,'estemesacumulado':MyesteMesAcumulado})
@@ -1452,6 +1458,8 @@ def pitarnfo(request):
     info_grafica_semana_acumulada = grafica_semana_actual_acumulada(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist)
     #print('info grafica de la semana acumulada-----------------------------------------------------------------------------------------')
     #print(info_grafica_semana_acumulada)
+    
+    #graficas inferiores
     
   
     return render(request, "index_base.html",  {'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado,'info_grafica_semana_acumulada':info_grafica_semana_acumulada})
