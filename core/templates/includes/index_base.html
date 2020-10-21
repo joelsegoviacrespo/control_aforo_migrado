@@ -239,7 +239,7 @@
                          <!--h3 class="fw-bold mt-1 mb-0 text">Aforo máximo 50 personas</h3-->                          
                           </div>
 					  </div>
-					  <div class="card-header text-center pt-2 pb-4" style=" border-width:0px !important;">
+					<div class="card-header text-center pt-2 pb-4" style=" border-width:0px !important;">
 						<br>
 						
 					   <!-- <b><small>{{camara.nombre_camara}}</small></b>-->
@@ -284,46 +284,46 @@
 						  </div>
 						 
 						  {% if  camara.serial_camara == "Q2HV-B24V-ZKN5" %}
-						  <img class="card-img-top rounded" src="{{ camara.snapshot }}"  >
+						  <img class="card-img-top rounded" src="https://lh3.googleusercontent.com/proxy/HkQLQaRnMC9ybVO7QHwdwe36zpQ95M4vCWXiR9DXeFiaQzO-J-iboL5d6zMAYSrWi9telYj-JV_PH-qoEA9qvTXY3TYiorLdEMn3hiCKKMLg"  >
 					  
 						  {%endif%}
 						  {% if camara.serial_camara == "Q2GV-4YBM-YWWJ"%}
 						  <img class="card-img-top rounded" src="{{ camara.snapshot }}" >
 						  {%endif%} 
 						
-					</div> 
 					
-					<div align="center">
 					
-						Personas: {{zonas_camara.nro_personas}}</p>
+							<div align="center">
+					
+								Personas: {{zonas_camara.nro_personas}}</p>
 						
-					  </div>
+					  		</div>
 					  
 				
-				<!--  {% if  form.serial == "Q2HV-B24V-ZKN5" %}
-				 
-                  <img class="card-img-top p-4 rounded" src="{{ form.meraki }}">
-				  {%elif form.serial == "Q2GV-4YBM-YWWJ"%}
-				  <img class="card-img-top p-4 rounded" src="{{ form.meraki2 }}">
-				  {%else%}
-				  <img class="card-img-top p-4 rounded" src="{{ form.meraki2 }}">
-				  {%endif%}
-				-->
-                  <div class="card-img-overlay">
+													<!--  {% if  form.serial == "Q2HV-B24V-ZKN5" %}
+													
+                									  <img class="card-img-top p-4 rounded" src="{{ form.meraki }}">
+													  {%elif form.serial == "Q2GV-4YBM-YWWJ"%}
+													  <img class="card-img-top p-4 rounded" src="{{ form.meraki2 }}">
+													  {%else%}
+													  <img class="card-img-top p-4 rounded" src="{{ form.meraki2 }}">
+													  {%endif%}
+													-->
+                  		<div class="card-img-overlay">
                     
-                      <div class="d-flex flex-wrap justify-content-around">
-                        <div class="px-2 pb-2 pb-md-0 text-center mt-5 mb-0">
+                      			<div class="d-flex flex-wrap justify-content-around">
+                        			<div class="px-2 pb-2 pb-md-0 text-center mt-5 mb-0">
                     
-                              <!--h3 class="fw-bold mt-3 mb-0 text-gray">Aforo máximo: <span id="msg_aforo_maximo" class="px-2"></span> personas </h3>
-                              <h1 class="fw-bold mt-3 mb-2 text-gray">Bienvenidos</h1-->
-                          </div>
+                             								 <!--h3 class="fw-bold mt-3 mb-0 text-gray">Aforo máximo: <span id="msg_aforo_maximo" class="px-2"></span> personas </h3>
+                             								 <h1 class="fw-bold mt-3 mb-2 text-gray">Bienvenidos</h1-->
+                          			</div>
                           
-                    <div class="card-category text-center">
+                   		 		<div class="card-category text-center">
               
-                    <!-- <div class="card-footer text-center"><b>Zona: <small>{{zonas_camara.nombre_zona_camara}}</small></b></div>
-                    div class="card-footer text-center">Aforo máximo: <span id="msg_aforo_maximo" class="px-2"></span> personas</div
-            
-                    <div class="card-footer text-center"><b>Bienvenidos</small></b></div> -->
+                   		 <!-- <div class="card-footer text-center"><b>Zona: <small>{{zonas_camara.nombre_zona_camara}}</small></b></div>
+                   		 div class="card-footer text-center">Aforo máximo: <span id="msg_aforo_maximo" class="px-2"></span> personas</div
+							
+                   		 <div class="card-footer text-center"><b>Bienvenidos</small></b></div> -->
                     </div>
                     
                 </div>
@@ -335,15 +335,7 @@
                 
                 
 		
-				<div class="card-footer "id="chart-container" style=" border-width:0px !important; height: 50%;">
-					
-					<div id="chart-container" >
-						  <div id= 'CH-barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}'  >
-							   <canvas  id="barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}"style=" height: 100%; z-index:3;"></canvas>
-						  
-						  </div>
-					  </div>
-					
+				
 					<!--<br>
 					
 					<div class="col-md-12"style="max-height: 60px;"  >
@@ -354,8 +346,18 @@
 					 </div>-->
 					 
 				  </div>
-		    
+				  <div class="card-footer "id="chart-container" style=" border-width:0px !important; height: 50%;">
+					
+					<div id="chart-container" >
+						  	<div id= 'CH-barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}'  >
+							   <canvas  id="barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}"style=" height: 100%; z-index:3;"></canvas>
+						  
+						  	</div>
+					</div>
+					
+					</div> 
 			  </div>
+			  
         
         </div>
    
