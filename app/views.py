@@ -58,7 +58,28 @@ def TimeConverter(millis):
 
 def grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,seriales):
     #print('la fecha actual es',mydate2)
+    mySerials=[]
+    e= 0
+    if (type(seriales )is list):
+        for i in seriales:
+            aux = seriales[e]
+            mySerials.append(aux)
+            
+            print(mySerials)
+            e=e +1 
+    else:
+        
+        mySerials.append(seriales)
+        print(seriales)
+        
     
+  
+       
+
+
+
+
+ 
     #print('indiceeeeeeeeeeeeeeeeeee')
     #print(seriales)
     #print('estoy recibiendo de argumento:',mydate, mydate1 ,mydate2,)
@@ -86,7 +107,8 @@ def grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,ser
 
 
     dias_semana_total=[0,0,0,0,0,0,0,0,0,0]
-    for i in seriales:
+    for i in mySerials:
+        print("se está ejecutando este cilco for el primero")
         dias_semana=[0,0,0,0,0,0,0]
         varTemporal0= 0000
         varTemporal1= 0000
@@ -103,8 +125,9 @@ def grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,ser
             #print(myLocalSunday)
         #print(myLocalSunday)
         for e in myCamaras.objects.all():
+            print("se está ejecutando este cilco for el SEGUNDO")
             comparativeDate = 0000
-            if (e.serial_camara == seriales[contador]):
+            if (e.serial_camara == mySerials[contador]):
                 if(mydate2== 'Sunday'):
                     #print('la fecha del documento es:',e.fecha , 'y la de referencia es:',mydate)
                     if(str(e.fecha)==str(mydate) ):
@@ -140,14 +163,14 @@ def grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,ser
                                 pass
                         
                 else:
-                   
+                    print("primera condicional")
                     if datetime.strptime(e.fecha, '%Y-%m-%d')  <= fecha_limite and datetime.strptime(e.fecha, '%Y-%m-%d') >=  myLocalSunday:
                        # print('fechas segun el rango')
                        # print(e.fecha)
-
+                        print("segunda condicional")
 
                         if datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Monday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal1 :
-                          
+                            print("esta guardando datos"+ str(e.zonas_camara[0].nro_personas) + "en lunes")
                             # print('se agrego al dia lunes el valor',e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
                             dias_semana.pop(1)
 
@@ -157,38 +180,38 @@ def grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,ser
                         if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Tuesday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal2) :
                             dias_semana.pop(2)
                             
-
+                            print("esta guardando datos"+ str(e.zonas_camara[0].nro_personas) + "en martes")
                             dias_semana.insert(2,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
                             varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
 
                         if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Thursday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal3)  :
                             dias_semana.pop(3)
                            
-
+                            print("esta guardando datos"+ str(e.zonas_camara[0].nro_personas) + "en miercoles")
                             dias_semana.insert(3,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
                             varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
 
                         if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Wednesday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal4) :
                             dias_semana.pop(4)
-
+                            print("esta guardando datos"+ str(e.zonas_camara[0].nro_personas) + "en jueves")
                             dias_semana.insert(4,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
                             varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
 
 
                         if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Friday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal5):
                             dias_semana.pop(5)
-
+                            print("esta guardando datos"+ str(e.zonas_camara[0].nro_personas) + "en viernes")
                             dias_semana.insert(5,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
                             varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
 
                         if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Saturday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal6) :
                             dias_semana.pop(6)
-
+                            print("esta guardando datos"+ str(e.zonas_camara[0].nro_personas) + "en sabado")
                             dias_semana.insert(6,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
                             varTemporal1 = e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas
 
                         if (datetime.strptime(e.fecha, '%Y-%m-%d').strftime('%A') == 'Sunday' and e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas != varTemporal0):
-                           
+                            print("esta guardando datos"+ str(e.zonas_camara[0].nro_personas) + "en domingo")
                             dias_semana.pop(0)
                             #print('se agrego al dia domingo el valor',e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
                             dias_semana.insert(0,e.zonas_camara[0].nro_personas + e.zonas_camara[1].nro_personas)
@@ -197,7 +220,8 @@ def grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,ser
                 pass
             #print(dias_semana)
             dias_semana_total= list( map(add, dias_semana, dias_semana_total) )
-                         
+        print("dias_semana_total000000000000000000000000000000000000")
+        print(dias_semana_total)
     return dias_semana_total
 
 
@@ -1162,7 +1186,7 @@ def grafica_horas_acumuladas(mydate):
 @login_required(login_url="/login/")
 def index(request):
 
-    
+ 
 
 
     #argumentos ordenados
@@ -1195,7 +1219,7 @@ def index(request):
             print('que imprime esto')
             print(request.user.profile.cliente.nif)'''
     if (request.user.profile.rol== Constantes.SUPERUSUARIO):
-        mySerial=['Q2GV-4YBM-YWWJ']
+        mySerial=['Q2GV-4YBM-YWWJ','Q2HV-B24V-ZKN5']
         mylist= mySerial
 
        
@@ -1223,11 +1247,13 @@ def index(request):
                                 if str(o.instalacion.nombre) == MyInstalacion:
                                     #print('------tenemos una camara con esas caracteristicas')
                                     mySerial.append(o.serial_camara)
+                                    
                         else:
                             print('no encontro nada--------------------')
         #print('el serial es:')
         mylist=list(dict.fromkeys(mySerial))
         #print(mylist)
+        
     
     
     
@@ -1249,13 +1275,63 @@ def index(request):
     #-------------Para las graficas de la tarjeta superior derecha (ESTE MES)------------------------
     
     esteMes = esteMesActual(mylist,mydate,1)
-    MyesteMesAcumulado = esteMesAcumulado(mylist,mydate,1)
+    MyesteMesAcumulado = esteMesAcumulado(mylist,mydate,1)  
+    indice = 0
+    
+    datosDevolver=  {'camaras':camarasAll,'info_grafica_semana': info_grafica_semana,'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado,'info_grafica_semana_acumulada':info_grafica_semana_acumulada,'estemes':esteMes,'estemesacumulado':MyesteMesAcumulado}
+    #de ejemplo
+    mylist=['Q2GV-4YBM-YWWJ','Q2HV-B24V-ZKN5']
+    if len(mylist) > 1:
+        for i in mylist:
+            info_camara1=grafica_semana(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist[indice])
+            info_grafica_semana_acumulada1 = grafica_semana_actual_acumulada(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist[indice])
+            #print('info camara a agragar al diccionario')
+            #print(info_camara1)
+            #nombre = "infocamara" + str(indice)
+            #nombre1 ="infocamaraAcumulada"+ str(indice)
+            #globals() [nombre] = info_camara1
+            #globals() [nombre1]= info_grafica_semana_acumulada1
 
+            print("infocamara" + str(indice))
+            datosDevolver["infocamara" + str(indice)] = grafica_semana(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist[indice])
+            print( grafica_semana(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist[indice]))
+            print(grafica_semana_actual_acumulada(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist[indice]))
+
+            datosDevolver["infocamaraAcumulada"+str(indice)]=grafica_semana_actual_acumulada(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist[indice])
+            indice = indice+1
+    else:
+         for i in mylist:
+            info_camara1=grafica_semana(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist[indice])
+            info_grafica_semana_acumulada1 = grafica_semana_actual_acumulada(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist[indice])
+            #print('info camara a agragar al diccionario')
+            #print(info_camara1)
+            #nombre = "infocamara" + str(indice)
+            #nombre1 ="infocamaraAcumulada"+ str(indice)
+            #globals() [nombre] = info_camara1
+            #globals() [nombre1]= info_grafica_semana_acumulada1
+
+            print("infocamara" + str(indice))
+            datosDevolver["infocamara" + str(indice)] = grafica_semana(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist[indice])
+            print( grafica_semana(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist[indice]))
+            print(grafica_semana_actual_acumulada(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist[indice]))
+
+            datosDevolver["infocamaraAcumulada"+str(indice)]=grafica_semana_actual_acumulada(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist[indice])
+            indice = indice+1
+
+            datosDevolver["infocamara1"]=[0,0,0,0,0,0,0,0,0,0]
+            datosDevolver["infocamaraAcumulada1"]=[0,0,0,0,0,0,0,0,0,0]
+
+
+    #grafica_semana(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist[indice])
+   
+    print (datosDevolver)
+    
+ 
 
 
     
 
-    return render(request, "index.html",  {'camaras':camarasAll,'info_grafica_semana': info_grafica_semana,'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado,'info_grafica_semana_acumulada':info_grafica_semana_acumulada,'estemes':esteMes,'estemesacumulado':MyesteMesAcumulado})
+    return render(request, "index.html",datosDevolver )
  
 
 @login_required(login_url="/login/")
@@ -1356,6 +1432,7 @@ def ahead(request):
     fecha_limite =(hoy1-timedelta(days=indiceTiempo))   
     info_grafica_horas = grafica_horas(mydate)
     info_grafica_horas_acumulado= grafica_horas_acumuladas(mydate)  
+
     info_grafica_semana= grafica_semana(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist)
     info_grafica_semana_acumulada= grafica_semana_actual_acumulada(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist)  
     esteMes= esteMesActual(mylist,mydate,True)
@@ -1384,6 +1461,7 @@ def hello(request):
 
 @login_required(login_url="/login/")
 def pitarnfo(request):
+    print("AHHHHHHHHHHHHHHHHHHHHHHHHHHHH")
     if (request.user.profile.rol== Constantes.SUPERUSUARIO):
         mySerial=['Q2GV-4YBM-YWWJ']
         mylist= mySerial
@@ -1460,9 +1538,32 @@ def pitarnfo(request):
     #print(info_grafica_semana_acumulada)
     
     #graficas inferiores
-    
+    indice= 0
   
-    return render(request, "index_base.html",  {'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado,'info_grafica_semana_acumulada':info_grafica_semana_acumulada})
+
+
+    datosDevolver={'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado,'info_grafica_semana_acumulada':info_grafica_semana_acumulada}
+
+    #datosDevolver=  {'camaras':camarasAll,'info_grafica_semana': info_grafica_semana,'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado,'info_grafica_semana_acumulada':info_grafica_semana_acumulada,'estemes':esteMes,'estemesacumulado':MyesteMesAcumulado}
+    #de ejemplo
+    mylist=['Q2GV-4YBM-YWWJ','Q2HV-B24V-ZKN5']
+    for i in mylist:
+        
+        info_camara1=grafica_semana(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist[indice])
+        info_grafica_semana_acumulada1 = grafica_semana_actual_acumulada(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist[indice])
+        print('info camara a agragar al diccionario')
+        print(info_camara1)
+        nombre = "infocamara" + str(indice)
+        globals() [nombre] = info_camara1
+        print("infocamara" + str(indice))
+        datosDevolver["infocamara" + str(indice)] =[1,2,3,4,5,6,7]
+        indice = indice+1
+        #grafica_semana(mydate, mydate1 ,mydate2,fecha_limite0,fecha_limite_minima0,mylist[indice])
+    
+    print("AHHHHHHHHHHHHHHHHHHHHHHHHHHHH")
+    print(datosDevolver)
+
+    return render(request, "includes\index_base.html", datosDevolver )
 
 
 

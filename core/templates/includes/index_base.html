@@ -235,7 +235,8 @@
                   
                       <div class="d-flex flex-wrap justify-content-around ">
                           <div class="px-2 pb-2 pb-md-0 text-center">
-                              <div id="circles-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" class="py-3"></div>
+							<div style="height:177px;"class="align-middle">
+                              <div id="circles-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" class="py-3"></div></div>
                          <!--h3 class="fw-bold mt-1 mb-0 text">Aforo máximo 50 personas</h3-->                          
                           </div>
 					  </div>
@@ -274,7 +275,7 @@
 				  
                 <div class="card full-height">
 					
-                    <div class="card-body text-center pt-2 pb-3"style=" border-width:0px !important;">                  
+                    <div class="card-body text-center pt-2 pb-3"style=" border-width:0px !important;" >                  
 					 
 						<div class="card-header"style=" border-width:0px !important;">
 							
@@ -284,20 +285,35 @@
 						  </div>
 						 
 						  {% if  camara.serial_camara == "Q2HV-B24V-ZKN5" %}
-						  <img class="card-img-top rounded" src="{{ camara.snapshot }}"  >
-					  
+						  <div style="height:200px;">
+							<div style= height:70%>
+						  <img class="card-img-top rounded" src="{{ camara.snapshot }}" onerror="this.onerror=null;this.src='static/assets/img/onerrorQ2HV-B24V-ZKN5.jpg';" >
+							</div>
+						  
+						  </div>
+						  <div align="center" >
+					
+							Personas: {{zonas_camara.nro_personas}}</p>
+					
+						  </div>
 						  {%endif%}
 						  {% if camara.serial_camara == "Q2GV-4YBM-YWWJ"%}
-						  <img class="card-img-top rounded" src="{{ camara.snapshot }}" >
+						  <div style="height:200px;">
+							<div style= height:70%>
+						  <img class="card-img-top rounded" src="{{ camara.snapshot }}"onerror="this.onerror=null;this.src='static/assets/img/onerrorQ2GV-4YBM-YWWJ.jpg';" >
+							</div>
+						 
+						</div>
+						<div align="center" >
+					
+							Personas: {{zonas_camara.nro_personas}}</p>
+					
+						  </div>
 						  {%endif%} 
 						
 					
 					
-							<div align="center">
-					
-								Personas: {{zonas_camara.nro_personas}}</p>
-						
-					  		</div>
+							
 					  
 				
 													<!--  {% if  form.serial == "Q2HV-B24V-ZKN5" %}
@@ -629,7 +645,7 @@
 		
 		Circles.create({
 			id:id_circle,
-			radius:50,
+			radius:60,
 			value:value,
 			maxValue:maxValue,
 			width:7,
@@ -643,7 +659,7 @@
 		})
 		Circles.create({
 			id:id_circle_persona,
-			radius:50,
+			radius:60,
 			value:value,
 			maxValue:maxValue,
 			width:7,
@@ -726,7 +742,8 @@ function crearBarra(camaras){
 		
 		
 	}
-	
+	var counter= 0
+	var counterA= 0
 	function setBarra(id_barra_persona_acumulada,maxValue,value,boolean){
 	
 		/*console.log("setCircle 100")
@@ -814,8 +831,9 @@ var mytotalIncomeChart = new Chart(totalIncomeChart, {
 });
 }*/
 if(boolean ==1){
+	if(counterA == 0){
 var totalIncomeChart = document.getElementById(id_barra).getContext('2d');
-var arrayD=JSON.parse("{{info_grafica_semana_acumulada}}")
+var arrayD=JSON.parse("{{infocamaraAcumulada0}}")
 var mytotalIncomeChart = new Chart(totalIncomeChart, {
   type: 'bar',
   data: {
@@ -852,11 +870,60 @@ var mytotalIncomeChart = new Chart(totalIncomeChart, {
     },
   }
 });
+
+counterA= 1
 }
+else if(counterA == 1){
+	
+	var totalIncomeChart = document.getElementById(id_barra).getContext('2d');
+	var arrayD=JSON.parse("{{infocamaraAcumulada1}}")
+	var mytotalIncomeChart = new Chart(totalIncomeChart, {
+	  type: 'bar',
+	  data: {
+		labels:["D", "L", "M", "M", "J", "V", "S"],
+		datasets : [{
+		  label: "Total aforo",
+		  backgroundColor: '#ff9e27',
+		  borderColor: 'rgb(23, 125, 255)',
+		  data: arrayD,
+		}],
+	  },
+	  options: {
+		responsive: true,
+		maintainAspectRatio: false,
+		legend: {
+		  display: false,
+		},
+		scales: {
+		  yAxes: [{
+			ticks: {
+			  display: false //this will remove only the label
+			},
+			gridLines : {
+			  drawBorder: false,
+			  display : false
+			}
+		  }],
+		  xAxes : [ {
+			gridLines : {
+			  drawBorder: false,
+			  display : false
+			}
+		  }]
+		},
+	  }
+	});
+	counterA= 0
+	}
+}
+
+
 else{
+if(counter == 0){
+
 var totalIncomeChart = document.getElementById(id_barra_persona).getContext('2d');
 //alert(id_barra_persona)
-var arrayE=JSON.parse("{{info_grafica_semana}}")
+var arrayE=JSON.parse("{{infocamara0}}")
 console.log(id_barra_persona) 
 var mytotalIncomeChart = new Chart(totalIncomeChart, {
   type: 'bar',
@@ -894,9 +961,53 @@ var mytotalIncomeChart = new Chart(totalIncomeChart, {
     },
   }
 });
-
+counter = 1
 }
-
+else if (counter ==1){
+var totalIncomeChart = document.getElementById(id_barra_persona).getContext('2d');
+//alert(id_barra_persona)
+var arrayE=JSON.parse("{{infocamara1}}")
+console.log(id_barra_persona) 
+var mytotalIncomeChart = new Chart(totalIncomeChart, {
+  type: 'bar',
+  data: {
+    labels: ["D", "L", "M", "M", "J", "V", "S"],
+    datasets : [{
+      label: "Total aforo",
+      backgroundColor: '#ff9e27',
+      borderColor: 'rgb(23, 125, 255)',
+      data: arrayE,
+    }],
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    legend: {
+      display: false,
+    },
+    scales: {
+      yAxes: [{
+        ticks: {
+          display: false //this will remove only the label
+        },
+        gridLines : {
+          drawBorder: false,
+          display : false
+        }
+      }],
+      xAxes : [ {
+        gridLines : {
+          drawBorder: false,
+          display : false
+        }
+      }]
+    },
+  }
+});
+counter = 0
+}
+}
+	
 }
     /*
     $(function(){
