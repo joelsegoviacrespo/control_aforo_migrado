@@ -227,9 +227,9 @@
 	
             <div class="col-md-3">
               <div class="card full-height">
-                    			
+                    			<div style="height: 50%;">
             <div class="card-body"style="height:50%">
-             
+				<div class="card-header text-center pt-2 pb-4" style=" border-width:0px !important;"style="height:50%">
                       <div class="card-category text-center"><b><small>{{zonas_camara.nombre_zona_camara}}</small></b></div>
                   
                       <div class="d-flex flex-wrap justify-content-around ">
@@ -237,20 +237,21 @@
 							<div class="align-middle">
 								
                               <div id="circles-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" class="py-3"style="height:50%"></div></div>
-                         <!--h3 class="fw-bold mt-1 mb-0 text">Aforo máximo 50 personas</h3-->                          
+						 <!--h3 class="fw-bold mt-1 mb-0 text">Aforo máximo 50 personas</h3-->          
+						           
                           </div>
 					  </div>
 					  
-					<div class="card-header text-center pt-2 pb-4" style=" border-width:0px !important;"style="height:50%">
+					
 						
 						
 					   <!-- <b><small>{{camara.nombre_camara}}</small></b>-->
-					   <b><small>Total Aforo</small></b>
+					   
                     </div>
 				  </div>
-				 
+				</div>
 				<div class="card-footer " style=" border-width:0px !important; height: 50%;">
-					
+					<p align="center"><b ><small>Total Aforo</small></b>   </p>   
 					<div id="chart-container">
 						<!--problemas con esta tarjeta para cambiar el tamano de la grafica, no obedece a porsentaje de altura y arruina a las otras tarjetass-->
 						<div id="CH-barras-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}">
@@ -268,7 +269,8 @@
                     </div>
                   </div>-->	
               </div>
-            </div>
+			</div>
+		
 		
 			
         
@@ -276,9 +278,9 @@
 				  
                 <div class="card full-height">
 					<div style ="height: 50%;">
-                    <div class="card-body text-center pt-2 pb-3"style=" border-width:0px !important; hegith:30%" >                  
+                    <div class="card-body text-center pt-2 pb-3"style=" border-width:0px !important;" >                  
 					 
-						<div class="card-header"style=" border-width:0px !important;">
+						<div class="card-header"style=" border-width:0px !important;"style="height:50%">
 							
 							<b><small>{{camara.nombre_camara}}</small></b>
 							
@@ -291,11 +293,7 @@
 						  <img class="card-img-top rounded" src="{{ camara.snapshot }}" onerror="this.onerror=null;this.src='static/assets/img/onerrorQ2HV-B24V-ZKN5.jpg';" >
 							</div>
 						  
-							<div align="center" >
-					
-								<p><small> Personas: {{zonas_camara.nro_personas}}</small></p>
-						
-							</div>
+							
 						
 						  {%endif%}
 						  {% if camara.serial_camara == "Q2GV-4YBM-YWWJ"%}
@@ -303,15 +301,12 @@
 							<div style= "height:40%;max-height: 50%;">
 						  <img class="card-img-top rounded" src="{{ camara.snapshot }}"onerror="this.onerror=null;this.src='static/assets/img/onerrorQ2GV-4YBM-YWWJ.jpg';" >
 							</div>
-							<div align="center" >
-					
-								<p><small> Personas: {{zonas_camara.nro_personas}}</small></p>
-						
-							</div>
+							
+							
 						
 						  {%endif%} 
 						  
-						
+						  
 					
 					
 							
@@ -367,6 +362,10 @@
 			</div>
 		</div>
 			<div class="card-footer " style=" border-width:0px !important; height: 50%;">
+			
+					
+					<p  align="center"><small> Personas: {{zonas_camara.nro_personas}}</small></p>
+			
 					
 				<div id="chart-container" >
 						  	<div id= 'CH-barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}'  >
