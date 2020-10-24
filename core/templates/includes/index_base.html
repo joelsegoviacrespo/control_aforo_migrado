@@ -106,8 +106,7 @@
 					
 				</div>
 				</div>
-				<br>
-				<br>
+				
 				<div style = "height: 54%;">
 				<!--primera tarjeta-->
 					<div class="col-md-12"style="max-height: 55%; z-index:1;" id="tarjeta1">
@@ -229,7 +228,7 @@
             <div class="col-md-3">
               <div class="card full-height">
                     			
-            <div class="card-body">
+            <div class="card-body"style="height:50%">
              
                       <div class="card-category text-center"><b><small>{{zonas_camara.nombre_zona_camara}}</small></b></div>
                   
@@ -237,12 +236,12 @@
                           <div class="px-2 pb-2 pb-md-0 text-center">
 							<div class="align-middle">
 								
-                              <div id="circles-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" class="py-3"></div></div>
+                              <div id="circles-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" class="py-3"style="height:50%"></div></div>
                          <!--h3 class="fw-bold mt-1 mb-0 text">Aforo máximo 50 personas</h3-->                          
                           </div>
 					  </div>
 					  
-					<div class="card-header text-center pt-2 pb-4" style=" border-width:0px !important;">
+					<div class="card-header text-center pt-2 pb-4" style=" border-width:0px !important;"style="height:50%">
 						
 						
 					   <!-- <b><small>{{camara.nombre_camara}}</small></b>-->
@@ -276,8 +275,8 @@
               <div class="col-md-3">
 				  
                 <div class="card full-height">
-					
-                    <div class="card-body text-center pt-2 pb-3"style=" border-width:0px !important;" >                  
+					<div style ="height: 50%;">
+                    <div class="card-body text-center pt-2 pb-3"style=" border-width:0px !important; hegith:30%" >                  
 					 
 						<div class="card-header"style=" border-width:0px !important;">
 							
@@ -288,26 +287,30 @@
 						 
 						  {% if  camara.serial_camara == "Q2HV-B24V-ZKN5" %}
 						
-							<div style= height:60%>
+							<div style= "height:40%;max-height: 50%;">
 						  <img class="card-img-top rounded" src="{{ camara.snapshot }}" onerror="this.onerror=null;this.src='static/assets/img/onerrorQ2HV-B24V-ZKN5.jpg';" >
 							</div>
 						  
+							<div align="center" >
+					
+								<p><small> Personas: {{zonas_camara.nro_personas}}</small></p>
 						
+							</div>
 						
 						  {%endif%}
 						  {% if camara.serial_camara == "Q2GV-4YBM-YWWJ"%}
 						
-							<div style= height:60%>
+							<div style= "height:40%;max-height: 50%;">
 						  <img class="card-img-top rounded" src="{{ camara.snapshot }}"onerror="this.onerror=null;this.src='static/assets/img/onerrorQ2GV-4YBM-YWWJ.jpg';" >
 							</div>
-						 
+							<div align="center" >
+					
+								<p><small> Personas: {{zonas_camara.nro_personas}}</small></p>
+						
+							</div>
 						
 						  {%endif%} 
-						  <div align="center" >
-					
-							<p><small> Personas: {{zonas_camara.nro_personas}}</small></p>
-					
-						</div>
+						  
 						
 					
 					
@@ -323,26 +326,28 @@
 													  <img class="card-img-top p-4 rounded" src="{{ form.meraki2 }}">
 													  {%endif%}
 													-->
-                  	<div >
+						<!--	<div >
+						
                     
                       			<div class="d-flex flex-wrap justify-content-around">
                         			<div class="px-2 pb-2 pb-md-0 text-center mt-5 mb-0">
                     
                              								 <!--h3 class="fw-bold mt-3 mb-0 text-gray">Aforo máximo: <span id="msg_aforo_maximo" class="px-2"></span> personas </h3>
-                             								 <h1 class="fw-bold mt-3 mb-2 text-gray">Bienvenidos</h1-->
-                          			</div>
+                             								 <h1 class="fw-bold mt-3 mb-2 text-gray">Bienvenidos</h1
+									  </div>
+									  
                           
                    		 		    <div class="card-category text-center">
               
                    		 														<!-- <div class="card-footer text-center"><b>Zona: <small>{{zonas_camara.nombre_zona_camara}}</small></b></div>
                    		 														div class="card-footer text-center">Aforo máximo: <span id="msg_aforo_maximo" class="px-2"></span> personas</div
 							
-                   		    													<div class="card-footer text-center"><b>Bienvenidos</small></b></div> -->
+                   		    													<div class="card-footer text-center"><b>Bienvenidos</small></b></div> 
                     				</div>
                     
                 				</div>
                
-             		 	</div>
+             		 	</div>-->
                     
     
 						<!--<p>camara</p>-->
@@ -360,7 +365,8 @@
 					 </div>-->
 					 
 			</div>
-			<div class="card-footer "id="chart-container" style=" border-width:0px !important; height: 50%;">
+		</div>
+			<div class="card-footer " style=" border-width:0px !important; height: 50%;">
 					
 				<div id="chart-container" >
 						  	<div id= 'CH-barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}'  >
@@ -643,7 +649,7 @@
 		
 		Circles.create({
 			id:id_circle,
-			radius:60,
+			radius:50,
 			value:value,
 			maxValue:maxValue,
 			width:7,
@@ -657,7 +663,7 @@
 		})
 		Circles.create({
 			id:id_circle_persona,
-			radius:60,
+			radius:50,
 			value:value,
 			maxValue:maxValue,
 			width:7,
