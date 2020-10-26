@@ -65,7 +65,7 @@ def grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,ser
             aux = seriales[e]
             mySerials.append(aux)
             
-            print(mySerials)
+            #print(mySerials)
             e=e +1 
     else:
         
