@@ -20,6 +20,7 @@ from django.utils.translation import activate
 from camaras.forms import CamarasForm
 from camaras.models import Camaras
 from aforoInfo.models import AforoInfo
+from uso_red.models import UsoRed
 from monitor.models import Monitor
 from django.forms.models import model_to_dict
 from django.core import serializers
@@ -151,6 +152,12 @@ def configuracion_camaras(request, id_monitor):
                    
                    
                 camaras_serialize = serializers.serialize('json', camarasAll)
+                usoRed_ethernet =  UsoRed.objects.all()[0]
+                usoRed_wifi =  UsoRed.objects.all()[1]
+                print(usoRed_ethernet.enviadosGB)
+                #print(usoRed.tipo_red)
+		
+		
                 
             except Exception as e:
                 print('%s (%s)' % (e, type(e)))
@@ -172,7 +179,11 @@ def configuracion_camaras(request, id_monitor):
                 "aforo_frase_ambar": monitor["aforo_frase_ambar"],
                 "aforo_frase_rojo": monitor["aforo_frase_rojo"],                
                 "camaras": camaras_serialize,
-                "nombre_aforo":nombre_aforo                
+                "nombre_aforo":nombre_aforo,
+                "usoRed_ethernet_enviados": round(usoRed_ethernet.enviadosGB,3),  
+		"usoRed_ethernet_recibidos": round(usoRed_ethernet.recibidosGB,3),
+                "usoRed_wifi_enviados": round(usoRed_wifi.enviadosGB,3),  
+		"usoRed_wifi_recibidos": round(usoRed_wifi.recibidosGB,3)                
             }
             return HttpResponse(simplejson.dumps(monitor_js), content_type='application/json')
         except Exception as e:
