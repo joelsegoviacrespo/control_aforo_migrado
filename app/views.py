@@ -920,7 +920,7 @@ def dias28(today,seriales):
     #print(total)   
     return total   
 def default():
-    print('')
+    defecto = ""
     
 
 
