@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'posicion.apps.PosicionConfig',
     'espacios.apps.EspaciosConfig',
     'display.apps.DisplayConfig',     
+    'uso_red.apps.UsoRedConfig',     
 
     
 ]

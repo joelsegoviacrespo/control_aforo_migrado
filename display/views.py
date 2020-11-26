@@ -11,6 +11,8 @@ import Constantes
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from camaras.models import Camaras
 import time
+from datetime import datetime
+from django.http import JsonResponse
 
 @login_required(login_url="/login/")
 #@permission_required('valores.add_valores',login_url="/logout/")
@@ -47,11 +49,21 @@ def configuracion(request, id_display):
     
     if request.method == 'GET':
         try:            
-            display = Display.objects.filter(_id = id_display,activo=True).first()
+            #display = Display.objects.filter(_id = "5fbef559677c73b1e7b715a4",activo=True)[0]
+            display = Display.objects.all()
+
+            
             horario_laboral = False            
             #Convierto la hora de apertura y cierre
-            hora_apertura = display.fondos.hora_apertura.strftime("%H:%M:%S")
-            hora_cierre = display.fondos.hora_cierre.strftime("%H:%M:%S")
+            #hora_apertura = display.fondos.hora_apertura.strftime("%H:%M:%S")
+            fecha_apertura = datetime(2020, 11, 25, 8, 0, 0, 000000)
+            fecha_cierre = datetime(2020, 11, 25, 20, 0, 0, 000000)
+
+            hora_apertura = fecha_apertura.strftime("%H:%M:%S")
+            #print(hora_apertura)
+#           hora_cierre = display.fondos.hora_cierre.strftime("%H:%M:%S")
+            hora_cierre = fecha_cierre.strftime("%H:%M:%S")
+
             #Calculo la Hora Actual
             t = time.localtime()
             current_time = time.strftime("%H:%M:%S", t)
@@ -75,23 +87,51 @@ def configuracion(request, id_display):
                     i= i+1  
 
 
-                
+            
+                #Quemado mientras resuelvo lo de que no embebido que no me trae los valores
+                url_verde = "http://5.196.27.225/mosayk/F1000/MERLIN_Properties_Socimi,_S.A./imagen/fondo_merlin_verde_low.jpg"
+                url_ambar = "http://5.196.27.225/mosayk/F1000/MERLIN_Properties_Socimi,_S.A./imagen/fondo_merlin_ambar_low.jpg"
+                url_rojo = "ttp://5.196.27.225/mosayk/F1000/MERLIN_Properties_Socimi,_S.A./imagen/fondo_merlin_rojo_low.jpg"
+                url_cerrado = "http://5.196.27.225/mosayk/F1000/MERLIN_Properties_Socimi,_S.A./imagen/melin_fondo.jpg"
+                maximo_aforo = 100
+                mostrar_valor = "NMB"
+                mostrar_capacidad = True
+                mostrar_ambar = True
+                posicion_reloj = 1
+                color = "FFFFFF"
             except Exception as e:
                 print('%s (%s)' % (e, type(e)))
                 pass
+            #display_js = {                
+            #    "url_verde": display.fondos.url_verde,     
+            #    "url_ambar": display.fondos.url_ambar,    
+            #    "url_rojo": display.fondos.url_rojo,    
+            #    "url_cerrado": display.fondos.url_cerrado,     
+            #    "hora_apertura": str(display.fondos.hora_apertura), 
+            #    "hora_cierre": str(display.fondos.hora_cierre),    
+            #    "maximo_aforo": display.valores.maximo_aforo,
+            #    "mostrar_valor": display.valores.mostrar_valor,
+            #    "mostrar_capacidad": display.valores.mostrar_capacidad,
+            #    "mostrar_ambar": display.valores.mostrar_ambar,   
+            #    "posicion_reloj": display.posicion.posicion_reloj,
+            #    "color": display.posicion.color,                 
+            #    "nro_personas": nro_aforo,
+            #    "horario_laboral": horario_laboral
+                
+            #}
             display_js = {                
-                "url_verde": display.fondos.url_verde,     
-                "url_ambar": display.fondos.url_ambar,    
-                "url_rojo": display.fondos.url_rojo,    
-                "url_cerrado": display.fondos.url_cerrado,     
-                "hora_apertura": str(display.fondos.hora_apertura), 
-                "hora_cierre": str(display.fondos.hora_cierre),    
-                "maximo_aforo": display.valores.maximo_aforo,
-                "mostrar_valor": display.valores.mostrar_valor,
-                "mostrar_capacidad": display.valores.mostrar_capacidad,
-                "mostrar_ambar": display.valores.mostrar_ambar,   
-                "posicion_reloj": display.posicion.posicion_reloj,
-                "color": display.posicion.color,                 
+                "url_verde": url_verde,     
+                "url_ambar": url_ambar,    
+                "url_rojo": url_rojo,    
+                "url_cerrado": url_cerrado,     
+                "hora_apertura": str(hora_apertura), 
+                "hora_cierre": str(hora_cierre),    
+                "maximo_aforo": maximo_aforo,
+                "mostrar_valor": mostrar_valor,
+                "mostrar_capacidad": mostrar_capacidad,
+                "mostrar_ambar": mostrar_ambar,   
+                "posicion_reloj": posicion_reloj,
+                "color": color,                 
                 "nro_personas": nro_aforo,
                 "horario_laboral": horario_laboral
                 
