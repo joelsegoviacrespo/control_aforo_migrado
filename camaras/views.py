@@ -154,7 +154,7 @@ def configuracion_camaras(request, id_monitor):
                 camaras_serialize = serializers.serialize('json', camarasAll)
                 usoRed_ethernet =  UsoRed.objects.all()[0]
                 usoRed_wifi =  UsoRed.objects.all()[1]
-                print(usoRed_ethernet.enviadosGB)
+                #print(usoRed_ethernet.enviadosGB)
                 #print(usoRed.tipo_red)
 		
 		
