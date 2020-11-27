@@ -1576,20 +1576,20 @@ def hfs(request):
         if hasattr(request.user.profile, 'instalacion') and hasattr(request.user.profile.instalacion, 'get_id') and (request.user.profile.instalacion.get_id() is not None):
             id_instalacion = request.user.profile.instalacion.get_id()
             display = Display.objects.filter(instalacion={'nif_cliente': request.user.profile.cliente.nif} and {'nombre': request.user.profile.instalacion.nombre_comercial}).first()            
-#            id_display = display.get_id()
-            id_display = "5f67fbcd37cb6511302af8ee"
+            id_display = display.get_id()
+#            id_display = "5f67fbcd37cb6511302af8ee"
         else:
           #print("else")
           display = Display.objects.filter(instalacion={'nif_cliente': request.user.profile.cliente.nif}).first()
-#          id_display = display.get_id()
-          id_display = "5f67fbcd37cb6511302af8ee"
+          id_display = display.get_id()
+#          id_display = "5f67fbcd37cb6511302af8ee"
     else:   
         #print("estoy en el else")     
         cliente = Cliente.objects.first()        
         instalacion = Instalacion.objects.filter(cliente={'nif': cliente.nif}).first()
         display = Display.objects.filter(instalacion={'nif_cliente': cliente.nif} and {'nombre': instalacion.nombre_comercial}).first()                
-#        id_display = display.get_id()
-        id_display = "5f67fbcd37cb6511302af8ee"
+        id_display = display.get_id()
+#        id_display = "5f67fbcd37cb6511302af8ee"
         #print("id_display:  ",id_display)
 
     data = { 
@@ -1606,18 +1606,23 @@ def hfsEmbebido(request):
         if hasattr(request.user.profile, 'instalacion') and hasattr(request.user.profile.instalacion, 'get_id') and (request.user.profile.instalacion.get_id() is not None):
             id_instalacion = request.user.profile.instalacion.get_id()
             display = Display.objects.filter(instalacion={'nif_cliente': request.user.profile.cliente.nif} and {'nombre': request.user.profile.instalacion.nombre_comercial}).first()            
-            #id_display = display.get_id()
-            id_display = "5f67fbcd37cb6511302af8ee"
+            id_display = display.get_id()
+            #id_display = "5f67fbcd37cb6511302af8ee"
         else:
-          #print("estoy en el else")     
+          #print("estoy en el else1")     
           display = Display.objects.filter(instalacion={'nif_cliente': request.user.profile.cliente.nif}).first()
-          id_display = "5f67fbcd37cb6511302af8ee"   
+          #id_display = "5f67fbcd37cb6511302af8ee"
+          id_display = display.get_id()   
     else:
-        #print("estoy en el else")
-        cliente = Cliente.objects.first()        
+        #print("estoy en el else2")
+        cliente = Cliente.objects.first()  
+        #print("cliente",cliente.nif)      
         instalacion = Instalacion.objects.filter(cliente={'nif': cliente.nif}).first()
-        display = Display.objects.filter(instalacion={'nif_cliente': cliente.nif} and {'nombre': instalacion.nombre_comercial}).first()                
-        id_display = "5f67fbcd37cb6511302af8ee"
+        #print("instalacion",instalacion.nombre_comercial)
+        display = Display.objects.filter(instalacion={'nif_cliente': cliente.nif} and {'nombre': instalacion.nombre_comercial}).first()
+        #print("display",display)                
+        #id_display = "5f67fbcd37cb6511302af8ee"
+        id_display = display.get_id()
         #print("id_display:  ",id_display)
     
        
