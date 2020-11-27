@@ -1,383 +1,395 @@
+<div class="panel-header bg-primary-gradient" style="height:85px;">
+	<div class="page-inner py-3">
+		<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+			<div>
 
-<div class="panel-header bg-primary-gradient" style ="height:85px;" >
-    <div class="page-inner py-3" >
-        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
-            <div>
-               
-                <h2 class="text-white pb-4 pt-2 fw-bold">Panel de control</h2>
-                {% if user.is_superuser %}
-                <h5 class="text-white op-7 mb-2"> <!--[S]Administrador--> </h5>
-                {% elif user.is_staff %}
-                <h5 class="text-white op-7 mb-2">{{user.profile.get_rol_display}} </h5>
-                {%else%}
-                <h5 class="text-white op-7 mb-2">{{user.cliente}} </h5>
-                {%endif%}
-            </div>
-            <!--div class="ml-md-auto py-2 py-md-0">
+				<h2 class="text-white pb-4 pt-2 fw-bold">Panel de control</h2>
+				{% if user.is_superuser %}
+				<h5 class="text-white op-7 mb-2">
+					<!--[S]Administrador-->
+				</h5>
+				{% elif user.is_staff %}
+				<h5 class="text-white op-7 mb-2">{{user.profile.get_rol_display}} </h5>
+				{%else%}
+				<h5 class="text-white op-7 mb-2">{{user.cliente}} </h5>
+				{%endif%}
+			</div>
+			<!--div class="ml-md-auto py-2 py-md-0">
               <a href="#" class="btn btn-white btn-border btn-round mr-2">Manage</a>
               <a href="#" class="btn btn-secondary btn-round">Add Customer</a>
             </div-->
-        </div>
-    </div>
+		</div>
+	</div>
 </div>
 
-<div class="page-inner mt--5 ">
-
-     <div class="row mt--3 " >
+<div class="page-inner">
+	<div class="row">
 		<div class="col-md-2">
-            <div class="card full-height ">
-                <div class="card-body">					
+			<div class="card full-height ">
+				<div class="card-body">
 					</br>
 					</br>
-					<div class="row" style="width: 200px; height: 200px;">						
-<!--						<div class="col-md-12">
+					<div class="row" style="width: 200px; height: 200px;">
+						<!--						<div class="col-md-12">
 							<p class="font-weight-bold text-center;" style="color:#59d05d">&#8212 Aforo</p>							
 						</div>
 						<div class="col-md-12">
 							<p class="font-weight-bold text-center;" style="color:#f3545d">&#8212 Usuarios RED</p>							
 						</div>-->
 						<div class="col-md-12">
-							<p class="font-weight-bold text-center;" style="font-size:12px;color:#1d7af3">&#8212 Usuarios <br>&nbsp; &nbsp; &nbsp; Wifi</p>							
+							<p class="font-weight-bold text-center;" style="font-size:12px;color:#1d7af3">&#8212
+								Usuarios <br>&nbsp; &nbsp; &nbsp; Wifi</p>
 						</div>
 						<div class="col-md-12">
-							<p class="font-weight-bold text-center;" style="font-size:12px;color:#f3545d">&#8212 Usuarios<br>&nbsp; &nbsp; &nbsp; Ethernet</p>														
+							<p class="font-weight-bold text-center;" style="font-size:12px;color:#f3545d">&#8212
+								Usuarios<br>&nbsp; &nbsp; &nbsp; Ethernet</p>
 						</div>
 					</div>
-                </div>
-            </div>
+				</div>
+			</div>
 		</div>
-    
-	  	<div class="col-md-8">
-            <div class="card full-height ">
-                <div class="card-body">
-                    
-				<p  align="center"><samall>Estadisticas</samall></p>	
-				<div class="row" style="width: 200px; height: 200px;">					
-					<div class="chart-container" style="max-height: 200px;">
-						<canvas id="LCPresionArterial" style="width: 560px;"></canvas>
-					</div>
-	 			</div>		
-                 
-            	</div>
-        	</div>		
-    	</div>
-	<div class="col-md-2">
-    	    <div class="card full-height ">
-    	        <div class="card-body">
-		    <div class="row" style="width: 200px; height: 200px;">						
-	 	        <div class="col-md-12">
-			   <div align="left" class="font-weight-bold">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Hoy</div>
-<br>
-			   <div class="font-weight-bold text-left;" style="font-size:12px;">Consumo Wifi
-			   </div>	
-			   <div class="font-weight-bold text-left;" style="font-size:12px;color:#1d7af3">enviados:&nbsp; <span id="usoRed_wifi_enviados" style="font-size:12px; color:#1d7af3"></span></div>
-<div class="font-weight-bold text-left;" style="font-size:12px;color:#1d7af3">Recibidos:&nbsp; <span id="usoRed_wifi_recibidos" style="font-size:12px; color:#1d7af3"></span></div>
-			   
-			   					
-			   
-			   <br>						
-			   <br>						
-			   <div class="font-weight-bold text-left;" style="font-size:12px;">Consumo Ethernet
-			   </div>	
-			   <div class="font-weight-bold text-left;" style="font-size:12px;color:#f3545d">enviados:&nbsp; <span id="usoRed_ethernet_enviados" style="font-size:12px; color:#f3545d"></span></div>
-<div class="font-weight-bold text-left;" style="font-size:12px;color:#f3545d">Recibidos:&nbsp; <span id="usoRed_ethernet_recibidos" style="font-size:12px; color:#f3545d"></span></div>
-			   
-			   </div>					
-			</div>
-		    </div>
-	        </div>
-        </div>
-    </div>
-    </div>        
-        
-    
-    <div class="row mt--2 " >
 
-	
-		
-        <div class="col-md-6"style="max-height:30%">
-            <div class="card full-height ">
-                <div class="card-body">
-                    <!--div class="card-title">Planta 7</div>-->
-					<div class="card-title"><span id="nombre_aforo"></span></div>
-					
-                    <div class="card-category">Capacidad actual</div>
-                    <div class="d-flex justify-content-around h-80 w-100 pt-4 rounded">
-						<div class="embed-responsive embed-responsive-16by9 h-100 w-100 m-0 p-2 rounded shadow "><!--4by9-->
-							
-                            <iframe class="embed-responsive-item" src="hfsEmbebido" class="h-100 w-100" scrolling="no"  style="LINE-HEIGHT:20px;"></iframe>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-      
-        <div class="col-md-6"style="max-height:30%">
-          <div class="card full-height">
-            <div class="card-body">
-              <!--div class="card-title text-center pt-2 pb-1 ">Entrada Principal</div>-->
-				<div class="card-title text-center  pb-1 "></div>
+		<div class="col-md-8">
+			<div class="card full-height ">
+				<div class="card-body">
 
-              
-              <!--<div class="row py-1" >-->
-                <!--<div class="col-md-4 d-flex flex-column justify-content-around">
-                  <div>
-                    <h3 class="fw-bold text-uppercase text-danger op-8">Último Mes</h6>
-                    <h3 class="fw-bold">9.782</h3>
-                  </div>
-                  <div>
-                    <h3 class="fw-bold text-uppercase text-danger op-8">Esta Semana</h6>
-                    <h3 class="fw-bold">1,248</h3>
-                  </div>
-                  <div>
-                    <h3 class="fw-bold text-uppercase text-danger op-8">Hoy</h6>
-                    <h3 class="fw-bold">1,248</h3>
-                  </div>
-                  
-                </div>-->
-            <div class="btn-group text-center" role="group">
-                
-                </div>
-
-                
-                <div class="row">
-                    <div class="col text-center mb-1 " style="max-height: 30%; max-width: 100%;">
-						
-
-
-							
-								
-
-
-
-						<div class="btn-group   " role="group" aria-label="Basic example">
-
-
-							<div class="input-group">
-								<button class="btn  float-left fas fa-angle-left btn-sm "style="margin-left:13%;color:white;" onclick="leftPressed();backFunction();" id="left"></button>
-									<input id="date" type="textbox" placeholder="City or Zipcode" class="form-control" readonly="true"   style="text-align: center; " value="hola">
-								<button class="btn  float-right fas fa-angle-right btn-sm "style="margin-right:13%;color:white;" onclick="rightPressed();aheadFunction();"id="right"></button>	
-							</div>
-
-							<button id="1"class="btn success " type="button" onclick="myFunctionToday()">Día</button>
-							<button id="2"class="btn success" type="button"onclick="myFunctionThisWeek()">Semana</button>
-							<button id="3"class="btn success " type="button" onclick="myFunctionThisMonth()">Mes</button>
-						<!--<button id= "2" type="button" class="btn btn-primary min-vw-25 mr-3 "  onclick="myFunctionThisWeek()">Esta Semana</button>
-						<button id= "3" type="button" class="btn btn-primary min-vw-25  "onclick="myFunctionThisMonth()" >Este Mes</button>-->
-					</div>
-					
-					
-						
-					
-				</div>
-				</div>
-				
-				<div style = "height: 54%;">
-				<!--primera tarjeta-->
-					<div class="col-md-12"style="max-height: 55%; z-index:1;" id="tarjeta1">
-						<p  align="center"><samall>Total Aforo</samall></p>
-						<div id="chart-container" style="max-height: 68%;z-index:2;" >
-						
-							<canvas id="totalIncomeChart" style=" width: 100%; height: 100%; z-index:3;  "></canvas>
-							
-							
+					<p align="center">
+						<samall>Estadisticas</samall>
+					</p>
+					<div class="row" style="width: 200px; height: 200px;">
+						<div class="chart-container" style="max-height: 200px;">
+							<canvas id="LCPresionArterial" style="width: 560px;"></canvas>
 						</div>
 					</div>
-		
-				
-                    
-			     
-				
-				
-				
-                <div class="col-md-12" style="max-height: 55%; z-index:1;"id="tarjeta2"><br>
-					<p  align="center"><samall>Total Persona</samall></p>
-					
-                    <div id="chart-container" style="max-height: 68% ;z-index:2;">
-						
-                    	<canvas id="totalIncomeChart1" style=" width: 100%; height:100%;z-index:3;  "></canvas>
-                      
-                      
-					</div>
-					<!--<div align="center">
-						<b><small >Horario Activo:  8:00 am -a 5:00 pm para el público</small></b>
-					</div>-->
-                  
-				</div>
 
-			
-				<!--primera tarjeta-->
-				<!--segunda tarjeta-->
-				
-				<div class="col-md-12" style="max-height: 55%; z-index:1;" id="tarjeta3">
-					<p  align="center"><samall>Esta Semana</samall></p>
-                  <div id="chart-container" style="max-height: 68% ;z-index:2;" >
-					
-					<canvas id="totalIncomeChart2" style=" width: 100%; height:100%;z-index:3;  "></canvas>
-					
-                  </div>
-                  
-                    
-			     
 				</div>
-				
-				
-                <div class="col-md-12" style="max-height: 55%; z-index:1;" id="tarjeta4"><br>
-					<p  align="center"><samall>Esta Semana Acumulada</samall></p>
-					
-                    <div id="chart-container" style="max-height: 68% ;z-index:2;">
-						
-                      <canvas id="totalIncomeChart3" style=" width: 100%; height:100%;z-index:3;  "></canvas>
-                      
-                      
-					</div>
-					<!--<div align="center">
-						<b><small >Horario Activo:  8:00 am -a 5:00 pm para el público</small></b>
-					</div>-->
-				</div>
-				
-				<!--segunda tarjeta-->
-				<!--tercera tarjeta-->
-			
-				<div class="col-md-12" style="max-height: 55%; z-index:1;" id="tarjeta5">
-					<p  align="center"><samall>Este Mes</samall></p>
-                  <div id="chart-container" style="max-height: 68% ;z-index:2;" >
-					
-					<canvas id="totalIncomeChart4" style=" width: 100%; height:100%;z-index:3;  "></canvas>
-					
-                  </div>
-                  
-                    
-			     
-				</div>
-				
-                <div class="col-md-12" style="max-height: 55%; z-index:1;" id="tarjeta6"><br>
-					<p  align="center"><samall>El Mes Pasado</samall></p>
-					
-                    <div id="chart-container" style="max-height: 68% ;z-index:2;">
-						
-                      <canvas id="totalIncomeChart5" style=" width: 100%; height:100%;z-index:3;  "></canvas>
-                      
-                      
-					</div>
-					<!--<div align="center">
-						<b><small >Horario Activo:  8:00 am -a 5:00 pm para el público</small></b>
-					</div>-->
-					
-				</div>
-				
-				<!--tercera tarjeta-->
-				<div>
-				
-						
 			</div>
-			</div>		
-				
-				
-                </div>
-              </div>
-              </div>
-              </div>
-			
-	
+		</div>
+		<div class="col-md-2">
+			<div class="card full-height ">
+				<div class="card-body">
+					<div class="row" style="width: 200px; height: 200px;">
+						<div class="col-md-12">
+							<div align="left" class="font-weight-bold">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Hoy</div>
+							<br>
+							<div class="font-weight-bold text-left;" style="font-size:12px;">Consumo Wifi
+							</div>
+							<div class="font-weight-bold text-left;" style="font-size:12px;color:#1d7af3">
+								enviados:&nbsp; <span id="usoRed_wifi_enviados"
+									style="font-size:12px; color:#1d7af3"></span></div>
+							<div class="font-weight-bold text-left;" style="font-size:12px;color:#1d7af3">
+								Recibidos:&nbsp; <span id="usoRed_wifi_recibidos"
+									style="font-size:12px; color:#1d7af3"></span></div>
 
 
-        
-{% for camara  in camaras %}
-   <div class="row {{var}}">
-    {% for zonas_camara in camara.zonas_camara %}
-     
-        
-			
+
+							<br>
+							<br>
+							<div class="font-weight-bold text-left;" style="font-size:12px;">Consumo Ethernet
+							</div>
+							<div class="font-weight-bold text-left;" style="font-size:12px;color:#f3545d">
+								enviados:&nbsp; <span id="usoRed_ethernet_enviados"
+									style="font-size:12px; color:#f3545d"></span></div>
+							<div class="font-weight-bold text-left;" style="font-size:12px;color:#f3545d">
+								Recibidos:&nbsp; <span id="usoRed_ethernet_recibidos"
+									style="font-size:12px; color:#f3545d"></span></div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+
+		<div class="col-md-6" style="max-height:30%">
+			<div class="card full-height ">
+				<div class="card-body">
+					<!--div class="card-title">Planta 7</div>-->
+					<div class="card-title"><span id="nombre_aforo"></span></div>
 	
-            <div class="col-md-3">
-              <div class="card full-height">
-                    			<div style="height: 50%;">
-            <div class="card-body"style="height:50%">
-				<div class="card-header text-center pt-2 pb-4" style=" border-width:0px !important;"style="height:50%">
-                      <div class="card-category text-center"><b><small>{{zonas_camara.nombre_zona_camara}}</small></b></div>
-                  
-                      <div class="d-flex flex-wrap justify-content-around ">
-                          <div class="px-2 pb-2 pb-md-0 text-center">
-							<div class="align-middle">
-								
-                              <div id="circles-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" class="py-3"style="height:50%"></div></div>
-						 <!--h3 class="fw-bold mt-1 mb-0 text">Aforo máximo 50 personas</h3-->          
-						           
-                          </div>
+					<div class="card-category">Capacidad actual</div>
+					<div class="d-flex justify-content-around h-80 w-100 pt-4 rounded">
+						<div class="embed-responsive embed-responsive-16by9 h-100 w-100 m-0 p-2 rounded shadow ">
+							<!--4by9-->
+	
+							<iframe class="embed-responsive-item" src="hfsEmbebido" class="h-100 w-100" scrolling="no"
+								style="LINE-HEIGHT:20px;"></iframe>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+		<div class="col-md-6" style="max-height:30%">
+			<div class="card full-height">
+				<div class="card-body">
+					<!--div class="card-title text-center pt-2 pb-1 ">Entrada Principal</div>-->
+					<div class="card-title text-center  pb-1 "></div>
+	
+	
+					<!--<div class="row py-1" >-->
+					<!--<div class="col-md-4 d-flex flex-column justify-content-around">
+					  <div>
+						<h3 class="fw-bold text-uppercase text-danger op-8">Último Mes</h6>
+						<h3 class="fw-bold">9.782</h3>
+					  </div>
+					  <div>
+						<h3 class="fw-bold text-uppercase text-danger op-8">Esta Semana</h6>
+						<h3 class="fw-bold">1,248</h3>
+					  </div>
+					  <div>
+						<h3 class="fw-bold text-uppercase text-danger op-8">Hoy</h6>
+						<h3 class="fw-bold">1,248</h3>
 					  </div>
 					  
-					
-						
-						
-					   <!-- <b><small>{{camara.nombre_camara}}</small></b>-->
-					   
-                    </div>
-				  </div>
+					</div>-->
+					<div class="btn-group text-center" role="group">
+	
+					</div>
+	
+	
+					<div class="row">
+						<div class="col text-center mb-1 " style="max-height: 30%; max-width: 100%;">
+
+							<div class="btn-group   " role="group" aria-label="Basic example">
+	
+	
+								<div class="input-group">
+									<button class="btn  float-left fas fa-angle-left btn-sm "
+										style="margin-left:13%;color:white;" onclick="leftPressed();backFunction();"
+										id="left"></button>
+									<input id="date" type="textbox" placeholder="City or Zipcode" class="form-control"
+										readonly="true" style="text-align: center; " value="hola">
+									<button class="btn  float-right fas fa-angle-right btn-sm "
+										style="margin-right:13%;color:white;" onclick="rightPressed();aheadFunction();"
+										id="right"></button>
+								</div>
+	
+								<button id="1" class="btn success " type="button" onclick="myFunctionToday()">Día</button>
+								<button id="2" class="btn success" type="button"
+									onclick="myFunctionThisWeek()">Semana</button>
+								<button id="3" class="btn success " type="button"
+									onclick="myFunctionThisMonth()">Mes</button>
+								<!--<button id= "2" type="button" class="btn btn-primary min-vw-25 mr-3 "  onclick="myFunctionThisWeek()">Esta Semana</button>
+							<button id= "3" type="button" class="btn btn-primary min-vw-25  "onclick="myFunctionThisMonth()" >Este Mes</button>-->
+							</div>
+						</div>
+					</div>
+	
+					<div style="height: 54%;">
+						<!--primera tarjeta-->
+						<div class="col-md-12" style="max-height: 55%; z-index:1;" id="tarjeta1">
+							<p align="center">
+								<samall>Total Aforo</samall>
+							</p>
+							<div id="chart-container" style="max-height: 68%;z-index:2;">
+	
+								<canvas id="totalIncomeChart" style=" width: 100%; height: 100%; z-index:3;  "></canvas>
+							</div>
+						</div>
+	
+	
+	
+					<div class="col-md-12" style="max-height: 55%; z-index:1;" id="tarjeta2"><br>
+							<p align="center">
+								<samall>Total Persona</samall>
+							</p>
+	
+							<div id="chart-container" style="max-height: 68% ;z-index:2;">
+	
+								<canvas id="totalIncomeChart1" style=" width: 100%; height:100%;z-index:3;  "></canvas>
+	
+	
+							</div>
+							<!--<div align="center">
+							<b><small >Horario Activo:  8:00 am -a 5:00 pm para el público</small></b>
+						</div>-->
+	
+						</div>
+	
+	
+						<!--primera tarjeta-->
+						<!--segunda tarjeta-->
+	
+						<div class="col-md-12" style="max-height: 55%; z-index:1;" id="tarjeta3">
+							<p align="center">
+								<samall>Esta Semana</samall>
+							</p>
+							<div id="chart-container" style="max-height: 68% ;z-index:2;">
+	
+								<canvas id="totalIncomeChart2" style=" width: 100%; height:100%;z-index:3;  "></canvas>
+	
+							</div>
+	
+	
+	
+						</div>
+	
+	
+						<div class="col-md-12" style="max-height: 55%; z-index:1;" id="tarjeta4"><br>
+							<p align="center">
+								<samall>Esta Semana Acumulada</samall>
+							</p>
+	
+							<div id="chart-container" style="max-height: 68% ;z-index:2;">
+	
+								<canvas id="totalIncomeChart3" style=" width: 100%; height:100%;z-index:3;  "></canvas>
+	
+	
+							</div>
+							<!--<div align="center">
+							<b><small >Horario Activo:  8:00 am -a 5:00 pm para el público</small></b>
+						</div>-->
+						</div>
+	
+						<!--segunda tarjeta-->
+						<!--tercera tarjeta-->
+	
+						<div class="col-md-12" style="max-height: 55%; z-index:1;" id="tarjeta5">
+							<p align="center">
+								<samall>Este Mes</samall>
+							</p>
+							<div id="chart-container" style="max-height: 68% ;z-index:2;">
+	
+								<canvas id="totalIncomeChart4" style=" width: 100%; height:100%;z-index:3;  "></canvas>
+	
+							</div>
+	
+	
+	
+						</div>
+	
+						<div class="col-md-12" style="max-height: 55%; z-index:1;" id="tarjeta6"><br>
+							<p align="center">
+								<samall>El Mes Pasado</samall>
+							</p>
+	
+							<div id="chart-container" style="max-height: 68% ;z-index:2;">
+	
+								<canvas id="totalIncomeChart5" style=" width: 100%; height:100%;z-index:3;  "></canvas>
+	
+	
+							</div>
+							<!--<div align="center">
+							<b><small >Horario Activo:  8:00 am -a 5:00 pm para el público</small></b>
+						</div>-->
+	
+						</div>
+	
+						<!--tercera tarjeta-->
+						<div>
+	
+	
+						</div>
+					</div>
+	
+	
 				</div>
-				<div class="card-footer " style=" border-width:0px !important; height: 50%;">
-					<p align="center"><b ><small>Total Aforo</small></b>   </p>   
-					<div id="chart-container">
-						<!--problemas con esta tarjeta para cambiar el tamano de la grafica, no obedece a porsentaje de altura y arruina a las otras tarjetass-->
-						<div id="CH-barras-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}">
-							
-                  		    <canvas id="barras-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" style=" height: 100%; z-index:3;"></canvas>
-					    </div>
-					  </div>
+			</div>
+		</div>
+	</div>
+
+    {% for camara  in camaras %}
+    <div class="row {{var}}">
+	{% for zonas_camara in camara.zonas_camara %}
+
+	<div class="col-md-3">
+		<div class="card full-height">
+			<div style="height: 50%;">
+				<div class="card-body" style="height:50%">
+					<div class="card-header text-center pt-2 pb-4" style=" border-width:0px !important;"
+						style="height:50%">
+						<div class="card-category text-center"><b><small>{{zonas_camara.nombre_zona_camara}} X</small></b>
+						</div>
+
+						<div class="d-flex flex-wrap justify-content-around ">
+							<div class="px-2 pb-2 pb-md-0 text-center">
+								<div class="align-middle">
+
+									<div id="circles-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}"
+										class="py-3" style="height:50%"></div>
+								</div>
+								<!--h3 class="fw-bold mt-1 mb-0 text">Aforo máximo 50 personas</h3-->
+
+							</div>
+						</div>
+
+
+
+
+						<!-- <b><small>{{camara.nombre_camara}}</small></b>-->
+
+					</div>
 				</div>
-				
-					<!--					
+			</div>
+			<div class="card-footer " style=" border-width:0px !important; height: 50%;">
+				<p align="center"><b><small>Total Aforo</small></b> </p>
+				<div id="chart-container">
+					<!--problemas con esta tarjeta para cambiar el tamano de la grafica, no obedece a porsentaje de altura y arruina a las otras tarjetass-->
+					<div id="CH-barras-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}">
+
+						<canvas id="barras-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}"
+							style=" height: 100%; z-index:3;"></canvas>
+					</div>
+				</div>
+			</div>
+
+			<!--					
                   <div class="col-md-12"  >
                     <div id="chart-container" >
                       
                       <canvas id="barras-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" style="display: block; width:262px; height :120px;"></canvas>
                     </div>
-                  </div>-->	
-              </div>
-			</div>
-		
-		
-			
-        
-              <div class="col-md-3">
-				  
-                <div class="card full-height">
-					<div style ="height: 50%;">
-                    <div class="card-body text-center pt-2 pb-3"style=" border-width:0px !important;" >                  
-					 
-						<div class="card-header"style=" border-width:0px !important;"style="height:50%">
-							
-							<b><small>{{camara.nombre_camara}}</small></b>
-							
-							
-						</div>
-						 
-						  {% if  camara.serial_camara == "Q2HV-B24V-ZKN5" %}
-						
-							<div style= "height:40%;max-height: 50%;">
-						  <img class="card-img-top rounded" src="{{ camara.snapshot }}" onerror="this.onerror=null;this.src='static/assets/img/onerrorQ2HV-B24V-ZKN5.jpg';" >
-							</div>
-						  
-							
-						
-						  {%endif%}
-						  {% if camara.serial_camara == "Q2GV-4YBM-YWWJ"%}
-						
-							<div style= "height:40%;max-height: 50%;">
-						  <img class="card-img-top rounded" src="{{ camara.snapshot }}"onerror="this.onerror=null;this.src='static/assets/img/onerrorQ2GV-4YBM-YWWJ.jpg';" >
-							</div>
-							
-							
-						
-						  {%endif%} 
-						  
-						  
-					
-					
-							
-					  
-				
-													<!--  {% if  form.serial == "Q2HV-B24V-ZKN5" %}
+                  </div>-->
+		</div>
+	</div>
+
+
+
+
+	<div class="col-md-3">
+
+		<div class="card full-height">
+			<div style="height: 50%;">
+				<div class="card-body text-center pt-2 pb-3" style=" border-width:0px !important;">
+
+					<div class="card-header" style=" border-width:0px !important;" style="height:50%">
+
+						<b><small>{{camara.nombre_camara}} U </small></b>
+
+
+					</div>
+
+					{% if  camara.serial_camara == "Q2HV-B24V-ZKN5" %}
+
+					<div style="height:40%;max-height: 50%;">
+						<img class="card-img-top rounded" src="{{ camara.snapshot }}"
+							onerror="this.onerror=null;this.src='static/assets/img/onerrorQ2HV-B24V-ZKN5.jpg';">
+					</div>
+
+
+
+					{%endif%}
+					{% if camara.serial_camara == "Q2GV-4YBM-YWWJ"%}
+
+					<div style="height:40%;max-height: 50%;">
+						<img class="card-img-top rounded" src="{{ camara.snapshot }}"
+							onerror="this.onerror=null;this.src='static/assets/img/onerrorQ2GV-4YBM-YWWJ.jpg';">
+					</div>
+
+
+
+					{%endif%}
+
+
+
+
+
+
+
+					<!--  {% if  form.serial == "Q2HV-B24V-ZKN5" %}
 													
                 									  <img class="card-img-top p-4 rounded" src="{{ form.meraki }}">
 													  {%elif form.serial == "Q2GV-4YBM-YWWJ"%}
@@ -386,7 +398,7 @@
 													  <img class="card-img-top p-4 rounded" src="{{ form.meraki2 }}">
 													  {%endif%}
 													-->
-						<!--	<div >
+					<!--	<div >
 						
                     
                       			<div class="d-flex flex-wrap justify-content-around">
@@ -408,13 +420,13 @@
                 				</div>
                
              		 	</div>-->
-                    
-    
-						<!--<p>camara</p>-->
-                
-                
-		
-				
+
+
+					<!--<p>camara</p>-->
+
+
+
+
 					<!--<br>
 					
 					<div class="col-md-12"style="max-height: 60px;"  >
@@ -423,56 +435,64 @@
 					  <<canvas id="totalIncomeChart2" style=" width: 376px; height: 90px;"></canvas>
 					 </div>
 					 </div>-->
-					 
+
+				</div>
+			</div>
+			<div class="card-footer " style=" border-width:0px !important; height: 50%;">
+
+
+				<p align="center"><small> Personas: {{zonas_camara.nro_personas}}</small></p>
+
+
+				<div id="chart-container">
+					<div id='CH-barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}'>
+						<canvas id="barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}"
+							style=" height: 100%; z-index:3;"></canvas>
+
+					</div>
+				</div>
+
 			</div>
 		</div>
-			<div class="card-footer " style=" border-width:0px !important; height: 50%;">
-			
-					
-					<p  align="center"><small> Personas: {{zonas_camara.nro_personas}}</small></p>
-			
-					
-				<div id="chart-container" >
-						  	<div id= 'CH-barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}'  >
-							   <canvas  id="barras-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}"style=" height: 100%; z-index:3;"></canvas>
-						  
-						  	</div>
-					</div>
 
-					</div> 
-			</div>
-			  
-        
-        </div>
-   
-       
-      
-      
-   {% endfor %}
-   
 
-  
+	</div>
+
+
+
+
+	{% endfor %}
+
+
+
+    </div>
+    {% endfor %}
 </div>
-     
-      
-    
-    {% block body%}
-   
-    {% endblock %}
 
 
 
 
-{% endfor %}
 
 
-  </div>
+{% block body%}
+
+{% endblock %}
+
+
+
+
+
+
+
+</div>
 </div>
 <!--Fin de  la Fila-->
 <!--   Core JS Files   -->
-<script src="../static/assets/js/core/jquery.3.2.1.min.js"></script><!--estos dos juntos no permiten abirir el menu del perfil-->
+<script src="../static/assets/js/core/jquery.3.2.1.min.js"></script>
+<!--estos dos juntos no permiten abirir el menu del perfil-->
 <script src="../static/assets/js/core/popper.min.js"></script>
-<!--<script src="../static/assets/js/core/bootstrap.min.js"></script>--><!--estos dos juntos no permiten abirir el menu del perfil-->
+<!--<script src="../static/assets/js/core/bootstrap.min.js"></script>-->
+<!--estos dos juntos no permiten abirir el menu del perfil-->
 
 <!-- jQuery UI -->
 <script src="../static/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
@@ -494,25 +514,25 @@
 <script src="../static/assets/js/atlantis.min.js"></script>
 
 
-  <script>
-	  
+<script>
+
 	/*let searchParams = new URLSearchParams(window.location.search)
 	if searchParams.has('m');
 	let param = searchParams.get('sent')
 	*/
 	hzt_verde = "../static/assets/img/design/shv.png";
-	hzt_ambar ="../static/assets/img/design/sha.png";
-	hzt_rojo ="../static/assets/img/design/shr.png";
+	hzt_ambar = "../static/assets/img/design/sha.png";
+	hzt_rojo = "../static/assets/img/design/shr.png";
 
 
- function revisar_cambios() {
+	function revisar_cambios() {
 		id_monitor = $('#hdn_monitor').val();
 		id_monitor = 10
 		if (id_monitor != '') {
 			request_url = '/camaras/configuracion_camaras/' + id_monitor + '';
 			$.ajax({
 				url: request_url,
-				success: function(data){
+				success: function (data) {
 					nro_personas = parseInt(data['nro_personas']);
 					aforo_maximo = parseInt(data['aforo_maximo']);
 					color_barra_cabecera = data['color_barra_cabecera'];
@@ -525,24 +545,24 @@
 					aforo_mostrar_casi_lleno = data['aforo_mostrar_casi_lleno'];
 					aforo_frase_verde = data['aforo_frase_verde'];
 					aforo_frase_ambar = data['aforo_frase_ambar'];
-					aforo_frase_rojo = data['aforo_frase_rojo'];										
-					camaras = JSON.parse(data['camaras'])		
-					nombre_aforo = data['nombre_aforo']; 
+					aforo_frase_rojo = data['aforo_frase_rojo'];
+					camaras = JSON.parse(data['camaras'])
+					nombre_aforo = data['nombre_aforo'];
 					$('#nombre_aforo').html(nombre_aforo);
-					usoRed_ethernet_enviados = data['usoRed_ethernet_enviados']; 
+					usoRed_ethernet_enviados = data['usoRed_ethernet_enviados'];
 					$('#usoRed_ethernet_enviados').html(usoRed_ethernet_enviados);
-					usoRed_ethernet_recibidos = data['usoRed_ethernet_recibidos']; 
+					usoRed_ethernet_recibidos = data['usoRed_ethernet_recibidos'];
 					$('#usoRed_ethernet_recibidos').html(usoRed_ethernet_recibidos);
 
 
-					usoRed_wifi_enviados = data['usoRed_wifi_enviados']; 
+					usoRed_wifi_enviados = data['usoRed_wifi_enviados'];
 					$('#usoRed_wifi_enviados').html(usoRed_wifi_enviados);
-					usoRed_wifi_recibidos = data['usoRed_wifi_recibidos']; 
+					usoRed_wifi_recibidos = data['usoRed_wifi_recibidos'];
 					$('#usoRed_wifi_recibidos').html(usoRed_wifi_recibidos);
 
 
-					 
-					
+
+
 					/*console.log("camaras::")
 					console.log(camaras)
 					console.log("camaras[0].fields.nombre_camara")
@@ -576,116 +596,113 @@
 						console.log("zonas_camara: ")
 						console.log(zonas_camara)
 					}*/
-					
-					
-					
-					
-					
-					crearCircle(camaras)
-          crearBarra(camaras)
 
-					switch (color_barra_cabecera)
-					{
+
+
+
+
+					crearCircle(camaras)
+					crearBarra(camaras)
+
+					switch (color_barra_cabecera) {
 						case "WTH":
-							color_barra_cabecera ="#FFFFFF";
+							color_barra_cabecera = "#FFFFFF";
 							break;
 						case "G60":
-							color_barra_cabecera ="#4c4c4c";
+							color_barra_cabecera = "#4c4c4c";
 							break;
 						case "G30":
-							color_barra_cabecera ="#999999";
+							color_barra_cabecera = "#999999";
 							break;
 						case "BLK":
-							color_barra_cabecera ="#000000";
+							color_barra_cabecera = "#000000";
 							break;
 					}
 
-					switch (true)
-					{
-					   case (nro_personas < 18):
-					   		sem_color = hzt_verde;
-					   		frase = aforo_frase_verde;
-					   		break;
-					   case (nro_personas < 41):
-					   		sem_color = hzt_ambar;
-					   		frase = aforo_frase_ambar;
-					   		break;
-					   case (nro_personas > 40):
-						   sem_color = hzt_rojo;
-						   frase = aforo_frase_rojo;
-						   break;
-					   default:
-						   sem_color = hzt_verde;
-						   frase = aforo_frase_verde;
+					switch (true) {
+						case (nro_personas < 18):
+							sem_color = hzt_verde;
+							frase = aforo_frase_verde;
+							break;
+						case (nro_personas < 41):
+							sem_color = hzt_ambar;
+							frase = aforo_frase_ambar;
+							break;
+						case (nro_personas > 40):
+							sem_color = hzt_rojo;
+							frase = aforo_frase_rojo;
+							break;
+						default:
+							sem_color = hzt_verde;
+							frase = aforo_frase_verde;
 					}
 
-				    $('#semaforo').attr('src',sem_color);
-				    $('#texto_barra_cabecera').html(texto_barra_cabecera);
+					$('#semaforo').attr('src', sem_color);
+					$('#texto_barra_cabecera').html(texto_barra_cabecera);
 
-					if(aforo_mostrar_maximo==false){
+					if (aforo_mostrar_maximo == false) {
 						$("#msg_aforo_maximo").hide().html('');
 					}
-					else{
+					else {
 						$("#msg_aforo_maximo").show().html(aforo_maximo);
 					}
-					if(aforo_mostrar_casi_lleno==false){
+					if (aforo_mostrar_casi_lleno == false) {
 						$("#msg_aforo_casi_lleno").hide().html('');
 					}
-					else{
+					else {
 						$("#msg_aforo_casi_lleno").show().html(frase);
 					}
-				    /*color_barra_cabecera*/
+					/*color_barra_cabecera*/
 
-				    if (aforo_formato=="PCT"){
-				    	nro_personas_show = ((nro_personas * 100)/aforo_maximo).toFixed(0) + "%";
-				    }
-				    else{
-				    	nro_personas_show = nro_personas;
-				    }
+					if (aforo_formato == "PCT") {
+						nro_personas_show = ((nro_personas * 100) / aforo_maximo).toFixed(0) + "%";
+					}
+					else {
+						nro_personas_show = nro_personas;
+					}
 
 					Circles.create({
-						id:'circles-1',
-						radius:100,
-						value:nro_personas,
-						maxValue:aforo_maximo,
-						width:15,
+						id: 'circles-1',
+						radius: 100,
+						value: nro_personas,
+						maxValue: aforo_maximo,
+						width: 15,
 						text: nro_personas_show,
-						colors:['#f1f1f1', '#FF9E27'], /*#FF9E27*/
-						duration:400,
-						wrpClass:'circles-wrp',
-						textClass:'circles-text',
-						styleWrapper:true,
-						styleText:true
+						colors: ['#f1f1f1', '#FF9E27'], /*#FF9E27*/
+						duration: 400,
+						wrpClass: 'circles-wrp',
+						textClass: 'circles-text',
+						styleWrapper: true,
+						styleText: true
 					});
 				}
 			});
 		};
-    };
+	};
 
-    $(document).ready(function(){});
+	$(document).ready(function () { });
 
-    revisar_cambios();
+	revisar_cambios();
 
-    $(function(){
-        window.setInterval(function(){
-           revisar_cambios();
-        },5000);
-    });
+	$(function () {
+		window.setInterval(function () {
+			revisar_cambios();
+		}, 5000);
+	});
 
-	function crearCircle(camaras){
-		
+	function crearCircle(camaras) {
+
 		console.log("crearCircle")
 		//console.log("camaras::")
 		//console.log(camaras)
-		for (i = 0; i < camaras.length; i++)
-		{
+		for (i = 0; i < camaras.length; i++) {
 			//console.log("camaras: "+i)
 			//console.log("camaras[i].fields.zonas_camara")
 			//console.log((camaras[i].fields.zonas_camara))
 			nombre_camara = camaras[i].fields.nombre_camara
 			//console.log("nombre_camara")
 			//console.log(nombre_camara)
-			var zonas_camara_str = camaras[i].fields.zonas_camara.replace(/'/g, '"');		
+			var zonas_camara_str = camaras[i].fields.zonas_camara.replace(/'/g, '"');
 			//console.log("zonas_camara")
 			//console.log(zonas_camara)			
 			var zonas_camara = JSON.parse(zonas_camara_str)
@@ -693,82 +710,81 @@
 			//console.log(zonas_camara)
 			//console.log("zonas_camara.length")
 			//console.log(zonas_camara.length)
-			
-			for (j = 0; j < zonas_camara.length; j++){
+
+			for (j = 0; j < zonas_camara.length; j++) {
 				//console.log("zonas_camara"+j)
 				//console.log(zonas_camara[j])				
 				//console.log("zonas_camara "+j+" nombre_zona_camara ")
 				//console.log(zonas_camara[j].nombre_zona_camara)
 				//console.log("zonas_camara "+j+" nro_personas ")
 				//console.log(zonas_camara[j].nro_personas)
-				id_circle = "circles"+"-"+nombre_camara+"-"+zonas_camara[j].nombre_zona_camara
-				id_circle_persona = "circles-persona"+"-"+nombre_camara+"-"+zonas_camara[j].nombre_zona_camara
-				setCircle(id_circle,id_circle_persona,100,zonas_camara[j].nro_personas)
+				id_circle = "circles" + "-" + nombre_camara + "-" + zonas_camara[j].nombre_zona_camara
+				id_circle_persona = "circles-persona" + "-" + nombre_camara + "-" + zonas_camara[j].nombre_zona_camara
+				setCircle(id_circle, id_circle_persona, 100, zonas_camara[j].nro_personas)
 			}
-			
+
 		}
-		
-		
-		
+
+
+
 	}
-	
-	function setCircle(id_circle,id_circle_persona,maxValue,value){
+
+	function setCircle(id_circle, id_circle_persona, maxValue, value) {
 		/*console.log("setCircle 100")
 		console.log("id_circle")
 		console.log(id_circle)
 		console.log("maxValue")
 		console.log(maxValue)
 		console.log("value")
-		console.log(value)*/		
-		
-		
+		console.log(value)*/
+
+
 		Circles.create({
-			id:id_circle,
-			radius:50,
-			value:value,
-			maxValue:maxValue,
-			width:7,
+			id: id_circle,
+			radius: 50,
+			value: value,
+			maxValue: maxValue,
+			width: 7,
 			text: value,
-			colors:['#f1f1f1', '#FF9E27'],
-			duration:400,
-			wrpClass:'circles-wrp',
-			textClass:'circles-text',
-			styleWrapper:true,
-			styleText:true
+			colors: ['#f1f1f1', '#FF9E27'],
+			duration: 400,
+			wrpClass: 'circles-wrp',
+			textClass: 'circles-text',
+			styleWrapper: true,
+			styleText: true
 		})
 		Circles.create({
-			id:id_circle_persona,
-			radius:50,
-			value:value,
-			maxValue:maxValue,
-			width:7,
+			id: id_circle_persona,
+			radius: 50,
+			value: value,
+			maxValue: maxValue,
+			width: 7,
 			text: value.toString(),
-			colors:['#f1f1f1', '#FF9E27'],
-			duration:400,
-			wrpClass:'circles-wrp',
-			textClass:'circles-text',
-			styleWrapper:true,
-			styleText:true
+			colors: ['#f1f1f1', '#FF9E27'],
+			duration: 400,
+			wrpClass: 'circles-wrp',
+			textClass: 'circles-text',
+			styleWrapper: true,
+			styleText: true
 		})
 	}
-	
-	
-//barras------------------------------------------------------
 
-function crearBarra(camaras){
-		
+
+	//barras------------------------------------------------------
+
+	function crearBarra(camaras) {
+
 		console.log("crearBarras")
 		//console.log("camaras::")
 		//console.log(camaras)
-		for (i = 0; i < camaras.length; i++)
-		{
+		for (i = 0; i < camaras.length; i++) {
 			//console.log("camaras: "+i)
 			//console.log("camaras[i].fields.zonas_camara")
 			//console.log((camaras[i].fields.zonas_camara))
 			nombre_camara = camaras[i].fields.nombre_camara
 			//console.log("nombre_camara")
 			//console.log(nombre_camara)
-			var zonas_camara_str = camaras[i].fields.zonas_camara.replace(/'/g, '"');		
+			var zonas_camara_str = camaras[i].fields.zonas_camara.replace(/'/g, '"');
 			//console.log("zonas_camara")
 			//console.log(zonas_camara)			
 			var zonas_camara = JSON.parse(zonas_camara_str)
@@ -776,32 +792,32 @@ function crearBarra(camaras){
 			//console.log(zonas_camara)
 			//console.log("zonas_camara.length")
 			//console.log(zonas_camara.length)
-			
-			for (j = 0; j < zonas_camara.length; j++){
+
+			for (j = 0; j < zonas_camara.length; j++) {
 				//console.log("zonas_camara"+j)
 				//console.log(zonas_camara[j])				
 				//console.log("zonas_camara "+j+" nombre_zona_camara ")
 				//console.log(zonas_camara[j].nombre_zona_camara)
 				//console.log("zonas_camara "+j+" nro_personas ")
 				//console.log(zonas_camara[j].nro_personas)
-				
-				id_barra = "barras"+"-"+nombre_camara+"-"+zonas_camara[j].nombre_zona_camara
-				id_barra_persona = "barras-persona"+"-"+nombre_camara+"-"+zonas_camara[j].nombre_zona_camara
-				id_barra_persona_acumulada = "barras-persona-acumulada"+"-"+nombre_camara+"-"+zonas_camara[j].nombre_zona_camara
-				
-				var xContenido = document.getElementById('CH-'+id_barra);
-				xContenido.innerHTML = '';
-				xContenido.innerHTML = '<canvas id="'+id_barra+'"></canvas>';
 
-				var yContenido = document.getElementById('CH-'+id_barra_persona);
+				id_barra = "barras" + "-" + nombre_camara + "-" + zonas_camara[j].nombre_zona_camara
+				id_barra_persona = "barras-persona" + "-" + nombre_camara + "-" + zonas_camara[j].nombre_zona_camara
+				id_barra_persona_acumulada = "barras-persona-acumulada" + "-" + nombre_camara + "-" + zonas_camara[j].nombre_zona_camara
+
+				var xContenido = document.getElementById('CH-' + id_barra);
+				xContenido.innerHTML = '';
+				xContenido.innerHTML = '<canvas id="' + id_barra + '"></canvas>';
+
+				var yContenido = document.getElementById('CH-' + id_barra_persona);
 				yContenido.innerHTML = '';
-				yContenido.innerHTML = '<canvas id="'+id_barra_persona+'"></canvas>';
+				yContenido.innerHTML = '<canvas id="' + id_barra_persona + '"></canvas>';
 
 				/**var zContenido = document.getElementById('CH-'+id_barra_persona_acumulada);
 				zContenido.innerHTML = '';
 				zContenido.innerHTML = '<canvas id="'+id_barra_persona_acumulada+'"></canvas>';*/
 
-				setBarra(id_barra,100,zonas_camara[j].nro_personas,3)
+				setBarra(id_barra, 100, zonas_camara[j].nro_personas, 3)
 				//setBarra(id_barra_persona_acumulada,100,zonas_camara[j].nro_personas,2)
 				//mytotalIncomeChart.destroy();
 				//$('.muestra').remove();
@@ -810,30 +826,30 @@ function crearBarra(camaras){
 					console.log('alerta');
 				
 				});*/
-				
-				setBarra(id_barra_persona,100,zonas_camara[j].nro_personas,1)
-				
-				
-			} 
-			
+
+				setBarra(id_barra_persona, 100, zonas_camara[j].nro_personas, 1)
+
+
+			}
+
 		}
-		
-		
-		
+
+
+
 	}
-	var counter= 0
-	var counterA= 0
-	function setBarra(id_barra_persona_acumulada,maxValue,value,boolean){
-	
+	var counter = 0
+	var counterA = 0
+	function setBarra(id_barra_persona_acumulada, maxValue, value, boolean) {
+
 		/*console.log("setCircle 100")
 		console.log("id_circle")
 		console.log(id_circle)
 		console.log("maxValue")
 		console.log(maxValue)
 		console.log("value")
-		console.log(value)*/		
-		
-		
+		console.log(value)*/
+
+
 		/*Circles.create({
 			id:id_circle,
 			radius:45,
@@ -865,385 +881,388 @@ function crearBarra(camaras){
 	}*/
 
 
-	//evalua que se cree una sola grafica para que no choque barra persona con persona acumulada y barra
-/**if (boolean ==2){
-
-
-  
-	var totalIncomeChart = document.getElementById(id_barra_persona_acumulada).getContext('2d');
-	var arrayC=JSON.parse("{{info_grafica_horas_acumulado}}")
-var mytotalIncomeChart = new Chart(totalIncomeChart, {
-  type: 'bar',
-  data: {
-    labels: ["1H", "4H", "8H", "12H", "16H", "20H", "24H"],
-    datasets : [{
-      label: "Total aforo",
-      backgroundColor: '#ff9e27',
-      borderColor: 'rgb(23, 125, 255)',
-      data: arrayC,
-    }],
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    legend: {
-      display: false,
-    },
-    scales: {
-      yAxes: [{
-        ticks: {
-          display: false //this will remove only the label
-        },
-        gridLines : {
-          drawBorder: false,
-          display : false
-        }
-      }],
-      xAxes : [ {
-        gridLines : {
-          drawBorder: false,
-          display : false
-        }
-      }]
-    },
-  }
-});
-}*/
-if(boolean ==1){
-	if(counterA == 0){
-var totalIncomeChart = document.getElementById(id_barra).getContext('2d');
-var arrayD=JSON.parse("{{infocamaraAcumulada0}}")
-var mytotalIncomeChart = new Chart(totalIncomeChart, {
-  type: 'bar',
-  data: {
-    labels:["D", "L", "M", "M", "J", "V", "S"],
-    datasets : [{
-      label: "Total aforo",
-      backgroundColor: '#ff9e27',
-      borderColor: 'rgb(23, 125, 255)',
-      data: arrayD,
-    }],
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    legend: {
-      display: false,
-    },
-    scales: {
-      yAxes: [{
-        ticks: {
-          display: false //this will remove only the label
-        },
-        gridLines : {
-          drawBorder: false,
-          display : false
-        }
-      }],
-      xAxes : [ {
-        gridLines : {
-          drawBorder: false,
-          display : false
-        }
-      }]
-    },
-  }
-});
-
-counterA= 1
-}
-else if(counterA == 1){
-	
-	var totalIncomeChart = document.getElementById(id_barra).getContext('2d');
-	var arrayD=JSON.parse("{{infocamaraAcumulada1}}")
-	var mytotalIncomeChart = new Chart(totalIncomeChart, {
-	  type: 'bar',
-	  data: {
-		labels:["D", "L", "M", "M", "J", "V", "S"],
-		datasets : [{
-		  label: "Total aforo",
-		  backgroundColor: '#ff9e27',
-		  borderColor: 'rgb(23, 125, 255)',
-		  data: arrayD,
-		}],
-	  },
-	  options: {
-		responsive: true,
-		maintainAspectRatio: false,
-		legend: {
-		  display: false,
-		},
-		scales: {
-		  yAxes: [{
-			ticks: {
-			  display: false //this will remove only the label
+		//evalua que se cree una sola grafica para que no choque barra persona con persona acumulada y barra
+		/**if (boolean ==2){
+		
+		
+		  
+			var totalIncomeChart = document.getElementById(id_barra_persona_acumulada).getContext('2d');
+			var arrayC=JSON.parse("{{info_grafica_horas_acumulado}}")
+		var mytotalIncomeChart = new Chart(totalIncomeChart, {
+		  type: 'bar',
+		  data: {
+			labels: ["1H", "4H", "8H", "12H", "16H", "20H", "24H"],
+			datasets : [{
+			  label: "Total aforo",
+			  backgroundColor: '#ff9e27',
+			  borderColor: 'rgb(23, 125, 255)',
+			  data: arrayC,
+			}],
+		  },
+		  options: {
+			responsive: true,
+			maintainAspectRatio: false,
+			legend: {
+			  display: false,
 			},
-			gridLines : {
-			  drawBorder: false,
-			  display : false
+			scales: {
+			  yAxes: [{
+				ticks: {
+				  display: false //this will remove only the label
+				},
+				gridLines : {
+				  drawBorder: false,
+				  display : false
+				}
+			  }],
+			  xAxes : [ {
+				gridLines : {
+				  drawBorder: false,
+				  display : false
+				}
+			  }]
+			},
+		  }
+		});
+		}*/
+		if (boolean == 1) {
+			if (counterA == 0) {
+				var totalIncomeChart = document.getElementById(id_barra).getContext('2d');
+				var arrayD = JSON.parse("{{infocamaraAcumulada0}}")
+				var mytotalIncomeChart = new Chart(totalIncomeChart, {
+					type: 'bar',
+					data: {
+						labels: ["D", "L", "M", "M", "J", "V", "S"],
+						datasets: [{
+							label: "Total aforo",
+							backgroundColor: '#ff9e27',
+							borderColor: 'rgb(23, 125, 255)',
+							data: arrayD,
+						}],
+					},
+					options: {
+						responsive: true,
+						maintainAspectRatio: false,
+						legend: {
+							display: false,
+						},
+						scales: {
+							yAxes: [{
+								ticks: {
+									display: false //this will remove only the label
+								},
+								gridLines: {
+									drawBorder: false,
+									display: false
+								}
+							}],
+							xAxes: [{
+								gridLines: {
+									drawBorder: false,
+									display: false
+								}
+							}]
+						},
+					}
+				});
+
+				counterA = 1
 			}
-		  }],
-		  xAxes : [ {
-			gridLines : {
-			  drawBorder: false,
-			  display : false
+			else if (counterA == 1) {
+
+				var totalIncomeChart = document.getElementById(id_barra).getContext('2d');
+				var arrayD = JSON.parse("{{infocamaraAcumulada1}}")
+				var mytotalIncomeChart = new Chart(totalIncomeChart, {
+					type: 'bar',
+					data: {
+						labels: ["D", "L", "M", "M", "J", "V", "S"],
+						datasets: [{
+							label: "Total aforo",
+							backgroundColor: '#ff9e27',
+							borderColor: 'rgb(23, 125, 255)',
+							data: arrayD,
+						}],
+					},
+					options: {
+						responsive: true,
+						maintainAspectRatio: false,
+						legend: {
+							display: false,
+						},
+						scales: {
+							yAxes: [{
+								ticks: {
+									display: false //this will remove only the label
+								},
+								gridLines: {
+									drawBorder: false,
+									display: false
+								}
+							}],
+							xAxes: [{
+								gridLines: {
+									drawBorder: false,
+									display: false
+								}
+							}]
+						},
+					}
+				});
+				counterA = 0
 			}
-		  }]
-		},
-	  }
-	});
-	counterA= 0
+		}
+
+
+		else {
+			if (counter == 0) {
+
+				var totalIncomeChart = document.getElementById(id_barra_persona).getContext('2d');
+				//alert(id_barra_persona)
+				var arrayE = JSON.parse("{{infocamara0}}")
+				console.log(id_barra_persona)
+				var mytotalIncomeChart = new Chart(totalIncomeChart, {
+					type: 'bar',
+					data: {
+						labels: ["D", "L", "M", "M", "J", "V", "S"],
+						datasets: [{
+							label: "Total aforo",
+							backgroundColor: '#ff9e27',
+							borderColor: 'rgb(23, 125, 255)',
+							data: arrayE,
+						}],
+					},
+					options: {
+						responsive: true,
+						maintainAspectRatio: false,
+						legend: {
+							display: false,
+						},
+						scales: {
+							yAxes: [{
+								ticks: {
+									display: false //this will remove only the label
+								},
+								gridLines: {
+									drawBorder: false,
+									display: false
+								}
+							}],
+							xAxes: [{
+								gridLines: {
+									drawBorder: false,
+									display: false
+								}
+							}]
+						},
+					}
+				});
+				counter = 1
+			}
+			else if (counter == 1) {
+				var totalIncomeChart = document.getElementById(id_barra_persona).getContext('2d');
+				//alert(id_barra_persona)
+				var arrayE = JSON.parse("{{infocamara1}}")
+				console.log(id_barra_persona)
+				var mytotalIncomeChart = new Chart(totalIncomeChart, {
+					type: 'bar',
+					data: {
+						labels: ["D", "L", "M", "M", "J", "V", "S"],
+						datasets: [{
+							label: "Total aforo",
+							backgroundColor: '#ff9e27',
+							borderColor: 'rgb(23, 125, 255)',
+							data: arrayE,
+						}],
+					},
+					options: {
+						responsive: true,
+						maintainAspectRatio: false,
+						legend: {
+							display: false,
+						},
+						scales: {
+							yAxes: [{
+								ticks: {
+									display: false //this will remove only the label
+								},
+								gridLines: {
+									drawBorder: false,
+									display: false
+								}
+							}],
+							xAxes: [{
+								gridLines: {
+									drawBorder: false,
+									display: false
+								}
+							}]
+						},
+					}
+				});
+				counter = 0
+			}
+		}
+
 	}
-}
-
-
-else{
-if(counter == 0){
-
-var totalIncomeChart = document.getElementById(id_barra_persona).getContext('2d');
-//alert(id_barra_persona)
-var arrayE=JSON.parse("{{infocamara0}}")
-console.log(id_barra_persona) 
-var mytotalIncomeChart = new Chart(totalIncomeChart, {
-  type: 'bar',
-  data: {
-    labels: ["D", "L", "M", "M", "J", "V", "S"],
-    datasets : [{
-      label: "Total aforo",
-      backgroundColor: '#ff9e27',
-      borderColor: 'rgb(23, 125, 255)',
-      data: arrayE,
-    }],
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    legend: {
-      display: false,
-    },
-    scales: {
-      yAxes: [{
-        ticks: {
-          display: false //this will remove only the label
-        },
-        gridLines : {
-          drawBorder: false,
-          display : false
-        }
-      }],
-      xAxes : [ {
-        gridLines : {
-          drawBorder: false,
-          display : false
-        }
-      }]
-    },
-  }
-});
-counter = 1
-}
-else if (counter ==1){
-var totalIncomeChart = document.getElementById(id_barra_persona).getContext('2d');
-//alert(id_barra_persona)
-var arrayE=JSON.parse("{{infocamara1}}")
-console.log(id_barra_persona) 
-var mytotalIncomeChart = new Chart(totalIncomeChart, {
-  type: 'bar',
-  data: {
-    labels: ["D", "L", "M", "M", "J", "V", "S"],
-    datasets : [{
-      label: "Total aforo",
-      backgroundColor: '#ff9e27',
-      borderColor: 'rgb(23, 125, 255)',
-      data: arrayE,
-    }],
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    legend: {
-      display: false,
-    },
-    scales: {
-      yAxes: [{
-        ticks: {
-          display: false //this will remove only the label
-        },
-        gridLines : {
-          drawBorder: false,
-          display : false
-        }
-      }],
-      xAxes : [ {
-        gridLines : {
-          drawBorder: false,
-          display : false
-        }
-      }]
-    },
-  }
-});
-counter = 0
-}
-}
-	
-}
     /*
-    $(function(){
-        //prepare Your data array with img urls
-        var dataArray=new Array();
-        dataArray[0]="../static/assets/img/design/shv.png";
-        dataArray[1]="../static/assets/img/design/sha.png";
-        dataArray[2]="../static/assets/img/design/shr.png";
-        //start with id=0 after 5 seconds
-        var thisId=0;
-        window.setInterval(function(){
-            $('#semaforo').attr('src',dataArray[thisId]);
-            thisId++; //increment data array id
-            console.log(thisId);
-            if (thisId==3) thisId=0; //repeat from start
-        },5000);
-    });*/
+	$(function(){
+		//prepare Your data array with img urls
+		var dataArray=new Array();
+		dataArray[0]="../static/assets/img/design/shv.png";
+		dataArray[1]="../static/assets/img/design/sha.png";
+		dataArray[2]="../static/assets/img/design/shr.png";
+		//start with id=0 after 5 seconds
+		var thisId=0;
+		window.setInterval(function(){
+			$('#semaforo').attr('src',dataArray[thisId]);
+			thisId++; //increment data array id
+			console.log(thisId);
+			if (thisId==3) thisId=0; //repeat from start
+		},5000);
+	});*/
 
 
-	
+
 
 </script>
 
 <script>
 
-var x = document.getElementById("tarjeta1");
-var y = document.getElementById("tarjeta2");
-var z = document.getElementById("tarjeta3");
-var a = document.getElementById("tarjeta4");
-var b = document.getElementById("tarjeta5");
-var c = document.getElementById("tarjeta6");
+	var x = document.getElementById("tarjeta1");
+	var y = document.getElementById("tarjeta2");
+	var z = document.getElementById("tarjeta3");
+	var a = document.getElementById("tarjeta4");
+	var b = document.getElementById("tarjeta5");
+	var c = document.getElementById("tarjeta6");
 
-var leftisPressed= false
-var rightisPressed = false;
+	var leftisPressed = false
+	var rightisPressed = false;
 
-function leftPressed(){
-	
-	leftisPressed = true;
-	rightisPressed = false;
-	}
-	
-function rightPressed(){
-	
-	rightisPressed = true;
-	leftisPressed = false;
+	function leftPressed() {
+
+		leftisPressed = true;
+		rightisPressed = false;
 	}
 
-$(document).ready(function(){
-	x.style.display = "block";
-y.style.display = "block";
-z.style.display = "none";
-a.style.display = "none";
-b.style.display = "none";
-c.style.display = "none";
+	function rightPressed() {
 
-});
+		rightisPressed = true;
+		leftisPressed = false;
+	}
+
+	$(document).ready(function () {
+		x.style.display = "block";
+		y.style.display = "block";
+		z.style.display = "none";
+		a.style.display = "none";
+		b.style.display = "none";
+		c.style.display = "none";
+
+	});
 
 	function myFunctionToday() {
-		
-		if (leftisPressed == true){
-		backFunction()
-	}else if (rightisPressed== true){
-		aheadFunction()
+
+		if (leftisPressed == true) {
+			backFunction()
+		} else if (rightisPressed == true) {
+			aheadFunction()
+		}
+
+
+		if (x.style.display === "none") {
+
+			x.style.display = "block";
+			y.style.display = "block";
+			z.style.display = "none";
+			a.style.display = "none";
+			b.style.display = "none";
+			c.style.display = "none";
+
+
+		} else {
+			x.style.display = "block";
+			y.style.display = "block";
+			z.style.display = "none";
+			a.style.display = "none";
+			b.style.display = "none";
+			c.style.display = "none";
+
+
+		}
 	}
 
 
-if (x.style.display === "none") {
-	
-x.style.display = "block";
-y.style.display = "block";
-z.style.display = "none";
-a.style.display = "none";
-b.style.display = "none";
-c.style.display = "none";
 
+	function myFunctionThisWeek() {
 
-} else {
-x.style.display = "block";
-y.style.display = "block";
-z.style.display = "none";
-a.style.display = "none";
-b.style.display = "none";
-c.style.display = "none";
+		if (leftisPressed == true) {
+			backFunction()
+		} else if (rightisPressed == true) {
+			aheadFunction()
+		}
 
+		if (x.style.display === "block") {
+			x.style.display = "none";
+			y.style.display = "none";
+			z.style.display = "block";
+			a.style.display = "block";
+			b.style.display = "none";
+			c.style.display = "none";
 
-}}
+		} else {
+			x.style.display = "none";
+			y.style.display = "none";
+			z.style.display = "block";
+			a.style.display = "block";
+			b.style.display = "none";
+			c.style.display = "none";
 
-
-
-function myFunctionThisWeek() {
-	
-	if (leftisPressed == true){
-		backFunction()
-	}else if (rightisPressed== true){
-		aheadFunction()
+		}
 	}
 
-if (x.style.display === "block") {
-x.style.display = "none";
-y.style.display = "none";
-z.style.display = "block";
-a.style.display = "block";
-b.style.display = "none";
-c.style.display = "none";
-
-} else {
-x.style.display = "none";
-y.style.display = "none";
-z.style.display = "block";
-a.style.display = "block";
-b.style.display = "none";
-c.style.display = "none";
-
-}}
 
 
+	function myFunctionThisMonth() {
 
-function myFunctionThisMonth() {
+		if (leftisPressed == true) {
+			backFunction()
+		} else if (rightisPressed == true) {
+			aheadFunction()
+		}
 
-	if (leftisPressed == true){
-		backFunction()
-	}else if (rightisPressed== true){
-		aheadFunction()
+		if (x.style.display === "none") {
+			y.style.display = "none";
+			z.style.display = "none";
+			a.style.display = "none";
+			b.style.display = "none";
+			c.style.display = "none";
+			b.style.display = "block";
+			c.style.display = "block";
+
+		} else {
+			x.style.display = "none";
+			x.style.display = "none";
+			y.style.display = "none";
+			z.style.display = "none";
+			a.style.display = "none";
+			b.style.display = "block";
+			c.style.display = "block";
+
+		}
 	}
 
-if (x.style.display === "none") {
-	y.style.display = "none";
-z.style.display = "none";
-a.style.display = "none";
-b.style.display = "none";
-c.style.display = "none";
-b.style.display = "block";
-c.style.display = "block";
+	/*Grafica de Red*/
 
-} else {
-x.style.display = "none";
-x.style.display = "none";
-y.style.display = "none";
-z.style.display = "none";
-a.style.display = "none";
-b.style.display = "block";
-c.style.display = "block";
+	var LCPresionArterial = document.getElementById('LCPresionArterial').getContext('2d')
+	//function createGraficaPresionArterial(array_aforo,array_usuarios_red,array_wifi,array_ethernet){
+	function createGraficaPresionArterial(array_wifi, array_ethernet) {
+		console.log("createGraficaPresionArterial")
 
-}}
-
-/*Grafica de Red*/
-
-var LCPresionArterial = document.getElementById('LCPresionArterial').getContext('2d')
-//function createGraficaPresionArterial(array_aforo,array_usuarios_red,array_wifi,array_ethernet){
-function createGraficaPresionArterial(array_wifi,array_ethernet){
-	console.log("createGraficaPresionArterial")
-	
 		var myLCPresionArterial = new Chart(LCPresionArterial, {
-		type: 'line',
-		data: {
-			labels: ["9", "10", "11", "12", "13", "14", "15", "16", "17", "18"],
-			datasets: [/*{
+			type: 'line',
+			data: {
+				labels: ["9", "10", "11", "12", "13", "14", "15", "16", "17", "18"],
+				datasets: [/*{
 				label: "Aforo ",
 				borderColor: "#59d05d",
 				pointBorderColor: "#FFF",
@@ -1271,87 +1290,85 @@ function createGraficaPresionArterial(array_wifi,array_ethernet){
 				borderWidth: 2,
 				data: array_usuarios_red	
 			},*/
-			{
-				label: "Usuarios wifi",
-				borderColor: "#1d7af3",
-				pointBorderColor: "#FFF",
-				pointBackgroundColor: "#1d7af3",
-				pointBorderWidth: 2,
-				pointHoverRadius: 4,
-				pointHoverBorderWidth: 1,
-				pointRadius: 4,
-				backgroundColor: 'transparent',
-				fill: true,
-				borderWidth: 2,
-				data: array_wifi	
+					{
+						label: "Usuarios wifi",
+						borderColor: "#1d7af3",
+						pointBorderColor: "#FFF",
+						pointBackgroundColor: "#1d7af3",
+						pointBorderWidth: 2,
+						pointHoverRadius: 4,
+						pointHoverBorderWidth: 1,
+						pointRadius: 4,
+						backgroundColor: 'transparent',
+						fill: true,
+						borderWidth: 2,
+						data: array_wifi
+					},
+					{
+						label: "Usuarios ethernet",
+						borderColor: "#f3545d",
+						pointBorderColor: "#FFF",
+						pointBackgroundColor: "#f3545d",
+						pointBorderWidth: 2,
+						pointHoverRadius: 4,
+						pointHoverBorderWidth: 1,
+						pointRadius: 4,
+						backgroundColor: 'transparent',
+						fill: true,
+						borderWidth: 2,
+						data: array_ethernet
+					}
+				]
 			},
-			{
-				label: "Usuarios ethernet",
-				borderColor: "#f3545d",
-				pointBorderColor: "#FFF",
-				pointBackgroundColor: "#f3545d",
-				pointBorderWidth: 2,
-				pointHoverRadius: 4,
-				pointHoverBorderWidth: 1,
-				pointRadius: 4,
-				backgroundColor: 'transparent',
-				fill: true,
-				borderWidth: 2,
-				data: array_ethernet	
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				legend: {
+					display: false,
+				},
+				tooltips: {
+					bodySpacing: 1,
+					mode: "nearest",
+					intersect: 0,
+					position: "nearest",
+					xPadding: 10,
+					yPadding: 10,
+					caretPadding: 10
+				},
+				layout: {
+					padding: { left: 15, right: 15, top: 15, bottom: 15 }
+				}
 			}
-			]
-		},
-		options : {
-			responsive: true, 
-			maintainAspectRatio: false,
-			legend: {
-				display: false,
-			},
-			tooltips: {
-				bodySpacing: 1,
-				mode:"nearest",
-				intersect: 0,
-				position:"nearest",
-				xPadding:10,
-				yPadding:10,
-				caretPadding:10
-			},
-			layout:{
-				padding:{left:15,right:15,top:15,bottom:15}
-			}
-		}
-	});
+		});
 
-}
-window.onload = function() {
+	}
+	window.onload = function () {
 		//array_aforo = [21, 27, 28, 31, 35, 25, 18, 23, 19, 4]
 		//array_usuarios_red = [19, 26, 25,30, 35,24,19,20,19,4]
-		array_wifi = [14,17,21,24,29,19,16,15,13,1]
-		array_ethernet = [5, 9, 4, 6, 6, 6, 5, 5, 6, 3]  		
-//  		createGraficaPresionArterial(array_aforo,array_usuarios_red,array_wifi,array_ethernet);
-		createGraficaPresionArterial(array_wifi,array_ethernet);
-	};		
+		array_wifi = [14, 17, 21, 24, 29, 19, 16, 15, 13, 1]
+		array_ethernet = [5, 9, 4, 6, 6, 6, 5, 5, 6, 3]
+		//  		createGraficaPresionArterial(array_aforo,array_usuarios_red,array_wifi,array_ethernet);
+		createGraficaPresionArterial(array_wifi, array_ethernet);
+	};
 
 </script>
 <style>
-	
-.success{
-  border: 0px solid rgb(34, 92, 167);
-  background-color: rgb(34, 92, 167);
-  color: rgb(77, 157, 232);
-  
-  font-size: 16px;
-  color:aliceblue;
-  cursor: pointer;
-  
-   
-  
-}
-.float-left, .float-right{
-border:none;
-background-color: rgb(34, 92, 167);
-}
+	.success {
+		border: 0px solid rgb(34, 92, 167);
+		background-color: rgb(34, 92, 167);
+		color: rgb(77, 157, 232);
 
-	
+		font-size: 16px;
+		color: aliceblue;
+		cursor: pointer;
 
+
+
+	}
+
+	.float-left,
+	.float-right {
+		border: none;
+		background-color: rgb(34, 92, 167);
+	}
 </style>
