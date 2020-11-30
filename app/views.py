@@ -57,6 +57,9 @@ def TimeConverter(millis):
     return newResult
 
 def grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,seriales):
+    return 0
+
+def grafica_semana2(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,seriales):
     #print('la fecha actual es',mydate2)
     mySerials=[]
     e= 0
@@ -226,8 +229,9 @@ def grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,ser
 
 
     
-
 def grafica_semana_actual_acumulada(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,seriales):
+        return []
+def grafica_semana_actual_acumulada2(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,seriales):
     datos_semana_acumuladas= grafica_semana(mydate, mydate1 ,mydate2,fecha_limite,fecha_limite_minima,seriales)
     
     datosSemana=[]
@@ -270,8 +274,9 @@ def grafica_semana_actual_acumulada(mydate, mydate1 ,mydate2,fecha_limite,fecha_
                     
     return datosSemana
 
-
 def esteMesActual(seriales, mydate, boolean):
+    return []
+def esteMesActual2(seriales, mydate, boolean):
     #inicio el array
     today = date.today()
     i = 0
@@ -311,7 +316,7 @@ def esteMesActual(seriales, mydate, boolean):
          
         today = date.today()
         weekDay,myMonthrange=monthrange(int(today.strftime("%Y")), int(today.strftime("%m")))
-        #obtengo el dia de hoy
+        #obtengo e l dia de hoy
         diaDeHoy = (int(today.strftime("%d")))
 
     #print(int(today.strftime("%Y")))
@@ -322,10 +327,10 @@ def esteMesActual(seriales, mydate, boolean):
     #una vez obtenida la cantidad de dias de este me se hacen las condicionales respectivas
 
     switch_casos = {
-	31: dias31(today,seriales),
-	30: dias30(today,seriales),
-	29: dias29(today,seriales),
-	28: dias28(today,seriales),
+    31: dias31(today,seriales),
+    30: dias30(today,seriales),
+    29: dias29(today,seriales),
+    28: dias28(today,seriales),
     }
     esteMes = switch_casos.get(myMonthrange,default())
     #print ('total')
@@ -348,6 +353,8 @@ def esteMesActual(seriales, mydate, boolean):
     return datosMes
 
 def esteMesAcumulado(seriales,mydate,state):
+    return []
+def esteMesAcumulado2(seriales,mydate,state):
     #inicio el array
     date_time_obj = datetime.strptime(mydate, '%Y-%m-%d')
     #obtengo la cantidad de dias por mes
@@ -368,10 +375,10 @@ def esteMesAcumulado(seriales,mydate,state):
     #una vez obtenida la cantidad de dias de este me se hacen las condicionales respectivas
 
     switch_casos = {
-	31: dias31(today,seriales),
-	30: dias30(today,seriales),
-	29: dias29(today,seriales),
-	28: dias28(today,seriales),
+    31: dias31(today,seriales),
+    30: dias30(today,seriales),
+    29: dias29(today,seriales),
+    28: dias28(today,seriales),
     }
     esteMes = switch_casos.get(myMonthrange,default())
     #print ('total')
@@ -394,8 +401,8 @@ def esteMesAcumulado(seriales,mydate,state):
     return datosSemanaAcum
 
 
-
 def dias31(today,seriales):
+
     contador= 0
     int(contador)
     
@@ -941,6 +948,8 @@ else:
     
 # HORAS---------------------------------------------------------------------------------------------------------------------
 def grafica_horas(mydate):
+    return [0,0,0,0,0,0,0,0,0,0]
+def grafica_horas2(mydate):
     varTemporal1 = 0
     varTemporal2 = 0
     varTemporal3 = 0
@@ -1109,8 +1118,10 @@ def grafica_horas(mydate):
     return datos_horas
         
 #HORAS ACUMULADAS--------------------------------------------------------------------------------------------------------------------------------
-        
+
 def grafica_horas_acumuladas(mydate):
+    return []        
+def grafica_horas_acumuladas2(mydate):
     today = date.today()
     myLocalDate = str(today.strftime("%Y-%m-%d"))
     datosHoras=[]

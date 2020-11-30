@@ -33,6 +33,7 @@ class Instalacion(models.Model):
     tecnico_movil = models.CharField(max_length=20, blank=False, default='')
     tecnico_email = models.CharField(max_length=255, blank=False, default='')
     instalacion_estado = models.BooleanField(blank=False, default=True)
+    network_meraky_id = models.CharField(max_length=255, blank=False, default='') 
 
     def __unicode__(self):
         return self.nombre_comercial
@@ -52,6 +53,6 @@ class InstalacionEmbebido(models.Model):
     _id = models.ObjectIdField()   
     nif_cliente = models.CharField(max_length=20, blank=False, default='')     
     nombre = models.CharField(max_length=255, blank=False, default='')
-    
+    network_meraky_id = models.CharField(max_length=255, blank=False, default='')
     class Meta:        
         abstract = True

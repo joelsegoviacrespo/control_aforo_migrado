@@ -22,6 +22,7 @@ urlpatterns = [
     path('fondos/', include('fondos.urls')),
     path('camaras_historico/', include('camaras_historico.urls')),
     path('display/', include('display.urls')),
+    path('uso_red/', include('uso_red.urls')),    
     url('back/', views.back),
     url('ahead/', views.ahead),
 ]

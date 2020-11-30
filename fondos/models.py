@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 from django.contrib import admin
 from djongo import models
-from instalacion.models import InstalacionEmbebido
+from instalacion.models import InstalacionEmbebido,Instalacion
 from instalacion.forms import InstalacionEmbebidoForm
 from cliente.models import Cliente
 from django.conf import settings
@@ -69,6 +69,13 @@ class Fondos(models.Model):
            
            
        
+        
+       #Esto es para buscar el network_meraky_id para luego guardarla 
+       #en la tabla fondos
+         
+       instalacion = Instalacion.objects.filter(cliente={'nif': self.instalacion.nif_cliente},nombre_comercial=self.instalacion.nombre)[0]        
+       self.instalacion.network_meraky_id = instalacion.network_meraky_id 
+
        super(self.__class__, self).save(*args, **kwargs)        
        
 
