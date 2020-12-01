@@ -104,7 +104,7 @@ def actualizar(request, id):
 def eliminar(request, id):
     activate('es')
     try:
-        jornada = jornada_laboral.objects.get(_id=id)
+        jornada = JornadaLaboral.objects.get(_id=id)
         if (request.user.profile.rol == Constantes.ADMINISTRADOR) and hasattr(request.user.profile, 'cliente') and (request.user.profile.cliente.get_id() is not None):                
             if (request.user.profile.cliente.nif != jornada.instalacion.nif_cliente):            
                 return redirect('/accounts/logout/')
