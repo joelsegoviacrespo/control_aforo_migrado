@@ -55,7 +55,8 @@ INSTALLED_APPS = [
     'espacios.apps.EspaciosConfig',
     'display.apps.DisplayConfig',     
     'uso_red.apps.UsoRedConfig', 
-    'usuarios_red.apps.UsuariosRedConfig',         
+    'usuarios_red.apps.UsuariosRedConfig',
+    'jornada_laboral.apps.JornadaLaboralConfig',         
 
     
 ]
@@ -101,8 +102,24 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {           
-         'default': {
+DATABASES = {
+    
+#        'default': {
+#             'ENGINE': 'djongo',
+#             'NAME': 'aforo2',
+#             'ENFORCE_SCHEMA': False,
+#             'CLIENT': {
+#                 'host': 'mongodb://smfactory:S0ftwar4Mf4ac0ory@127.0.0.1:27117',
+#                 'port': 27117,
+#                 'username': 'smfactory',
+#                 'password': 'S0ftwar4Mf4ac0ory',
+#                 'authSource': 'admin',
+#                 'authMechanism': 'SCRAM-SHA-1'
+#             }
+#        },
+    
+           
+          'default': {
              'ENGINE': 'djongo',
              'NAME': 'aforo',
              'ENFORCE_SCHEMA': False,
@@ -115,6 +132,7 @@ DATABASES = {
                  'authMechanism': 'SCRAM-SHA-1'
              }
         },
+
 'DBCollection1': {
             'ENGINE': 'djongo',
             'NAME': 'aforo',
