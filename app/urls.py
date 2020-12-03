@@ -24,6 +24,7 @@ urlpatterns = [
     path('display/', include('display.urls')),
     path('uso_red/', include('uso_red.urls')),
     path('jornada_laboral/', include('jornada_laboral.urls')),
+    path('usuarios_red/', include('usuarios_red.urls')),
     url('back/', views.back),
     url('ahead/', views.ahead),
 ]

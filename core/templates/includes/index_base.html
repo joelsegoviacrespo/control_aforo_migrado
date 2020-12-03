@@ -16,9 +16,30 @@
             <!--div class="ml-md-auto py-2 py-md-0">
               <a href="#" class="btn btn-white btn-border btn-round mr-2">Manage</a>
               <a href="#" class="btn btn-secondary btn-round">Add Customer</a>
-            </div-->
-        </div>
-    </div>
+            </div-->		
+    	</div>
+    </div>    
+</div>
+<div class="page-inner">
+    <div class="d-flex justify-content-center flex-column flex-md-row">
+			<div class="row">
+				<div class="btn-group   " role="group" aria-label="Basic example">
+				
+				<!--	Aqui va el boton que da hacia adelante o atras la fecha-->
+					<div class="input-group">
+						<button class="btn  float-left fas fa-angle-left btn-sm "style="margin-left:13%;color:white;" onclick="leftPressed();backFunction();" id="left" disabled></button>
+							<input id="date" type="textbox" placeholder="City or Zipcode" class="form-control" readonly="true"   style="text-align: center; " value="hola">
+						<button class="btn  float-right fas fa-angle-right btn-sm "style="margin-right:13%;color:white;" onclick="rightPressed();aheadFunction();"id="right" readonly="true"></button>	
+					</div>
+	
+					<button id="1"class="btn success " type="button" onclick="revisar_cambios_red(true,1);">Día</button>
+					<button id="2"class="btn success" type="button"onclick="revisar_cambios_red(true,2);">Semana</button>
+					<button id="3"class="btn success " type="button" onclick="revisar_cambios_red(true,3);">Mes</button>
+					<!--<button id= "2" type="button" class="btn btn-primary min-vw-25 mr-3 "  onclick="myFunctionThisWeek()">Esta Semana</button>
+					<button id= "3" type="button" class="btn btn-primary min-vw-25  "onclick="myFunctionThisMonth()" >Este Mes</button>-->
+				</div>
+		    </div>
+    </div>    
 </div>
 <br>
 <div class="page-inner mt--5 ">
@@ -53,8 +74,8 @@
                     
 				<p  align="center"><samall>Estadisticas</samall></p>	
 				<div class="row" style="width: 200px; height: 200px;">					
-					<div class="chart-container" style="max-height: 200px;">
-						<canvas id="LCPresionArterial" style="width: 560px;"></canvas>
+					<div id="id_div_canvas_RED" class="chart-container" style="max-height: 200px;">
+						<canvas id="LCRed" style="width: 560px;"></canvas>
 					</div>
 	 			</div>		
                  
@@ -150,7 +171,7 @@
 
 
 
-						<div class="btn-group   " role="group" aria-label="Basic example">
+						<!--<div class="btn-group   " role="group" aria-label="Basic example">
 
 
 							<div class="input-group">
@@ -164,7 +185,7 @@
 							<button id="3"class="btn success " type="button" onclick="myFunctionThisMonth()">Mes</button>
 						<!--<button id= "2" type="button" class="btn btn-primary min-vw-25 mr-3 "  onclick="myFunctionThisWeek()">Esta Semana</button>
 						<button id= "3" type="button" class="btn btn-primary min-vw-25  "onclick="myFunctionThisMonth()" >Este Mes</button>-->
-					</div>
+					<!--</div>-->
 					
 					
 						
@@ -1234,15 +1255,30 @@ c.style.display = "block";
 
 /*Grafica de Red*/
 
-var LCPresionArterial = document.getElementById('LCPresionArterial').getContext('2d')
-//function createGraficaPresionArterial(array_aforo,array_usuarios_red,array_wifi,array_ethernet){
-function createGraficaRed(array_wifi,array_ethernet){
+var LCRed = document.getElementById('LCRed').getContext('2d')
+	
+function createGraficaRed(contextGrafica,data_ethernet,data_wifi,update,labels){
+	//Verifico si es la grafica que se carga por defecto
+		if (update == false)
+		{
+			myLCRed = crearGraficaRed(contextGrafica,data_ethernet,data_wifi,labels)	
+						
+		}
+		if (update == true)
+		{
+			eliminarGrafica('LCRed')
+			newLCRED = creardivCanvasRED('id_div_canvas_RED')
+	  		myLCRed = crearGraficaRed(newLCRED,data_ethernet,data_wifi,labels)	
+		}
+	
+}	
+function crearGraficaRed(contextGrafica,array_wifi,array_ethernet,labels){
 	console.log("createGraficaRed")
 	
-		var myLCPresionArterial = new Chart(LCPresionArterial, {
+		var grafica = new Chart(contextGrafica, {
 		type: 'line',
 		data: {
-			labels: ["9", "10", "11", "12", "13", "14", "15", "16", "17", "18"],
+			labels: labels,
 			datasets: [/*{
 				label: "Aforo ",
 				borderColor: "#59d05d",
@@ -1321,35 +1357,126 @@ function createGraficaRed(array_wifi,array_ethernet){
 			}
 		}
 	});
+	
+	return grafica
 
 }
+
+function eliminarGrafica(id_grafica){	
+	var oldGrafica = document.getElementById(id_grafica)
+	oldGrafica.remove()					
+	
+}
+
+function creardivCanvasRED(id_div_canvas_RED){
+	
+	
+	$('#'+id_div_canvas_RED).append('<canvas id="LCRed" style="width: 560px;"></canvas>');		
+	newgrafica = document.querySelector("#LCRed").getContext('2d');
+	return newgrafica
+}
+function getLabels(array_red_wifi,periodo_estadistica,hora_apertura,hora_cierre) {	
+	labels = []
+	factor_suma = 0
+	pos = 0
+	if (periodo_estadistica ==2){
+				labels = ["L", "M", "X", "J", "V", "S", "D"] 
+	}
+	else{
+		if (periodo_estadistica ==3){
+			factor_suma = 1
+			for (i = 0; i < array_red_wifi.length-factor_suma; i++)
+			{			
+					
+				labels[i] = i+factor_suma 
+			}	
+		}
+		
+		else if (periodo_estadistica ==1){
+				
+			for (i = 0; i < array_red_wifi.length-factor_suma; i++)
+			{			
+				if((i >= hora_apertura) && (i<= hora_cierre)){				
+					console.log("TRUE V2")
+					labels[pos] = i 
+					pos++
+					
+				}			 
+			}
+		}
+	}
+	return labels
+}
+function getArrayByHorario(array_red_ethernet,array_red_wifi,periodo_estadistica,hora_apertura,hora_cierre){
+	
+	pos=0
+	array_red_ethernet_horario = []
+	array_red_wifi_horario = []
+	console.log("hora_apertura en horario: "+hora_apertura)
+	console.log("hora_cierre en horario: "+hora_cierre)
+	for (i = 0; i < array_red_wifi.length; i++)
+	{			
+		if((i >= hora_apertura) && (i<= hora_cierre)) {				
+			console.log("TRUE V3")
+			array_red_wifi_horario[pos] = array_red_wifi[i]
+			array_red_ethernet_horario[pos] = array_red_ethernet[i] 
+			pos++
+			
+		}			 
+	}
+	
+	 return [array_red_ethernet_horario,array_red_wifi_horario]
+ }
+	
+
+
 
  $(document).ready(function(){});
 
-    revisar_cambios_red();
+    //Cuando cargue la pagina por primera vez update== fals y
+    //periodo_estadistica == el dia de hoy
 
+    revisar_cambios_red(false,1);
+    // 3630000 = 1 hora y 30 segundos
     $(function(){
         window.setInterval(function(){
-           revisar_cambios_red();
-        },60000);
+           revisar_cambios_red(true,1);
+        },3630000);
     });
 
-function revisar_cambios_red(){
-	console.log("revisar_cambios_red")
-	request_url = '/uso_red/conteoUsoRed/';
+function revisar_cambios_red(update,periodo_estadistica){
+	console.log("revisar_cambios_red")	
+	request_url = '/usuarios_red/dispositivosConectados/'+periodo_estadistica + '';
 	$.ajax({
 		url: request_url,
-		success: function(data){
-			nro_personas = parseInt(data['nro_personas']);	
-			console.log("nro_personas: "+nro_personas);
-		}				
+		success: function(data){			
+			array_red_ethernet = data.array_red_ethernet
+			array_red_wifi = data.array_red_wifi
+			hora_apertura = data.hora_apertura
+			hora_cierre = data.hora_cierre			
+			console.log(array_red_ethernet);	
+			console.log("array_red_wifi");
+			console.log(array_red_wifi);
+			console.log("hora_apertura: "+hora_apertura)
+			console.log("hora_cierre: "+hora_cierre)
+			labels = getLabels(array_red_wifi,periodo_estadistica,hora_apertura,hora_cierre)
+			console.log("labels")
+			console.log(labels)
+			if (periodo_estadistica ==1) {
+				result = getArrayByHorario(array_red_ethernet,array_red_wifi,periodo_estadistica,hora_apertura,hora_cierre)
+				array_red_ethernet = result[0]
+				array_red_wifi = result[1]
+			}			
+			console.log("array_red_ethernet V2");			
+			console.log(array_red_ethernet);	
+			console.log("array_red_wifi V2");
+			console.log(array_red_wifi);
+			createGraficaRed(LCRed,array_red_wifi,array_red_ethernet,update,labels)
+		}						
      
-   });
-	array_wifi = [14,17,21,24,29,19,16,15,13,1]
-	array_ethernet = [5, 9, 4, 6, 6, 6, 5, 5, 6, 3]
-	createGraficaRed(array_wifi,array_ethernet);
-	
+   });	
 }
+
 
 /*window.onload = function() {
 		//array_aforo = [21, 27, 28, 31, 35, 25, 18, 23, 19, 4]

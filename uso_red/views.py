@@ -16,21 +16,18 @@ from django.http import JsonResponse
 
 
 
-def generar_estadistica_conteo_red(array_red_ethernet,array_red_wifi,tipo_estadistica,periodo_estadistica):
+def generar_estadistica_conteo_red(array_red_ethernet,array_red_wifi,periodo_estadistica):
     
     print("generar_estadistica_conteo_red")
   
-    """intervalo = get_intervaloPeriodo(periodo_estadistica)
+    intervalo = get_intervaloPeriodo(periodo_estadistica)
     start_date = intervalo[0]
     end_date = intervalo[1]  
-    parametros = setParametros(tipo_estadistica,periodo_estadistica)    
-    tiempo_medicion = parametros[2]
-    nombre_tiempo_medicion = parametros[3]
-    tiempo_medicion_parametro = parametros[4]
-    valor_tiempo_medicion =  parametros[5]
-    maxima_medicion = parametros[6]
-    array_tiempo  = parametros[7]
-    """
+    parametros = setParametros(periodo_estadistica)    
+    tiempo_medicion = parametros[0]    
+    tiempo_medicion_parametro = parametros[1]    
+    array_tiempo  = parametros[2]
+    
     query = [
       {
         "$match": {          
@@ -76,15 +73,15 @@ def generar_estadistica_conteo_red(array_red_ethernet,array_red_wifi,tipo_estadi
     #print("QUERY")
     #print(query)
 
-    medicionHistorico = MedicionHistorico.objects.mongo_aggregate(query)       
-    lista = list(medicionHistorico)    
+    usuariosRed = UsuariosRed.objects.mongo_aggregate(query)       
+    lista = list(usuariosRed)    
     array_presion_arterial_sys_hora = [0] * len(array_tiempo)
     array_presion_arterial_dia_hora = [0] * len(array_tiempo)
-    #for i in range(len(array_presion_arterial_sys_hora)):
-    #    print("i: ",i)
-    #    print("array_presion_arterial_sys_hora[i]: ",array_presion_arterial_sys_hora[i])
+    for i in range(len(array_presion_arterial_sys_hora)):
+        print("i: ",i)
+        print("array_presion_arterial_sys_hora[i]: ",array_presion_arterial_sys_hora[i])
         
-         
+    """     
     for medicionHistorico in lista:
         #print("medicionHistorico")
         #print(medicionHistorico)
@@ -116,7 +113,7 @@ def generar_estadistica_conteo_red(array_red_ethernet,array_red_wifi,tipo_estadi
             array_presion_arterial_sys_hora[hora] = maxima_presion_arterial_sys
             array_presion_arterial_dia_hora[hora] = maxima_presion_arterial_dia
         #print("hora: ",hora)
-        
+        """
         
     #print("ARREGLO DE PRESION ARTERIAL QUE VA PARA ESTADISTICA")
     #for i in range(len(array_presion_arterial_sys_hora)):
@@ -130,11 +127,11 @@ def generar_estadistica_conteo_red(array_red_ethernet,array_red_wifi,tipo_estadi
 @api_view(['GET', 'POST'])
 @authentication_classes([])
 @permission_classes([])
-def conteoUsoRed(request):
+def conteoUsoRed(request,periodo_estadistica):
     
     if request.method == 'GET':
         try:        
-            #print("id_display: ",id_display)    
+            print("periodo_estadistica: ",periodo_estadistica)    
               
             try:                
                 nro_aforo = 0
