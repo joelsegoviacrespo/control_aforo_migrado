@@ -457,29 +457,31 @@ def getQueryMinuto(start_date,end_date,tiempo_medicion,tiempo_medicion_parametro
     
 def conteoDispositivoRedMinuto():
     
-    print(datetime.today())
-    #start_date = get_start_minute_day(datetime.today())
+    #print(datetime.today())
+    nro_usuarios_ethernet = 0
+    nro_usuarios_wifi = 0
+    start_date = get_start_minute_day(datetime.today())
     start_date = datetime(2020, 12, 2, 2, 53, 0)
-    print("start_date: ",start_date)
-    #end_date = get_end_minute_day(datetime.today())
-    end_date = datetime(2020, 12, 2, 2, 53, 59)
-    print("end_date: ",end_date)    
+    #print("start_date: ",start_date)
+    end_date = get_end_minute_day(datetime.today())
+    #end_date = datetime(2020, 12, 2, 2, 53, 59)
+    #print("end_date: ",end_date)    
     tiempo_medicion = "hour"
     tiempo_medicion_parametro = "$hour"
     minuto = datetime.now().strftime("%M")
-    hora = datetime.now().strftime("%H")
-    print("hora: ",hora)
-    #array_tiempo = [hora]    
-    array_tiempo = [2] 
+    hora = int(str(datetime.now().strftime("%H")))
+    #print("hora: ",hora)
+    array_tiempo = [hora]    
+    #array_tiempo = [2] 
     query = getQueryMinuto(start_date,end_date,tiempo_medicion,tiempo_medicion_parametro,array_tiempo)
-    print("query")
-    print(query)    
+    #print("query")
+    #print(query)    
     usuariosRed = UsuariosRed.objects.mongo_aggregate(query)
-    lista = list(usuariosRed)
-    
+    lista = list(usuariosRed)    
+        
     for dispositivoConectados in lista:
-        print("dispositivoConectados")
-        print(dispositivoConectados)    
+        #print("dispositivoConectados")
+        #print(dispositivoConectados)    
         result: OrderedDict[str, int] = dispositivoConectados
         #print("RESULTADOS!!!!!!!!!!!!!!!")        
         #print(result['_id'])
