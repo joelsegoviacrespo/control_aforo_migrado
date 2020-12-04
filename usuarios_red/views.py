@@ -153,8 +153,10 @@ def dispositivosConectados(request,periodo_estadistica):
                 array_red_ethernet = result[0]        
                 array_red_wifi = result[1]
                 hora_apertura = result[2]
-                hora_cierre = result[3]                
-                 
+                hora_cierre = result[3]
+                result_minuto = conteoDispositivoRedMinuto()
+                nro_usuarios_ethernet = result_minuto[0]
+                nro_usuarios_wifi = result_minuto[1]
             except Exception as e:
                 print('%s (%s)' % (e, type(e)))
                 pass
@@ -163,6 +165,8 @@ def dispositivosConectados(request,periodo_estadistica):
                 "array_red_wifi" : array_red_wifi,
                 "hora_apertura" : hora_apertura,
                 "hora_cierre" : hora_cierre,
+                "nro_usuarios_ethernet" : nro_usuarios_ethernet,
+                "nro_usuarios_wifi": nro_usuarios_wifi,
                               
             }
             return HttpResponse(simplejson.dumps(red_js), content_type='application/json')
@@ -219,6 +223,11 @@ def get_array_tiempo(ultimo_dia):
         array_tiempo.append(i)        
     return array_tiempo
 
+def get_start_minute_day(today):
+    return datetime(today.year, today.month, today.day,today.hour,0,0)
+
+def get_end_minute_day(today):
+    return datetime(today.year, today.month, today.day,today.hour,59,59)
 
 def setParametros(periodo_estadistica):
     
@@ -397,3 +406,106 @@ def getQuery(start_date,end_date,tiempo_medicion,tiempo_medicion_parametro,array
       }  
     ]
     return query   
+
+def getQueryMinuto(start_date,end_date,tiempo_medicion,tiempo_medicion_parametro,array_tiempo):
+    query = [
+      {
+        "$match": {          
+          "fecha": {
+            "$gte": start_date,
+            "$lte": end_date
+          },
+        }
+      },
+      {
+        "$project": {
+          "date": {
+            "$dateToString": {
+              "format": "%Y-%m-%d",
+              "date": "$fecha"
+            }
+          },
+        tiempo_medicion: { 
+                tiempo_medicion_parametro: "$fecha"
+        },
+         "nro_usuarios_ethernet": "$nro_usuarios_ethernet",
+         "nro_usuarios_wifi": "$nro_usuarios_wifi"
+        }
+      },
+      {
+     "$match":{
+            tiempo_medicion:{"$in":array_tiempo}
+          }
+      },
+      {
+        "$group": {
+          "_id": {
+          tiempo_medicion: tiempo_medicion_parametro,
+          "date": "$date"
+          },                
+          "nro_usuarios_ethernet": { 
+            "$max": "$nro_usuarios_ethernet"
+          },
+          "nro_usuarios_wifi": { 
+            "$max": "$nro_usuarios_wifi"
+          },      
+          
+        }
+      }  
+    ]
+    return query
+    
+def conteoDispositivoRedMinuto():
+    
+    print(datetime.today())
+    #start_date = get_start_minute_day(datetime.today())
+    start_date = datetime(2020, 12, 2, 2, 53, 0)
+    print("start_date: ",start_date)
+    #end_date = get_end_minute_day(datetime.today())
+    end_date = datetime(2020, 12, 2, 2, 53, 59)
+    print("end_date: ",end_date)    
+    tiempo_medicion = "hour"
+    tiempo_medicion_parametro = "$hour"
+    minuto = datetime.now().strftime("%M")
+    hora = datetime.now().strftime("%H")
+    print("hora: ",hora)
+    #array_tiempo = [hora]    
+    array_tiempo = [2] 
+    query = getQueryMinuto(start_date,end_date,tiempo_medicion,tiempo_medicion_parametro,array_tiempo)
+    print("query")
+    print(query)    
+    usuariosRed = UsuariosRed.objects.mongo_aggregate(query)
+    lista = list(usuariosRed)
+    
+    for dispositivoConectados in lista:
+        print("dispositivoConectados")
+        print(dispositivoConectados)    
+        result: OrderedDict[str, int] = dispositivoConectados
+        #print("RESULTADOS!!!!!!!!!!!!!!!")        
+        #print(result['_id'])
+        #result_tiempo: OrderedDict[str, str] = result['_id']
+        result_tiempo: OrderedDict[str, int] = dispositivoConectados
+        nro_usuarios_ethernet = result['nro_usuarios_ethernet']
+        nro_usuarios_wifi = result['nro_usuarios_wifi']
+        result_hora: OrderedDict[str, str] = result['_id']
+        
+        #print("result_hora: ",result_tiempo)
+        #print("tiempo_medicion: ",tiempo_medicion)
+        hora = result_hora[tiempo_medicion]
+        #print("hora: ",hora)
+        #if hora in
+        nro_usuarios_ethernet = int(result_tiempo['nro_usuarios_ethernet'])
+        nro_usuarios_wifi = int(result_tiempo['nro_usuarios_wifi'])
+        result_hora: OrderedDict[str, str] = result['_id']
+        
+        #print("result_hora: ",result_tiempo)
+        #print("tiempo_medicion: ",tiempo_medicion)
+        hora = result_hora[tiempo_medicion]
+        #print("hora: ",hora)
+        #if hora in
+        nro_usuarios_ethernet = int(result_tiempo['nro_usuarios_ethernet'])
+        nro_usuarios_wifi = int(result_tiempo['nro_usuarios_wifi'])
+                
+    return nro_usuarios_ethernet,nro_usuarios_wifi
+
+

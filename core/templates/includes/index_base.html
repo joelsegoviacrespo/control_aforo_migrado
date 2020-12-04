@@ -48,21 +48,26 @@
 		<div class="col-md-2">
             <div class="card full-height ">
                 <div class="card-body">					
-					</br>
-					</br>
+
 					<div class="row" style="width: 200px; height: 200px;">						
 <!--						<div class="col-md-12">
 							<p class="font-weight-bold text-center;" style="color:#59d05d">&#8212 Aforo</p>							
 						</div>
 						<div class="col-md-12">
 							<p class="font-weight-bold text-center;" style="color:#f3545d">&#8212 Usuarios RED</p>							
-						</div>-->
+						</div>-->						
 						<div class="col-md-12">
-							<p class="font-weight-bold text-center;" style="font-size:12px;color:#1d7af3">&#8212 Usuarios <br>&nbsp; &nbsp; &nbsp; Wifi</p>							
+						   <div align="left" class="font-weight-bold">&nbsp; <b>Conexiones <br> &nbsp; a las <span id="hms_conexiones"></span> h</b></div>
+							<br>
+						   <div class="font-weight-bold text-left;" style=" color:#1d7af3;font-size:14px;">&emsp;&ensp; Wifi
+		                		<p class="font-weight-bold" style=" color:#1d7af3;font-size:24px;">&ensp; <span id="nro_usuarios_ethernet"></span></p>
+						   </div>						   
+						   <div class="font-weight-bold text-left;" style=" color:#f3545d;font-size:14px;">&ensp; Ethernet
+			                	<p class="font-weight-bold" style=" color:#f3545d;font-size:24px;">&ensp; <span id="nro_usuarios_wifi"></span></p>
+							</div> 							
 						</div>
-						<div class="col-md-12">
-							<p class="font-weight-bold text-center;" style="font-size:12px;color:#f3545d">&#8212 Usuarios<br>&nbsp; &nbsp; &nbsp; Ethernet</p>														
-						</div>
+		               <br>
+
 					</div>
                 </div>
             </div>
@@ -75,7 +80,7 @@
 				<p  align="center"><samall>Estadisticas</samall></p>	
 				<div class="row" style="width: 200px; height: 200px;">					
 					<div id="id_div_canvas_RED" class="chart-container" style="max-height: 200px;">
-						<canvas id="LCRed" style="width: 560px;"></canvas>
+						<canvas id="LCRed" style="width: 580px;"></canvas>
 					</div>
 	 			</div>		
                  
@@ -85,27 +90,33 @@
 	<div class="col-md-2">
     	    <div class="card full-height ">
     	        <div class="card-body">
-		    <div class="row" style="width: 200px; height: 200px;">						
-	 	        <div class="col-md-12">
-			   <div align="left" class="font-weight-bold">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Hoy</div>
-<br>
-			   <div class="font-weight-bold text-left;" style="font-size:12px;">Consumo Wifi
-			   </div>	
-			   <div class="font-weight-bold text-left;" style="font-size:12px;color:#1d7af3">enviados:&nbsp; <span id="usoRed_wifi_enviados" style="font-size:12px; color:#1d7af3"></span></div>
-<div class="font-weight-bold text-left;" style="font-size:12px;color:#1d7af3">Recibidos:&nbsp; <span id="usoRed_wifi_recibidos" style="font-size:12px; color:#1d7af3"></span></div>
-			   
-			   					
-			   
-			   <br>						
-			   <br>						
-			   <div class="font-weight-bold text-left;" style="font-size:12px;">Consumo Ethernet
-			   </div>	
-			   <div class="font-weight-bold text-left;" style="font-size:12px;color:#f3545d">enviados:&nbsp; <span id="usoRed_ethernet_enviados" style="font-size:12px; color:#f3545d"></span></div>
-<div class="font-weight-bold text-left;" style="font-size:12px;color:#f3545d">Recibidos:&nbsp; <span id="usoRed_ethernet_recibidos" style="font-size:12px; color:#f3545d"></span></div>
-			   
-			   </div>					
-			</div>
-		    </div>
+				    <div class="row" style="width: 200px; height: 200px;">						
+			 	        <div class="col-md-12">
+					   <div align="left" class="font-weight-bold">&nbsp; <b>Consumo Kb <br> &nbsp; a las <span id="hms"></span> h</b>
+		               </div> 
+		               <br>
+					   <div class="font-weight-bold text-left;" style=" color:#1d7af3;font-size:14px;">&emsp;&ensp; Wifi</div>	
+					   <div class="font-weight-bold text-left;" style="font-size:12px;color:#1d7af3">
+							&emsp; <span id="usoRed_wifi_recibidos" style="color:#1d7af3"></span>
+							&nbsp;<span style="color:#1d7af3">Up</span>
+						</div>
+					   <div class="font-weight-bold text-left;" style="font-size:12px;color:#1d7af3">
+							&ensp; <span id="usoRed_wifi_enviados" style="color:#1d7af3"></span>
+							&nbsp;<span style="color:#1d7af3">Down</span>
+						</div>	   					
+					   
+					   <br>
+					   <div class="font-weight-bold text-left;" style="font-size:14px; color:#f3545d">&ensp; Ethernet</div>	
+					   <div class="font-weight-bold text-left;" style="font-size:12px;color:#f3545d">
+							&ensp;<span id="usoRed_ethernet_recibidos" style="color:#f3545d"></span>
+							&nbsp;<span style="color:#f3545d">Up</span>
+						</div>
+					   <div class="font-weight-bold text-left;" style="font-size:12px;color:#f3545d">
+							<span id="usoRed_ethernet_enviados" style="color:#f3545d"></span>
+							&nbsp;<span style="color:#f3545d">Down</span>
+						</div>			   					
+					</div>
+		    	</div>
 	        </div>
         </div>
     </div>
@@ -554,6 +565,9 @@
 					$('#usoRed_ethernet_enviados').html(usoRed_ethernet_enviados);
 					usoRed_ethernet_recibidos = data['usoRed_ethernet_recibidos']; 
 					$('#usoRed_ethernet_recibidos').html(usoRed_ethernet_recibidos);
+					hms = data['hms']			
+			        $('#hms').html(hms);
+					$('#hms_conexiones').html(hms);
 
 
 					usoRed_wifi_enviados = data['usoRed_wifi_enviados']; 
@@ -1371,7 +1385,7 @@ function eliminarGrafica(id_grafica){
 function creardivCanvasRED(id_div_canvas_RED){
 	
 	
-	$('#'+id_div_canvas_RED).append('<canvas id="LCRed" style="width: 560px;"></canvas>');		
+	$('#'+id_div_canvas_RED).append('<canvas id="LCRed" style="width: 580px;"></canvas>');		
 	newgrafica = document.querySelector("#LCRed").getContext('2d');
 	return newgrafica
 }
@@ -1453,12 +1467,18 @@ function revisar_cambios_red(update,periodo_estadistica){
 			array_red_ethernet = data.array_red_ethernet
 			array_red_wifi = data.array_red_wifi
 			hora_apertura = data.hora_apertura
-			hora_cierre = data.hora_cierre			
+			hora_cierre = data.hora_cierre
+			nro_usuarios_ethernet = data.nro_usuarios_ethernet
+			nro_usuarios_wifi = data.nro_usuarios_wifi			
+			$('#nro_usuarios_ethernet').html(nro_usuarios_ethernet);
+			$('#nro_usuarios_wifi').html(nro_usuarios_wifi);
 			console.log(array_red_ethernet);	
 			console.log("array_red_wifi");
 			console.log(array_red_wifi);
 			console.log("hora_apertura: "+hora_apertura)
 			console.log("hora_cierre: "+hora_cierre)
+			console.log("nro_usuarios_ethernet: "+nro_usuarios_ethernet)
+			console.log("nro_usuarios_wifi: "+nro_usuarios_wifi)			
 			labels = getLabels(array_red_wifi,periodo_estadistica,hora_apertura,hora_cierre)
 			console.log("labels")
 			console.log(labels)
@@ -1478,15 +1498,6 @@ function revisar_cambios_red(update,periodo_estadistica){
 }
 
 
-/*window.onload = function() {
-		//array_aforo = [21, 27, 28, 31, 35, 25, 18, 23, 19, 4]
-		//array_usuarios_red = [19, 26, 25,30, 35,24,19,20,19,4]
-		array_wifi = [14,17,21,24,29,19,16,15,13,1]
-		array_ethernet = [5, 9, 4, 6, 6, 6, 5, 5, 6, 3]  		
-//  		createGraficaPresionArterial(array_aforo,array_usuarios_red,array_wifi,array_ethernet);
-		createGraficaRed(array_wifi,array_ethernet);
-	};		
-*/
 </script>
 <style>
 	

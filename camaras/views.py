@@ -26,9 +26,8 @@ from django.forms.models import model_to_dict
 from django.core import serializers
 
 import calendar
-import datetime
+from datetime import datetime, date
 import pytz
-from datetime import date
 today = date.today()
 
 @login_required(login_url="/login/")
@@ -154,6 +153,7 @@ def configuracion_camaras(request, id_monitor):
                 camaras_serialize = serializers.serialize('json', camarasAll)
                 usoRed_ethernet =  UsoRed.objects.all()[0]
                 usoRed_wifi =  UsoRed.objects.all()[1]
+                hms = datetime.now().strftime("%H:%M")                
                 #print(usoRed_ethernet.enviadosGB)
                 #print(usoRed.tipo_red)
 		
@@ -181,9 +181,10 @@ def configuracion_camaras(request, id_monitor):
                 "camaras": camaras_serialize,
                 "nombre_aforo":nombre_aforo,
                 "usoRed_ethernet_enviados": round(usoRed_ethernet.enviadosGB,3),  
-		"usoRed_ethernet_recibidos": round(usoRed_ethernet.recibidosGB,3),
+		        "usoRed_ethernet_recibidos": round(usoRed_ethernet.recibidosGB,3),
                 "usoRed_wifi_enviados": round(usoRed_wifi.enviadosGB,3),  
-		"usoRed_wifi_recibidos": round(usoRed_wifi.recibidosGB,3)                
+   		        "usoRed_wifi_recibidos": round(usoRed_wifi.recibidosGB,3),
+                "hms" : hms,                
             }
             return HttpResponse(simplejson.dumps(monitor_js), content_type='application/json')
         except Exception as e:
