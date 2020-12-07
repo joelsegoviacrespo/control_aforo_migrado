@@ -28,7 +28,10 @@ from django.core import serializers
 import calendar
 from datetime import datetime, date
 import pytz
+from Fecha import Fecha
+
 today = date.today()
+
 
 @login_required(login_url="/login/")
 def camaras(request):
@@ -153,7 +156,8 @@ def configuracion_camaras(request, id_monitor):
                 camaras_serialize = serializers.serialize('json', camarasAll)
                 usoRed_ethernet =  UsoRed.objects.all()[0]
                 usoRed_wifi =  UsoRed.objects.all()[1]
-                hms = datetime.now().strftime("%H:%M")                
+                #hms = datetime.now().strftime("%H:%M")    
+                hms = Fecha.getfechaActual();            
                 #print(usoRed_ethernet.enviadosGB)
                 #print(usoRed.tipo_red)
 		
