@@ -157,7 +157,7 @@ def configuracion_camaras(request, id_monitor):
                 usoRed_ethernet =  UsoRed.objects.all()[0]
                 usoRed_wifi =  UsoRed.objects.all()[1]
                 #hms = datetime.now().strftime("%H:%M")    
-                hms = Fecha.getfechaActual();            
+                hms = Fecha.getHoraMinutoActual();            
                 #print(usoRed_ethernet.enviadosGB)
                 #print(usoRed.tipo_red)
 		

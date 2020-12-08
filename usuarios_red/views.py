@@ -13,6 +13,7 @@ import collections
 from django.http import JsonResponse
 from usuarios_red.models import UsuariosRed
 from jornada_laboral.models import JornadaLaboral
+from Fecha import Fecha
 
 def generar_estadistica_conteo_red(request,array_red_ethernet,array_red_wifi,periodo_estadistica):
     
@@ -156,6 +157,7 @@ def dispositivosConectados(request,periodo_estadistica):
                 hora_cierre = result[3]
                 result_minuto = conteoDispositivoRedMinuto()
                 nro_usuarios_ethernet = result_minuto[0]
+		
                 nro_usuarios_wifi = result_minuto[1]
             except Exception as e:
                 print('%s (%s)' % (e, type(e)))
@@ -223,11 +225,11 @@ def get_array_tiempo(ultimo_dia):
         array_tiempo.append(i)        
     return array_tiempo
 
-def get_start_minute_day(today):
-    return datetime(today.year, today.month, today.day,today.hour,0,0)
+def get_start_minute_day(today):    
+    return datetime(today.year, today.month, today.day,today.hour,today.minute,0)
 
 def get_end_minute_day(today):
-    return datetime(today.year, today.month, today.day,today.hour,59,59)
+    return datetime(today.year, today.month, today.day,today.hour,today.minute,59)
 
 def setParametros(periodo_estadistica):
     
@@ -458,18 +460,22 @@ def getQueryMinuto(start_date,end_date,tiempo_medicion,tiempo_medicion_parametro
 def conteoDispositivoRedMinuto():
     
     #print(datetime.today())
+    hoy = Fecha.getFechaActual(); 
+    #print("hoy: ",hoy)                
     nro_usuarios_ethernet = 0
     nro_usuarios_wifi = 0
-    start_date = get_start_minute_day(datetime.today())
-    start_date = datetime(2020, 12, 2, 2, 53, 0)
+    start_date = get_start_minute_day(hoy)
+    #print("start_date",start_date)
+    #start_date = datetime(2020, 12, 2, 2, 53, 0)
     #print("start_date: ",start_date)
-    end_date = get_end_minute_day(datetime.today())
+    end_date = get_end_minute_day(hoy)
+    #print("end_date",end_date)
     #end_date = datetime(2020, 12, 2, 2, 53, 59)
     #print("end_date: ",end_date)    
     tiempo_medicion = "hour"
     tiempo_medicion_parametro = "$hour"
-    minuto = datetime.now().strftime("%M")
-    hora = int(str(datetime.now().strftime("%H")))
+    minuto = start_date.strftime("%M")
+    hora = int(str(start_date.strftime("%H")))
     #print("hora: ",hora)
     array_tiempo = [hora]    
     #array_tiempo = [2] 
@@ -480,30 +486,30 @@ def conteoDispositivoRedMinuto():
     lista = list(usuariosRed)    
         
     for dispositivoConectados in lista:
-        #print("dispositivoConectados")
-        #print(dispositivoConectados)    
+        print("dispositivoConectados")
+        print(dispositivoConectados)    
         result: OrderedDict[str, int] = dispositivoConectados
-        #print("RESULTADOS!!!!!!!!!!!!!!!")        
-        #print(result['_id'])
-        #result_tiempo: OrderedDict[str, str] = result['_id']
+        print("RESULTADOS!!!!!!!!!!!!!!!")        
+        print(result['_id'])
+        result_tiempo: OrderedDict[str, str] = result['_id']
         result_tiempo: OrderedDict[str, int] = dispositivoConectados
         nro_usuarios_ethernet = result['nro_usuarios_ethernet']
         nro_usuarios_wifi = result['nro_usuarios_wifi']
         result_hora: OrderedDict[str, str] = result['_id']
         
-        #print("result_hora: ",result_tiempo)
-        #print("tiempo_medicion: ",tiempo_medicion)
+        print("result_hora: ",result_tiempo)
+        print("tiempo_medicion: ",tiempo_medicion)
         hora = result_hora[tiempo_medicion]
-        #print("hora: ",hora)
+        print("hora: ",hora)
         #if hora in
         nro_usuarios_ethernet = int(result_tiempo['nro_usuarios_ethernet'])
         nro_usuarios_wifi = int(result_tiempo['nro_usuarios_wifi'])
         result_hora: OrderedDict[str, str] = result['_id']
         
-        #print("result_hora: ",result_tiempo)
-        #print("tiempo_medicion: ",tiempo_medicion)
+        print("result_hora: ",result_tiempo)
+        print("tiempo_medicion: ",tiempo_medicion)
         hora = result_hora[tiempo_medicion]
-        #print("hora: ",hora)
+        print("hora: ",hora)
         #if hora in
         nro_usuarios_ethernet = int(result_tiempo['nro_usuarios_ethernet'])
         nro_usuarios_wifi = int(result_tiempo['nro_usuarios_wifi'])
