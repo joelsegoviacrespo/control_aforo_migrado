@@ -486,30 +486,30 @@ def conteoDispositivoRedMinuto():
     lista = list(usuariosRed)    
         
     for dispositivoConectados in lista:
-        print("dispositivoConectados")
-        print(dispositivoConectados)    
+        #print("dispositivoConectados")
+        #print(dispositivoConectados)    
         result: OrderedDict[str, int] = dispositivoConectados
-        print("RESULTADOS!!!!!!!!!!!!!!!")        
-        print(result['_id'])
+        #print("RESULTADOS!!!!!!!!!!!!!!!")        
+        #print(result['_id'])
         result_tiempo: OrderedDict[str, str] = result['_id']
         result_tiempo: OrderedDict[str, int] = dispositivoConectados
         nro_usuarios_ethernet = result['nro_usuarios_ethernet']
         nro_usuarios_wifi = result['nro_usuarios_wifi']
         result_hora: OrderedDict[str, str] = result['_id']
         
-        print("result_hora: ",result_tiempo)
-        print("tiempo_medicion: ",tiempo_medicion)
+        #print("result_hora: ",result_tiempo)
+        #print("tiempo_medicion: ",tiempo_medicion)
         hora = result_hora[tiempo_medicion]
-        print("hora: ",hora)
+        #print("hora: ",hora)
         #if hora in
         nro_usuarios_ethernet = int(result_tiempo['nro_usuarios_ethernet'])
         nro_usuarios_wifi = int(result_tiempo['nro_usuarios_wifi'])
         result_hora: OrderedDict[str, str] = result['_id']
         
-        print("result_hora: ",result_tiempo)
-        print("tiempo_medicion: ",tiempo_medicion)
+        #print("result_hora: ",result_tiempo)
+        #print("tiempo_medicion: ",tiempo_medicion)
         hora = result_hora[tiempo_medicion]
-        print("hora: ",hora)
+        #print("hora: ",hora)
         #if hora in
         nro_usuarios_ethernet = int(result_tiempo['nro_usuarios_ethernet'])
         nro_usuarios_wifi = int(result_tiempo['nro_usuarios_wifi'])
