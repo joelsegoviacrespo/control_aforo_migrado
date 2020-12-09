@@ -27,9 +27,10 @@
 				
 				<!--	Aqui va el boton que da hacia adelante o atras la fecha-->
 					<div class="input-group">
-						<button class="btn  float-left fas fa-angle-left btn-sm "style="margin-left:13%;color:white;" onclick="leftPressed();backFunction();" id="left" disabled></button>
-							<input id="date" type="textbox" placeholder="City or Zipcode" class="form-control" readonly="true"   style="text-align: center; " value="">
-						<button class="btn  float-right fas fa-angle-right btn-sm "style="margin-right:13%;color:white;" onclick="rightPressed();aheadFunction();"id="right" readonly="true"></button>	
+						<!--<button class="btn  float-left fas fa-angle-left btn-sm "style="margin-left:13%;color:white;" onclick="leftPressed();backFunction();" id="left" ></button>-->
+						<button class="btn  float-left fas fa-angle-left btn-sm "style="margin-left:13%;color:white;" onclick="seleccionarDia('atras')" id="Izquierda" ></button>
+							<input id="date" type="textbox" placeholder="Fecha actual" class="form-control" readonly="true"   style="text-align: center; " value="{{fecha_actual}}">
+						<button class="btn  float-right fas fa-angle-right btn-sm "style="margin-right:13%;color:white;" onclick="seleccionarDia('delante')"id="Derecha" disabled ></button>	
 					</div>
 	
 					<button id="1"class="btn success " type="button" onclick="revisar_cambios_red(true,1);">Día</button>
@@ -123,9 +124,7 @@
     </div>        
         
     
-    <div class="row mt--2 " >
-
-	
+    <div class="row mt--2 " >	
 		
         <div class="col-md-6"style="max-height:30%">
             <div class="card full-height ">
@@ -135,8 +134,7 @@
 					
                     <div class="card-category">Capacidad actual</div>
                     <div class="d-flex justify-content-around h-80 w-100 pt-4 rounded">
-						<div class="embed-responsive embed-responsive-16by9 h-100 w-100 m-0 p-2 rounded shadow "><!--4by9-->
-							
+						<div class="embed-responsive embed-responsive-16by9 h-100 w-100 m-0 p-2 rounded shadow "><!--4by9-->							
                             <iframe class="embed-responsive-item" src="hfsEmbebido" class="h-100 w-100" scrolling="no"  style="LINE-HEIGHT:20px;"></iframe>
                         </div>
                     </div>
@@ -567,8 +565,7 @@
 					$('#usoRed_ethernet_recibidos').html(usoRed_ethernet_recibidos);
 					hms = data['hms']			
 			        $('#hms').html(hms);
-					$('#hms_conexiones').html(hms);
-
+					$('#hms_conexiones').html(hms);                    
 
 					usoRed_wifi_enviados = data['usoRed_wifi_enviados']; 
 					$('#usoRed_wifi_enviados').html(usoRed_wifi_enviados);
@@ -1497,7 +1494,25 @@ function revisar_cambios_red(update,periodo_estadistica){
    });	
 }
 
+function seleccionarDia(operacion) {
+	console.log("diaAtras")
+	console.log($('#date').val())
+	fecha_actual = $('#date').val()
+	request_url = '/generar_estadistica_generales/'+fecha_actual+'/'+operacion;
+	$.ajax({
+		url: request_url,
+		success: function(data){	
+			fecha = data.fecha
+			derecha_disabled = data.derecha_disabled
+			console.log("fecha_atras: "+fecha)
+			console.log("derecha_disabled: "+derecha_disabled)
+			$('#date').val(fecha)		
+			$('#Derecha').prop('disabled', derecha_disabled);
+		}						
+     
+   });	
 
+}
 </script>
 <style>
 	

@@ -34,6 +34,8 @@ import re
 from operator import add
 import Constantes
 from calendar import monthrange
+from Fecha import Fecha
+import simplejson as simplejson
 
 
 serial_camara = "Q2GV-4YBM-YWWJ"
@@ -1196,6 +1198,23 @@ def grafica_horas_acumuladas2(mydate):
 #print(grafica_horas_acumuladas(mydate))
 @login_required(login_url="/login/")
 def index(request):
+    
+    #TODO: Orientarlo a un cliente en particular
+    camarasAll =  Camaras.objects.all()    
+    fecha_actual = Fecha.getFechaActual().strftime("%d-%m-%Y")
+    
+    info_grafica_semana = grafica_semana("", "" ,"","","","")
+    info_grafica_semana_acumulada = grafica_semana_actual_acumulada("", "" ,"","","","")
+    esteMes = esteMesActual("","","")
+    MyesteMesAcumulado = esteMesAcumulado("","","")
+    info_grafica_horas = grafica_horas("")
+    info_grafica_horas_acumulado= grafica_horas_acumuladas("")
+    
+    datosDevolver=  {'camaras':camarasAll,"fecha_actual":fecha_actual,'info_grafica_semana': info_grafica_semana,'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado,'info_grafica_semana_acumulada':info_grafica_semana_acumulada,'estemes':esteMes,'estemesacumulado':MyesteMesAcumulado}
+    return render(request, "index.html",datosDevolver )
+
+@login_required(login_url="/login/")
+def index2(request):
 
  
 
@@ -1372,9 +1391,12 @@ def pages(request):
 indiceTiempo=0 
 @login_required(login_url="/login/")
 def back(request):
+    print("back@@@@@@@@@@@@@@@@@")
     global indiceTiempo
+    print("indiceTiempo INICIAL: ",indiceTiempo)
     indiceTiempo = indiceTiempo -1
     indiceTiempoNP= abs(indiceTiempo)
+    print("indiceTiempoNP: ",indiceTiempoNP)
 
     mySerial=['Q2GV-4YBM-YWWJ']
     mylist= mySerial
@@ -1423,8 +1445,10 @@ def back(request):
 
 @login_required(login_url="/login/")
 def ahead(request):
-    global indiceTiempo
+    global indiceTiempo    
+    print("indiceTiempo: ",indiceTiempo)
     indiceTiempo = indiceTiempo +1
+    print("indiceTiempo2: ",indiceTiempo)
     indiceTiempoNP= abs(indiceTiempo)   
     mySerial=['Q2GV-4YBM-YWWJ']
     mylist= mySerial    
@@ -1645,3 +1669,155 @@ def hfsEmbebido(request):
     
     dataJSON = dumps(data)    
     return render(request, 'hzfullscreen_bu.html', {'data': dataJSON})
+
+
+def generar_estadistica_generales(request,fecha_str,operacion):    
+
+    fecha = ""
+    derecha_disabled = False
+    array_red_ethernet = []        
+    array_red_wifi = [] 
+    result = [] 
+    if request.method == 'GET':
+        try:              
+              
+            try:
+                if request.method == 'GET':
+                    #print("GET")
+                    #print("fecha_str: ",fecha_str)                    
+                    fecha_convert =  datetime.strptime(fecha_str, "%d-%m-%Y").date()
+                    #print("fecha_convert: ",fecha_convert)
+                    if (operacion == 'atras'):
+                        fecha = (fecha_convert - timedelta(days=1)).strftime("%d-%m-%Y")
+                        #print("fecha: ",fecha)
+                    elif (operacion == 'delante'):
+                        fecha = (fecha_convert + timedelta(days=1)).strftime("%d-%m-%Y")
+                        #print("fecha: ",fecha)
+                                            
+                    derecha_disabled =  (fecha == Fecha.getFechaActual().strftime("%d-%m-%Y"))
+                    fecha_consultar = datetime.strptime(fecha, "%d-%m-%Y").date()
+                    generar_estadistica_conteo_red(array_red_ethernet,array_red_wifi,fecha_consultar)
+                    
+            except Exception as e:
+                print('%s (%s)' % (e, type(e)))
+                pass
+            estadistica_js = {           
+                "fecha" : str(fecha),      
+                "derecha_disabled": derecha_disabled                        
+            }
+            return HttpResponse(simplejson.dumps(estadistica_js), content_type='application/json')
+        except Exception as e:
+            print('%s (%s)' % (e, type(e)))
+            return JsonResponse({'m': fecha_str, 'error:': 'parametros erroneos'},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        pass
+    return JsonResponse({'m': fecha_str, 'error:': 'parametros erroneos 2'},
+                        status=status.HTTP_400_BAD_REQUEST)
+
+def generar_estadistica_conteo_red(array_red_ethernet,array_red_wifi,fecha):
+    
+    #print("generar_estadistica_conteo_red")
+  
+    intervalo = get_intervaloPeriodo(fecha)
+    start_date = intervalo[0]
+    end_date = intervalo[1]  
+    #print("start_date",start_date)
+    #print("end_date",end_date)
+    
+    parametros = setParametros(periodo_estadistica)    
+    tiempo_medicion = parametros[0]    
+    #print("tiempo_medicion",tiempo_medicion)
+    tiempo_medicion_parametro = parametros[1]
+    #print("tiempo_medicion_parametro",tiempo_medicion_parametro)    
+    array_tiempo  = parametros[2]
+    #print("array_tiempo",array_tiempo)    
+    query = getQuery(start_date,end_date,tiempo_medicion,tiempo_medicion_parametro,array_tiempo)
+    
+    #print("QUERY")
+    #print(query)
+
+    usuariosRed = UsuariosRed.objects.mongo_aggregate(query)       
+    lista = list(usuariosRed)  
+    #print(list) 
+    jornada = getHorarioLaboral()
+    hora_apertura = jornada[0]
+    hora_cierre = jornada[1]        
+    #print("hora_apertura: ",hora_apertura)
+    #print("hora_cierre: ",hora_cierre)    
+    array_red_ethernet = [0] * len(array_tiempo)
+    array_red_wifi = [0] * len(array_tiempo)
+    """
+    for i in range(len(array_red_ethernet)):
+        print("i: ",i)
+        print("array_red_ethernet[i]: ",array_red_ethernet[i])
+    """   
+
+    for dispositivoConectados in lista:
+        #print("dispositivoConectados")
+        #print(dispositivoConectados)
+        result: OrderedDict[str, int] = dispositivoConectados
+        #print("RESULTADOS!!!!!!!!!!!!!!!")        
+        #print(result['_id'])
+        #result_tiempo: OrderedDict[str, str] = result['_id']
+        result_tiempo: OrderedDict[str, int] = dispositivoConectados
+        nro_usuarios_ethernet = result['nro_usuarios_ethernet']
+        nro_usuarios_wifi = result['nro_usuarios_wifi']
+        result_hora: OrderedDict[str, str] = result['_id']
+        
+        #print("result_hora: ",result_tiempo)
+        #print("tiempo_medicion: ",tiempo_medicion)
+        hora = result_hora[tiempo_medicion]
+        #print("hora: ",hora)
+        #if hora in
+        nro_usuarios_ethernet = int(result_tiempo['nro_usuarios_ethernet'])
+        nro_usuarios_wifi = int(result_tiempo['nro_usuarios_wifi'])
+        #print("nro_usuarios_ethernet: ",nro_usuarios_ethernet)        
+        
+        if (periodo_estadistica ==2):            
+            if (hora-2 == -1):
+                hora = len(array_tiempo)-1                
+            else:
+                hora = hora-2
+                
+        if (periodo_estadistica ==3):            
+            if (hora-1 >= 0):        
+                hora = hora-1
+                
+        #print("hora: ",hora) 
+        if (periodo_estadistica !=1 and hora-1 >= 0):    
+            array_red_ethernet[hora] = nro_usuarios_ethernet
+            array_red_wifi[hora] = nro_usuarios_wifi
+        elif (periodo_estadistica ==1):
+            array_red_ethernet[hora] = nro_usuarios_ethernet
+            array_red_wifi[hora] = nro_usuarios_wifi
+        
+                
+
+        
+    #print("ARREGLO DE PRESION ARTERIAL QUE VA PARA ESTADISTICA")
+    #for i in range(len(array_presion_arterial_sys_hora)):
+       #print("i: ",i)
+       #print("array_presion_arterial_sys_hora[i]: ",array_presion_arterial_sys_hora[i])
+       #print("array_presion_arterial_dia_hora[i]: ",array_presion_arterial_dia_hora[i])      
+
+    return array_red_ethernet,array_red_wifi,hora_apertura,hora_cierre
+    
+def get_intervaloPeriodo(fecha_consulta):       
+    
+    print("fecha_consulta:",fecha_consulta)
+    start_date = get_start_day(fecha_consulta)    
+    end_date =  get_end_day(fecha_consulta)     
+    print("start_date: ",start_date)
+    print("end_date: ",end_date)
+    return start_date,end_date    
+    
+    
+    
+def get_start_day(today):
+    return datetime(today.year, today.month, today.day)
+
+def get_end_day(today):
+    return datetime(today.year, today.month, today.day,23,59,59)
+
+    
+

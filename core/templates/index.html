@@ -39,8 +39,10 @@
 		var arrayF=JSON.parse("{{estemesacumulado}}")
 		var today = new Date();
 
+		/*Se setea el valor de la fecha al dia de hoy*/		
 		var dateString = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
-		$('#date').val(dateString);
+		/*Aqui en donde seteo el dia de hoy*/
+		//$('#date').val(dateString);
 		
 		function daysInMonth (month, year) {
     return new Date(year, month, 0).getDate();
@@ -427,10 +429,10 @@ var d = new Date();
 		
 	</script>
 	<script>
+	/*Se setea el valor de la fecha al dia de hoy*/
 var today = new Date();
 var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 $('#date').val(stringify(date));
-
 	
 	var myhtml1= 
 	'<p  align="center"><samall>Total Persona</samall></p>'+
@@ -506,37 +508,34 @@ $('#date').val(stringify(date));
 		function backFunction(){
 			
 			if(document.getElementById('1').clicked == true || document.getElementById('2').clicked == true||document.getElementById('3').clicked == true){
-		pass
-	}
+				pass
+			}
 
-	else{ 
+			else{
 		
-		buttonCounter = buttonCounter-1
-	if (buttonCounter < 0){
-		document.getElementById("right").disabled=false;
-	}
-	}
+				buttonCounter = buttonCounter-1
+				if (buttonCounter < 0){
+					document.getElementById("right").disabled=false;
+				}
+			}
 			
 	
 			var chartInfo=[];
 			
 			$.ajax({
-		url: '127.0.0.1:8000/back',
-		cache: false,
-		type: 'get', // This is the default though, you don't actually need to always mention it
-		
-		success: function(data) {
-			var obj = JSON.parse(data)
-
-			
-			
+				url: '127.0.0.1:8000/back',
+				cache: false,
+				type: 'get', // This is the default though, you don't actually need to always mention it
+				
+				success: function(data) {
+					var obj = JSON.parse(data)	
 
 
-			$.each(obj, function(i, item){
-				var myJSON = JSON.stringify(item);
-				chartInfo.push(myJSON);
+				$.each(obj, function(i, item){
+					var myJSON = JSON.stringify(item);
+					chartInfo.push(myJSON);
     			
-});
+	});
 
 
 
@@ -650,7 +649,7 @@ $('#tarjeta5').html(myhtml5);
 
 $('#tarjeta6').html(myhtml6);
 
-
+/*Se setea el valor de la fecha al dia de hoy*/
 $('#date').val(splitarray20);
 
 

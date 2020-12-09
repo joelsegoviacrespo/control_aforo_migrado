@@ -187,8 +187,8 @@ def get_intervaloPeriodo(periodo_estadistica):
     
     
     if (periodo_estadistica == 1):
-        start_date = get_start_day(datetime.today())    
-        end_date =  get_end_day(datetime.today())
+        start_date = get_start_day(Fecha.getFechaActual())    
+        end_date =  get_end_day(Fecha.getFechaActual())
     
     elif (periodo_estadistica == 2):
         dia_semana = datetime.today().weekday()
@@ -517,3 +517,7 @@ def conteoDispositivoRedMinuto():
     return nro_usuarios_ethernet,nro_usuarios_wifi
 
 
+
+    
+    
+    
