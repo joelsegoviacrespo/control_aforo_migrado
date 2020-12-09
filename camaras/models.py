@@ -7,7 +7,7 @@ class ZonaCamara(models.Model):
     #_id = models.ObjectIdField()
     nombre_zona_camara = models.CharField(max_length=250, blank=False, default='')
     nro_personas = models.IntegerField(default=0)
-    
+    suma_total_aforo =  models.BooleanField(blank=False, default=True)
     
     class Meta:        
        abstract = True
