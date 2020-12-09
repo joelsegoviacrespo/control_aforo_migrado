@@ -1804,11 +1804,11 @@ def generar_estadistica_conteo_red(array_red_ethernet,array_red_wifi,fecha):
     
 def get_intervaloPeriodo(fecha_consulta):       
     
-    print("fecha_consulta:",fecha_consulta)
+    #print("fecha_consulta:",fecha_consulta)
     start_date = get_start_day(fecha_consulta)    
     end_date =  get_end_day(fecha_consulta)     
-    print("start_date: ",start_date)
-    print("end_date: ",end_date)
+    #print("start_date: ",start_date)
+    #print("end_date: ",end_date)
     return start_date,end_date    
     
     
