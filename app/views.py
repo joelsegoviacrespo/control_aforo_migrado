@@ -1205,18 +1205,11 @@ def index(request):
     fecha_actual = Fecha.getFechaActual().strftime("%d-%m-%Y")
     
     info_grafica_semana = grafica_semana("", "" ,"","","","")
-    print("info_grafica_semana: ",info_grafica_semana)
-    info_grafica_semana_acumulada = grafica_semana_actual_acumulada("", "" ,"","","","")
-    print("info_grafica_semana_acumulada: ",info_grafica_semana_acumulada)
-    esteMes = esteMesActual("","","")
-    print("esteMes: ",esteMes)    
-    MyesteMesAcumulado = esteMesAcumulado("","","")
-    print("MyesteMesAcumulado: ",MyesteMesAcumulado)       
-    info_grafica_horas = grafica_horas("")
-    print("info_grafica_horas: ",info_grafica_horas)    
-    info_grafica_horas_acumulado= grafica_horas_acumuladas("")
-    print("info_grafica_horas_acumulado: ",info_grafica_horas_acumulado)    
-    
+    info_grafica_semana_acumulada = grafica_semana_actual_acumulada("", "" ,"","","","")    
+    esteMes = esteMesActual("","","")    
+    MyesteMesAcumulado = esteMesAcumulado("","","")           
+    info_grafica_horas = grafica_horas("")    
+    info_grafica_horas_acumulado= grafica_horas_acumuladas("")    
     datosDevolver=  {'camaras':camarasAll,"fecha_actual":fecha_actual,'info_grafica_semana': info_grafica_semana,'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado,'info_grafica_semana_acumulada':info_grafica_semana_acumulada,'estemes':esteMes,'estemesacumulado':MyesteMesAcumulado}
     return render(request, "index.html",datosDevolver )
 
