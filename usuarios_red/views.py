@@ -157,7 +157,7 @@ def dispositivosConectados(request,periodo_estadistica):
                 hora_cierre = result[3]
                 result_minuto = conteoDispositivoRedMinuto()
                 nro_usuarios_ethernet = result_minuto[0]
-		
+                fecha = Fecha.getFechaActual().strftime("%d-%m-%Y")    
                 nro_usuarios_wifi = result_minuto[1]
             except Exception as e:
                 print('%s (%s)' % (e, type(e)))
@@ -169,6 +169,7 @@ def dispositivosConectados(request,periodo_estadistica):
                 "hora_cierre" : hora_cierre,
                 "nro_usuarios_ethernet" : nro_usuarios_ethernet,
                 "nro_usuarios_wifi": nro_usuarios_wifi,
+                "fecha" : fecha,
                               
             }
             return HttpResponse(simplejson.dumps(red_js), content_type='application/json')

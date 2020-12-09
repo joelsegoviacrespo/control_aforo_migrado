@@ -36,7 +36,8 @@ import Constantes
 from calendar import monthrange
 from Fecha import Fecha
 import simplejson as simplejson
-
+from usuarios_red.models import UsuariosRed
+from jornada_laboral.models import JornadaLaboral
 
 serial_camara = "Q2GV-4YBM-YWWJ"
 
@@ -1204,11 +1205,17 @@ def index(request):
     fecha_actual = Fecha.getFechaActual().strftime("%d-%m-%Y")
     
     info_grafica_semana = grafica_semana("", "" ,"","","","")
+    print("info_grafica_semana: ",info_grafica_semana)
     info_grafica_semana_acumulada = grafica_semana_actual_acumulada("", "" ,"","","","")
+    print("info_grafica_semana_acumulada: ",info_grafica_semana_acumulada)
     esteMes = esteMesActual("","","")
+    print("esteMes: ",esteMes)    
     MyesteMesAcumulado = esteMesAcumulado("","","")
+    print("MyesteMesAcumulado: ",MyesteMesAcumulado)       
     info_grafica_horas = grafica_horas("")
+    print("info_grafica_horas: ",info_grafica_horas)    
     info_grafica_horas_acumulado= grafica_horas_acumuladas("")
+    print("info_grafica_horas_acumulado: ",info_grafica_horas_acumulado)    
     
     datosDevolver=  {'camaras':camarasAll,"fecha_actual":fecha_actual,'info_grafica_semana': info_grafica_semana,'info_grafica_horas':info_grafica_horas,'info_grafica_horas_acumulado':info_grafica_horas_acumulado,'info_grafica_semana_acumulada':info_grafica_semana_acumulada,'estemes':esteMes,'estemesacumulado':MyesteMesAcumulado}
     return render(request, "index.html",datosDevolver )
@@ -1696,14 +1703,22 @@ def generar_estadistica_generales(request,fecha_str,operacion):
                                             
                     derecha_disabled =  (fecha == Fecha.getFechaActual().strftime("%d-%m-%Y"))
                     fecha_consultar = datetime.strptime(fecha, "%d-%m-%Y").date()
-                    generar_estadistica_conteo_red(array_red_ethernet,array_red_wifi,fecha_consultar)
+                    result = generar_estadistica_conteo_red(array_red_ethernet,array_red_wifi,fecha_consultar)
+                    array_red_ethernet = result[0]        
+                    array_red_wifi = result[1]
+                    hora_apertura = result[2]
+                    hora_cierre = result[3]
                     
             except Exception as e:
                 print('%s (%s)' % (e, type(e)))
                 pass
             estadistica_js = {           
                 "fecha" : str(fecha),      
-                "derecha_disabled": derecha_disabled                        
+                "derecha_disabled": derecha_disabled,
+                "array_red_ethernet" : array_red_ethernet,
+                "array_red_wifi" : array_red_wifi,
+                "hora_apertura" : hora_apertura,
+                "hora_cierre" : hora_cierre,                        
             }
             return HttpResponse(simplejson.dumps(estadistica_js), content_type='application/json')
         except Exception as e:
@@ -1724,7 +1739,7 @@ def generar_estadistica_conteo_red(array_red_ethernet,array_red_wifi,fecha):
     #print("start_date",start_date)
     #print("end_date",end_date)
     
-    parametros = setParametros(periodo_estadistica)    
+    parametros = setParametros()    
     tiempo_medicion = parametros[0]    
     #print("tiempo_medicion",tiempo_medicion)
     tiempo_medicion_parametro = parametros[1]
@@ -1773,23 +1788,9 @@ def generar_estadistica_conteo_red(array_red_ethernet,array_red_wifi,fecha):
         nro_usuarios_wifi = int(result_tiempo['nro_usuarios_wifi'])
         #print("nro_usuarios_ethernet: ",nro_usuarios_ethernet)        
         
-        if (periodo_estadistica ==2):            
-            if (hora-2 == -1):
-                hora = len(array_tiempo)-1                
-            else:
-                hora = hora-2
-                
-        if (periodo_estadistica ==3):            
-            if (hora-1 >= 0):        
-                hora = hora-1
-                
-        #print("hora: ",hora) 
-        if (periodo_estadistica !=1 and hora-1 >= 0):    
-            array_red_ethernet[hora] = nro_usuarios_ethernet
-            array_red_wifi[hora] = nro_usuarios_wifi
-        elif (periodo_estadistica ==1):
-            array_red_ethernet[hora] = nro_usuarios_ethernet
-            array_red_wifi[hora] = nro_usuarios_wifi
+       
+        array_red_ethernet[hora] = nro_usuarios_ethernet
+        array_red_wifi[hora] = nro_usuarios_wifi
         
                 
 
@@ -1819,5 +1820,79 @@ def get_start_day(today):
 def get_end_day(today):
     return datetime(today.year, today.month, today.day,23,59,59)
 
-    
 
+def getQuery(start_date,end_date,tiempo_medicion,tiempo_medicion_parametro,array_tiempo):
+    query = [
+      {
+        "$match": {          
+          "fecha": {
+            "$gte": start_date,
+            "$lte": end_date
+          },
+        }
+      },
+      {
+        "$project": {
+          "date": {
+            "$dateToString": {
+              "format": "%Y-%m-%d",
+              "date": "$fecha"
+            }
+          },
+        tiempo_medicion: { 
+                tiempo_medicion_parametro: "$fecha"
+        },
+         "nro_usuarios_ethernet": "$nro_usuarios_ethernet",
+         "nro_usuarios_wifi": "$nro_usuarios_wifi"
+        }
+      },
+      {
+     "$match":{
+            tiempo_medicion:{"$in":array_tiempo}
+          }
+      },
+      {
+        "$group": {
+          "_id": {
+          tiempo_medicion: tiempo_medicion_parametro,
+          "date": "$date"
+          },                
+          "nro_usuarios_ethernet": { 
+            "$max": "$nro_usuarios_ethernet"
+          },
+          "nro_usuarios_wifi": { 
+            "$max": "$nro_usuarios_wifi"
+          },      
+          
+        }
+      }  
+    ]
+    return query    
+
+def setParametros():
+    tiempo_medicion = "hour"
+    tiempo_medicion_parametro = "$hour"
+    array_tiempo = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]   
+    
+    return tiempo_medicion,tiempo_medicion_parametro,array_tiempo
+
+
+def getHorarioLaboral():
+    #print("getHorarioLaboral")
+    jornada = JornadaLaboral.objects.all()[0]
+    #print("jornada")
+    #print(jornada)
+    hora_apertura = int(str(jornada.hora_apertura)[:2])
+    hora_cierre = int(str(jornada.hora_cierre)[:2])
+    #print("hora_apertura: ",hora_apertura)
+    #print("hora_cierre: ",hora_cierre)
+    return hora_apertura,hora_cierre
+    """
+    if (request.user.profile.rol == Constantes.ADMINISTRADOR) and hasattr(request.user.profile, 'cliente') and (request.user.profile.cliente.get_id() is not None):
+                jornadaTodos = JornadaLaboral.objects.all().filter(instalacion={'nif_cliente': request.user.profile.cliente.nif})
+    
+    elif (request.user.profile.rol > Constantes.ADMINISTRADOR) and hasattr(request.user.profile, 'cliente') and (request.user.profile.cliente.get_id() is not None):
+          if hasattr(request.user.profile, 'instalacion') and hasattr(request.user.profile.instalacion, 'get_id') and (request.user.profile.instalacion.get_id() is not None):
+              jornadaTodos = JornadaLaboral.objects.all().filter(instalacion={'nif_cliente': request.user.profile.cliente.nif} and {'nombre': request.user.profile.instalacion.nombre_comercial})
+    """
+   

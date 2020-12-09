@@ -614,7 +614,7 @@
 					
 					
 					crearCircle(camaras)
-          crearBarra(camaras)
+                    //crearBarra(camaras)
 
 					switch (color_barra_cabecera)
 					{
@@ -1466,7 +1466,9 @@ function revisar_cambios_red(update,periodo_estadistica){
 			hora_apertura = data.hora_apertura
 			hora_cierre = data.hora_cierre
 			nro_usuarios_ethernet = data.nro_usuarios_ethernet
-			nro_usuarios_wifi = data.nro_usuarios_wifi			
+			nro_usuarios_wifi = data.nro_usuarios_wifi
+			fecha = data.fecha
+			$('#date').val(fecha)			
 			$('#nro_usuarios_ethernet').html(nro_usuarios_ethernet);
 			$('#nro_usuarios_wifi').html(nro_usuarios_wifi);
 			console.log(array_red_ethernet);	
@@ -1504,10 +1506,27 @@ function seleccionarDia(operacion) {
 		success: function(data){	
 			fecha = data.fecha
 			derecha_disabled = data.derecha_disabled
+			array_red_ethernet = data.array_red_ethernet
+			array_red_wifi = data.array_red_wifi
+			hora_apertura = data.hora_apertura
+			hora_cierre = data.hora_cierre
 			console.log("fecha_atras: "+fecha)
 			console.log("derecha_disabled: "+derecha_disabled)
 			$('#date').val(fecha)		
 			$('#Derecha').prop('disabled', derecha_disabled);
+			console.log(array_red_ethernet);	
+			console.log("array_red_wifi");
+			console.log(array_red_wifi);
+			console.log("hora_apertura: "+hora_apertura)
+			console.log("hora_cierre: "+hora_cierre)			
+			result = getArrayByHorario(array_red_ethernet,array_red_wifi,1,hora_apertura,hora_cierre)
+			array_red_ethernet = result[0]
+			array_red_wifi = result[1]						
+			console.log("array_red_ethernet V2");			
+			console.log(array_red_ethernet);	
+			console.log("array_red_wifi V2");
+			console.log(array_red_wifi);
+			createGraficaRed(LCRed,array_red_wifi,array_red_ethernet,true,labels)			
 		}						
      
    });	
