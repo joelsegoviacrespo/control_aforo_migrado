@@ -1457,6 +1457,7 @@ function getArrayByHorario(array_red_ethernet,array_red_wifi,periodo_estadistica
 
 function revisar_cambios_red(update,periodo_estadistica){
 	console.log("revisar_cambios_red")	
+	$('#Derecha').prop('disabled', true);
 	request_url = '/usuarios_red/dispositivosConectados/'+periodo_estadistica + '';
 	$.ajax({
 		url: request_url,
@@ -1500,6 +1501,7 @@ function seleccionarDia(operacion) {
 	console.log("diaAtras")
 	console.log($('#date').val())
 	fecha_actual = $('#date').val()
+	
 	request_url = '/generar_estadistica_generales/'+fecha_actual+'/'+operacion;
 	$.ajax({
 		url: request_url,
