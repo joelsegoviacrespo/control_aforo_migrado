@@ -74,16 +74,14 @@ def configuracion(request, id_display):
               
             try:                
                 nro_aforo = 0
-                camarasAll =  Camaras.objects.all()
-                i=0
-                for camaras in camarasAll:
-                    j=0                   
-                    for zonas_camara in camaras.zonas_camara:
-                        if (i==0 and j==0):                                                 
-                            nro_aforo = zonas_camara.nro_personas                            
-                        j = j+1
-                    i= i+1            
-
+                camarasAll =  Camaras.objects.all()                
+                for camaras in camarasAll:                                       
+                    for zonas_camara in camaras.zonas_camara:                        
+                        if (zonas_camara.suma_total_aforo == True):    
+                            print(zonas_camara.nombre_zona_camara)                                             
+                            nro_aforo = nro_aforo + zonas_camara.nro_personas                            
+                    
+                                 
             except Exception as e:
                 print('%s (%s)' % (e, type(e)))
                 pass
