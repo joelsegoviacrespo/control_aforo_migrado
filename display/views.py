@@ -78,7 +78,7 @@ def configuracion(request, id_display):
                 for camaras in camarasAll:                                       
                     for zonas_camara in camaras.zonas_camara:                        
                         if (zonas_camara.suma_total_aforo == True):    
-                            print(zonas_camara.nombre_zona_camara)                                             
+                            #print(zonas_camara.nombre_zona_camara)                                             
                             nro_aforo = nro_aforo + zonas_camara.nro_personas                            
                     
                                  
