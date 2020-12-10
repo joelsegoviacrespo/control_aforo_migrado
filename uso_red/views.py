@@ -13,7 +13,7 @@ from datetime import datetime, timedelta
 from calendar import monthrange
 import collections
 from django.http import JsonResponse
-
+from Fecha import Fecha
 
 
 def generar_estadistica_conteo_red(array_red_ethernet,array_red_wifi,periodo_estadistica):
@@ -158,30 +158,24 @@ def get_intervaloPeriodo(periodo_estadistica):
     
     
     if (periodo_estadistica == 1):
-        start_date = get_start_day(datetime.today())    
-        end_date =  get_end_day(datetime.today())
+        start_date = Fecha.get_start_day(datetime.today())    
+        end_date =  Fecha.get_end_day(datetime.today())
     
     elif (periodo_estadistica == 2):
         dia_semana = datetime.today().weekday()
         inicio_semana = datetime.today() - timedelta(days=dia_semana)        
         fin_semana =inicio_semana +  timedelta(days=6)         
-        start_date = get_start_day(inicio_semana)
-        end_date =  get_end_day(fin_semana)        
+        start_date = Fecha.get_start_day(inicio_semana)
+        end_date =  Fecha.get_end_day(fin_semana)        
         
     elif (periodo_estadistica == 3):    
          #x = datetime(2019, 2, 17)
          inicio_mes = datetime.today() - timedelta(days=(datetime.today().day-1))
-         start_date = get_start_day(inicio_mes)         
+         start_date = Fecha.get_start_day(inicio_mes)         
          fin_mes = last_date_of_month(datetime.today())
-         end_date =  get_end_day(fin_mes)         
+         end_date =  Fecha.get_end_day(fin_mes)         
         
     return start_date,end_date
-
-def get_start_day(today):
-    return datetime(today.year, today.month, today.day)
-
-def get_end_day(today):
-    return datetime(today.year, today.month, today.day,23,59,59)
 
 def last_day_of_month(date_value):
     return monthrange(date_value.year, date_value.month)[1]
