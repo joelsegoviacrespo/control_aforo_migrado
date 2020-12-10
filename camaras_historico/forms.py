@@ -1,5 +1,5 @@
 from django import forms
-from camaras_historico.models import myCamaras
+from camaras_historico.models import CamarasHistorico
 
 class Camaras_historicoForm(forms.ModelForm):
     id = forms.CharField(widget=forms.HiddenInput, required=False, initial=0)

@@ -52,6 +52,7 @@ def generar_estadistica_conteo_red(request,array_red_ethernet,array_red_wifi,per
         print("array_red_ethernet[i]: ",array_red_ethernet[i])
     """   
 
+    
     for dispositivoConectados in lista:
         #print("dispositivoConectados")
         #print(dispositivoConectados)
@@ -159,6 +160,10 @@ def dispositivosConectados(request,periodo_estadistica):
                 nro_usuarios_ethernet = result_minuto[0]
                 fecha = Fecha.getFechaActual().strftime("%d-%m-%Y")    
                 nro_usuarios_wifi = result_minuto[1]
+                
+                
+                    
+                
             except Exception as e:
                 print('%s (%s)' % (e, type(e)))
                 pass
@@ -188,30 +193,26 @@ def get_intervaloPeriodo(periodo_estadistica):
     
     
     if (periodo_estadistica == 1):
-        start_date = get_start_day(Fecha.getFechaActual())    
-        end_date =  get_end_day(Fecha.getFechaActual())
+        start_date = Fecha.get_start_day(Fecha.getFechaActual())    
+        end_date =  Fecha.get_end_day(Fecha.getFechaActual())
     
     elif (periodo_estadistica == 2):
         dia_semana = datetime.today().weekday()
         inicio_semana = datetime.today() - timedelta(days=dia_semana)        
         fin_semana =inicio_semana +  timedelta(days=6)         
-        start_date = get_start_day(inicio_semana)
-        end_date =  get_end_day(fin_semana)        
+        start_date = Fecha.get_start_day(inicio_semana)
+        end_date =  Fecha.get_end_day(fin_semana)        
         
     elif (periodo_estadistica == 3):    
          #x = datetime(2019, 2, 17)
          inicio_mes = datetime.today() - timedelta(days=(datetime.today().day-1))
-         start_date = get_start_day(inicio_mes)         
+         start_date = Fecha.get_start_day(inicio_mes)         
          fin_mes = last_date_of_month(datetime.today())
-         end_date =  get_end_day(fin_mes)         
+         end_date =  Fecha.get_end_day(fin_mes)         
         
     return start_date,end_date
 
-def get_start_day(today):
-    return datetime(today.year, today.month, today.day)
 
-def get_end_day(today):
-    return datetime(today.year, today.month, today.day,23,59,59)
 
 def last_day_of_month(date_value):
     return monthrange(date_value.year, date_value.month)[1]
@@ -226,11 +227,6 @@ def get_array_tiempo(ultimo_dia):
         array_tiempo.append(i)        
     return array_tiempo
 
-def get_start_minute_day(today):    
-    return datetime(today.year, today.month, today.day,today.hour,today.minute,0)
-
-def get_end_minute_day(today):
-    return datetime(today.year, today.month, today.day,today.hour,today.minute,59)
 
 def setParametros(periodo_estadistica):
     
@@ -465,11 +461,11 @@ def conteoDispositivoRedMinuto():
     #print("hoy: ",hoy)                
     nro_usuarios_ethernet = 0
     nro_usuarios_wifi = 0
-    start_date = get_start_minute_day(hoy)
+    start_date = Fecha.get_start_minute_day(hoy)
     #print("start_date",start_date)
     #start_date = datetime(2020, 12, 2, 2, 53, 0)
     #print("start_date: ",start_date)
-    end_date = get_end_minute_day(hoy)
+    end_date = Fecha.get_end_minute_day(hoy)
     #print("end_date",end_date)
     #end_date = datetime(2020, 12, 2, 2, 53, 59)
     #print("end_date: ",end_date)    
@@ -484,8 +480,26 @@ def conteoDispositivoRedMinuto():
     #print("query")
     #print(query)    
     usuariosRed = UsuariosRed.objects.mongo_aggregate(query)
-    lista = list(usuariosRed)    
-        
+    lista = list(usuariosRed)
+    #print("len")
+    #print(lista.__len__())
+    #print("usuariosRed")
+    #print(usuariosRed)
+    #print("lista V2")        
+    #print(lista)
+    if (lista.__len__() == 0):
+        intentos = 0
+        maximo_intentos = 10
+        while (intentos <= maximo_intentos) and (lista.__len__() == 0):
+            #print("intentos: ",intentos)
+            time.sleep(3)
+            query =  getQueryMinuto(start_date,end_date,tiempo_medicion,tiempo_medicion_parametro,array_tiempo)
+            usuariosRed = UsuariosRed.objects.mongo_aggregate(query)
+            intentos += 1 
+            lista = list(usuariosRed)    
+    
+
+
     for dispositivoConectados in lista:
         #print("dispositivoConectados")
         #print(dispositivoConectados)    

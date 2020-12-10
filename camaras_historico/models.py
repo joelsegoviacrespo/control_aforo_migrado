@@ -2,28 +2,21 @@ from djongo import models
 from django.contrib import admin
 from djongo import models
 from instalacion.models import Instalacion,InstalacionEmbebido
-class ZonaCamara(models.Model):
-    #_id = models.ObjectIdField()
+
+       
+       
+class CamarasHistorico(models.Model):
+    _id = models.ObjectIdField()
+    nombre =  models.CharField(max_length=250, blank=False, default='')
+    network_meraky_id = models.CharField(max_length=255, blank=False, default='')
+    nif_cliente = models.CharField(max_length=255, blank=False, default='')
+    nombre_camara = models.CharField(max_length=250, blank=False, default='')
+    serial_camara = models.CharField(max_length=250, blank=False, default='')    
+    fecha = models.DateField(auto_now_add=True,blank=True, null=True)
     nombre_zona_camara = models.CharField(max_length=250, blank=False, default='')
     nro_personas = models.IntegerField(default=0)
-    class Meta:
-       abstract = True
-class myCamaras(models.Model):
-    _id = models.ObjectIdField()
-    instalacion = models.EmbeddedField(
-       model_container=InstalacionEmbebido,
-       null=True,
-       blank=True,
-    )
-    nombre_camara = models.CharField(max_length=250, blank=False, default='')
-    serial_camara = models.CharField(max_length=250, blank=False, default='')
-    ts = models.TimeField(blank=False)
-    fecha = models.DateField(auto_now_add=True,blank=True, null=True)
-    zonas_camara = models.ArrayField(
-      model_container=ZonaCamara,
-      null=True,
-      blank=True,
-    )
+    suma_total_aforo =  models.BooleanField(blank=False, default=True)
+   
     def __unicode__(self):
         return self.nombre_camara
     def __str__(self,):

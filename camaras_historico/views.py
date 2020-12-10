@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from djongo import models
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.utils.translation import activate
-from camaras_historico.models import myCamaras
+
 # Create your views here.
 
 
