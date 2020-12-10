@@ -26,7 +26,7 @@ from datetime import date
 from aforoInfo.models import AforoInfo
 from django.core import serializers
 from rest_framework.renderers import JSONRenderer
-from camaras_historico.models import myCamaras
+from camaras_historico.models import CamarasHistorico
 from datetime import date
 from datetime import datetime, timedelta
 from json import dumps
@@ -1799,19 +1799,14 @@ def generar_estadistica_conteo_red(array_red_ethernet,array_red_wifi,fecha):
 def get_intervaloPeriodo(fecha_consulta):       
     
     #print("fecha_consulta:",fecha_consulta)
-    start_date = get_start_day(fecha_consulta)    
-    end_date =  get_end_day(fecha_consulta)     
+    start_date = Fecha.get_start_day(fecha_consulta)    
+    end_date =  Fecha.get_end_day(fecha_consulta)     
     #print("start_date: ",start_date)
     #print("end_date: ",end_date)
     return start_date,end_date    
     
     
     
-def get_start_day(today):
-    return datetime(today.year, today.month, today.day)
-
-def get_end_day(today):
-    return datetime(today.year, today.month, today.day,23,59,59)
 
 
 def getQuery(start_date,end_date,tiempo_medicion,tiempo_medicion_parametro,array_tiempo):
@@ -1888,4 +1883,125 @@ def getHorarioLaboral():
           if hasattr(request.user.profile, 'instalacion') and hasattr(request.user.profile.instalacion, 'get_id') and (request.user.profile.instalacion.get_id() is not None):
               jornadaTodos = JornadaLaboral.objects.all().filter(instalacion={'nif_cliente': request.user.profile.cliente.nif} and {'nombre': request.user.profile.instalacion.nombre_comercial})
     """
-   
+def getQueryTotalAforo(start_date,end_date,tiempo_medicion,tiempo_medicion_parametro,array_tiempo):
+    query =[
+        {
+        "$match": {
+         "suma_total_aforo": {
+            "$eq": true
+          },
+          "fecha": {
+                "$gte": start_date,
+                "$lte": end_date
+          }
+        }
+      },
+      {
+        "$project": {
+          "date": {
+            "$dateToString": {
+              "format": "%Y-%m-%d",
+              "date": "$fecha"
+            }
+          },
+          tiempo_medicion: { 
+                    tiempo_medicion_parametro: "$fecha"
+            },
+         "nro_personas": "$nro_personas"
+    
+        }
+      },
+      {
+         "$match":{
+                tiempo_medicion:{"$in":array_tiempo}
+              }
+          },
+      {
+        "$group": {
+          "_id": {
+            tiempo_medicion: tiempo_medicion_parametro,
+            "date": "$date",       
+          },
+          "total_nro_personas": { 
+             "$sum": "$nro_personas"
+          }
+        }
+      },
+      {"$sort": {_id: 1}}
+    ]
+    return query
+  
+  
+def generar_estadistica_total_aforo(array_red_ethernet,array_red_wifi,fecha):
+    
+    #print("generar_estadistica_conteo_red")
+  
+    intervalo = get_intervaloPeriodo(fecha)
+    start_date = intervalo[0]
+    end_date = intervalo[1]  
+    #print("start_date",start_date)
+    #print("end_date",end_date)
+    
+    parametros = setParametros()    
+    tiempo_medicion = parametros[0]    
+    #print("tiempo_medicion",tiempo_medicion)
+    tiempo_medicion_parametro = parametros[1]
+    #print("tiempo_medicion_parametro",tiempo_medicion_parametro)    
+    array_tiempo  = parametros[2]
+    #print("array_tiempo",array_tiempo)    
+    query = getQueryTotalAforo(start_date,end_date,tiempo_medicion,tiempo_medicion_parametro,array_tiempo)
+    
+    #print("QUERY")
+    #print(query)
+
+    camarasHistorico = CamarasHistorico.objects.mongo_aggregate(query)       
+    lista = list(camarasHistorico)  
+    #print(list) 
+    jornada = getHorarioLaboral()
+    hora_apertura = jornada[0]
+    hora_cierre = jornada[1]        
+    #print("hora_apertura: ",hora_apertura)
+    #print("hora_cierre: ",hora_cierre)    
+    array_total_aforo = [0] * len(array_tiempo)
+    
+    """
+    for i in range(len(array_red_ethernet)):
+        print("i: ",i)
+        print("array_red_ethernet[i]: ",array_red_ethernet[i])
+    """   
+
+    for nro_personas in lista:
+        #print("dispositivoConectados")
+        #print(dispositivoConectados)
+        result: OrderedDict[str, int] = nro_personas
+        #print("RESULTADOS!!!!!!!!!!!!!!!")        
+        #print(result['_id'])
+        #result_tiempo: OrderedDict[str, str] = result['_id']
+        result_tiempo: OrderedDict[str, int] = nro_personas
+        nro_usuarios_ethernet = result['total_nro_personas']
+        
+        result_hora: OrderedDict[str, str] = result['_id']
+        
+        #print("result_hora: ",result_tiempo)
+        #print("tiempo_medicion: ",tiempo_medicion)
+        hora = result_hora[tiempo_medicion]
+        #print("hora: ",hora)
+        #if hora in
+        nro_usuarios_ethernet = int(result_tiempo['nro_usuarios_ethernet'])
+        nro_usuarios_wifi = int(result_tiempo['nro_usuarios_wifi'])
+        #print("nro_usuarios_ethernet: ",nro_usuarios_ethernet)        
+        
+       
+        array_red_ethernet[hora] = nro_usuarios_ethernet
+        array_red_wifi[hora] = nro_usuarios_wifi
+        
+                
+
+        
+    #print("ARREGLO DE PRESION ARTERIAL QUE VA PARA ESTADISTICA")
+    #for i in range(len(array_presion_arterial_sys_hora)):
+       #print("i: ",i)
+       #print("array_presion_arterial_sys_hora[i]: ",array_presion_arterial_sys_hora[i])
+       #print("array_presion_arterial_dia_hora[i]: ",array_presion_arterial_dia_hora[i])      
+
+    return array_red_ethernet,array_red_wifi,hora_apertura,hora_cierre  
