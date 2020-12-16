@@ -207,7 +207,8 @@
                           			<div class="px-2 pb-2 pb-md-0 text-center">
 										<div class="align-middle">
 											<div style= "height:40%;max-height: 50%;">
-						  						<img id="snapshot-{{camara.serial_camara}}-zona-{{forloop.counter}}" class="card-img-top rounded" src="{{ camara.snapshot }}" onerror="this.onerror=null;this.src='{{ camara.imagen_defecto }}';" >
+						  						<!--<img id="snapshot-{{camara.serial_camara}}-zona-{{forloop.counter}}" class="card-img-top rounded" src="{{ camara.snapshot }}" onerror="this.onerror=null;this.src='{{ camara.imagen_defecto }}';" >-->
+										        <img id="snapshot-{{camara.serial_camara}}-zona-{{forloop.counter}}" class="card-img-top rounded" src="{{ camara.snapshot }}" onerror="cambio_imagen(this,'{{ camara.imagen_defecto }}')" >
 											</div>
 										</div>								
                           			</div>
@@ -1581,7 +1582,16 @@ function refrescar_imagen() {
    });	
 }
 
-
+function cambio_imagen(img,imagen_defecto) {
+	console.log("!!!!!!!!!!cambio_imagen!!!!!!!!!!!!")
+	console.log("img: "+img)
+	console.log("img.id: "+img.id)
+	console.log("img.src: "+img.src)	
+	console.log("imagen_defecto: "+imagen_defecto)
+	img.src = imagen_defecto
+	console.log("img.src_cambio: "+img.src)
+    console.log('The image could not be loaded.');
+}
  
 </script>
 <style>
