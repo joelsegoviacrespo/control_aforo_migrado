@@ -78,7 +78,7 @@
             <div class="card full-height ">
                 <div class="card-body">
                     
-				<p  align="center"><samall>Estadisticas</samall></p>	
+				<p  align="center"><samall>Estad&iacute;sticas</samall></p>	
 				<div class="row" style="width: 200px; height: 200px;">					
 					<div id="id_div_canvas_RED" class="chart-container" style="max-height: 200px;">
 						<canvas id="LCRed" style="width: 580px;"></canvas>
@@ -152,7 +152,9 @@
 				</div><!--Fin row-->				
 				<div style = "height: 300%;">				
 					<div class="col-md-12"style="max-height: 290%; z-index:1;" id="tarjeta1">
-						<p  align="center"><samall>Estadistica de Aforo</samall></p>
+						<p  align="center"><samall>Estad&iacute;stica de Aforo</samall></p>
+						<p  align="center"><span align="left"  style="color:#1d7af3;font-size:14px;">&mdash; Total aforo</span>						
+						<span align="center" style=" color:#FF9E27;font-size:14px;">&emsp;&emsp;&emsp;&emsp;&mdash; Total persona</span></p>
 						<div class="row" style="width: 200px; height: 290px;">					
 							<div id="id_div_canvas_Aforo" class="chart-container" style="max-height: 290px;">
 								<canvas id="LCAforo" style="width: 420px;"></canvas>
@@ -1497,7 +1499,7 @@ function crearGraficaDoble(context,data1,data2,labels,nombreGrafica1,nombreGrafi
 			responsive: true, 
 			maintainAspectRatio: false,
 			legend: {
-				display: true,
+				display: false,
 			},
 			tooltips: {
 				bodySpacing: 1,
