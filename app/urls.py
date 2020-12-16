@@ -27,6 +27,8 @@ urlpatterns = [
     path('usuarios_red/', include('usuarios_red.urls')),
     url('back/', views.back),
     url('ahead/', views.ahead),
-    path('generar_estadistica_generales/<str:fecha_str>/<str:operacion>', views.generar_estadistica_generales)
+    path('generar_estadistica_generales/<str:fecha_str>/<str:operacion>', views.generar_estadistica_generales),
+    path('totalAforo/<int:periodo_estadistica>', views.totalAforo),
+    path('totalAforo/<str:fecha_str>/<str:operacion>', views.totalAforoDia),
     
 ]

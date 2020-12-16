@@ -23,3 +23,5 @@ class CamarasHistorico(models.Model):
         return str(self.nombre_camara)
     class Meta:
         db_table = "camaras_historico"
+        
+    objects = models.DjongoManager() 

@@ -77,9 +77,10 @@ def generar_estadistica_conteo_red(array_red_ethernet,array_red_wifi,periodo_est
     lista = list(usuariosRed)    
     array_presion_arterial_sys_hora = [0] * len(array_tiempo)
     array_presion_arterial_dia_hora = [0] * len(array_tiempo)
-    for i in range(len(array_presion_arterial_sys_hora)):
-        print("i: ",i)
-        print("array_presion_arterial_sys_hora[i]: ",array_presion_arterial_sys_hora[i])
+    
+    #for i in range(len(array_presion_arterial_sys_hora)):
+    #    print("i: ",i)
+    #    print("array_presion_arterial_sys_hora[i]: ",array_presion_arterial_sys_hora[i])
         
     """     
     for medicionHistorico in lista:
@@ -130,9 +131,7 @@ def generar_estadistica_conteo_red(array_red_ethernet,array_red_wifi,periodo_est
 def conteoUsoRed(request,periodo_estadistica):
     
     if request.method == 'GET':
-        try:        
-            print("periodo_estadistica: ",periodo_estadistica)    
-              
+        try:              
             try:                
                 nro_aforo = 0
 
@@ -191,49 +190,9 @@ def get_array_tiempo(ultimo_dia):
     return array_tiempo
 
 
-def setParametros(periodo_estadistica):
-    
-    #periodo_estadistica == hora y tipo es fecuencia cardiaca
-    """if (tipo_estadistica==1):
+def setParametros(periodo_estadistica):    
 
-        nombre_medicion = "frecuencia_cardiaca"
-        valor_medicion = "$frecuencia_cardiaca"
-        nombre_tiempo_medicion  = "hora_frecuencia_cardiaca"
-        valor_tiempo_medicion = "$hora_frecuencia_cardiaca"  
-        maxima_medicion = "maxima_frecuencia_cardiaca"    
-     
-         
-         
-    if (tipo_estadistica==2):
-
-        nombre_medicion = "saturacion_oxigeno"
-        valor_medicion = "$saturacion_oxigeno"
-        nombre_tiempo_medicion  = "hora_saturacion_oxigeno"
-        valor_tiempo_medicion = "$hora_saturacion_oxigeno"
-        maxima_medicion = "maxima_saturacion_oxigeno"    
-            
-
-    if (tipo_estadistica==3):            
-        nombre_medicion = "temperatura"
-        valor_medicion = "$temperatura"
-        nombre_tiempo_medicion  = "hora_temperatura"
-        valor_tiempo_medicion = "$hora_temperatura"
-        maxima_medicion = "maxima_temperatura"        
-        
-
-
-    if (tipo_estadistica==4):            
-        nombre_medicion = ""
-        valor_medicion = ""
-        nombre_tiempo_medicion  = ""
-        valor_tiempo_medicion = "$hora_presion_arterial"
-        maxima_medicion = ""        
-        
-  
-    """
-    #tipos_estadistica = [1,2,3,4]
-    #if (tipo_estadistica in tipos_estadistica):
-        #Por Hora
+    #Por Hora
     if (periodo_estadistica == 1):
         tiempo_medicion = "hour"
         tiempo_medicion_parametro = "$hour"

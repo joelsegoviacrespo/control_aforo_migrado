@@ -267,3 +267,44 @@ def configuracion(request, id_monitor):
         pass
     return JsonResponse({'m': id_monitor, 'error:': 'parametros erroneos 2'},
                         status=status.HTTP_400_BAD_REQUEST)
+
+
+def refrescar_imagen(request):
+    camaras_serialize = []
+    if request.method == 'GET':
+        try:
+            
+            #camarasAll = Camaras.objects.values_list('serial_camara','snapshot','zonas_camara')
+            camarasAll =  Camaras.objects.all()
+            try:
+                
+                #for camara in camarasAll:                             
+                #    camaras_serialize.append(camara)
+                for camaras in camarasAll:                
+
+                    zonas_camaras = []                         
+                    for zonas_camara in camaras.zonas_camara:                        
+                                                
+                        zonas_camara = model_to_dict(zonas_camara)
+                        zonas_camaras.append(zonas_camara)            
+                        
+                    camaras.zonas_camara = zonas_camaras                     
+
+                camaras_serialize = serializers.serialize('json', camarasAll)
+                
+            except Exception as e:
+                print('%s (%s)' % (e, type(e)))
+                pass
+            monitor_js = {
+                "camaras": camaras_serialize,
+            }
+            return HttpResponse(simplejson.dumps(monitor_js), content_type='application/json')
+        except Exception as e:
+            print('%s (%s)' % (e, type(e)))
+            return JsonResponse({'m': id_monitor, 'error:': 'parametros erroneos'},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        pass
+    return JsonResponse({'m': id_monitor, 'error:': 'parametros erroneos 2'},
+                        status=status.HTTP_400_BAD_REQUEST)
+    
+    

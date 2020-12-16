@@ -1857,10 +1857,40 @@ def getQuery(start_date,end_date,tiempo_medicion,tiempo_medicion_parametro,array
     ]
     return query    
 
+def get_array_tiempo(ultimo_dia):
+    array_tiempo = []
+    rango = ultimo_dia + 1
+    for i in range(0,rango):
+        array_tiempo.append(i)        
+    return array_tiempo
+
+def setParametrosAF(periodo_estadistica):
+    
+    if (periodo_estadistica == 1):
+        tiempo_medicion = "hour"
+        tiempo_medicion_parametro = "$hour"
+        array_tiempo = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]
+    #Por semana
+    if (periodo_estadistica == 2):
+        tiempo_medicion = "dayOfWeek"
+        tiempo_medicion_parametro = "$dayOfWeek"
+        array_tiempo = [1,2,3,4,5,6,7]
+
+
+    if (periodo_estadistica == 3):
+        tiempo_medicion = "dayOfMonth"
+        tiempo_medicion_parametro = "$dayOfMonth"            
+        ultimo_dia = last_day_of_month(datetime.today())
+        array_tiempo = get_array_tiempo(ultimo_dia)
+        
+    return tiempo_medicion,tiempo_medicion_parametro,array_tiempo
+
 def setParametros():
+    
     tiempo_medicion = "hour"
     tiempo_medicion_parametro = "$hour"
-    array_tiempo = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]   
+    array_tiempo = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]  
+
     
     return tiempo_medicion,tiempo_medicion_parametro,array_tiempo
 
@@ -1869,11 +1899,11 @@ def getHorarioLaboral():
     #print("getHorarioLaboral")
     jornada = JornadaLaboral.objects.all()[0]
     #print("jornada")
-    #print(jornada)
+    #print(jornada)    
     hora_apertura = int(str(jornada.hora_apertura)[:2])
     hora_cierre = int(str(jornada.hora_cierre)[:2])
-    #print("hora_apertura: ",hora_apertura)
-    #print("hora_cierre: ",hora_cierre)
+    #print("hora_apertura HL: ",hora_apertura)
+    #print("hora_cierre: HL",hora_cierre)
     return hora_apertura,hora_cierre
     """
     if (request.user.profile.rol == Constantes.ADMINISTRADOR) and hasattr(request.user.profile, 'cliente') and (request.user.profile.cliente.get_id() is not None):
@@ -1883,12 +1913,12 @@ def getHorarioLaboral():
           if hasattr(request.user.profile, 'instalacion') and hasattr(request.user.profile.instalacion, 'get_id') and (request.user.profile.instalacion.get_id() is not None):
               jornadaTodos = JornadaLaboral.objects.all().filter(instalacion={'nif_cliente': request.user.profile.cliente.nif} and {'nombre': request.user.profile.instalacion.nombre_comercial})
     """
-def getQueryTotalAforo(start_date,end_date,tiempo_medicion,tiempo_medicion_parametro,array_tiempo):
+def getQueryTotalAforo(verdadero,start_date,end_date,tiempo_medicion,tiempo_medicion_parametro,array_tiempo):
     query =[
         {
         "$match": {
          "suma_total_aforo": {
-            "$eq": true
+            "$eq": verdadero
           },
           "fecha": {
                 "$gte": start_date,
@@ -1926,30 +1956,30 @@ def getQueryTotalAforo(start_date,end_date,tiempo_medicion,tiempo_medicion_param
              "$sum": "$nro_personas"
           }
         }
-      },
-      {"$sort": {_id: 1}}
+      }
+      
     ]
     return query
   
   
-def generar_estadistica_total_aforo(array_red_ethernet,array_red_wifi,fecha):
+def generar_estadistica_total_aforo(array_total_nro_personas,periodo_estadistica):
     
-    #print("generar_estadistica_conteo_red")
+    #print("generar_estadistica_total_aforo")
   
-    intervalo = get_intervaloPeriodo(fecha)
+    intervalo = get_intervaloPeriodo_AF(periodo_estadistica)
     start_date = intervalo[0]
     end_date = intervalo[1]  
     #print("start_date",start_date)
     #print("end_date",end_date)
     
-    parametros = setParametros()    
+    parametros = setParametrosAF(periodo_estadistica)    
     tiempo_medicion = parametros[0]    
     #print("tiempo_medicion",tiempo_medicion)
     tiempo_medicion_parametro = parametros[1]
     #print("tiempo_medicion_parametro",tiempo_medicion_parametro)    
     array_tiempo  = parametros[2]
     #print("array_tiempo",array_tiempo)    
-    query = getQueryTotalAforo(start_date,end_date,tiempo_medicion,tiempo_medicion_parametro,array_tiempo)
+    query = getQueryTotalAforo(True,start_date,end_date,tiempo_medicion,tiempo_medicion_parametro,array_tiempo)
     
     #print("QUERY")
     #print(query)
@@ -1973,27 +2003,208 @@ def generar_estadistica_total_aforo(array_red_ethernet,array_red_wifi,fecha):
     for nro_personas in lista:
         #print("dispositivoConectados")
         #print(dispositivoConectados)
-        result: OrderedDict[str, int] = nro_personas
+        #result: OrderedDict[str, int] = nro_personas
         #print("RESULTADOS!!!!!!!!!!!!!!!")        
         #print(result['_id'])
         #result_tiempo: OrderedDict[str, str] = result['_id']
         result_tiempo: OrderedDict[str, int] = nro_personas
-        nro_usuarios_ethernet = result['total_nro_personas']
+        #nro_personas = result['total_nro_personas']
         
-        result_hora: OrderedDict[str, str] = result['_id']
+        result_hora: OrderedDict[str, str] = result_tiempo['_id']
         
         #print("result_hora: ",result_tiempo)
         #print("tiempo_medicion: ",tiempo_medicion)
         hora = result_hora[tiempo_medicion]
         #print("hora: ",hora)
         #if hora in
-        nro_usuarios_ethernet = int(result_tiempo['nro_usuarios_ethernet'])
-        nro_usuarios_wifi = int(result_tiempo['nro_usuarios_wifi'])
+        total_nro_personas = int(result_tiempo['total_nro_personas'])
+        #nro_usuarios_wifi = int(result_tiempo['nro_usuarios_wifi'])
         #print("nro_usuarios_ethernet: ",nro_usuarios_ethernet)        
         
        
-        array_red_ethernet[hora] = nro_usuarios_ethernet
-        array_red_wifi[hora] = nro_usuarios_wifi
+        array_total_aforo[hora] = total_nro_personas
+        
+        
+                
+
+        
+    #print("ARREGLO DE TOTAL NÚMEROS DE PERSONAS QUE VA PARA ESTADISTICA")
+    #for i in range(len(array_total_aforo)):
+       #print("i: ",i)
+       #print("array_total_aforo[i]: ",array_total_aforo[i])
+             
+
+    return array_total_aforo,hora_apertura,hora_cierre
+  
+  
+def totalAforo(request,periodo_estadistica):
+    
+    array_total_nro_personas = []     
+    result = [] 
+    if request.method == 'GET':
+        try:        
+            #print("periodo_estadistica: ",periodo_estadistica)
+                
+              
+            try:                
+                nro_aforo = 0
+                result = generar_estadistica_total_aforo(array_total_nro_personas,periodo_estadistica)
+                array_total_aforo = result[0]       
+                hora_apertura = result[1]
+                hora_cierre = result[2]              
+                    
+                
+            except Exception as e:
+                print('%s (%s)' % (e, type(e)))
+                pass
+            red_js = {           
+                "array_total_aforo" : array_total_aforo,                
+                "hora_apertura" : hora_apertura,
+                "hora_cierre" : hora_cierre,                              
+            }
+            return HttpResponse(simplejson.dumps(red_js), content_type='application/json')
+        except Exception as e:
+            print('%s (%s)' % (e, type(e)))
+            return JsonResponse({'m': periodo_estadistica, 'error:': 'parametros erroneos'},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        pass
+    return JsonResponse({'m': periodo_estadistica, 'error:': 'parametros erroneos 2'},
+                        status=status.HTTP_400_BAD_REQUEST)
+
+  
+def get_intervaloPeriodo_AF(periodo_estadistica):   
+    
+    
+    if (periodo_estadistica == 1):
+        start_date = Fecha.get_start_day(Fecha.getFechaActual())    
+        end_date =  Fecha.get_end_day(Fecha.getFechaActual())
+    
+    elif (periodo_estadistica == 2):
+        dia_semana = datetime.today().weekday()
+        inicio_semana = datetime.today() - timedelta(days=dia_semana)        
+        fin_semana =inicio_semana +  timedelta(days=6)         
+        start_date = Fecha.get_start_day(inicio_semana)
+        end_date =  Fecha.get_end_day(fin_semana)        
+        
+    elif (periodo_estadistica == 3):    
+         inicio_mes = datetime.today() - timedelta(days=(datetime.today().day-1))                     
+         fin_mes = last_date_of_month(datetime.today())               
+         start_date = Fecha.get_start_day(inicio_mes)      
+         end_date =  Fecha.get_end_day(fin_mes)         
+        
+    return start_date,end_date
+
+def totalAforoDia(request,fecha_str,operacion):    
+
+    fecha = ""
+    derecha_disabled = False            
+    array_total_aforo = [] 
+    result = [] 
+    if request.method == 'GET':
+        try:              
+              
+            try:
+                if request.method == 'GET':
+                    #print("GET")
+                    #print("fecha_str: ",fecha_str)                    
+                    fecha_convert =  datetime.strptime(fecha_str, "%d-%m-%Y").date()
+                    #print("fecha_convert: ",fecha_convert)
+                    if (operacion == 'atras'):
+                        fecha = (fecha_convert - timedelta(days=1)).strftime("%d-%m-%Y")
+                        #print("fecha: ",fecha)
+                    elif (operacion == 'delante'):
+                        fecha = (fecha_convert + timedelta(days=1)).strftime("%d-%m-%Y")
+                        #print("fecha: ",fecha)
+                                            
+                    derecha_disabled =  (fecha == Fecha.getFechaActual().strftime("%d-%m-%Y"))
+                    fecha_consultar = datetime.strptime(fecha, "%d-%m-%Y").date()
+                    result = generar_estadistica_aforo_dia(array_total_aforo,fecha_consultar)
+                    array_total_aforo = result[0]        
+                    #array_red_wifi = result[1]
+                    hora_apertura = result[1]
+                    hora_cierre = result[2]
+                    
+            except Exception as e:
+                print('%s (%s)' % (e, type(e)))
+                pass
+            estadistica_js = {           
+                "fecha" : str(fecha),      
+                "derecha_disabled": derecha_disabled,
+                "array_total_aforo" : array_total_aforo,    
+                "hora_apertura" : hora_apertura,
+                "hora_cierre" : hora_cierre,                        
+            }
+            return HttpResponse(simplejson.dumps(estadistica_js), content_type='application/json')
+        except Exception as e:
+            print('%s (%s)' % (e, type(e)))
+            return JsonResponse({'m': fecha_str, 'error:': 'parametros erroneos'},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        pass
+    return JsonResponse({'m': fecha_str, 'error:': 'parametros erroneos 2'},
+                        status=status.HTTP_400_BAD_REQUEST)
+
+def generar_estadistica_aforo_dia(array_total_aforo,fecha):
+    
+    #print("generar_estadistica_aforo_dia")
+  
+    intervalo = get_intervaloPeriodo(fecha)
+    start_date = intervalo[0]
+    end_date = intervalo[1]  
+    #print("start_date",start_date)
+    #print("end_date",end_date)
+    
+    parametros = setParametros()    
+    tiempo_medicion = parametros[0]    
+    #print("tiempo_medicion",tiempo_medicion)
+    tiempo_medicion_parametro = parametros[1]
+    #print("tiempo_medicion_parametro",tiempo_medicion_parametro)    
+    array_tiempo  = parametros[2]
+    #print("array_tiempo",array_tiempo)    
+    query = getQueryTotalAforo(True,start_date,end_date,tiempo_medicion,tiempo_medicion_parametro,array_tiempo)
+    
+    #print("QUERY")
+    #print(query)
+
+    usuariosRed = UsuariosRed.objects.mongo_aggregate(query)       
+    lista = list(usuariosRed)  
+    #print(list) 
+    jornada = getHorarioLaboral()
+    hora_apertura = jornada[0]
+    hora_cierre = jornada[1]        
+    #print("hora_apertura dia: ",hora_apertura)
+    #print("hora_cierre dia: ",hora_cierre)    
+    array_total_aforo = [0] * len(array_tiempo)
+    #array_red_wifi = [0] * len(array_tiempo)
+    """
+    for i in range(len(array_red_ethernet)):
+        print("i: ",i)
+        print("array_red_ethernet[i]: ",array_red_ethernet[i])
+    """   
+
+    for nro_personas in lista:
+        #print("dispositivoConectados")
+        #print(dispositivoConectados)
+        #result: OrderedDict[str, int] = nro_personas
+        #print("RESULTADOS!!!!!!!!!!!!!!!")        
+        #print(result['_id'])
+        #result_tiempo: OrderedDict[str, str] = result['_id']
+        result_tiempo: OrderedDict[str, int] = nro_personas
+        #nro_personas = result['total_nro_personas']
+        
+        result_hora: OrderedDict[str, str] = result_tiempo['_id']
+        
+        #print("result_hora: ",result_tiempo)
+        #print("tiempo_medicion: ",tiempo_medicion)
+        hora = result_hora[tiempo_medicion]
+        #print("hora: ",hora)
+        #if hora in
+        total_nro_personas = int(result_tiempo['total_nro_personas'])
+        #nro_usuarios_wifi = int(result_tiempo['nro_usuarios_wifi'])
+        #print("nro_usuarios_ethernet: ",nro_usuarios_ethernet)        
+        
+       
+        array_total_aforo[hora] = total_nro_personas
+
         
                 
 
@@ -2004,4 +2215,11 @@ def generar_estadistica_total_aforo(array_red_ethernet,array_red_wifi,fecha):
        #print("array_presion_arterial_sys_hora[i]: ",array_presion_arterial_sys_hora[i])
        #print("array_presion_arterial_dia_hora[i]: ",array_presion_arterial_dia_hora[i])      
 
-    return array_red_ethernet,array_red_wifi,hora_apertura,hora_cierre  
+    return array_total_aforo,hora_apertura,hora_cierre
+
+
+def last_day_of_month(date_value):
+    return monthrange(date_value.year, date_value.month)[1]
+
+def last_date_of_month(date_value):
+    return date_value.replace(day = last_day_of_month(date_value))

@@ -22,7 +22,8 @@ class Camaras(models.Model):
     )            
     nombre_camara = models.CharField(max_length=250, blank=False, default='')
     snapshot = models.CharField(max_length=250, blank=False, default='')
-    serial_camara = models.CharField(max_length=250, blank=False, default='')    
+    serial_camara = models.CharField(max_length=250, blank=False, default='')
+    imagen_defecto = models.CharField(max_length=250, blank=False, default='')    
     zonas_camara = models.ArrayField(
       model_container=ZonaCamara,
       null=True,

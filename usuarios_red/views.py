@@ -204,7 +204,6 @@ def get_intervaloPeriodo(periodo_estadistica):
         end_date =  Fecha.get_end_day(fin_semana)        
         
     elif (periodo_estadistica == 3):    
-         #x = datetime(2019, 2, 17)
          inicio_mes = datetime.today() - timedelta(days=(datetime.today().day-1))
          start_date = Fecha.get_start_day(inicio_mes)         
          fin_mes = last_date_of_month(datetime.today())

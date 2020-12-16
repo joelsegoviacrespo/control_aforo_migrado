@@ -10,5 +10,6 @@ urlpatterns = [
     path('actualizar/<str:id>/', views.actualizar),
     path('eliminar/<str:id>/', views.eliminar),
     path('configuracion/<str:id_monitor>/', views.configuracion),
-    path('configuracion_camaras/<str:id_monitor>/', views.configuracion_camaras),    
+    path('configuracion_camaras/<str:id_monitor>/', views.configuracion_camaras),
+    path('refrescar_imagen/', views.refrescar_imagen),    
 ]
