@@ -1962,7 +1962,7 @@ def getQueryTotalAforo(verdadero,start_date,end_date,tiempo_medicion,tiempo_medi
     return query
   
   
-def generar_estadistica_total_aforo(array_total_nro_personas,periodo_estadistica):
+def generar_estadistica_total_aforo(periodo_estadistica):
     
     #print("generar_estadistica_total_aforo")
   
@@ -1993,7 +1993,7 @@ def generar_estadistica_total_aforo(array_total_nro_personas,periodo_estadistica
     #print("hora_apertura: ",hora_apertura)
     #print("hora_cierre: ",hora_cierre)    
     array_total_aforo = [0] * len(array_tiempo)
-    
+    array_total_persona = [0] * len(array_tiempo)
     """
     for i in range(len(array_red_ethernet)):
         print("i: ",i)
@@ -2034,12 +2034,12 @@ def generar_estadistica_total_aforo(array_total_nro_personas,periodo_estadistica
        #print("array_total_aforo[i]: ",array_total_aforo[i])
              
 
-    return array_total_aforo,hora_apertura,hora_cierre
+    return array_total_aforo,array_total_persona,hora_apertura,hora_cierre
   
   
 def totalAforo(request,periodo_estadistica):
     
-    array_total_nro_personas = []     
+     
     result = [] 
     if request.method == 'GET':
         try:        
@@ -2048,17 +2048,19 @@ def totalAforo(request,periodo_estadistica):
               
             try:                
                 nro_aforo = 0
-                result = generar_estadistica_total_aforo(array_total_nro_personas,periodo_estadistica)
+                result = generar_estadistica_total_aforo(periodo_estadistica)
                 array_total_aforo = result[0]       
-                hora_apertura = result[1]
-                hora_cierre = result[2]              
+                array_total_persona = result[1]
+                hora_apertura = result[2]
+                hora_cierre = result[3]              
                     
                 
             except Exception as e:
                 print('%s (%s)' % (e, type(e)))
                 pass
             red_js = {           
-                "array_total_aforo" : array_total_aforo,                
+                "array_total_aforo" : array_total_aforo,
+                "array_total_persona" : array_total_persona,                
                 "hora_apertura" : hora_apertura,
                 "hora_cierre" : hora_cierre,                              
             }

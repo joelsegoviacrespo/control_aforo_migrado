@@ -461,7 +461,8 @@ function revisar_total_aforo(update,periodo_estadistica){
 	$.ajax({
 		url: request_url,
 		success: function(data){			
-			array_total_aforo = data.array_total_aforo		
+			array_total_aforo = data.array_total_aforo
+			array_total_persona = data.array_total_persona		
 			hora_apertura = data.hora_apertura
 			hora_cierre = data.hora_cierre
 
@@ -475,10 +476,10 @@ function revisar_total_aforo(update,periodo_estadistica){
 			console.log("labels")
 			console.log(labels)
 			if (periodo_estadistica ==1) {
-				array_total_aforo = getArrayByHorario(array_total_aforo,periodo_estadistica,hora_apertura,hora_cierre)
-				array_total_persona = [1,2,3,4,5,6,7,8,5,4,9,8,15]
-				console.log("array_total_aforo_horario")
-				console.log(array_total_aforo)
+				result = getArraysByHorario(array_total_aforo,array_total_persona,periodo_estadistica,hora_apertura,hora_cierre)
+				array_total_aforo = result[0]
+				array_total_persona = result[1] 				
+				
 				
 			}			
 			console.log("array_total_nro_personas V2");			
@@ -491,7 +492,6 @@ function revisar_total_aforo(update,periodo_estadistica){
 }
 
     $(document).ready(function(){});
-		revisar_total_aforo(false,1);
         revisar_cambios();
        
 
@@ -1235,14 +1235,16 @@ function getArrayByHorario(array,periodo_estadistica,hora_apertura,hora_cierre){
 
  $(document).ready(function(){});
 
-    //Cuando cargue la pagina por primera vez update== fals y
+    //Cuando cargue la pagina por primera vez update== false y
     //periodo_estadistica == el dia de hoy
 
     revisar_cambios_red(false,1);
+	revisar_total_aforo(false,1);
     // 3630000 = 1 hora y 30 segundos
     $(function(){
         window.setInterval(function(){
            revisar_cambios_red(true,1);
+		   revisar_total_aforo(true,1);
         },60000);
     });
 
@@ -1339,6 +1341,7 @@ function seleccionarDiaEstadisticaAforo(operacion) {
 		url: request_url,
 		success: function(data){			
 			array_total_aforo = data.array_total_aforo		
+			array_total_persona = data.array_total_persona
 			hora_apertura = data.hora_apertura
 			hora_cierre = data.hora_cierre
 
@@ -1351,8 +1354,9 @@ function seleccionarDiaEstadisticaAforo(operacion) {
 			labels = getLabels(array_total_aforo,1,hora_apertura,hora_cierre)			
 			console.log("labels")
 			console.log(labels)			
-			array_total_aforo = getArrayByHorario(array_total_aforo,1,hora_apertura,hora_cierre)
-			array_total_persona = [1,2,3,4,5,6,7,8,5,4,9,8,15]
+			result = getArraysByHorario(array_total_aforo,array_total_persona,periodo_estadistica,hora_apertura,hora_cierre)
+			array_total_aforo = result[0]
+			array_total_persona = result[1]
 			console.log("array_total_aforo_horario")
 			console.log(array_total_aforo)
 				
@@ -1582,15 +1586,8 @@ function refrescar_imagen() {
    });	
 }
 
-function cambio_imagen(img,imagen_defecto) {
-	console.log("!!!!!!!!!!cambio_imagen!!!!!!!!!!!!")
-	console.log("img: "+img)
-	console.log("img.id: "+img.id)
-	console.log("img.src: "+img.src)	
-	console.log("imagen_defecto: "+imagen_defecto)
+function cambio_imagen(img,imagen_defecto) {	
 	img.src = imagen_defecto
-	console.log("img.src_cambio: "+img.src)
-    console.log('The image could not be loaded.');
 }
  
 </script>
