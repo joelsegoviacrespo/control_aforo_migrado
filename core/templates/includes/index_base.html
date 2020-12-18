@@ -182,19 +182,28 @@
 			        <div class="row no-gutters">
 			            <div class="col">
 			                <div class="card-block px-2">
-								<div class="align-middle">
-									<div id="circles-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" class="py-3" style="height:50%">
-									</div>
-								</div>
+								<div class="card-category text-left"><b><small>{{zonas_camara.nombre_zona_camara}}</small></b></div>
+									<div class="align-middle">
+										<div id="circles-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" class="py-3" style="height:50%">
+										</div>
+									</div>									
 			                </div>
 			            </div>
 			            <div class="col-auto">
-			                <img id="snapshot-{{camara.serial_camara}}-zona-{{forloop.counter}}" src="{{ camara.snapshot }}" width="200" height="200" class="img-fluid" alt="" onerror="cambio_imagen(this,'{{ camara.imagen_defecto }}')">
+							</br>
+			                <img id="snapshot-{{camara.serial_camara}}-zona-{{forloop.counter}}" src="{{ camara.snapshot }}" width="231" height="130" class="img-fluid" alt="" onerror="cambio_imagen(this,'{{ camara.imagen_defecto }}')">
 							
 			            </div>
 			        </div>
         			<div class="card-footer " style=" border-width:0px !important; height: 50%;">
-						<p align="left"><b ><small>Total Aforo</small></b>   </p>   
+						<div class="row no-gutters">
+							<div class="col">
+								<p align="left"><b ><small>Total Aforo</small></b>   </p>
+							</div>						   
+							<div class="col">
+								<p  align="center"><small> Personas</small></p>
+							</div>
+						</div>
 					</div><!--fin card-body-->
      			</div>
    			</div>
