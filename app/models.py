@@ -19,10 +19,11 @@ class Profile(models.Model):
         (ADMINISTRADOR, 'Administrador'),
         (USUARIO, 'Usuario'),
     )
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    rol = models.PositiveSmallIntegerField(choices=ROLE_CHOICES, null=False, blank=False, default=0)
     cliente = models.ForeignKey(Cliente, on_delete=models.SET_NULL, blank=True, null=True, default=None)
     instalacion = models.ForeignKey(Instalacion, on_delete=models.SET_NULL, blank=True, null=True, default=None)
-    rol = models.PositiveSmallIntegerField(choices=ROLE_CHOICES, null=False, blank=False, default=0)
 
     def __str__(self):
         return self.user.username
