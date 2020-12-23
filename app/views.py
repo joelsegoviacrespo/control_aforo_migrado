@@ -2220,6 +2220,263 @@ def generar_estadistica_aforo_dia(array_total_aforo,fecha):
     return array_total_aforo,hora_apertura,hora_cierre
 
 
+def aforoZona(request,periodo_estadistica):
+    
+     
+    result = [] 
+    if request.method == 'GET':
+        try:        
+            #print("periodo_estadistica: ",periodo_estadistica)
+                
+              
+            try:                
+                nro_aforo = 0
+                result = generar_estadistica_aforo_zona(periodo_estadistica)
+                dict_zonas_camara = result[0]                
+                hora_apertura = result[1]
+                hora_cierre = result[2]              
+                    
+                
+            except Exception as e:
+                print('%s (%s)' % (e, type(e)))
+                pass
+            red_js = {           
+                "dict_zonas_camara" : dict_zonas_camara,                                
+                "hora_apertura" : hora_apertura,
+                "hora_cierre" : hora_cierre,                              
+            }
+            return HttpResponse(simplejson.dumps(red_js), content_type='application/json')
+        except Exception as e:
+            print('%s (%s)' % (e, type(e)))
+            return JsonResponse({'m': periodo_estadistica, 'error:': 'parametros erroneos'},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        pass
+    return JsonResponse({'m': periodo_estadistica, 'error:': 'parametros erroneos 2'},
+                        status=status.HTTP_400_BAD_REQUEST)
+
+def generar_estadistica_total_aforo(periodo_estadistica):
+    
+    #print("generar_estadistica_total_aforo")
+  
+    intervalo = get_intervaloPeriodo_AF(periodo_estadistica)
+    start_date = intervalo[0]
+    end_date = intervalo[1]  
+    #print("start_date",start_date)
+    #print("end_date",end_date)
+    
+    parametros = setParametrosAF(periodo_estadistica)    
+    tiempo_medicion = parametros[0]    
+    #print("tiempo_medicion",tiempo_medicion)
+    tiempo_medicion_parametro = parametros[1]
+    #print("tiempo_medicion_parametro",tiempo_medicion_parametro)    
+    array_tiempo  = parametros[2]
+    #print("array_tiempo",array_tiempo)    
+    query = getQueryTotalAforo(True,start_date,end_date,tiempo_medicion,tiempo_medicion_parametro,array_tiempo)
+    
+    #print("QUERY")
+    #print(query)
+
+    camarasHistorico = CamarasHistorico.objects.mongo_aggregate(query)       
+    lista = list(camarasHistorico)  
+    #print(list) 
+    jornada = getHorarioLaboral()
+    hora_apertura = jornada[0]
+    hora_cierre = jornada[1]        
+    #print("hora_apertura: ",hora_apertura)
+    #print("hora_cierre: ",hora_cierre)    
+    array_total_aforo = [0] * len(array_tiempo)
+    array_total_persona = [0] * len(array_tiempo)
+    """
+    for i in range(len(array_red_ethernet)):
+        print("i: ",i)
+        print("array_red_ethernet[i]: ",array_red_ethernet[i])
+    """   
+
+    for nro_personas in lista:
+        #print("dispositivoConectados")
+        #print(dispositivoConectados)
+        #result: OrderedDict[str, int] = nro_personas
+        #print("RESULTADOS!!!!!!!!!!!!!!!")        
+        #print(result['_id'])
+        #result_tiempo: OrderedDict[str, str] = result['_id']
+        result_tiempo: OrderedDict[str, int] = nro_personas
+        #nro_personas = result['total_nro_personas']
+        
+        result_hora: OrderedDict[str, str] = result_tiempo['_id']
+        
+        #print("result_hora: ",result_tiempo)
+        #print("tiempo_medicion: ",tiempo_medicion)
+        hora = result_hora[tiempo_medicion]
+        #print("hora: ",hora)
+        #if hora in
+        total_nro_personas = int(result_tiempo['total_nro_personas'])
+        #nro_usuarios_wifi = int(result_tiempo['nro_usuarios_wifi'])
+        #print("nro_usuarios_ethernet: ",nro_usuarios_ethernet)        
+        
+       
+        array_total_aforo[hora] = total_nro_personas
+        
+        
+                
+
+        
+    #print("ARREGLO DE TOTAL NÚMEROS DE PERSONAS QUE VA PARA ESTADISTICA")
+    #for i in range(len(array_total_aforo)):
+       #print("i: ",i)
+       #print("array_total_aforo[i]: ",array_total_aforo[i])
+             
+
+    return array_total_aforo,array_total_persona,hora_apertura,hora_cierre
+
+
+
+def generar_estadistica_aforo_zona(periodo_estadistica):
+    
+    #print("generar_estadistica_aforo_zona")
+  
+    intervalo = get_intervaloPeriodo_AF(periodo_estadistica)
+    start_date = intervalo[0]
+    end_date = intervalo[1]  
+    #print("start_date",start_date)
+    #print("end_date",end_date)
+    
+    parametros = setParametrosAF(periodo_estadistica)    
+    tiempo_medicion = parametros[0]    
+    #print("tiempo_medicion",tiempo_medicion)
+    tiempo_medicion_parametro = parametros[1]
+    #print("tiempo_medicion_parametro",tiempo_medicion_parametro)    
+    array_tiempo  = parametros[2]
+    #print("array_tiempo",array_tiempo)
+    zonas_camara = ["Aforo Interior planta 3","Aforo Office planta 3","Aforo Despacho planta 3","Aforo de Planta","Aforo Planta 7","Ocupación Mesa"]    
+    query = getQueryAforoZona(start_date,end_date,tiempo_medicion,tiempo_medicion_parametro,array_tiempo,zonas_camara)
+    
+    #print("QUERY")
+    #print(query)
+
+    camarasHistorico = CamarasHistorico.objects.mongo_aggregate(query)       
+    lista = list(camarasHistorico)  
+    #print(list) 
+    jornada = getHorarioLaboral()
+    hora_apertura = jornada[0]
+    hora_cierre = jornada[1]        
+    #print("hora_apertura: ",hora_apertura)
+    #print("hora_cierre: ",hora_cierre)
+    
+    array_zonas_camara = ["Planta 3-Aforo Interior planta 3","Planta 3-Aforo Office planta 3","Planta 3-Aforo Despacho planta 3","Planta 3-Aforo de Planta","Planta 7-Aforo Planta 7","Planta 7-Ocupación Mesa"]
+    dict_zonas_camara = {}
+    for zona_camara in array_zonas_camara:
+        #print("zona_camara: ",zona_camara)
+        dict_zonas_camara[zona_camara] = [0] * len(array_tiempo)    
+    
+    #print("!!!!!!!!!!dict_zonas_camara!!!!!!!!!!!!")
+    #print(dict_zonas_camara)
+    """
+    for i in range(len(array_red_ethernet)):
+        print("i: ",i)
+        print("array_red_ethernet[i]: ",array_red_ethernet[i])
+    """   
+
+    for nro_personas in lista:
+        #print("nro_personas")
+        #print(nro_personas)
+        result: OrderedDict[str, int] = nro_personas
+        #print("RESULTADOS!!!!!!!!!!!!!!!")        
+        #print(result['_id'])
+        #result_tiempo: OrderedDict[str, str] = result['_id']
+        result_tiempo: OrderedDict[str, int] = nro_personas
+        #print("result_tiempo!!!!")
+        #print(result_tiempo)     
+        
+        result: OrderedDict[str, str] = result_tiempo['_id']
+        
+        #print("result_hora: ",result_tiempo)
+        #print("tiempo_medicion: ",tiempo_medicion)
+        hora = result[tiempo_medicion]
+        #print("hora: ",hora)
+        #if hora in
+        total_nro_personas = int(result_tiempo['nro_personas'])
+        #print("total_nro_personas: ",total_nro_personas)
+        nombre_zona_camara = result['nombre_zona_camara']
+        #print('nombre_zona_camara: ',nombre_zona_camara)        
+        nombre_camara = result['nombre_camara']
+        #print('nombre_camara: ',nombre_camara)
+        
+        zonaxcamara = nombre_camara+"-"+nombre_zona_camara
+        #print("zonaxcamara: ",zonaxcamara)
+        #array_total_aforo[hora] = total_nro_personas
+        #dict_zonas_camara[nombre_zona_camara] = nombre_camara
+        dict_zonas_camara[zonaxcamara][hora] = total_nro_personas
+        
+        #nro_usuarios_wifi = int(result_tiempo['nro_usuarios_wifi'])
+        #print("nro_usuarios_ethernet: ",nro_usuarios_ethernet)        
+        
+       
+        
+        
+        
+                
+
+        
+    #print("ARREGLO DE TOTAL NÚMEROS DE PERSONAS QUE VA PARA ESTADISTICA")
+    #print("??????? dict_zonas_camara ?????????")
+    #print(dict_zonas_camara)
+             
+
+    return dict_zonas_camara,hora_apertura,hora_cierre
+
+def getQueryAforoZona(start_date,end_date,tiempo_medicion,tiempo_medicion_parametro,array_tiempo,array_zona_camara):
+    query =[
+        {
+        "$match": {
+        "nombre_zona_camara": {
+                "$in": array_zona_camara
+          },
+          "fecha": {
+                "$gte": start_date,
+                "$lte": end_date
+          }
+        }
+      },
+      {
+        "$project": {
+          "date": {
+            "$dateToString": {
+              "format": "%Y-%m-%d",
+              "date": "$fecha"
+            }
+          },
+          tiempo_medicion: { 
+                    tiempo_medicion_parametro: "$fecha"
+            },
+         "nro_personas": "$nro_personas",
+         "nombre_zona_camara": "$nombre_zona_camara",
+         "nombre_camara": "$nombre_camara",         
+    
+        }
+      },
+      {
+         "$match":{
+                tiempo_medicion:{"$in":array_tiempo}
+              }
+          },
+      {
+        "$group": {
+          "_id": {
+            tiempo_medicion: tiempo_medicion_parametro,
+            "date": "$date",
+            "nombre_zona_camara" :"$nombre_zona_camara",
+            "nombre_camara": "$nombre_camara",                    
+          },
+          "nro_personas": { 
+             "$max": "$nro_personas"
+          }
+        }
+      }
+      
+    ]
+    return query
+
+
 def last_day_of_month(date_value):
     return monthrange(date_value.year, date_value.month)[1]
 

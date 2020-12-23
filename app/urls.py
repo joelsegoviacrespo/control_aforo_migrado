@@ -30,5 +30,6 @@ urlpatterns = [
     path('generar_estadistica_generales/<str:fecha_str>/<str:operacion>', views.generar_estadistica_generales),
     path('totalAforo/<int:periodo_estadistica>', views.totalAforo),
     path('totalAforo/<str:fecha_str>/<str:operacion>', views.totalAforoDia),
+    path('aforoZona/<int:periodo_estadistica>', views.aforoZona), 
     
 ]

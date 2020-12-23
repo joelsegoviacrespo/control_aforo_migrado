@@ -153,8 +153,8 @@
 				<div style = "height: 300%;">				
 					<div class="col-md-12"style="max-height: 290%; z-index:1;" id="tarjeta1">
 						<p  align="center"><samall>Estad&iacute;stica de Aforo</samall></p>
-						<p  align="center"><span align="left"  style="color:#1d7af3;font-size:14px;">&mdash; Total aforo</span>						
-						<span align="center" style=" color:#FF9E27;font-size:14px;">&emsp;&emsp;&emsp;&emsp;&mdash; Total persona</span></p>
+						<p  align="center"><span align="left"  style="color:#FF9E27;font-size:14px;">&mdash; Total aforo</span>						
+						<span align="center" style=" color: #1d7af3;font-size:14px;">&emsp;&emsp;&emsp;&emsp;&mdash; Total persona</span></p>
 						<div class="row" style="width: 200px; height: 290px;">					
 							<div id="id_div_canvas_Aforo" class="chart-container" style="max-height: 290px;">
 								<canvas id="LCAforo" style="width: 420px;"></canvas>
@@ -175,61 +175,57 @@
 	   
 	
    {% for zonas_camara in camara.zonas_camara %}
-   <div class="col-md-6">
-		<div class="card full-height">
-			<div style="height: 50%;">
-            	<div class="card-body"style="height:50%">
-			        <div class="row no-gutters">
-			            <div class="col">
-			                <div class="card-block px-2">
-								<div class="card-category text-left"><b><small>{{zonas_camara.nombre_zona_camara}}</small></b></div>
-									<div class="align-middle">
-										<div id="circles-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" class="py-3" style="height:50%">
-										</div>
-									</div>									
-			                </div>
-			            </div>
-			            <div class="col-auto">
-							</br>
-			                <img id="snapshot-{{camara.serial_camara}}-zona-{{forloop.counter}}" src="{{ camara.snapshot }}" width="231" height="130" class="img-fluid" alt="" onerror="cambio_imagen(this,'{{ camara.imagen_defecto }}')">
-							
-			            </div>
-			        </div>
-        			<div class="card-footer " style=" border-width:0px !important; height: 50%;">
-						<div class="row no-gutters">
-							<div class="col">
-								<p align="left"><b ><small>Total Aforo</small></b>   </p>
-							</div>						   
-							<div class="col">
-								<p  align="center"><small> Personas</small></p>
+	   <div class="col-md-6">
+			<div class="card full-height">
+				<div style="height: 50%;">
+	            	<div class="card-body"style="height:50%">
+				        <div class="row no-gutters">
+				            <div class="col">
+				                <div class="card-block px-2">
+									<div class="card-category text-left"><b><small>{{zonas_camara.nombre_zona_camara}}</small></b></div>
+										<div class="align-middle">
+											<div id="circles-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" class="py-3" style="height:50%">
+											</div>
+										</div>									
+				                </div>
+				            </div>
+				            <div class="col-auto">
+								</br>
+				                <img id="snapshot-{{camara.serial_camara}}-zona-{{forloop.counter}}" src="{{ camara.snapshot }}" width="231" height="130" class="img-fluid" alt="" onerror="cambio_imagen(this,'{{ camara.imagen_defecto }}')">
+								
+				            </div>
+				        </div>
+	        			<div class="card-footer " style=" border-width:0px !important; height: 50%;">
+							<div class="row no-gutters">
+								<div class="col">
+									<p align="left"><b ><small>Aforo ahora</small></b>   </p>
+								</div>						   
+								<!--<div class="col">
+									<p  align="center"><small> </small></p>
+								</div>-->
 							</div>
+						</div><!--fin card-body-->
+	     			</div>
+	   			</div>
+			</div>			               
+	   </div>
+		<div class="col-md-6">
+	    	<div class="card full-height">
+				<div style="height: 50%;">
+	        		<div class="card-body"style="height:50%">
+						<!--<p  align="center"><small> Personas: {{zonas_camara.nro_personas}}</small></p>-->
+	   				   <p  align="center"><span align="left"  style="color:#FF9E27;font-size:14px;">&mdash; Total aforo</span>						
+						<span align="center" style=" color: #008f4c;font-size:14px;">&emsp;&emsp;&emsp;&emsp;&mdash; Total persona</span></p>
+						<div id="chart-container" >
+						  	<!--<div id= 'id_div_canvas-{{camara.serial_camara}}-zona-{{forloop.counter}}'  >-->
+								<div id= 'id_div_canvas-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}'>								
+							   		<canvas  id="LC-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" style=" height: 100%; z-index:3;"></canvas>						  
+						  	</div>
 						</div>
-					</div><!--fin card-body-->
-     			</div>
-   			</div>
-		</div>			               
-   </div>
-	<div class="col-md-6">
-    	<div class="card full-height">
-			<div style="height: 50%;">
-        		<div class="card-body"style="height:50%">
-					<!--<p  align="center"><small> Personas: {{zonas_camara.nro_personas}}</small></p>-->
-					<p>Graficas</p>
-					<div id="chart-container" >
-					  	<!--<div id= 'id_div_canvas-{{camara.serial_camara}}-zona-{{forloop.counter}}'  >-->
-							<div id= 'id_div_canvas-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}'>								
-						   		<canvas  id="LC-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" style=" height: 100%; z-index:3;"></canvas>						  
-					  	</div>
-					</div>
-        		</div>
-			</div>
-    	</div>
-	</div>
-	
-	
-               
-       
-      
+	        		</div>
+				</div>
+	    	</div>
+		</div> 
     
    {% endfor %}
    
@@ -478,6 +474,66 @@ function revisar_total_aforo(update,periodo_estadistica){
 			console.log(array_total_aforo);	
     		createGraficaAforo(LCAforo,array_total_aforo,array_total_persona,update,labels)
 			
+		}						
+     
+   });	
+}
+
+function revisar_aforo_zona(update,periodo_estadistica){
+	console.log("revisar_aforo_zona")		
+	//$('#Derecha').prop('disabled', true);
+	request_url = '/aforoZona/'+periodo_estadistica + '';
+	$.ajax({
+		url: request_url,
+		success: function(data){			
+			dict_zonas_camara = data.dict_zonas_camara					
+			hora_apertura = data.hora_apertura
+			hora_cierre = data.hora_cierre
+
+				
+			console.log("dict_zonas_camara");
+			console.log(dict_zonas_camara);
+			console.log("hora_apertura: "+hora_apertura)
+			console.log("hora_cierre: "+hora_cierre)
+			
+			for (var zona_camara in dict_zonas_camara){
+				console.log("zona_camara");
+ 			    console.log(zona_camara);
+				console.log(dict_zonas_camara[zona_camara]);
+				labels = getLabels(dict_zonas_camara[zona_camara],periodo_estadistica,hora_apertura,hora_cierre)
+				if (periodo_estadistica ==1) {
+					array_total_persona = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+					console.log("dict_zonas_camara[zona_camara]: "+dict_zonas_camara[zona_camara])
+					result = getArraysByHorario(dict_zonas_camara[zona_camara],array_total_persona,periodo_estadistica,hora_apertura,hora_cierre)
+					array_total_aforo_zona_camara = result[0]
+					array_total_persona_zona_camara = result[1]
+					console.log("array_total_aforo_zona_camara: "+array_total_aforo_zona_camara)
+					nombreLCZonaxCamara = "LC-"+zona_camara					
+					console.log("nombreLCZonaxCamara: "+nombreLCZonaxCamara)
+					idDivZonaxCamara = "id_div_canvas-"+zona_camara
+					console.log("idDivZonaxCamara: "+idDivZonaxCamara)				
+					var LCZonaxCamara = document.getElementById(nombreLCZonaxCamara).getContext('2d')
+					console.log("LCZonaxCamara: "+LCZonaxCamara)
+					createGraficaAforoZonaCamara(LCZonaxCamara,nombreLCZonaxCamara,idDivZonaxCamara,array_total_aforo_zona_camara,array_total_persona_zona_camara,update,labels)
+					
+													
+				}
+			}
+				
+			/*labels = getLabels(array_total_aforo,periodo_estadistica,hora_apertura,hora_cierre)
+			console.log("labels")
+			console.log(labels)
+			if (periodo_estadistica ==1) {
+				result = getArraysByHorario(array_total_aforo,array_total_persona,periodo_estadistica,hora_apertura,hora_cierre)
+				array_total_aforo = result[0]
+				array_total_persona = result[1] 				
+				
+				
+			}			
+			console.log("array_total_nro_personas V2");			
+			console.log(array_total_aforo);	
+    		createGraficaAforo(LCAforo,array_total_aforo,array_total_persona,update,labels)
+			*/
 		}						
      
    });	
@@ -1233,11 +1289,13 @@ function getArrayByHorario(array,periodo_estadistica,hora_apertura,hora_cierre){
 
     revisar_cambios_red(false,1);
 	revisar_total_aforo(false,1);
+	revisar_aforo_zona(false,1);
     // 3630000 = 1 hora y 30 segundos
     $(function(){
         window.setInterval(function(){
            revisar_cambios_red(true,1);
 		   revisar_total_aforo(true,1);
+		   revisar_aforo_zona(true,1);
         },60000);
     });
 
@@ -1317,8 +1375,8 @@ function seleccionarDia(operacion) {
 			console.log("array_red_ethernet V2");			
 			console.log(array_red_ethernet);	
 			console.log("array_red_wifi V2");
-			console.log(array_red_wifi);
-			createGraficaRed(LCRed,array_red_wifi,array_red_ethernet,true,labels)			
+			console.log(array_red_wifi);			
+			createGraficaRed(LCRed,array_red_ethernet,array_red_wifi,true,labels)			
 		}						
      
    });	
@@ -1388,14 +1446,14 @@ function createGraficaAforo(contextGrafica,data_aforo,data_total_personas,update
 	//Verifico si es la grafica que se carga por defecto
 		if (update == false)
 		{
-			myLCAforo = crearGraficaDoble(contextGrafica,data_aforo,data_total_personas,labels,"Aforo Total","Total Persona")	
+			myLCAforo = crearGraficaDoble(contextGrafica,data_aforo,data_total_personas,labels,"Aforo Total","Total Persona","#FF9E27","#1d7af3")	
 						
 		}
 		if (update == true)
 		{
 			eliminarGrafica('LCAforo')
 			newLCAforo = creardivCanvasAforo('id_div_canvas_Aforo')
-	  		myLCAforo = crearGraficaDoble(newLCAforo,data_aforo,data_total_personas,labels,"Aforo Total","Total Persona")	
+	  		myLCAforo = crearGraficaDoble(newLCAforo,data_aforo,data_total_personas,labels,"Aforo Total","Total Persona","#FF9E27","#1d7af3")	
 		}
 	
 }	
@@ -1449,7 +1507,7 @@ function crearGrafica(context,data,labels,nombreGrafica){
 	return grafica
 }
 
-function crearGraficaDoble(context,data1,data2,labels,nombreGrafica1,nombreGrafica2){	
+function crearGraficaDoble(context,data1,data2,labels,nombreGrafica1,nombreGrafica2,colorGrafica1,colorGrafica2){	
 	
 		var grafica = new Chart(context, {
 		type: 'line',
@@ -1458,9 +1516,9 @@ function crearGraficaDoble(context,data1,data2,labels,nombreGrafica1,nombreGrafi
 			datasets: [
 			{
 				label: nombreGrafica1,
-				borderColor: "#1d7af3",
+				borderColor: colorGrafica1,
 				pointBorderColor: "#FFF",
-				pointBackgroundColor: "#1d7af3",
+				pointBackgroundColor: colorGrafica1,
 				pointBorderWidth: 2,
 				pointHoverRadius: 4,
 				pointHoverBorderWidth: 1,
@@ -1472,9 +1530,9 @@ function crearGraficaDoble(context,data1,data2,labels,nombreGrafica1,nombreGrafi
 			},
 			{
 				label: nombreGrafica2, 
-				borderColor: "#FF9E27",
+				borderColor: colorGrafica2,
 				pointBorderColor: "#FFF",
-				pointBackgroundColor: "#FF9E27",
+				pointBackgroundColor: colorGrafica2,
 				pointBorderWidth: 2,
 				pointHoverRadius: 4,
 				pointHoverBorderWidth: 1,
@@ -1511,6 +1569,25 @@ function crearGraficaDoble(context,data1,data2,labels,nombreGrafica1,nombreGrafi
 
 }
 
+function createGraficaAforoZonaCamara(contextGrafica,idGrafica,idDivGrafica,data_aforo,data_total_personas,update,labels){
+	//Verifico si es true la grafica que se carga por defecto
+	
+	     /*var idGrafica = "\"+idGrafica+\""; 
+	console.log("idGrafica: #####:"+idGrafica)*/	
+		if (update == false)
+		{
+			myLCAforo = crearGraficaDoble(contextGrafica,data_aforo,data_total_personas,labels,"Aforo Total","Total Persona","#FF9E27","#008f4c")	
+						
+		}
+		if (update == true)
+		{
+			eliminarGrafica(idGrafica)			
+			newLCGrafica = creardivCanvasAforoZonaXCamara(idDivGrafica,idGrafica)
+	  		myLCGrafica = crearGraficaDoble(newLCGrafica,data_aforo,data_total_personas,labels,"Aforo Total","Total Persona","#FF9E27","#008f4c")	
+		}
+	
+}
+
 function creardivCanvasAforo(id_div_canvas_Aforo){
 	
 	$('#'+id_div_canvas_Aforo).append('<canvas id="LCAforo" style="width: 420px;"></canvas>');		
@@ -1523,6 +1600,15 @@ function creardivCanvasTotalPersona(id_div_canvas_total_persona){
 	
 	$('#'+id_div_canvas_total_persona).append('<canvas id="LCTotalPersona" style="width: 100%; height: 100%; z-index:3;"></canvas>');		
 	newgrafica = document.querySelector("#LCTotalPersona").getContext('2d');
+	return newgrafica
+}
+
+function creardivCanvasAforoZonaXCamara(idDivGrafica,idGrafica){	
+	
+	console.log("creardivCanvasAforoZonaXCamara")
+	canvas = "<canvas id='" + idGrafica +"' style='width: 170%; height: 150%; z-index:3;'></canvas>";
+	document.getElementById(idDivGrafica).innerHTML = canvas;	
+	newgrafica = document.getElementById(idGrafica).getContext('2d');	
 	return newgrafica
 }
 
