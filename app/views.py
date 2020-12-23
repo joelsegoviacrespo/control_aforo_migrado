@@ -2347,7 +2347,13 @@ def generar_estadistica_aforo_zona(periodo_estadistica):
     #print("tiempo_medicion_parametro",tiempo_medicion_parametro)    
     array_tiempo  = parametros[2]
     #print("array_tiempo",array_tiempo)
-    zonas_camara = ["Aforo Interior planta 3","Aforo Office planta 3","Aforo Despacho planta 3","Aforo de Planta","Aforo Planta 7","Ocupación Mesa"]    
+    
+    
+    #zonas_camara = ["Aforo Interior planta 3","Aforo Office planta 3","Aforo Despacho planta 3","Aforo de Planta","Aforo Planta 7","Ocupación Mesa"]
+    result_zona = getZonasXCamaras()
+    zonas_camara = result_zona[0] 
+    #print("zonas_camara: ",zonas_camara)
+           
     query = getQueryAforoZona(start_date,end_date,tiempo_medicion,tiempo_medicion_parametro,array_tiempo,zonas_camara)
     
     #print("QUERY")
@@ -2362,9 +2368,11 @@ def generar_estadistica_aforo_zona(periodo_estadistica):
     #print("hora_apertura: ",hora_apertura)
     #print("hora_cierre: ",hora_cierre)
     
-    array_zonas_camara = ["Planta 3-Aforo Interior planta 3","Planta 3-Aforo Office planta 3","Planta 3-Aforo Despacho planta 3","Planta 3-Aforo de Planta","Planta 7-Aforo Planta 7","Planta 7-Ocupación Mesa"]
+    #array_zonas_camara = ["Planta 3-Aforo Interior planta 3","Planta 3-Aforo Office planta 3","Planta 3-Aforo Despacho planta 3","Planta 3-Aforo de Planta","Planta 7-Aforo Planta 7","Planta 7-Ocupación Mesa"]
+    camaras_zonas_camaras = result_zona[1]
+    #print("!!!!camaras_zonas_camaras!!!!!: ",camaras_zonas_camaras)
     dict_zonas_camara = {}
-    for zona_camara in array_zonas_camara:
+    for zona_camara in camaras_zonas_camaras:
         #print("zona_camara: ",zona_camara)
         dict_zonas_camara[zona_camara] = [0] * len(array_tiempo)    
     
@@ -2477,6 +2485,18 @@ def getQueryAforoZona(start_date,end_date,tiempo_medicion,tiempo_medicion_parame
     return query
 
 
+def getZonasXCamaras():
+    
+    zonas_camaras = []
+    camaras_zonas_camaras = []
+    camarasAll =  Camaras.objects.all()
+    for camaras in camarasAll:                                       
+        for zonas_camara in camaras.zonas_camara:                      
+            zonas_camaras.append(zonas_camara.nombre_zona_camara)
+            camaras_zonas_camaras.append(camaras.nombre_camara+"-"+zonas_camara.nombre_zona_camara)
+    
+    return zonas_camaras,camaras_zonas_camaras
+            
 def last_day_of_month(date_value):
     return monthrange(date_value.year, date_value.month)[1]
 
