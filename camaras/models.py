@@ -3,9 +3,9 @@ from djongo import models
 from instalacion.models import Instalacion,InstalacionEmbebido
 
 
-class ZonaCamara(models.Model):
-    #_id = models.ObjectIdField()
+class ZonaCamara(models.Model):    
     nombre_zona_camara = models.CharField(max_length=250, blank=False, default='')
+    nombre_zona_camara_mostrar = models.CharField(max_length=250, blank=False, default='')
     nro_personas = models.IntegerField(default=0)
     #suma_total_aforo =  models.BooleanField(blank=False, default=True)
     suma_total_aforo =  models.CharField(max_length=5, blank=False, default='')
