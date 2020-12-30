@@ -11,6 +11,7 @@ import Constantes
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from camaras.models import Camaras
 import time
+from Fecha import Fecha
 from datetime import datetime
 from django.http import JsonResponse
 
@@ -60,14 +61,10 @@ def configuracion(request, id_display):
             #hora_apertura = fecha_apertura.strftime("%H:%M:%S")
             #print(hora_apertura)
             hora_cierre = display.fondos.hora_cierre.strftime("%H:%M:%S")
-            #hora_cierre = fecha_cierre.strftime("%H:%M:%S")
-
+            
             #Calculo la Hora Actual
-            t = time.localtime()
-            current_time = time.strftime("%H:%M:%S", t)
-            #print(current_time)
-            #print(hora_apertura)
-            #print(hora_cierre)
+            current_time = Fecha.getFechaActualByFormato("%H:%M:%S")
+
             
             if (current_time>= hora_apertura) and (current_time<= hora_cierre):
                 horario_laboral = True
