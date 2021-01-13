@@ -9,6 +9,7 @@ from app import views
 urlpatterns = [
     re_path(r'^.*\.html', views.pages, name='pages'),
     path('hfs', views.hfs, name='hfs'),
+    path('cargaIntalaciones/<str:id>/', views.cargaInstalaciones, name='carga'),
     path('hfsEmbebido', views.hfsEmbebido, name='hfs'),
     path('', views.index, name='home'),
     path('monitor/', include('monitor.urls')),

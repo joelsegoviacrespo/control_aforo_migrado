@@ -6,7 +6,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 from cliente.models import Cliente
-from instalacion.models import Instalacion 
+from instalacion.models import Instalacion
 from django.utils import timezone
 
 
@@ -34,8 +34,6 @@ class ProfileInline(admin.StackedInline):
     # max_num = 1
     can_delete = False
     verbose_name_plural = 'perfil'
-
-
 # Define un nuevo usuario admin
 class UserAdmin(BaseUserAdmin):
     inlines = (ProfileInline,)

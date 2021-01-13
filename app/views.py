@@ -2502,3 +2502,20 @@ def last_day_of_month(date_value):
 
 def last_date_of_month(date_value):
     return date_value.replace(day = last_day_of_month(date_value))
+
+@login_required(login_url="/login/")
+#Carga Instalaciones segun _id del cliente
+def cargaInstalaciones(request,id):
+    
+    #Buscar Cliente 
+    Clientes = Cliente.objects.get(_id=id)
+    #Buscar Instalaciones segun el cliente obtenido
+    Instalaciones = Instalacion.objects.filter(cliente={'nif':Clientes.nif}, instalacion_estado=True)
+    #Cargar la variable Result con las instalaciones en formato Json
+    Result = [ serealizarCliente(insta) for insta in Instalaciones]
+    #Retornamos los resultados
+    return JsonResponse(Result, safe=False)
+
+#Ordenamos los datos necesarios de cada registro en formato Json
+def serealizarCliente(insta):
+    return {'nombre':insta.nombre_comercial, '_id':str(insta._id)}

@@ -1,0 +1,135 @@
+{% load i18n admin_urls static %}
+<div class="js-inline-admin-formset inline-group"
+     id="{{ inline_admin_formset.formset.prefix }}-group"
+     data-inline-type="stacked"
+     data-inline-formset="{{ inline_admin_formset.inline_formset_data }}">
+<fieldset class="module {{ inline_admin_formset.classes }}">
+  <h2>{{ inline_admin_formset.opts.verbose_name_plural|capfirst }}</h2>
+{{ inline_admin_formset.formset.management_form }}
+{{ inline_admin_formset.formset.non_form_errors }}
+
+{% for inline_admin_form in inline_admin_formset %}<div class="inline-related{% if inline_admin_form.original or inline_admin_form.show_url %} has_original{% endif %}{% if forloop.last and inline_admin_formset.has_add_permission %} empty-form last-related{% endif %}" id="{{ inline_admin_formset.formset.prefix }}-{% if not forloop.last %}{{ forloop.counter0 }}{% else %}empty{% endif %}">
+  <h3><b>{{ inline_admin_formset.opts.verbose_name|capfirst }}:</b>&nbsp;<span class="inline_label">{% if inline_admin_form.original %}{{ inline_admin_form.original }}{% if inline_admin_form.model_admin.show_change_link and inline_admin_form.model_admin.has_registered_model %} <a href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}" class="{% if inline_admin_formset.has_change_permission %}inlinechangelink{% else %}inlineviewlink{% endif %}">{% if inline_admin_formset.has_change_permission %}{% trans "Change" %}{% else %}{% trans "View" %}{% endif %}</a>{% endif %}
+{% else %}#{{ forloop.counter }}{% endif %}</span>
+      {% if inline_admin_form.show_url %}<a href="{{ inline_admin_form.absolute_url }}">{% trans "View on site" %}</a>{% endif %}
+    {% if inline_admin_formset.formset.can_delete and inline_admin_formset.has_delete_permission and inline_admin_form.original %}<span class="delete">{{ inline_admin_form.deletion_field.field }} {{ inline_admin_form.deletion_field.label_tag }}</span>{% endif %}
+  </h3>
+  {% if inline_admin_form.form.non_field_errors %}{{ inline_admin_form.form.non_field_errors }}{% endif %}
+  {% for fieldset in inline_admin_form %}
+    {% include "admin/includes/fieldset.html" %}
+  {% endfor %}
+  {% if inline_admin_form.needs_explicit_pk_field %}{{ inline_admin_form.pk_field.field }}{% endif %}
+  {% if inline_admin_form.fk_field %}{{ inline_admin_form.fk_field.field }}{% endif %}
+</div>{% endfor %}
+</fieldset>
+</div>
+<script>
+  $( document ).ready(function() {
+    
+    //Si la pagina carga por defecto Superadmin
+    if($('#id_profile-0-rol').val()==1){
+      
+      //Desabilita los selects de cliente e instalacion
+      $('#id_profile-0-cliente').attr('disabled','disabled');
+      $('#id_profile-0-instalacion').attr('disabled','disabled');
+
+    }
+  });
+
+  //Si el campo rol cambia evaluamos su valor
+  $('#id_profile-0-rol').on('change', function() {
+
+      //Si el valor de rol es superadmin
+      if($('#id_profile-0-rol').val()==='1'){
+
+       //Desabilita y limpia los selects de cliente e instalacion
+      $('#id_profile-0-cliente').val('');
+      $('#id_profile-0-cliente').attr('disabled','disabled');
+      $('#id_profile-0-instalacion').val('');
+      $('#id_profile-0-instalacion').attr('disabled','disabled');
+
+      }
+
+      //Si el valor de rol es administrador
+      if($('#id_profile-0-rol').val()==='2'){
+
+        //Limpia y deshabilita el select instalacion
+        $('#id_profile-0-instalacion').val('');
+        $('#id_profile-0-instalacion').attr('disabled','disabled');
+
+        //Habilita y limpia el select de cliente
+        $('#id_profile-0-cliente').removeAttr('disabled');
+        $('#id_profile-0-cliente').val('');
+        
+      }
+
+       //Si el valor de rol es usuario
+       if($('#id_profile-0-rol').val()==='3'){
+        
+        //Habilita y limpia los selects de cliente e instlacion
+        $('#id_profile-0-cliente').removeAttr('disabled');
+        $('#id_profile-0-cliente').val('');
+        $('#id_profile-0-instalacion').removeAttr('disabled');
+        $('#id_profile-0-instalacion').val('');
+
+        //evaluamos los cambios del campo cliente
+        $('#id_profile-0-cliente').on('change', function() {
+  
+           //Obtenemos el valor del select cliente
+           id = $('#id_profile-0-cliente').val();
+
+           //Definimos la ruta para buscar las instalaciones
+           url = '/cargaIntalaciones/'+id;
+  
+           //Forzamos al DOM a solo realizar la peticion si es el rol usuario
+           if($('#id_profile-0-rol').val()==='3'){
+           fetch(url, {
+                headers:{
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+            })
+            .then(response => {
+                console.log(response)
+                return response.json() 
+            })
+            .then(data => {
+
+              //Habilitamos el select instalacion
+              $('#id_profile-0-instalacion').removeAttr('disabled');
+
+              //Eliminamos los options que tiene el select 
+              $('#id_profile-0-instalacion').children().remove().end();
+
+              //Anadimos la opcion por defecto
+              $('#id_profile-0-instalacion').append($('<option></option>').val('').html('---------'));
+
+              //Cargamos los options con la data resultante de la peticion
+              $.each(data, function(index, text){
+                //alert(text.nombre)
+                $('#id_profile-0-instalacion').append(
+                    $('<option></option>').val(text._id).html(text.nombre)
+                );
+              });
+            
+            })
+          }
+  })
+        
+       }
+
+  });
+
+  function ajax_post(){
+    $('#inputform').submit(function() {  
+        $.ajax({ 
+            type: 'POST',
+            url: '/index/',
+            data: $(this).serialize(),
+            success: function(data){alert(data)}
+
+         }); // end new Ajax.Request
+    });
+  }
+
+</script>
