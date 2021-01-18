@@ -3,14 +3,15 @@ from djongo import models
 from instalacion.models import Instalacion,InstalacionEmbebido
 
 
-class ZonaCamara(models.Model):    
+class ZonaCamara(models.Model):
+    id_zona = models.IntegerField(blank=True, default=0)    
     nombre_zona_camara = models.CharField(max_length=250, blank=False, default='')
     nombre_zona_camara_mostrar = models.CharField(max_length=250, blank=False, default='')
     nro_personas = models.IntegerField(default=0)
-    izquierda = models.FloatField(blank=True,default=0.00)
-    derecha = models.FloatField(blank=True,default=0.00)
-    superior = models.FloatField(blank=True,default=0.00)
-    inferior = models.FloatField(blank=True,default=0.00)    
+    x0 = models.FloatField(blank=True,default=0.00)
+    x1 = models.FloatField(blank=True,default=0.00)
+    y0 = models.FloatField(blank=True,default=0.00)
+    y1 = models.FloatField(blank=True,default=0.00)    
     #suma_total_aforo =  models.BooleanField(blank=False, default=True)
     suma_total_aforo =  models.CharField(max_length=5, blank=False, default='')
     class Meta:        
