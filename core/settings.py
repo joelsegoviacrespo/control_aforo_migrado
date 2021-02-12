@@ -56,7 +56,8 @@ INSTALLED_APPS = [
     'display.apps.DisplayConfig',     
     'uso_red.apps.UsoRedConfig', 
     'usuarios_red.apps.UsuariosRedConfig',
-    'jornada_laboral.apps.JornadaLaboralConfig',         
+    'jornada_laboral.apps.JornadaLaboralConfig',   
+    'streaming.apps.StreamingConfig',
 
     
 ]

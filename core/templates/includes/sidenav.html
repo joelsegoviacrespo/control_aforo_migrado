@@ -26,24 +26,32 @@
 											</a>
 										</li>
 										<li class="nav-item m-0 p-0 h-75">
+											<a href="/fondos/todos">
+												<i class="fas fa-fill-drip text-secondary"></i>
+												<span> Fondos </span>
+											</a>
+										</li>
+										<li class="nav-item m-0 p-0 h-75">
 											<a href="/jornada_laboral/todos">
 												<i class="fas fa-clock text-secondary"></i>
 												<span> Jornada Laboral </span>
 											</a>
+										</li>										
+										<li class="nav-item m-0 p-0 h-75">
+											<a href="/streaming/">
+												<i class="fas fa-file-video text-secondary"></i>
+												<span> Streaming </span>
+											</a>
 										</li>
+										
 										{% if user.profile.rol != 3 %}
-											<li class="nav-item m-0 p-0 h-75">
-												<a href="/fondos/todos">
-													<i class="fas fa-fill-drip text-secondary"></i>
-													<span> Fondos </span>
-												</a>
-											</li>
-											<li class="nav-item m-0 p-0 h-75">
+
+											<!--<li class="nav-item m-0 p-0 h-75">
 												<a href="/usuarios/todos">
 													<i class="far fa-address-card text-secondary"></i>
 													<span> Usuarios </span>
 												</a>
-											</li>
+											</li>-->
 										{% endif %}
 										{% if user.is_staff  %}
 											<li class="nav-item m-0 p-0 h-75">
