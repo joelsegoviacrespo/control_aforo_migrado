@@ -175,58 +175,59 @@
 	   
 	
    {% for zonas_camara in camara.zonas_camara %}
-	   <div class="col-md-6">
-			<div class="card full-height">
-				<div style="height: 50%;">
-	            	<div class="card-body"style="height:50%">
-				        <div class="row no-gutters">
-				            <div class="col">
-				                <div class="card-block px-2">
-									<div class="card-category text-left"><b><small>{{zonas_camara.nombre_zona_camara}}</small></b></div>
-										<div class="align-middle">
-											<div id="circles-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" class="py-3" style="height:50%">
-											</div>
-										</div>									
-				                </div>
-				            </div>
-				            <div class="col-auto">
-								</br>
-				                <img id="snapshot-{{camara.serial_camara}}-zona-{{forloop.counter}}" src="{{ camara.snapshot }}" width="231" height="130" class="img-fluid" alt="" onerror="cambio_imagen(this,'{{ camara.imagen_defecto }}')">
-								
-				            </div>
-				        </div>
-	        			<div class="card-footer " style=" border-width:0px !important; height: 50%;">
-							<div class="row no-gutters">
-								<div class="col">
-									<p align="left"><b ><small>Aforo ahora</small></b>   </p>
-								</div>						   
-								<!--<div class="col">
-									<p  align="center"><small> </small></p>
-								</div>-->
+      {% if zonas_camara.zona_fisica == 'True' %}      
+		   <div class="col-md-6">                 
+				<div class="card full-height">
+					<div style="height: 50%;">
+		            	<div class="card-body"style="height:50%">
+					        <div class="row no-gutters">
+					            <div class="col">
+					                <div class="card-block px-2">
+										<div class="card-category text-left"><b><small>{{zonas_camara.nombre_zona_camara}}</small></b></div>
+											<div class="align-middle">
+												<div id="circles-persona-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" class="py-3" style="height:50%">
+												</div>
+											</div>									
+					                </div>
+					            </div>
+					            <div class="col-auto">
+									</br>
+					                <img id="snapshot-{{camara.serial_camara}}-zona-{{forloop.counter}}" src="{{ camara.snapshot }}" width="231" height="130" class="img-fluid" alt="" onerror="cambio_imagen(this,'{{ camara.imagen_defecto }}')">
+									
+					            </div>
+					        </div>
+		        			<div class="card-footer " style=" border-width:0px !important; height: 50%;">
+								<div class="row no-gutters">
+									<div class="col">
+										<p align="left"><b ><small>Aforo ahora</small></b>   </p>
+									</div>						   
+									<!--<div class="col">
+										<p  align="center"><small> </small></p>
+									</div>-->
+								</div>
+							</div><!--fin card-body-->
+		     			</div>
+		   			</div>
+				</div>			               
+		   </div>
+			<div class="col-md-6">
+		    	<div class="card full-height">
+					<div style="height: 50%;">
+		        		<div class="card-body"style="height:50%">
+							<!--<p  align="center"><small> Personas: {{zonas_camara.nro_personas}}</small></p>-->
+		   				   <p  align="center"><span align="left"  style="color:#FF9E27;font-size:14px;">&mdash; Total aforo</span>						
+							<span align="center" style=" color: #008f4c;font-size:14px;">&emsp;&emsp;&emsp;&emsp;&mdash; Total persona</span></p>
+							<div id="chart-container" >
+							  	<!--<div id= 'id_div_canvas-{{camara.serial_camara}}-zona-{{forloop.counter}}'  >-->
+									<div id= 'id_div_canvas-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}'>								
+								   		<canvas  id="LC-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" style=" height: 100%; z-index:3;"></canvas>						  
+							  	</div>
 							</div>
-						</div><!--fin card-body-->
-	     			</div>
-	   			</div>
-			</div>			               
-	   </div>
-		<div class="col-md-6">
-	    	<div class="card full-height">
-				<div style="height: 50%;">
-	        		<div class="card-body"style="height:50%">
-						<!--<p  align="center"><small> Personas: {{zonas_camara.nro_personas}}</small></p>-->
-	   				   <p  align="center"><span align="left"  style="color:#FF9E27;font-size:14px;">&mdash; Total aforo</span>						
-						<span align="center" style=" color: #008f4c;font-size:14px;">&emsp;&emsp;&emsp;&emsp;&mdash; Total persona</span></p>
-						<div id="chart-container" >
-						  	<!--<div id= 'id_div_canvas-{{camara.serial_camara}}-zona-{{forloop.counter}}'  >-->
-								<div id= 'id_div_canvas-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}'>								
-							   		<canvas  id="LC-{{camara.nombre_camara}}-{{zonas_camara.nombre_zona_camara}}" style=" height: 100%; z-index:3;"></canvas>						  
-						  	</div>
-						</div>
-	        		</div>
-				</div>
-	    	</div>
-		</div> 
-    
+		        		</div>
+					</div>
+		    	</div>
+			</div> 
+       {% endif %}
    {% endfor %}
    
 
@@ -1628,10 +1629,10 @@ function refrescar_imagen() {
 	$.ajax({
 		url: request_url,
 		success: function(data){
-			console.log(data)			
+			//console.log(data)			
 			camaras = JSON.parse(data.camaras)
-			console.log("camaras")
-			console.log(camaras)
+			//console.log("camaras")
+			//console.log(camaras)
 			for(i=0; i < camaras.length;i++){
 				console.log("camaras[i].fields.nombre_camara: "+camaras[i].fields.nombre_camara)
 				var zonas_camara_str = camaras[i].fields.zonas_camara.replace(/'/g, '"');		

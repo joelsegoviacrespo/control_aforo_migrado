@@ -144,10 +144,10 @@ def configuracion_camaras(request, id_monitor):
                     if (i==0):
                         nombre_aforo = camaras.nombre_camara                         
                     for zonas_camara in camaras.zonas_camara:                        
-                                                
-                        zonas_camara = model_to_dict(zonas_camara)
-                        zonas_camaras.append(zonas_camara)
-                        j=j+1
+                        if (zonas_camara.zona_fisica == 'True'):                                                    
+                            zonas_camara = model_to_dict(zonas_camara)
+                            zonas_camaras.append(zonas_camara)
+                            j=j+1
                         
                     camaras.zonas_camara = zonas_camaras
                     i=i+1
