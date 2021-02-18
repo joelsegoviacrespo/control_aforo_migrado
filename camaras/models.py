@@ -14,6 +14,7 @@ class ZonaCamara(models.Model):
     y1 = models.FloatField(blank=True,default=0.00)    
     es_puerta =  models.CharField(blank=False, default=True)
     suma_total_aforo =  models.CharField(max_length=5, blank=False, default='')
+    zona_fisica =  models.CharField(max_length=5, blank=False, default='')
     class Meta:        
        abstract = True
 

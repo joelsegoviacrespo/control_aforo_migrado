@@ -1201,7 +1201,7 @@ def grafica_horas_acumuladas2(mydate):
 def index(request):
     
     #TODO: Orientarlo a un cliente en particular
-    camarasAll =  Camaras.objects.all()    
+    camarasAll =  Camaras.objects.all()   
     fecha_actual = Fecha.getFechaActual().strftime("%d-%m-%Y")
     
     info_grafica_semana = grafica_semana("", "" ,"","","","")
@@ -2491,9 +2491,10 @@ def getZonasXCamaras():
     camaras_zonas_camaras = []
     camarasAll =  Camaras.objects.all()
     for camaras in camarasAll:                                       
-        for zonas_camara in camaras.zonas_camara:                      
-            zonas_camaras.append(zonas_camara.nombre_zona_camara)
-            camaras_zonas_camaras.append(camaras.nombre_camara+"-"+zonas_camara.nombre_zona_camara)
+        for zonas_camara in camaras.zonas_camara: 
+            if (zonas_camara.zona_fisica == 'True'):                      
+                zonas_camaras.append(zonas_camara.nombre_zona_camara)
+                camaras_zonas_camaras.append(camaras.nombre_camara+"-"+zonas_camara.nombre_zona_camara)
     
     return zonas_camaras,camaras_zonas_camaras
             
