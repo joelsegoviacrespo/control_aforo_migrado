@@ -33,10 +33,15 @@
 {% block content-form-content %}
 <div class="card-body">
 	<p>STREAMING</p>
-</div>	
+</div>
 
 
+<div id="div1"><h2>Let jQuery AJAX Change This Text</h2></div>
 
+
+<div>
+<button class="" id ="objetos">Objects</button>
+</div>
 
 {% endblock content-form-content %}
 {% block content-form-form-tag-end %} {% endblock content-form-form-tag-end %}
@@ -44,6 +49,19 @@
 
 <!-- Specific JS goes HERE -->
 {% block javascripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+$(document).ready(function(){
+  $("button").click(function(){
+    $.ajax({url: "demo_test.txt", 
+    success: function(result){
+      $("#div1").html(result);
+    }});
+  });
+});
+
+</script>
 {% endblock javascripts %}
 {% block javascripts-page %}
 {% endblock javascripts-page %}
