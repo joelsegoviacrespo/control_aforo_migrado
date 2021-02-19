@@ -36,12 +36,110 @@
 </div>
 
 
-<div id="div1"><h2>Let jQuery AJAX Change This Text</h2></div>
 
 
-<div>
-<button class="" id ="objetos">Objects</button>
+<div class="page-inner mt--5">
+    <div class="row mt--2">
+  
 </div>
+
+
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-head-row">
+                        <div class="card-title">Streaming</div>
+                            
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container" style="min-height: 375px"><div class="chartjs-size-monitor" style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                        <canvas id="statisticsChart" width="417" height="375" class="chartjs-render-monitor" style="display: block; width: 417px; height: 375px;"></canvas>
+                    </div>
+                    <!--<div id="myChartLegend"><ul class="0-legend html-legend"><li><span style="background-color:#f3545d"></span>Subscribers</li><li><span style="background-color:#fdaf4b"></span>New Visitors</li><li><span style="background-color:#177dff"></span>Active Users</li></ul></div>-->
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+
+            <div class="card">
+                <div class="card-body pb-0 ">
+
+                    <div class="h1 fw-bold float-center text-warning">Detecciones Disponible</div>
+                    
+                    
+                   
+                    
+                    <div class="card-tools">
+                        <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm float-center" id="pills-tab" role="tablist">
+                            <li class="nav-item">
+                                <button class="nav-link"  id ="objetos">Objects</button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link"  id ="objetos">Mask</button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link"  id ="clear">Clear</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="pull-in sparkline-fix">
+                        <div id="lineChart"><canvas width="512" height="70" style="display: inline-block; width: 512.844px; height: 70px; vertical-align: top;"></canvas></div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card card-primary">
+                <div class="card-header">
+                    <div class="card-title">Manaeges Values</div>
+                    <div class="card-category">detection</div>
+                </div>
+
+
+
+                <div class="card-body pb-0">
+
+
+             
+
+
+                    <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
+                        <div class="px-2 pb-2 pb-md-0 text-center">
+                            <h6 class="fw-bold mt-3 mb-0">Umbralización</h6>
+                                <button class="nav-link thValueUp"  id ="button">+</button>
+                                <button class="nav-link thValueDown"  id ="button">-</button>
+
+                        </div>
+                        <div class="px-2 pb-2 pb-md-0 text-center">
+                            <h6 class="fw-bold mt-3 mb-0">Suavizado</h6>
+                                <button class="nav-link smValueUp"  id ="button">+</button>
+                                <button class="nav-link smValueDown"  id ="button">-</button>
+
+                        </div>
+                        <div class="px-2 pb-2 pb-md-0 text-center">
+                            
+                            <h6 class="fw-bold mt-3 mb-0">Otra característica</h6>
+                                <button class="nav-link"  id ="objetos">+</button>
+                                <button class="nav-link"  id ="objetos">-</button>
+
+                        </div>
+                    </div>
+
+                    
+                    <!--<div class="pull-in"><div class="chartjs-size-monitor" style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                    
+                    </div>-->
+                </div>
+            </div>
+
+        </div>
+    </div>
+    
+</div>
+
 
 {% endblock content-form-content %}
 {% block content-form-form-tag-end %} {% endblock content-form-form-tag-end %}
@@ -52,14 +150,91 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 
+document.getElementsByClassName('object');
+document.getElementsByClassName('mask');
+
+document.getElementsByClassName('thValueUp');
+document.getElementsByClassName('thValueDown');
+
+document.getElementsByClassName('smValueUp');
+document.getElementsByClassName('smValueDown');
+
+
+
+
 $(document).ready(function(){
-  $("button").click(function(){
-    $.ajax({url: "demo_test.txt", 
+    
+  $(".thValueUp").click(function(){
+    $.ajax({url: "/detections/thresholdValue/", type: 'POST',data:{
+csrfmiddlewaretoken: '{{csrf_token}}', value:1
+    },
+    datatype:"json",
     success: function(result){
-      $("#div1").html(result);
-    }});
+
+        console.log(result);
+    },
+error: function(error){
+    console.log(error);
+}
+});
+    
   });
 });
+
+
+$(document).ready(function(){
+  $(".thValueDown").click(function(){
+    $.ajax({url: "/detections/thresholdValue/", type: 'POST',data:{
+csrfmiddlewaretoken: '{{csrf_token}}',value:-1
+    },
+    datatype:"json",
+    success: function(result){
+        console.log(result);
+    },
+error: function(error){
+    console.log(error);
+}
+});
+    
+  });
+});
+
+$(".smValueUp").click(function(){
+    $.ajax({url: "/detections/smooth/", type: 'POST',data:{
+csrfmiddlewaretoken: '{{csrf_token}}', value:1
+    },
+    datatype:"json",
+    success: function(result){
+
+        console.log(result);
+    },
+error: function(error){
+    console.log(error);
+}
+});
+    
+  });
+
+
+
+$(document).ready(function(){
+  $(".smValueDown").click(function(){
+    $.ajax({url: "/detections/smooth/", type: 'POST',data:{
+csrfmiddlewaretoken: '{{csrf_token}}',value:-1
+    },
+    datatype:"json",
+    success: function(result){
+        console.log(result);
+    },
+error: function(error){
+    console.log(error);
+}
+});
+    
+  });
+});
+
+
 
 </script>
 {% endblock javascripts %}

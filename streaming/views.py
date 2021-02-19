@@ -2,8 +2,14 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required, user_passes_test,permission_required
 from streaming.forms import StreamingForm
 from django.utils.translation import activate
+from django.http import HttpResponse
+import json
 
-
+global objectId
+global threshold
+global smooth
+threshold = 0
+smooth = 0
 @login_required(login_url="/login/")
 def streaming(request):
     activate('es')
@@ -11,3 +17,51 @@ def streaming(request):
     form = StreamingForm()
     
     return render(request, 'streaming/agregar.html', {'form': form})
+
+@login_required(login_url="/login/")
+def objD(request):
+    if request.is_ajax():
+        message = "Yes, AJAX!"
+    else:
+        message = "Not Ajax"
+    return HttpResponse(message)
+
+#detections values
+
+@login_required(login_url="/login/")
+
+def thresholdValue(request):
+    
+    if request.is_ajax():
+        
+        message = "Yes, AJAX!"
+        response_json = request.POST['value']
+        response_json = json.dumps(response_json)
+        data = json.loads(response_json)
+        dataAux = int(data)
+        global threshold
+        threshold = threshold + dataAux
+        print(threshold)
+        
+    else:
+        message = "Not Ajax"
+    return HttpResponse(response_json)
+
+@login_required(login_url="/login/")
+def smoothValue(request):
+    
+    if request.is_ajax():
+        
+        message = "Yes, AJAX!"
+        response_json = request.POST['value']
+        response_json = json.dumps(response_json)
+        data = json.loads(response_json)
+        dataAux = int(data)
+        
+        global smooth
+        smooth = smooth + dataAux
+        print(smooth)
+        
+    else:
+        message = "Not Ajax"
+    return HttpResponse(data)

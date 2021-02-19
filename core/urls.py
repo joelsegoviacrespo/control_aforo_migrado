@@ -8,12 +8,14 @@ from django.contrib import admin
 from django.urls import path, include  # add this
 from django.conf import settings
 from django.conf.urls.static import static
+from streaming import urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
     path("", include("authentication.urls")),  # add this
     path("", include("app.urls")),  # add this
+    path('detections/',include("streaming.urls")), 
 ]
 
 #if settings.DEBUG:
