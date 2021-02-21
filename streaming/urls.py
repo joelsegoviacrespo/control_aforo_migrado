@@ -8,4 +8,5 @@ urlpatterns = [
     path('objD/',views.objD, name='objD'),
     path('thresholdValue/',views.thresholdValue, name='thresholdValue'),
     path('smooth/',views.smoothValue, name='smooth'),
+    path('livecam_feed', views.livecam_feed, name='livecam_feed'),
 ]
