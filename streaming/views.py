@@ -8,13 +8,18 @@ import json
 
 from django.http.response import StreamingHttpResponse
 from streaming.camera import LiveWebCam
-
+from objectsDetector import views
+do =views.detectordeObjetos()
 
 global objectId
 global threshold
 global smooth
 threshold = 0.5
 smooth = 0
+
+
+
+
 @login_required(login_url="/login/")
 def streaming(request):
     activate('es')
@@ -76,6 +81,7 @@ def smoothValue(request):
         message = "Not Ajax"
     return HttpResponse(data)
 
+
 def index(request):
 	return render(request, 'streamapp/home.html')
 
@@ -83,9 +89,11 @@ def index(request):
 def gen(camera):
 	while True:
 		frame = camera.get_frame()
+        
 		yield (b'--frame\r\n'
 				b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
 def livecam_feed(request):
-	return StreamingHttpResponse(gen(LiveWebCam()),
+	return StreamingHttpResponse(do.livecam_feed(),
 					content_type='multipart/x-mixed-replace; boundary=frame')
+                   

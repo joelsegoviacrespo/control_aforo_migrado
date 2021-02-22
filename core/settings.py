@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'usuarios_red.apps.UsuariosRedConfig',
     'jornada_laboral.apps.JornadaLaboralConfig',   
     'streaming.apps.StreamingConfig',
+    'objectsDetector',
 
     
 ]
