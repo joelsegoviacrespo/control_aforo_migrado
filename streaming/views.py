@@ -50,11 +50,16 @@ def thresholdValue(request):
         data = json.loads(response_json)
         dataAux = int(data)
         dataAux = dataAux/10
-        dataAux = round(dataAux)
-        print(dataAux,1)
+       
+        
         global threshold
+        global smooth
         threshold = threshold + dataAux
         print(threshold)
+         
+    
+        print ("\nVALORES QUE TENGO QUE ENVIAR A THEVALUES \n",threshold,smooth)
+        do.thevalues(threshold,smooth)
         
     else:
         message = "Not Ajax"
@@ -71,11 +76,13 @@ def smoothValue(request):
         data = json.loads(response_json)
         dataAux = int(data)
         dataAux = dataAux/10
-        dataAux = round(dataAux,1)
         
+        global threshold
         global smooth
         smooth = smooth + dataAux
         print(smooth)
+        print ("\nVALORES QUE TENGO QUE ENVIAR A THEVALUES \n",threshold,smooth)
+        do.thevalues(threshold,smooth)
         
     else:
         message = "Not Ajax"
@@ -94,6 +101,11 @@ def gen(camera):
 				b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
 def livecam_feed(request):
-	return StreamingHttpResponse(do.livecam_feed(),
-					content_type='multipart/x-mixed-replace; boundary=frame')
+    global threshold
+    global smooth
+    print ("\nVALORES QUE TENGO QUE ENVIAR A THEVALUES \n",threshold,smooth)
+    do.thevalues(threshold,smooth)
+
+    
+    return StreamingHttpResponse(do.livecam_feed(),content_type='multipart/x-mixed-replace; boundary=frame')
                    
