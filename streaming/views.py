@@ -16,6 +16,9 @@ global threshold
 global smooth
 threshold = 0.5
 smooth = 0
+global state
+
+#print("\n",state)
 
 
 
@@ -31,7 +34,25 @@ def streaming(request):
 @login_required(login_url="/login/")
 def objD(request):
     if request.is_ajax():
+        global state
         message = "Yes, AJAX!"
+        response_json = request.POST['value']
+        response_json = json.dumps(response_json)
+        data = json.loads(response_json)
+        if data =="true":
+            clicked = True
+            do.theDetection(clicked)
+        else:
+            clicked = False
+            do.theDetection(clicked)
+        print("\n AAAAAAAAAAAAAAAAAAAAAAAAAA \n",clicked)
+     
+            
+            
+        #print("\n",state)
+
+
+
     else:
         message = "Not Ajax"
     return HttpResponse(message)

@@ -217,7 +217,8 @@ $(document).ready(function(){
         console.log(clicked)
 
         $.ajax({url: "/detections/objD/", type: 'POST',data:{
-csrfmiddlewaretoken: '{{csrf_token}}',value:-1
+csrfmiddlewaretoken: '{{csrf_token}}',
+value:clicked
     },
     datatype:"json",
     success: function(result){
@@ -234,7 +235,7 @@ error: function(error){
         console.log(clicked1)
 
         $.ajax({url: "/detections/maskD/", type: 'POST',data:{
-csrfmiddlewaretoken: '{{csrf_token}}',value:-1
+csrfmiddlewaretoken: '{{csrf_token}}',value:clicked1
     },
     datatype:"json",
     success: function(result){
