@@ -45,7 +45,7 @@ def objD(request):
         else:
             clicked = False
             do.theDetection(clicked)
-        print("\n AAAAAAAAAAAAAAAAAAAAAAAAAA \n",clicked)
+        #print("\n AAAAAAAAAAAAAAAAAAAAAAAAAA \n",clicked)
      
             
             
@@ -76,10 +76,10 @@ def thresholdValue(request):
         global threshold
         global smooth
         threshold = threshold + dataAux
-        print(threshold)
+        #print(threshold)
          
     
-        print ("\nVALORES QUE TENGO QUE ENVIAR A THEVALUES \n",threshold,smooth)
+       #print ("\nVALORES QUE TENGO QUE ENVIAR A THEVALUES \n",threshold,smooth)
         do.thevalues(threshold,smooth)
         
     else:
@@ -101,8 +101,8 @@ def smoothValue(request):
         global threshold
         global smooth
         smooth = smooth + dataAux
-        print(smooth)
-        print ("\nVALORES QUE TENGO QUE ENVIAR A THEVALUES \n",threshold,smooth)
+        #print(smooth)
+        #print ("\nVALORES QUE TENGO QUE ENVIAR A THEVALUES \n",threshold,smooth)
         do.thevalues(threshold,smooth)
         
     else:
@@ -124,7 +124,7 @@ def gen(camera):
 def livecam_feed(request):
     global threshold
     global smooth
-    print ("\nVALORES QUE TENGO QUE ENVIAR A THEVALUES \n",threshold,smooth)
+    #print ("\nVALORES QUE TENGO QUE ENVIAR A THEVALUES \n",threshold,smooth)
     do.thevalues(threshold,smooth)
 
     
