@@ -5,14 +5,19 @@ from django.utils.translation import activate
 from django.http import HttpResponse
 import json
 
-
+import cv2
 from django.http.response import StreamingHttpResponse
 from streaming.camera import LiveWebCam
 from objectsDetector import views
-
-do =views.detectordeObjetos()
+from objectsDetector.models import Objects
+#do =views.detectordeObjetos()
 from maskDetector import views
 #ma =views.detectordeMascaras()
+
+
+from objectsDetector.camera import objectsDetector
+from maskDetector.camera import maskDetector
+
 
 global objectId
 global threshold
@@ -51,10 +56,10 @@ def objD(request):
         data = json.loads(response_json)
         if data =="true":
             clicked = True
-            do.theDetection(clicked,clicked1)
+            #do.theDetection(clicked,clicked1)
         else:
             clicked = False
-            do.theDetection(clicked,clicked1)
+            #do.theDetection(clicked,clicked1)
         #print("\n AAAAAAAAAAAAAAAAAAAAAAAAAA \n",clicked)
      
             
@@ -79,10 +84,10 @@ def maskD(request):
         data = json.loads(response_json)
         if data =="true":
             clicked1 = True
-            do.theDetection(clicked,clicked1)
+            #do.theDetection(clicked,clicked1)
         else:
             clicked1 = False
-            do.theDetection(clicked,clicked1)
+            #do.theDetection(clicked,clicked1)
         #print("\n AAAAAAAAAAAAAAAAAAAAAAAAAA \n",clicked)
      
             
@@ -106,10 +111,10 @@ def smoothValue(request):
         data = json.loads(response_json)
         if data =="true":
             clicked1 = True
-            do.theDetection(clicked,clicked1)
+           # do.theDetection(clicked,clicked1)
         else:
             clicked1 = False
-            do.theDetection(clicked,clicked1)
+            #do.theDetection(clicked,clicked1)
         #print("\n AAAAAAAAAAAAAAAAAAAAAAAAAA \n",clicked)
      
             
@@ -146,7 +151,7 @@ def thresholdValue(request):
          
     
        #print ("\nVALORES QUE TENGO QUE ENVIAR A THEVALUES \n",threshold,smooth)
-        do.thevalues(threshold,smooth)
+        #do.thevalues(threshold,smooth)
         
     else:
         message = "Not Ajax"
@@ -157,23 +162,50 @@ def thresholdValue(request):
 def index(request):
 	return render(request, 'streamapp/home.html')
 
+def add_info(info):
+	instance = Objects()
+	instance.label=  info['label']
+	#print("\n","LABEl", instance.get_label())
+	instance.save()
+    
 
 def gen(camera):
 	while True:
-		frame = camera.get_frame()
-        
+		global threshold
+		global smooth
+		global clicked
+		global clicked1
+		
+		
+		if clicked == True:
+			frame = camera.get_frame()
+			(frames,info) = objectsDetector.objectsdetector(frame,threshold,smooth)
+		#print(info)
+			add_info(info)
+		elif (clicked1 == True and clicked == False):
+			frame = camera.get_frame()
+			(frames,info) = maskDetector.maskdetector(frame,threshold,smooth)
+	
+		else:
+			frame = camera.get_frame()
+			ret, frames = cv2.imencode('.jpg', frame)
+			frames = frames.tobytes()
+			
+			
+		
+		
 		yield (b'--frame\r\n'
-				b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+					b'Content-Type: image/jpeg\r\n\r\n' + frames + b'\r\n\r\n')
 
 def livecam_feed(request):
     global threshold
     global smooth
     #print ("\nVALORES QUE TENGO QUE ENVIAR A THEVALUES \n",threshold,smooth)
-    do.thevalues(threshold,smooth)
+    #do.thevalues(threshold,smooth)
     #ma.thevalues(threshold,smooth)
 
     
-    return StreamingHttpResponse(do.livecam_feed(),content_type='multipart/x-mixed-replace; boundary=frame')
+    return StreamingHttpResponse(gen(LiveWebCam()),content_type='multipart/x-mixed-replace; boundary=frame')
                    
 
 

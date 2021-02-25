@@ -44,7 +44,7 @@ class objectsDetector(object):
         
         mythreshold = th
         mysmooth = sm
-        #print ("\n ESTO SON LOS VALORES ***************",mythreshold,mysmooth)
+        print ("\n ESTO SON LOS VALORES ***************",mythreshold,mysmooth)
        
         ormacion= []
         deccionInfo = None
