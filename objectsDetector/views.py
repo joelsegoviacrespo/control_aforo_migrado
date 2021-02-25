@@ -3,6 +3,7 @@ import cv2
 # Create your views here.
 from django.http.response import StreamingHttpResponse
 from objectsDetector.camera import objectsDetector
+from maskDetector.camera import maskDetector
 from streaming.camera import LiveWebCam
 from objectsDetector.forms import ObjectsForm
 from objectsDetector.models import Objects
@@ -58,7 +59,9 @@ global mythreshold
 global mysmooth
 
 global isClicked
+global isClicked1
 isClicked = False
+isClicked1 = False
 
 
 def add_info(info):
@@ -73,6 +76,7 @@ def gen(camera):
 		global mythreshold
 		global mysmooth
 		global isClicked
+		global isClicked1
 		
 		
 		if isClicked == True:
@@ -80,11 +84,15 @@ def gen(camera):
 			(frames,info) = objectsDetector.objectsdetector(frame,mythreshold,mysmooth)
 		#print(info)
 			add_info(info)
+		elif (isClicked1 == True and isClicked == False):
+			frame = camera.get_frame()
+			(frames,info) = maskDetector.maskdetector(frame,mythreshold,mysmooth)
+	
 		else:
 			frame = camera.get_frame()
 			ret, frames = cv2.imencode('.jpg', frame)
 			frames = frames.tobytes()
-			pass
+			
 			
 		
 		
@@ -104,9 +112,11 @@ def livecam_feed(request):
 
 class detectordeObjetos():
 
-	def theDetection(request,clicked):
+	def theDetection(request,clicked,clicked1):
 		global isClicked
+		global isClicked1
 		isClicked = clicked
+		isClicked1 = clicked1
 
 	def thevalues(request,th,sm):
 		global mythreshold

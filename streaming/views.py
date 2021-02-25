@@ -9,7 +9,10 @@ import json
 from django.http.response import StreamingHttpResponse
 from streaming.camera import LiveWebCam
 from objectsDetector import views
+
 do =views.detectordeObjetos()
+from maskDetector import views
+#ma =views.detectordeMascaras()
 
 global objectId
 global threshold
@@ -17,6 +20,12 @@ global smooth
 threshold = 0.5
 smooth = 0
 global state
+global clicked
+clicked = False
+
+global clicked1
+clicked1 =False
+
 
 #print("\n",state)
 
@@ -34,17 +43,18 @@ def streaming(request):
 @login_required(login_url="/login/")
 def objD(request):
     if request.is_ajax():
-        global state
+        global clicked
+        global clicked1
         message = "Yes, AJAX!"
         response_json = request.POST['value']
         response_json = json.dumps(response_json)
         data = json.loads(response_json)
         if data =="true":
             clicked = True
-            do.theDetection(clicked)
+            do.theDetection(clicked,clicked1)
         else:
             clicked = False
-            do.theDetection(clicked)
+            do.theDetection(clicked,clicked1)
         #print("\n AAAAAAAAAAAAAAAAAAAAAAAAAA \n",clicked)
      
             
@@ -56,6 +66,62 @@ def objD(request):
     else:
         message = "Not Ajax"
     return HttpResponse(message)
+
+
+@login_required(login_url="/login/")
+def maskD(request):
+    if request.is_ajax():
+        global clicked
+        global clicked1
+        message = "Yes, AJAX!"
+        response_json = request.POST['value']
+        response_json = json.dumps(response_json)
+        data = json.loads(response_json)
+        if data =="true":
+            clicked1 = True
+            do.theDetection(clicked,clicked1)
+        else:
+            clicked1 = False
+            do.theDetection(clicked,clicked1)
+        #print("\n AAAAAAAAAAAAAAAAAAAAAAAAAA \n",clicked)
+     
+            
+            
+        #print("\n",state)
+
+
+
+    else:
+        message = "Not Ajax"
+    return HttpResponse(message)
+
+@login_required(login_url="/login/")
+def smoothValue(request):
+    if request.is_ajax():
+        global clicked
+        global clicked1
+        message = "Yes, AJAX!"
+        response_json = request.POST['value']
+        response_json = json.dumps(response_json)
+        data = json.loads(response_json)
+        if data =="true":
+            clicked1 = True
+            do.theDetection(clicked,clicked1)
+        else:
+            clicked1 = False
+            do.theDetection(clicked,clicked1)
+        #print("\n AAAAAAAAAAAAAAAAAAAAAAAAAA \n",clicked)
+     
+            
+            
+        #print("\n",state)
+
+
+
+    else:
+        message = "Not Ajax"
+    return HttpResponse(message)
+
 
 #detections values
 
@@ -86,28 +152,6 @@ def thresholdValue(request):
         message = "Not Ajax"
     return HttpResponse(response_json)
 
-@login_required(login_url="/login/")
-def smoothValue(request):
-    
-    if request.is_ajax():
-        
-        message = "Yes, AJAX!"
-        response_json = request.POST['value']
-        response_json = json.dumps(response_json)
-        data = json.loads(response_json)
-        dataAux = int(data)
-        dataAux = dataAux/10
-        
-        global threshold
-        global smooth
-        smooth = smooth + dataAux
-        #print(smooth)
-        #print ("\nVALORES QUE TENGO QUE ENVIAR A THEVALUES \n",threshold,smooth)
-        do.thevalues(threshold,smooth)
-        
-    else:
-        message = "Not Ajax"
-    return HttpResponse(data)
 
 
 def index(request):
@@ -126,7 +170,12 @@ def livecam_feed(request):
     global smooth
     #print ("\nVALORES QUE TENGO QUE ENVIAR A THEVALUES \n",threshold,smooth)
     do.thevalues(threshold,smooth)
+    #ma.thevalues(threshold,smooth)
 
     
     return StreamingHttpResponse(do.livecam_feed(),content_type='multipart/x-mixed-replace; boundary=frame')
                    
+
+
+
+

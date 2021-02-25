@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'jornada_laboral.apps.JornadaLaboralConfig',   
     'streaming.apps.StreamingConfig',
     'objectsDetector',
+    'maskDetector',
 
     
 ]

@@ -8,6 +8,7 @@ from streaming import views
 urlpatterns = [
     path('', views.streaming, name='streaming'),
     path('objD/',views.objD, name='objD'),
+    path('maskD/',views.maskD, name='maskD'),
     path('thresholdValue/',views.thresholdValue, name='thresholdValue'),
     path('smooth/',views.smoothValue, name='smooth'),
     path('livecam_feed', views.livecam_feed, name='livecam_feed'),
