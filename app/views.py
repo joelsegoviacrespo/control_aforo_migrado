@@ -2224,6 +2224,9 @@ def aforoZona(request,periodo_estadistica):
     
      
     result = [] 
+    dict_zonas_camara = {}
+    hora_apertura = 0
+    hora_cierre= 0
     if request.method == 'GET':
         try:        
             #print("periodo_estadistica: ",periodo_estadistica)
@@ -2332,6 +2335,7 @@ def generar_estadistica_total_aforo(periodo_estadistica):
 
 def generar_estadistica_aforo_zona(periodo_estadistica):
     
+    
     #print("generar_estadistica_aforo_zona")
   
     intervalo = get_intervaloPeriodo_AF(periodo_estadistica)
@@ -2361,7 +2365,9 @@ def generar_estadistica_aforo_zona(periodo_estadistica):
 
     camarasHistorico = CamarasHistorico.objects.mongo_aggregate(query)       
     lista = list(camarasHistorico)  
-    #print(list) 
+    #print("#############LISTA###############")
+    
+    #print(lista) 
     jornada = getHorarioLaboral()
     hora_apertura = jornada[0]
     hora_cierre = jornada[1]        
@@ -2372,6 +2378,7 @@ def generar_estadistica_aforo_zona(periodo_estadistica):
     camaras_zonas_camaras = result_zona[1]
     #print("!!!!camaras_zonas_camaras!!!!!: ",camaras_zonas_camaras)
     dict_zonas_camara = {}
+    
     for zona_camara in camaras_zonas_camaras:
         #print("zona_camara: ",zona_camara)
         dict_zonas_camara[zona_camara] = [0] * len(array_tiempo)    
@@ -2383,43 +2390,46 @@ def generar_estadistica_aforo_zona(periodo_estadistica):
         print("i: ",i)
         print("array_red_ethernet[i]: ",array_red_ethernet[i])
     """   
-
-    for nro_personas in lista:
-        #print("nro_personas")
-        #print(nro_personas)
-        result: OrderedDict[str, int] = nro_personas
-        #print("RESULTADOS!!!!!!!!!!!!!!!")        
-        #print(result['_id'])
-        #result_tiempo: OrderedDict[str, str] = result['_id']
-        result_tiempo: OrderedDict[str, int] = nro_personas
-        #print("result_tiempo!!!!")
-        #print(result_tiempo)     
+    try:
         
-        result: OrderedDict[str, str] = result_tiempo['_id']
+        for nro_personas in lista:
+            #print("nro_personas")
+            #print(nro_personas)
+            result: OrderedDict[str, int] = nro_personas
+            #print("RESULTADOS!!!!!!!!!!!!!!!")        
+            #print(result['_id'])
+            result_tiempo: OrderedDict[str, str] = result['_id']
+            result_tiempo: OrderedDict[str, int] = nro_personas
+            #print("result_tiempo!!!!")
+            #print(result_tiempo)     
         
-        #print("result_hora: ",result_tiempo)
-        #print("tiempo_medicion: ",tiempo_medicion)
-        hora = result[tiempo_medicion]
-        #print("hora: ",hora)
-        #if hora in
-        total_nro_personas = int(result_tiempo['nro_personas'])
-        #print("total_nro_personas: ",total_nro_personas)
-        nombre_zona_camara = result['nombre_zona_camara']
-        #print('nombre_zona_camara: ',nombre_zona_camara)        
-        nombre_camara = result['nombre_camara']
-        #print('nombre_camara: ',nombre_camara)
+            result: OrderedDict[str, str] = result_tiempo['_id']
         
-        zonaxcamara = nombre_camara+"-"+nombre_zona_camara
-        #print("zonaxcamara: ",zonaxcamara)
-        #array_total_aforo[hora] = total_nro_personas
-        #dict_zonas_camara[nombre_zona_camara] = nombre_camara
-        dict_zonas_camara[zonaxcamara][hora] = total_nro_personas
+            #print("result_hora: ",result_tiempo)
+            #print("tiempo_medicion: ",tiempo_medicion)
+            hora = result[tiempo_medicion]
+            #print("hora: ",hora)
+            #if hora in
+            total_nro_personas = int(result_tiempo['nro_personas'])
+            #print("total_nro_personas: ",total_nro_personas)
+            nombre_zona_camara = result['nombre_zona_camara']
+            #print('nombre_zona_camara: ',nombre_zona_camara)        
+            nombre_camara = result['nombre_camara']
+            #print('nombre_camara: ',nombre_camara)
         
-        #nro_usuarios_wifi = int(result_tiempo['nro_usuarios_wifi'])
-        #print("nro_usuarios_ethernet: ",nro_usuarios_ethernet)        
+            zonaxcamara = str(nombre_camara)+"-"+str(nombre_zona_camara)
+            #print("zonaxcamara: ",zonaxcamara)
+            #array_total_aforo[hora] = total_nro_personas
+            #dict_zonas_camara[nombre_zona_camara] = nombre_camara
+            dict_zonas_camara[zonaxcamara][hora] = total_nro_personas
+        
+            #nro_usuarios_wifi = int(result_tiempo['nro_usuarios_wifi'])
+            #print("nro_usuarios_ethernet: ",nro_usuarios_ethernet)        
         
        
-        
+    except KeyError:
+        pass
+        #print("dict_zonas_camara no encuentra el indice")    
         
         
                 
