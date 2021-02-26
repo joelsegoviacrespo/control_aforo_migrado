@@ -2122,9 +2122,9 @@ def totalAforoDia(request,fecha_str,operacion):
                     fecha_consultar = datetime.strptime(fecha, "%d-%m-%Y").date()
                     result = generar_estadistica_aforo_dia(array_total_aforo,fecha_consultar)
                     array_total_aforo = result[0]        
-                    #array_red_wifi = result[1]
-                    hora_apertura = result[1]
-                    hora_cierre = result[2]
+                    array_total_persona = result[1]
+                    hora_apertura = result[2]
+                    hora_cierre = result[3]
                     
             except Exception as e:
                 print('%s (%s)' % (e, type(e)))
@@ -2132,7 +2132,8 @@ def totalAforoDia(request,fecha_str,operacion):
             estadistica_js = {           
                 "fecha" : str(fecha),      
                 "derecha_disabled": derecha_disabled,
-                "array_total_aforo" : array_total_aforo,    
+                "array_total_aforo" : array_total_aforo,
+                "array_total_persona" : array_total_persona,    
                 "hora_apertura" : hora_apertura,
                 "hora_cierre" : hora_cierre,                        
             }
@@ -2167,16 +2168,17 @@ def generar_estadistica_aforo_dia(array_total_aforo,fecha):
     #print("QUERY")
     #print(query)
 
-    usuariosRed = UsuariosRed.objects.mongo_aggregate(query)       
-    lista = list(usuariosRed)  
-    #print(list) 
+    camarasHistorico = CamarasHistorico.objects.mongo_aggregate(query)       
+    lista = list(camarasHistorico)  
+    #print(lista) 
     jornada = getHorarioLaboral()
     hora_apertura = jornada[0]
     hora_cierre = jornada[1]        
     #print("hora_apertura dia: ",hora_apertura)
     #print("hora_cierre dia: ",hora_cierre)    
     array_total_aforo = [0] * len(array_tiempo)
-    #array_red_wifi = [0] * len(array_tiempo)
+    array_total_persona = [0] * len(array_tiempo)
+    
     """
     for i in range(len(array_red_ethernet)):
         print("i: ",i)
@@ -2217,7 +2219,7 @@ def generar_estadistica_aforo_dia(array_total_aforo,fecha):
        #print("array_presion_arterial_sys_hora[i]: ",array_presion_arterial_sys_hora[i])
        #print("array_presion_arterial_dia_hora[i]: ",array_presion_arterial_dia_hora[i])      
 
-    return array_total_aforo,hora_apertura,hora_cierre
+    return array_total_aforo,array_total_persona,hora_apertura,hora_cierre
 
 
 def aforoZona(request,periodo_estadistica):
@@ -2281,7 +2283,8 @@ def generar_estadistica_total_aforo(periodo_estadistica):
 
     camarasHistorico = CamarasHistorico.objects.mongo_aggregate(query)       
     lista = list(camarasHistorico)  
-    #print(list) 
+    #print("####lista###")
+    #print(lista) 
     jornada = getHorarioLaboral()
     hora_apertura = jornada[0]
     hora_cierre = jornada[1]        
@@ -2310,14 +2313,32 @@ def generar_estadistica_total_aforo(periodo_estadistica):
         #print("result_hora: ",result_tiempo)
         #print("tiempo_medicion: ",tiempo_medicion)
         hora = result_hora[tiempo_medicion]
+        total_nro_personas = int(result_tiempo['total_nro_personas'])
         #print("hora: ",hora)
         #if hora in
-        total_nro_personas = int(result_tiempo['total_nro_personas'])
+        
+        if (periodo_estadistica ==2):            
+            if (hora-2 == -1):
+                hora = len(array_tiempo)-1                
+            else:
+                hora = hora-2
+                
+        if (periodo_estadistica ==3):            
+            if (hora-1 >= 0):        
+                hora = hora-1
+            
+        if (periodo_estadistica !=1 and hora-1 >= -1):    
+            array_total_aforo[hora] = total_nro_personas
+        
+        elif (periodo_estadistica ==1):
+            array_total_aforo[hora] = total_nro_personas
+
+        
         #nro_usuarios_wifi = int(result_tiempo['nro_usuarios_wifi'])
         #print("nro_usuarios_ethernet: ",nro_usuarios_ethernet)        
         
        
-        array_total_aforo[hora] = total_nro_personas
+        
         
         
                 
@@ -2353,9 +2374,11 @@ def generar_estadistica_aforo_zona(periodo_estadistica):
     #print("array_tiempo",array_tiempo)
     
     
-    #zonas_camara = ["Aforo Interior planta 3","Aforo Office planta 3","Aforo Despacho planta 3","Aforo de Planta","Aforo Planta 7","Ocupación Mesa"]
+    #zonas_camara = ["Interior Planta 3","Office Planta 3","Despacho Planta 3","Aforo de Planta 3","Aforo Planta 7","Ocupación Mesa"]
+    
     result_zona = getZonasXCamaras()
-    zonas_camara = result_zona[0] 
+    zonas_camara = result_zona[0]
+     
     #print("zonas_camara: ",zonas_camara)
            
     query = getQueryAforoZona(start_date,end_date,tiempo_medicion,tiempo_medicion_parametro,array_tiempo,zonas_camara)
