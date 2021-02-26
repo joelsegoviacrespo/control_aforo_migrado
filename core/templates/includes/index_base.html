@@ -1387,8 +1387,9 @@ function seleccionarDia(operacion) {
 function seleccionarDiaEstadisticaAforo(operacion) {
 	console.log("diaAtras")
 	console.log($('#date').val())
-	fecha_actual = $('#date').val()
+	fecha_actual = $('#date').val()	
 	request_url = '/totalAforo/'+fecha_actual+'/'+operacion;
+	console.log("request_url: "+request_url)
 	$.ajax({
 		url: request_url,
 		success: function(data){			
@@ -1405,7 +1406,10 @@ function seleccionarDiaEstadisticaAforo(operacion) {
 				
 			labels = getLabels(array_total_aforo,1,hora_apertura,hora_cierre)			
 			console.log("labels")
-			console.log(labels)			
+			console.log(labels)		
+			//periodo_estadistica == 1 significa que solo lo hace por dia
+			//Hay que hacerlo por semana, mes tambien	
+			periodo_estadistica = 1
 			result = getArraysByHorario(array_total_aforo,array_total_persona,periodo_estadistica,hora_apertura,hora_cierre)
 			array_total_aforo = result[0]
 			array_total_persona = result[1]
