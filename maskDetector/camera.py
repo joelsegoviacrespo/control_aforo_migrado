@@ -53,8 +53,8 @@ class maskDetector(object):
         locs = []
         preds = []
         informacion =[]
-        deteccionInfo = {};a = True
-        deteccionInfo ={"label": "none" }
+        deteccionInfo = {"mask": False};a = True
+        
         for i in range(0, detections.shape[2]):
             now = datetime.now()
             dt_string = now.strftime("%d.%m.%Y %H:%M:%S,%f")
@@ -109,19 +109,25 @@ class maskDetector(object):
                     label = "Mask" if mask > withoutMask else "No Mask"
                     color = (0, 255, 0) if label == "Mask" else (0, 0, 255)
                     templabel=label
+                    if label =="Mask":
+                        templabel = True
+                    elif label =="No Mask":
+                        templabel = False
+                    deteccionInfo ={"mask": templabel }
 		
                     label = "{}: {:.2f}%".format(label, max(mask, withoutMask) * 100)
-
+                    
 	
                     cv2.putText(frame, label, (startX, startY - 10),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.45, color, 2)
                     cv2.rectangle(frame, (startX, startY), (endX, endY), color, 2)
                     #deteccionInfo ={"label": templabel,"prediction": (max(mask, withoutMask) * 100), "pos":((startX, startY), (endX, endY)), "date":dt_string, "timestamp":millisec  }
-                    deteccionInfo ={"label": templabel }
+                    
                     informacion.append(deteccionInfo)
                     ret, jpeg = cv2.imencode('.jpg', frame)
                     a = False
         if a == True :
+          
             ret, jpeg = cv2.imencode('.jpg', frame)
         else: 
              pass

@@ -10,6 +10,7 @@ from django.http.response import StreamingHttpResponse
 from streaming.camera import LiveWebCam
 from objectsDetector import views
 from objectsDetector.models import Objects
+from streaming.models import Streaming
 #do =views.detectordeObjetos()
 from maskDetector import views
 #ma =views.detectordeMascaras()
@@ -162,39 +163,61 @@ def thresholdValue(request):
 def index(request):
 	return render(request, 'streamapp/home.html')
 
-def add_info(info):
-	instance = Objects()
-	instance.label=  info['label']
+def add_info(info,info1):
+    
+    instance = Streaming()
+    print(type(info))
+    print(info.values())
+
+    instance = Streaming()
+    instance.label=info['label']
+    instance.mask=info1['mask']
+    instance.save()
+
+    instance.save();print ("\n guardado!! \n")
 	#print("\n","LABEl", instance.get_label())
-	instance.save()
+
     
 
 def gen(camera):
-	while True:
-		global threshold
-		global smooth
-		global clicked
-		global clicked1
-		
-		
-		if clicked == True:
-			frame = camera.get_frame()
-			(frames,info) = objectsDetector.objectsdetector(frame,threshold,smooth)
+    while True:
+        global threshold
+        global smooth
+        global clicked
+        global clicked1
+        if (clicked == True and clicked1 == False):
+            frame = camera.get_frame()
+            (frames,info) = objectsDetector.objectsdetector(frame,threshold,smooth)
 		#print(info)
-			add_info(info)
-		elif (clicked1 == True and clicked == False):
-			frame = camera.get_frame()
-			(frames,info) = maskDetector.maskdetector(frame,threshold,smooth)
+            info1={"mask":False} 
+            add_info(info,info1)
+
+
+        elif (clicked1 == True and clicked == False):
+            frame = camera.get_frame()
+            (frames,info1) = maskDetector.maskdetector(frame,threshold,smooth)
+            #print("\n",type(info1['mask']),"\n")
+            info = {"label":"None"} 
+            add_info(info,info1)
+        elif (clicked1 == True and clicked == True):
+            frame = camera.get_frame()
+
+
+            (frames,info1) = maskDetector.maskdetector(frame,threshold,smooth)
+            (frames2,info) = objectsDetector.objectsdetector(frame,threshold,smooth)
+            
+            
+            add_info(info,info1)
 	
-		else:
-			frame = camera.get_frame()
-			ret, frames = cv2.imencode('.jpg', frame)
-			frames = frames.tobytes()
+        else:
+            frame = camera.get_frame()
+            ret, frames = cv2.imencode('.jpg', frame)
+            frames = frames.tobytes()
 			
 			
 		
 		
-		yield (b'--frame\r\n'
+        yield (b'--frame\r\n'
 					b'Content-Type: image/jpeg\r\n\r\n' + frames + b'\r\n\r\n')
 
 def livecam_feed(request):

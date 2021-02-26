@@ -53,11 +53,11 @@ class objectsDetector(object):
         #frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         (h, w) = frame.shape[:2]
         blob = cv2.dnn.blobFromImage(cv2.resize(frame, (300, 300)), 0.007843, (300, 300), 127.5)
-
+        deteccionInfo = {'label': None}
 	
         objectsNet.setInput(blob)
         detections = objectsNet.forward()
-        deteccionInfo = {"label": None}
+        
 		
         
 
@@ -98,7 +98,7 @@ class objectsDetector(object):
                 deteccionInfo = {"label": CLASSES[idx]}
                 ret, jpeg = cv2.imencode('.jpg', frame)
                 a = False
-            if deteccionInfo['label'] == None:
+            if deteccionInfo['label'] == None: 
                 deteccionInfo = {"label": "None"}
             else:
                 pass	
@@ -109,9 +109,14 @@ class objectsDetector(object):
 				
         if a == True:
             ret, jpeg = cv2.imencode('.jpg', frame)
+            if deteccionInfo['label'] == None:
+                deteccionInfo = {"label": "None"}
+            else:
+                pass	
             
         else: 
              pass
+        
 #return 
         
         return (jpeg.tobytes(), deteccionInfo)

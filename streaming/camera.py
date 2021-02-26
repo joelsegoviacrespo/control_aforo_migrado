@@ -28,8 +28,8 @@ class LiveWebCam(object):
         
         play = vPafy.getbest(preftype="webm")
         #self.video = cv2.VideoCapture(play.url)
-        #self.video = cv2.VideoCapture(0)
-        self.video = cv2.VideoCapture('http://211.248.20.173:8080/cam_1.cgi')
+        self.video = cv2.VideoCapture(0)
+        #self.video = cv2.VideoCapture('http://211.248.20.173:8080/cam_1.cgi')
         
         self.thread = Thread(target=self.update, args=())
         self.thread.daemon = True
@@ -47,8 +47,8 @@ class LiveWebCam(object):
         if self.status:
             #success,imgNp = self.video.read()
             #(self.status, self.frame)=self.video.read()
-            #self.video = cv2.VideoCapture(0)
-            self.video = cv2.VideoCapture('http://211.248.20.173:8080/cam_1.cgi')
+            self.video = cv2.VideoCapture(0)
+            #self.video = cv2.VideoCapture('http://211.248.20.173:8080/cam_1.cgi')
             (self.status, self.frame)=self.video.read()
             resize = cv2.resize(self.frame, (550, 335), interpolation = cv2.INTER_LINEAR) 
 
