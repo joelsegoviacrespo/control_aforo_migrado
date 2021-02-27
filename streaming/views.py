@@ -175,12 +175,25 @@ def add_info(info,info1):
     instance.save()
 
     instance.save();print ("\n guardado!! \n")
+
+def show_info(request):
+    
+    data ={
+        'detection':'info',
+        'mask':'info'
+    }
+    datas = str(data)
+    print("\nLLAMADO \n")
+    yield (request,'streaming/agregar.html', datas)
+
 	#print("\n","LABEl", instance.get_label())
 
-    
+
 
 def gen(camera):
     while True:
+        
+        
         global threshold
         global smooth
         global clicked
@@ -213,6 +226,7 @@ def gen(camera):
             frame = camera.get_frame()
             ret, frames = cv2.imencode('.jpg', frame)
             frames = frames.tobytes()
+        
 			
 			
 		
@@ -221,8 +235,10 @@ def gen(camera):
 					b'Content-Type: image/jpeg\r\n\r\n' + frames + b'\r\n\r\n')
 
 def livecam_feed(request):
+    
     global threshold
     global smooth
+    
     #print ("\nVALORES QUE TENGO QUE ENVIAR A THEVALUES \n",threshold,smooth)
     #do.thevalues(threshold,smooth)
     #ma.thevalues(threshold,smooth)

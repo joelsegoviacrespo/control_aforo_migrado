@@ -12,4 +12,5 @@ urlpatterns = [
     path('thresholdValue/',views.thresholdValue, name='thresholdValue'),
     path('smooth/',views.smoothValue, name='smooth'),
     path('livecam_feed', views.livecam_feed, name='livecam_feed'),
+    path('show_info',views.show_info, name = 'show_info'),
 ]
