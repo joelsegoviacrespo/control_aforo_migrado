@@ -28,7 +28,7 @@ class LiveWebCam(object):
         
         play = vPafy.getbest(preftype="webm")
         #self.video = cv2.VideoCapture(play.url)
-        #self.video = cv2.VideoCapture(0)
+        #self.video = cv2.VideoCapture(0+ cv2.CAP_DSHOW)
         #self.video = cv2.VideoCapture('http://211.248.20.173:8080/cam_1.cgi')
         self.video = cv2.VideoCapture('http://210.249.39.236/mjpg/video.mjpg')
         
@@ -37,23 +37,25 @@ class LiveWebCam(object):
         self.thread.start()
         
         (self.status, self.frame)=self.video.read()
-        
+       
 
         
         
     def __del__(self):
         cv2.destroyAllWindows()
+        
 
     def get_frame(self):
         if self.status:
             #success,imgNp = self.video.read()
             #(self.status, self.frame)=self.video.read()
-            #self.video = cv2.VideoCapture(0)
+            #self.video = cv2.VideoCapture(0+ cv2.CAP_DSHOW)
             #self.video = cv2.VideoCapture('http://211.248.20.173:8080/cam_1.cgi')
             
             self.video = cv2.VideoCapture('http://210.249.39.236/mjpg/video.mjpg')
             (self.status, self.frame)=self.video.read()
-            resize = cv2.resize(self.frame, (550, 335), interpolation = cv2.INTER_LINEAR) 
+            resize = cv2.resize(self.frame, (550, 335), interpolation = cv2.INTER_LINEAR)
+            
 
             
             #ret, jpeg = cv2.imencode('.jpg', resize)

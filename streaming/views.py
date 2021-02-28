@@ -176,7 +176,7 @@ def add_info(info,info1):
 
     instance.save();print ("\n guardado!! \n")
 
-def show_info(request):
+def show_info():
     
     data ={
         'detection':'info',
@@ -184,7 +184,16 @@ def show_info(request):
     }
     datas = str(data)
     print("\nLLAMADO \n")
-    yield (request,'streaming/agregar.html', datas)
+    yield (datas)
+    yield (datas)
+    yield (datas)
+    yield (datas)
+    yield (datas)
+    yield (datas)
+    yield (datas)
+    yield (datas)
+    yield (datas)
+    yield (datas)
 
 	#print("\n","LABEl", instance.get_label())
 
@@ -192,6 +201,7 @@ def show_info(request):
 
 def gen(camera):
     while True:
+        show_info()
         
         
         global threshold
@@ -233,6 +243,7 @@ def gen(camera):
 		
         yield (b'--frame\r\n'
 					b'Content-Type: image/jpeg\r\n\r\n' + frames + b'\r\n\r\n')
+        
 
 def livecam_feed(request):
     

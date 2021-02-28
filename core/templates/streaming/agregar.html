@@ -46,7 +46,7 @@
 
 
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
                     <div class="card-head-row">
@@ -56,7 +56,7 @@
                 </div>
                 <div class="card-body" style="display: flex;
                 justify-content: center;">
-                    <div class="chart-container" style="min-height: 335px"><div class="chartjs-size-monitor" style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1; "><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                    <div class="chart-container" style="min-height: 400px"><div class="chartjs-size-monitor" style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1; "><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                     <img src="{% url 'livecam_feed' %}" alt="Image not found" onerror="this.src='core\static\assets\img\people.jpg';"alt="Image not found" onerror="this.src='core\static\assets\img\people.jpg';">
                     <!--<canvas id="statisticsChart" width="417" height="335" class="chartjs-render-monitor" style="display: block; width: 417px; height: 335px;"></canvas>-->
                     </div>
@@ -64,8 +64,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card">
+         <!--<div class="col-md-3">
+           <div class="card">
                 <div class="card-header">
                     <div class="card-head-row">
                         <div class="card-title" >Output Detections</div>
@@ -76,14 +76,14 @@
 
                     <div style="display: block; width: 417px; height: 335px;" >
 
-                        <p></p>                    </div>
+                        <p></p>           {{datas}}         </div>
                   <!--  <div class="chart-container" style="min-height: 300px"><div class="chartjs-size-monitor" style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                         <canvas id="statisticsChart" width="417" height="335" class="chartjs-render-monitor" style="display: block; width: 417px; height: 335px;"></canvas>
                     </div>-->
-                    <!--<div id="myChartLegend"><ul class="0-legend html-legend"><li><span style="background-color:#f3545d"></span>Subscribers</li><li><span style="background-color:#fdaf4b"></span>New Visitors</li><li><span style="background-color:#177dff"></span>Active Users</li></ul></div>-->
+                    <!--<div id="myChartLegend"><ul class="0-legend html-legend"><li><span style="background-color:#f3545d"></span>Subscribers</li><li><span style="background-color:#fdaf4b"></span>New Visitors</li><li><span style="background-color:#177dff"></span>Active Users</li></ul></div>
                 </div>
             </div>
-        </div>
+        </div>-->
 
 
         
@@ -118,7 +118,7 @@
                         
                     </div>
                     <div class="pull-in sparkline-fix">
-                        <div id="lineChart"><canvas width="512" height="70" style="display: inline-block; width: 512.844px; height: 70px; vertical-align: top;"></canvas></div>
+                        <div id="lineChart"><canvas width="512" height="70" style="display: inline-block; width: 512.844px; height: 135px; vertical-align: top;"></canvas></div>
                     </div>
                 </div>
             </div>
