@@ -20,7 +20,8 @@ from datetime import datetime
 #import options.settings as st
 from .settings import maskconfidence_threshold, faceNet,maskNet
 #import settings
-print("AAAAAAAAAAAAAAAAAAAAAA",maskconfidence_threshold)
+#print("AAAAAAAAAAAAAAAAAAAAAA",maskconfidence_threshold)
+
 
 CLASSES = ["background", "aeroplane", "bicycle", "bird", "boat",
 	"bottle", "bus", "car", "cat", "chair", "cow", "diningtable",
@@ -121,6 +122,7 @@ class maskDetector(object):
                     cv2.putText(frame, label, (startX, startY - 10),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.45, color, 2)
                     cv2.rectangle(frame, (startX, startY), (endX, endY), color, 2)
+
                     #deteccionInfo ={"label": templabel,"prediction": (max(mask, withoutMask) * 100), "pos":((startX, startY), (endX, endY)), "date":dt_string, "timestamp":millisec  }
                     
                     informacion.append(deteccionInfo)

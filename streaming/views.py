@@ -171,7 +171,9 @@ def add_info(info,info1):
 
     instance = Streaming()
     instance.label=info['label']
+    instance.personid=info['id']
     instance.mask=info1['mask']
+    
     instance.save()
 
     instance.save();print ("\n guardado!! \n")
@@ -220,7 +222,7 @@ def gen(camera):
             frame = camera.get_frame()
             (frames,info1) = maskDetector.maskdetector(frame,threshold,smooth)
             #print("\n",type(info1['mask']),"\n")
-            info = {"label":"None"} 
+            info = {"label":"None", "id":"None"} 
             add_info(info,info1)
         elif (clicked1 == True and clicked == True):
             frame = camera.get_frame()
