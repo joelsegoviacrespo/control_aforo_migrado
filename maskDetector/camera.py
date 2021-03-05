@@ -19,6 +19,12 @@ from datetime import datetime
 
 #import options.settings as st
 from .settings import maskconfidence_threshold, faceNet,maskNet
+
+
+global mythreshold
+global mysmooth
+mythreshold = maskconfidence_threshold
+
 #import settings
 #print("AAAAAAAAAAAAAAAAAAAAAA",maskconfidence_threshold)
 
@@ -38,12 +44,25 @@ class maskDetector(object):
         pass
 
     def maskdetector(frame,th,sm):
+        mythreshold = th
+        mysmooth = sm
+        smoothxsmooth = sm * sm
+        mythreshold = round(mythreshold,1)
+        if mythreshold >= 0.9:
+            mythreshold =0.9
+        elif mythreshold <= 0.1:
+            mythreshold =0.1
+        #print ("\n ESTO SON LOS VALORES ***************",mythreshold,mythreshold)
    
         (h, w) = frame.shape[:2]
         blob = cv2.dnn.blobFromImage(frame, 1.0, (400, 400),
     		(104.0, 177.0, 123.0)) #224
         
-    
+        if mysmooth > 1 :
+            kernel = np.ones((mysmooth,mysmooth),np.float32)/smoothxsmooth
+            frame = cv2.filter2D(frame,-1,kernel)
+        else:
+            pass
     
         faceNet.setInput(blob)
         detections = faceNet.forward()
@@ -65,7 +84,7 @@ class maskDetector(object):
             millisec = dt_obj.timestamp() * 1000
             confidence = detections[0, 0, i, 2]
 
-            if confidence > maskconfidence_threshold:# 0.5
+            if confidence > mythreshold:# 0.5
    
                 box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
                 (startX, startY, endX, endY) = box.astype("int")

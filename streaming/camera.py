@@ -31,6 +31,7 @@ class LiveWebCam(object):
         #self.video = cv2.VideoCapture(0+ cv2.CAP_DSHOW)
         #self.video = cv2.VideoCapture('http://211.248.20.173:8080/cam_1.cgi')
         self.video = cv2.VideoCapture('http://210.249.39.236/mjpg/video.mjpg')
+        #self.video = cv2.VideoCapture('http://channel.softwaremediafactory.com:8082/canales/Barcelona720p.m3u8')
         
         self.thread = Thread(target=self.update, args=())
         self.thread.daemon = True
@@ -51,6 +52,7 @@ class LiveWebCam(object):
             #(self.status, self.frame)=self.video.read()
             #self.video = cv2.VideoCapture(0+ cv2.CAP_DSHOW)
             #self.video = cv2.VideoCapture('http://211.248.20.173:8080/cam_1.cgi')
+            #self.video = cv2.VideoCapture('http://channel.softwaremediafactory.com:8082/canales/Barcelona720p.m3u8')
             
             self.video = cv2.VideoCapture('http://210.249.39.236/mjpg/video.mjpg')
             (self.status, self.frame)=self.video.read()

@@ -106,15 +106,20 @@ def smoothValue(request):
     if request.is_ajax():
         global clicked
         global clicked1
+        global smooth
+        
         message = "Yes, AJAX!"
         response_json = request.POST['value']
         response_json = json.dumps(response_json)
         data = json.loads(response_json)
+        dataAux = int(data)
         if data =="true":
             clicked1 = True
+            smooth = smooth - dataAux
            # do.theDetection(clicked,clicked1)
         else:
             clicked1 = False
+            smooth = smooth + dataAux
             #do.theDetection(clicked,clicked1)
         #print("\n AAAAAAAAAAAAAAAAAAAAAAAAAA \n",clicked)
      

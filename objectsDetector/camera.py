@@ -28,6 +28,7 @@ mythreshold = objectconfidence_threshold
 
 
 
+
 CLASSES = ["background", "aeroplane", "bicycle", "bird", "boat",
 	"bottle", "bus", "car", "cat", "chair", "cow", "diningtable",
 	"dog", "horse", "motorbike", "person", "pottedplant", "sheep",
@@ -169,8 +170,18 @@ class objectsDetector(object):
         
         mythreshold = th
         mysmooth = sm
-        print ("\n ESTO SON LOS VALORES ***************",mythreshold,mysmooth)
+        smoothxsmooth = sm * sm
+        mythreshold = round(mythreshold,1)
+        if mythreshold >= 0.9:
+            mythreshold =0.9
+        elif mythreshold <= 0.1:
+            mythreshold =0.1
+
+        mysmooth = sm
+        #print ("\n ESTO SON LOS VALORES ***************",mythreshold,mysmooth)
         ct = CentroidTracker()
+
+        
         
 
         rects= []
@@ -180,6 +191,17 @@ class objectsDetector(object):
         #frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         (h, w) = frame.shape[:2]
         blob = cv2.dnn.blobFromImage(cv2.resize(frame, (300, 300)), 0.007843, (300, 300), 127.5)
+
+
+        if mysmooth > 1 :
+            kernel = np.ones((mysmooth,mysmooth),np.float32)/smoothxsmooth
+            frame = cv2.filter2D(frame,-1,kernel)
+
+        else:
+            pass
+
+
+
         deteccionInfo = {'label': None,"id":None}
 	
         objectsNet.setInput(blob)
