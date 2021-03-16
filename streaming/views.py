@@ -9,8 +9,14 @@ import cv2
 from django.http.response import StreamingHttpResponse
 from streaming.camera import LiveWebCam
 from objectsDetector import views
+
 from objectsDetector.models import Objects
 from streaming.models import Streaming
+from streaming.models import SavedSettings
+from cliente.models import Cliente
+
+
+
 #do =views.detectordeObjetos()
 from maskDetector import views
 #ma =views.detectordeMascaras()
@@ -41,6 +47,9 @@ clicked1 =False
 @login_required(login_url="/login/")
 def streaming(request):
     activate('es')
+    print("\n PRIMER METODO \n")
+    loadConfig(request)
+
     
     form = StreamingForm()
     
@@ -48,6 +57,7 @@ def streaming(request):
 
 @login_required(login_url="/login/")
 def objD(request):
+    
     if request.is_ajax():
         global clicked
         global clicked1
@@ -166,7 +176,8 @@ def thresholdValue(request):
 
 
 def index(request):
-	return render(request, 'streamapp/home.html')
+    
+    return render(request, 'streamapp/home.html')
 
 def add_info(info,info1):
     
@@ -207,6 +218,7 @@ def show_info():
 
 
 def gen(camera):
+    
     while True:
         show_info()
         
@@ -254,6 +266,7 @@ def gen(camera):
 
 def livecam_feed(request):
     
+    
     global threshold
     global smooth
     
@@ -265,6 +278,52 @@ def livecam_feed(request):
     return StreamingHttpResponse(gen(LiveWebCam()),content_type='multipart/x-mixed-replace; boundary=frame')
                    
 
+@login_required(login_url="/login/")
+def saveConfig(request):
+    print("\n HEY EXISTO\n ")
+    global threshold
+    global smooth
+
+    global clicked
+    global clicked1
+
+    instance = SavedSettings()
+
+    print("\n var 1",clicked,"\n var2",clicked1)
+
+    
+    instance.objectsDetection = clicked
+    instance.maskDetection = clicked1
+
+    instance.thresholdValue= threshold
+    instance.smoothValue = smooth
+
+    current_user = request.user
+    instance.email=current_user.email
+    
+    instance.save()
+    return HttpResponse("yeah")
+@login_required(login_url="/login/")
+def loadConfig(request):
+    print("\n HEY EXISTO2\n ")
+    global threshold
+    global smooth
+    global clicked
+    global clicked1
+
+    #instance = SavedSettings()
+    current_user = request.user
+    (a) = SavedSettings.objects.filter(email=current_user.email).values('objectsDetection').latest('settings_date')
+    (b) = SavedSettings.objects.filter(email=current_user.email).values('maskDetection').latest('settings_date')
+    (c) = SavedSettings.objects.filter(email=current_user.email).values('thresholdValue',).latest('settings_date')
+    (d) = SavedSettings.objects.filter(email=current_user.email).values('smoothValue').latest('settings_date')
+    print(a)
+    threshold =a['objectsDetection']
+    smooth =b['maskDetection']
+    clicked =c['thresholdValue']
+    clicked1 =d['smoothValue']
+    
+    return HttpResponse("yeah")
 
 
 

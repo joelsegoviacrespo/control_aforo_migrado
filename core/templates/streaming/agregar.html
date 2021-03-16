@@ -3,7 +3,13 @@
 {% block title %} Streaming {% endblock title %}
 
 <!-- Specific CSS goes HERE -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block stylesheets %}
+
+
+
+
+
+{% endblock stylesheets %}
 
 
 {% block content-form-page-header-title %} Streaming {% endblock content-form-page-header-title %}
@@ -88,6 +94,7 @@
 
         
         <div class="col-md-4">
+        
 
             <div class="card">
                 <div class="card-body pb-0 ">
@@ -102,10 +109,10 @@
                         <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm" id="pills-tab" role="tablist" style ="display: flex;
                         justify-content: center;">
                             <li class="nav-item">
-                                <button class="nav-link"  id ="objetos">Personas</button>
+                                <button class="nav-link ">People</button>
                             </li>
                             <li class="nav-item">
-                                <button class="nav-link"  id ="mascara">Mask</button>
+                                <button class="nav-link"  id ="mascara">Masks</button>
                             </li>
                             <li class="nav-item">
                                 <button class="nav-link"  id ="clear">Clear</button>
@@ -144,37 +151,62 @@
 
 
                         <div class="card-tools">
-                            <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm float-center" id="pills-tab" role="tablist">
-                                <li class="nav-item">
-                                    <p>Thr</p>
-                                    <button class="nav-link thValueUp"  ><i class="fas fa-angle-up"></i></button>
-                                </li>
-                                <li class="nav-item">
-                                    <p>Smo</p>
-                                    <button class="nav-link smValueUp"  ><i class="fas fa-angle-up"></i></button>
-                                </li>
-                                <li class="nav-item">
-                                    <p>None</p>
-                                    <button class="nav-link"  id ="clear"><i class="fas fa-angle-up"></i></button>
-                                </li>
-                            </ul>
-                            <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm float-center" id="pills-tab" role="tablist">
-                                <li class="nav-item">
-                                    <button class="nav-link thValueDown"  > <i class="fas fa-angle-down"></i></button>
-                                </li>
-                                <li class="nav-item">
-                                    <button class="nav-link smValueDown"  ><i class="fas fa-angle-down"></i> </button>
-                                </li>
-                                <li class="nav-item">
-                                    <button class="nav-link"  id ="clear"><i class="fas fa-angle-down"></i></button>
-                                </li>
-                            </ul>
 
+                            <div class="botones">
 
+                                <div class="superior">
+                                    <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm float-center" id="pills-tab" role="tablist">
+
+                                        <li class="nav-item">
+                                            <input  id=demoInput type=number min=0.3 max=0.9 value=0.5 >
+                                            <p>Threshhold</p>
+                                            <button class="val thValueUp" onClick="increment()" ><i class="fas fa-angle-up"></i></button>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <input  id=demoInput type=number min=0.3 max=0.9 value=1 >
+                                            <p>Smooth</p>
+                                            <button class="val smValueUp"   ><i class="fas fa-angle-up"></i></button>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <input  id=demoInput type=number min=0.3 max=0.9 value=0 >
+                                            <p>None</p>
+                                            <button class="val"  id ="clear"><i class="fas fa-angle-up"></i></button>
+                                        </li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="inferior">
+                                    <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm float-center" id="pills-tab" role="tablist">
+                                        <li class="nav-item">
+                                        <button class=" val thValueDown" onClick="decrement()" > <i class="fas fa-angle-down"></i></button>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <button class="val smValueDown"  ><i class="fas fa-angle-down"></i> </button>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <button class="val"  id ="clear"><i class="fas fa-angle-down"></i></button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
                         </div>
 
+                       
                     </div>
+
+
+                    <div>
+                        <button class="save btn btn-success"  id ="clear">Save Conf</button>
                     </div>
+
+
+                    </div>
+
 
               
                     
@@ -189,6 +221,42 @@
     
 </div>
 
+<style>
+    input::-webkit-outer-spin-button, 
+    input::-webkit-inner-spin-button { 
+        -webkit-appearance: none; 
+        margin: 0; 
+    } 
+
+    input[type=number] { 
+        -moz-appearance: textfield; 
+    } 
+    input{
+        border:none;
+        background: transparent;
+        text-align: center; 
+        color:white;
+
+    }
+    button.val{
+        margin-right :40px;
+        margin-left :40px ;
+        border-radius: 50%;
+        border: 0;
+        color: rgb(38, 116, 233);
+        
+
+    }
+    .botones{
+        text-align: center;
+    }
+    .superior{
+        padding-bottom: 10px;
+        
+    }
+    
+                </style>
+
 
 {% endblock content-form-content %}
 {% block content-form-form-tag-end %} {% endblock content-form-form-tag-end %}
@@ -198,6 +266,33 @@
 {% block javascripts %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+    var x = 0.5
+    var y = 1
+function increment() {
+    x = x+ 0.1
+    
+    x =Number((x).toFixed(1))
+    if (x >= 0.9){
+        x = 0.9;
+        document.getElementById('demoInput').value= x
+    }
+    else{
+      document.getElementById('demoInput').value= x;
+    }
+   }
+   function decrement() {
+    x = x- 0.1
+    
+    x =Number((x).toFixed(1))
+    if (x <= 0.1){
+        x = 0.1;
+        document.getElementById('demoInput').value= x
+    }
+    else{
+      document.getElementById('demoInput').value= x;
+    }
+   }
+
 
 document.getElementsByClassName('object');
 document.getElementsByClassName('mask');
@@ -294,6 +389,8 @@ error: function(error){
 });
 
 
+
+
 $(document).ready(function(){
   $(".thValueDown").click(function(){
     $.ajax({url: "/detections/thresholdValue/", type: 'POST',data:{
@@ -346,10 +443,27 @@ error: function(error){
   });
 });
 
+$(document).ready(function(){
+  $(".save").click(function(){
+    $.ajax({url: "/detections/save_config/", type: 'POST',data:{
+csrfmiddlewaretoken: '{{csrf_token}}',
+    },
+    datatype:"json",
+    success: function(result){
+        console.log(result);
+    },
+error: function(error){
+    console.log(error);
+}
+});
+    
+  });
+});
 
 
 </script>
 {% endblock javascripts %}
 {% block javascripts-page %}
 {% endblock javascripts-page %}
+
 
