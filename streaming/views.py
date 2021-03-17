@@ -290,6 +290,7 @@ def saveConfig(request):
     instance = SavedSettings()
 
     print("\n var 1",clicked,"\n var2",clicked1)
+    print("\n var 1",threshold,"\n var2",smooth)
 
     
     instance.objectsDetection = clicked
@@ -318,10 +319,10 @@ def loadConfig(request):
     (c) = SavedSettings.objects.filter(email=current_user.email).values('thresholdValue',).latest('settings_date')
     (d) = SavedSettings.objects.filter(email=current_user.email).values('smoothValue').latest('settings_date')
     print(a)
-    threshold =a['objectsDetection']
-    smooth =b['maskDetection']
-    clicked =c['thresholdValue']
-    clicked1 =d['smoothValue']
+    threshold =c['thresholdValue']
+    smooth =d['smoothValue']
+    clicked =a['objectsDetection']
+    clicked1 =b['maskDetection']
     
     return HttpResponse("yeah")
 

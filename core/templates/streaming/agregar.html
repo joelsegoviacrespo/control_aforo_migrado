@@ -15,252 +15,183 @@
 {% block content-form-page-header-title %} Streaming {% endblock content-form-page-header-title %}
 {% block content-form-page-header %}
 
-    <ul class="breadcrumbs">
-        <li class="nav-home">
-            <a href="#">
-				<i class="fas fa-file-video"></i>
-            </a>
-        </li>
-        <li class="separator">
-            <i class="flaticon-right-arrow"></i>
-        </li>
-        <li class="nav-item">
-            <a href="#">Streaming</a>
-        </li>
-        <li class="separator">
-            <i class="flaticon-right-arrow"></i>
-        </li>
-        <li class="nav-item">
-            <a href="#">Agregar</a>
-        </li>
-    </ul>
+<ul class="breadcrumbs">
+    <li class="nav-home">
+        <a href="#">
+            <i class="fas fa-file-video"></i>
+        </a>
+    </li>
+    <li class="separator">
+        <i class="flaticon-right-arrow"></i>
+    </li>
+    <li class="nav-item">
+        <a href="#">Streaming</a>
+    </li>
+    <li class="separator">
+        <i class="flaticon-right-arrow"></i>
+    </li>
+    <li class="nav-item">
+        <a href="#">Agregar</a>
+    </li>
+</ul>
+
 {% endblock content-form-page-header %}
 {% block content-form-form-tag-begin %} {% endblock content-form-form-tag-begin %}
 {% block content-form-content %}
-<div class="card-body">
-	<p>STREAMING</p>
-</div>
 
 
+<!--<div class="panel-header bg-primary-gradient">-->
+    <!--<div class="page-inner py-5">-->
+        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+            <div>
+                <h2 class="text-black pb-2 fw-bold">Manage Cams</h2>
+                <h5 class="text-black op-7 mb-2">Detections and Values</h5>
+            </div>
+            <div class="ml-md-auto py-2 py-md-0">
+                <button href="#" class="btn btn-black btn-primary btn-round mr-2">Clear All</button>
+                <button href="#" class="btn btn-secondary btn-round save">Save Configurations</button>
+            </div>
+        </div>
+    <!--</div>-->
+<!--</div>-->
+
+<div class="card">
+    <div class="card-header">
+        <div class="card-head-row">
+            <div class="card-title">Live Video</div>
+            <div class="card-tools">
+               
+        </div>
 
 
-<div class="page-inner mt--5">
-    <div class="row mt--2">
-  
-</div>
-
-
-
-    <div class="row">
+    </div>
+    <div class="card-body">
+        <div class="row py-3">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-head-row">
-                        <div class="card-title" >Streaming</div>
+            <div class="chart-container" style="min-height: 375px"><div class="chartjs-size-monitor" style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                <img src="{% url 'livecam_feed' %}" alt="Image not found" onerror="this.src='core\static\assets\img\people.jpg';"alt="Image not found" onerror="this.src='core\static\assets\img\people.jpg';">
+            </div>
+        
+        
+        </div>
+        <div class="col-md-4">
+        <div class="card full-height">
+            <div class="card-body">
+                <div class="card-title">Manage Values</div>
+                    <div class="row py-3" >
+                        <div class="col-md-4 d-flex flex-column justify-content-around">
+                        
+                       
+                            <input  id=demoInput type=number min=0.3 max=0.9 value=0.5 >
+                           
+                            <input  id=demoInput type=number min=0.3 max=0.9 value=1 >
+                    
+                            <input  id=demoInput type=number min=0.3 max=0.9 value=0 >
+                                    
+                                    
+                                    
+                            <button class="val thValueUp" onClick="increment()" ><i class="fas fa-angle-up"></i></button>
+                           
+                                    
+                                    
+                                    
+                            <button class="val smValueUp"   ><i class="fas fa-angle-up"></i></button>
+                              
+                                    
+                                    
+                            <button class="val"  id ="clear"><i class="fas fa-angle-up"></i></button>
                             
+                      
+
+
+                    
+                
+                            <button class=" val thValueDown" onClick="decrement()" > <i class="fas fa-angle-down"></i></button>
+                            
+                                
+                            <button class="val smValueDown"  ><i class="fas fa-angle-down"></i> </button>
+                                
+
+                               
+                            <button class="val"  id ="clear"><i class="fas fa-angle-down"></i></button>
+                                
                     </div>
+
                 </div>
-                <div class="card-body" style="display: flex;
-                justify-content: center;">
-                    <div class="chart-container" style="min-height: 400px"><div class="chartjs-size-monitor" style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1; "><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
-                    <img src="{% url 'livecam_feed' %}" alt="Image not found" onerror="this.src='core\static\assets\img\people.jpg';"alt="Image not found" onerror="this.src='core\static\assets\img\people.jpg';">
-                    <!--<canvas id="statisticsChart" width="417" height="335" class="chartjs-render-monitor" style="display: block; width: 417px; height: 335px;"></canvas>-->
                     </div>
-                    <!--<div id="myChartLegend"><ul class="0-legend html-legend"><li><span style="background-color:#f3545d"></span>Subscribers</li><li><span style="background-color:#fdaf4b"></span>New Visitors</li><li><span style="background-color:#177dff"></span>Active Users</li></ul></div>-->
+                    <div class="col-md-8">
+                        <div id="chart-container"><div class="chartjs-size-monitor" style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                            <canvas id="totalIncomeChart" width="209" height="150" class="chartjs-render-monitor" style="display: block; width: 209px; height: 150px;"></canvas>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-         <!--<div class="col-md-3">
-           <div class="card">
-                <div class="card-header">
-                    <div class="card-head-row">
-                        <div class="card-title" >Output Detections</div>
-                            
-                    </div>
-                </div>
-                <div class="card-body">
-
-                    <div style="display: block; width: 417px; height: 335px;" >
-
-                        <p></p>           {{datas}}         </div>
-                  <!--  <div class="chart-container" style="min-height: 300px"><div class="chartjs-size-monitor" style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
-                        <canvas id="statisticsChart" width="417" height="335" class="chartjs-render-monitor" style="display: block; width: 417px; height: 335px;"></canvas>
-                    </div>-->
-                    <!--<div id="myChartLegend"><ul class="0-legend html-legend"><li><span style="background-color:#f3545d"></span>Subscribers</li><li><span style="background-color:#fdaf4b"></span>New Visitors</li><li><span style="background-color:#177dff"></span>Active Users</li></ul></div>
-                </div>
-            </div>
-        </div>-->
-
-
-        
-        <div class="col-md-4">
-        
-
-            <div class="card">
-                <div class="card-body pb-0 ">
-
-                    <div class="h1 fw-bold text-warning" style ="display: flex;
-                    justify-content: center;">Detecciones Disponibles</div>
-                    
-                    
-                   
-                    
-                    <div class="card-tools">
-                        <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm" id="pills-tab" role="tablist" style ="display: flex;
-                        justify-content: center;">
-                            <li class="nav-item">
-                                <button class="nav-link ">People</button>
-                            </li>
-                            <li class="nav-item">
-                                <button class="nav-link"  id ="mascara">Masks</button>
-                            </li>
-                            <li class="nav-item">
-                                <button class="nav-link"  id ="clear">Clear</button>
-                            </li>
-                        </ul>
-
-
-                    
-
-                        
-                    </div>
-                    <div class="pull-in sparkline-fix">
-                        <div id="lineChart"><canvas width="512" height="70" style="display: inline-block; width: 512.844px; height: 135px; vertical-align: top;"></canvas></div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="card card-primary" style="height: auto;">
-                <div class="card-header">
-                    <div class="card-title" style ="display: flex;
-                    justify-content: center;">Manage Values</div>
-                    
-                
-
-
-
-                 <div class="card-body pb-0">
-
-
-             
-
-
-                    <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
-                
-
-
-                        <div class="card-tools">
-
-                            <div class="botones">
-
-                                <div class="superior">
-                                    <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm float-center" id="pills-tab" role="tablist">
-
-                                        <li class="nav-item">
-                                            <input  id=demoInput type=number min=0.3 max=0.9 value=0.5 >
-                                            <p>Threshhold</p>
-                                            <button class="val thValueUp" onClick="increment()" ><i class="fas fa-angle-up"></i></button>
-                                        </li>
-
-                                        <li class="nav-item">
-                                            <input  id=demoInput type=number min=0.3 max=0.9 value=1 >
-                                            <p>Smooth</p>
-                                            <button class="val smValueUp"   ><i class="fas fa-angle-up"></i></button>
-                                        </li>
-
-                                        <li class="nav-item">
-                                            <input  id=demoInput type=number min=0.3 max=0.9 value=0 >
-                                            <p>None</p>
-                                            <button class="val"  id ="clear"><i class="fas fa-angle-up"></i></button>
-                                        </li>
-                                    </ul>
-                                </div>
-                                
-                                <div class="inferior">
-                                    <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm float-center" id="pills-tab" role="tablist">
-                                        <li class="nav-item">
-                                        <button class=" val thValueDown" onClick="decrement()" > <i class="fas fa-angle-down"></i></button>
-                                        </li>
-
-                                        <li class="nav-item">
-                                            <button class="val smValueDown"  ><i class="fas fa-angle-down"></i> </button>
-                                        </li>
-
-                                        <li class="nav-item">
-                                            <button class="val"  id ="clear"><i class="fas fa-angle-down"></i></button>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            
-                        </div>
-
-                       
-                    </div>
-
-
-                    <div>
-                        <button class="save btn btn-success"  id ="clear">Save Conf</button>
-                    </div>
-
-
-                    </div>
-
-
-              
-                    
-                    <!--<div class="pull-in"><div class="chartjs-size-monitor" style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
-                    
-                    </div>-->
-                </div>
-            </div>
-
         </div>
     </div>
+
+    </div>
+
+
+
+
+
+
+    </div>
     
+       
+
+
+
+        <div id="myChartLegend"><ul class="0-legend html-legend"><li><span style="background-color:#0084ff"></span>People</li><li><span style="background-color:#00ff5e"></span>Masks</li><li><span style="background-color:#fd1e00"></span>No Mask</li></ul></div>
+    </div>
+
+    <style>
+        input::-webkit-outer-spin-button, 
+        input::-webkit-inner-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        } 
+    
+        input[type=number] { 
+            -moz-appearance: textfield; 
+        } 
+        input{
+            margin-right :35px;
+            margin-left :35px ;
+            border:none;
+            background: transparent;
+            text-align: center; 
+            color:rgb(0, 0, 0);
+    
+        }
+        button.val{
+            margin-right :40px;
+            margin-left :40px ;
+            border-radius: 50%;
+            border: 0;
+            color: rgb(38, 116, 233);
+            
+    
+        }
+        .botones{
+            text-align: center;
+        }
+        .superior{
+            padding-bottom: 10px;
+            
+        }
+        
+                    </style>
+
+
+
 </div>
 
-<style>
-    input::-webkit-outer-spin-button, 
-    input::-webkit-inner-spin-button { 
-        -webkit-appearance: none; 
-        margin: 0; 
-    } 
-
-    input[type=number] { 
-        -moz-appearance: textfield; 
-    } 
-    input{
-        border:none;
-        background: transparent;
-        text-align: center; 
-        color:white;
-
-    }
-    button.val{
-        margin-right :40px;
-        margin-left :40px ;
-        border-radius: 50%;
-        border: 0;
-        color: rgb(38, 116, 233);
-        
-
-    }
-    .botones{
-        text-align: center;
-    }
-    .superior{
-        padding-bottom: 10px;
-        
-    }
-    
-                </style>
 
 
 {% endblock content-form-content %}
 {% block content-form-form-tag-end %} {% endblock content-form-form-tag-end %}
-
 
 <!-- Specific JS goes HERE -->
 {% block javascripts %}
@@ -270,6 +201,7 @@
     var y = 1
 function increment() {
     x = x+ 0.1
+    console.log("hey")
     
     x =Number((x).toFixed(1))
     if (x >= 0.9){
@@ -465,5 +397,3 @@ error: function(error){
 {% endblock javascripts %}
 {% block javascripts-page %}
 {% endblock javascripts-page %}
-
-
