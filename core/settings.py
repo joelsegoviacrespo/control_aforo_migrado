@@ -105,7 +105,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-#DATABASES = {
+DATABASES = {
     
 #        'default': {
 #             'ENGINE': 'djongo',
@@ -120,44 +120,39 @@ WSGI_APPLICATION = 'core.wsgi.application'
 #                 'authMechanism': 'SCRAM-SHA-1'
 #             }
 #        },
-#    
-#           
-#          'default': {
-#             'ENGINE': 'djongo',
-#             'NAME': 'aforo',
-#             'ENFORCE_SCHEMA': False,
-#             'CLIENT': {
-#                 'host': 'mongodb://user_aforo_mongo:Af0r0smfC10uDM0n4O@5.196.27.225:27227',
-#                 'port': 27227,
-#                'username': 'user_aforo_mongo',
-#                 'password': 'Af0r0smfC10uDM0n4O',
-#                 'authSource': 'admin',
-#                 'authMechanism': 'SCRAM-SHA-1'
-#             }
-#        },
+    
+           
+          'default': {
+             'ENGINE': 'djongo',
+             'NAME': 'aforo',
+             'ENFORCE_SCHEMA': False,
+             'CLIENT': {
+                 'host': 'mongodb://user_aforo_mongo:Af0r0smfC10uDM0n4O@5.196.27.225:27227',
+                 'port': 27227,
+                 'username': 'user_aforo_mongo',
+                 'password': 'Af0r0smfC10uDM0n4O',
+                 'authSource': 'admin',
+                 'authMechanism': 'SCRAM-SHA-1'
+             }
+        },
 
-#'DBCollection1': {
-#            'ENGINE': 'djongo',
-#            'NAME': 'aforo',
-#            'DB_IP': '5.196.27.225',
-#            'DB_Port': '27227',
-#            'CLIENT': {
-#                 'host': 'mongodb://user_aforo_mongo:Af0r0smfC10uDM0n4O@5.196.27.225:27227',
-#                 'port': 27227,
-#                 'username': 'user_aforo_mongo',
-#                 'password': 'Af0r0smfC10uDM0n4O',
-#                 'authSource': 'admin',
-#                 'authMechanism': 'SCRAM-SHA-1',
-#                 'db_collection1': 'cliente',
-#            }
-#        },    
-#}
-DATABASES = {
-   'default': {
-      'ENGINE': 'djongo',
-      'NAME': 'mysite',
-   }
+'DBCollection1': {
+            'ENGINE': 'djongo',
+            'NAME': 'aforo',
+            'DB_IP': '5.196.27.225',
+            'DB_Port': '27227',
+            'CLIENT': {
+                 'host': 'mongodb://user_aforo_mongo:Af0r0smfC10uDM0n4O@5.196.27.225:27227',
+                 'port': 27227,
+                 'username': 'user_aforo_mongo',
+                 'password': 'Af0r0smfC10uDM0n4O',
+                 'authSource': 'admin',
+                 'authMechanism': 'SCRAM-SHA-1',
+                 'db_collection1': 'cliente',
+            }
+        },    
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
