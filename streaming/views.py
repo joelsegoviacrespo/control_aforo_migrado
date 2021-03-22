@@ -331,9 +331,9 @@ def loadConfig(request):
 
 
     #print(a)
-    
-    
-    return HttpResponse("yeah")
+    toJson = {'threshold':threshold,'smooth':smooth,'clicked':clicked,'clicked1':clicked1}
+    toJson = json.dumps(toJson)
+    return HttpResponse(toJson)
 
 
 
