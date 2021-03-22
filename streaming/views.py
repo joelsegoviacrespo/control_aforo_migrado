@@ -314,17 +314,26 @@ def loadConfig(request):
 
     #instance = SavedSettings()
     current_user = request.user
-    (a) = SavedSettings.objects.filter(email=current_user.email).values('objectsDetection').latest('settings_date')
-    (b) = SavedSettings.objects.filter(email=current_user.email).values('maskDetection').latest('settings_date')
-    (c) = SavedSettings.objects.filter(email=current_user.email).values('thresholdValue',).latest('settings_date')
-    (d) = SavedSettings.objects.filter(email=current_user.email).values('smoothValue').latest('settings_date')
-    print(a)
-    threshold =c['thresholdValue']
-    smooth =d['smoothValue']
-    clicked =a['objectsDetection']
-    clicked1 =b['maskDetection']
-    
-    return HttpResponse("yeah")
+    try:
+        (a) = SavedSettings.objects.filter(email=current_user.email).values('objectsDetection').latest('settings_date')
+        (b) = SavedSettings.objects.filter(email=current_user.email).values('maskDetection').latest('settings_date')
+        (c) = SavedSettings.objects.filter(email=current_user.email).values('thresholdValue',).latest('settings_date')
+        (d) = SavedSettings.objects.filter(email=current_user.email).values('smoothValue').latest('settings_date')
+        threshold =c['thresholdValue']
+        smooth =d['smoothValue']
+        clicked =a['objectsDetection']
+        clicked1 =b['maskDetection']
+    except:
+        threshold =0.5
+        smooth =1
+        clicked =False
+        clicked1 =False
+
+
+    #print(a)
+    toJson = {'threshold':threshold,'smooth':smooth,'clicked':clicked,'clicked1':clicked1}
+    toJson = json.dumps(toJson)
+    return HttpResponse(toJson)
 
 
 

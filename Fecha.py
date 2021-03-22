@@ -34,6 +34,10 @@ class Fecha:
     def get_end_minute_day(today):
         return datetime(today.year, today.month, today.day,today.hour,today.minute,59)
 
+    def get_start_hora(today):
+        return datetime(today.year, today.month, today.day,today.hour,0,0)
 
+    def get_end_hora(today):
+        return datetime(today.year, today.month, today.day,today.hour,59,59)
         
     

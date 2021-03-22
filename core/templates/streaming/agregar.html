@@ -75,66 +75,88 @@
         
         </div>
         <div class="col-md-4">
-        <div class="card full-height">
+            <div class="card full-height">
             <div class="card-body">
                 <div class="card-title">Manage Values</div>
                     <div class="row py-3" >
-                        <div class="col-md-4 d-flex flex-column justify-content-around">
-                        
-                       
-                            <input  id=demoInput type=number min=0.3 max=0.9 value=0.5 >
-                           
-                            <input  id=demoInput type=number min=0.3 max=0.9 value=1 >
-                    
-                            <input  id=demoInput type=number min=0.3 max=0.9 value=0 >
-                                    
-                                    
-                                    
-                            <button class="val thValueUp" onClick="increment()" ><i class="fas fa-angle-up"></i></button>
-                           
-                                    
-                                    
-                                    
-                            <button class="val smValueUp"   ><i class="fas fa-angle-up"></i></button>
-                              
-                                    
-                                    
-                            <button class="val"  id ="clear"><i class="fas fa-angle-up"></i></button>
-                            
-                      
+                        <div class="col-md-12 d-flex flex-column justify-content-around">
+
+                            <div class="center" id ="buttons">
 
 
-                    
-                
-                            <button class=" val thValueDown" onClick="decrement()" > <i class="fas fa-angle-down"></i></button>
-                            
-                                
-                            <button class="val smValueDown"  ><i class="fas fa-angle-down"></i> </button>
+
+                                <div class="selectgroup selectgroup-pills " style="padding-bottom: 30px;">
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" name="value" value="HTML" class="selectgroup-input" id="iobjetos">
+                                        <span class="selectgroup-button"  id="objetos" >People</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" name="value" value="CSS" class="selectgroup-input" id="imascara"> 
+                                        <span class="selectgroup-button"  id="mascara" >Mask</span>
+                                    </label>
+                                   
+                                </div>
+
+
                                 
 
-                               
-                            <button class="val"  id ="clear"><i class="fas fa-angle-down"></i></button>
+                                <table class="default">
+
+                                    <tr>
+                                        <td>Threshold</td>
                                 
+                                        <td>Smooth</td>
+                                
+                                        <td>None</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input  id=demoInput type=number min=0.3 max=0.9 value=0.5 ></td>
+        
+                                        <td><input  id=demoInput1 type=number min=0.3 max=0.9 value=1 ></td>
+                                
+                                        <td><input  id=demoInput2 type=number min=0.3 max=0.9 value=0 ></td>
+                                    </tr>
+                                    <tr>
+                                        <td><button class="val thValueUp" onClick="increment()" ><i class="fas fa-angle-up"></i></button></td>
+                                
+                                        <td><button class="val smValueUp"   ><i class="fas fa-angle-up"></i></button></td>
+                                
+                                    <td><button class="val"  id ="clear"><i class="fas fa-angle-up"></i></button></td>
+                                
+                                    </tr>
+                                    <tr>
+                                
+                                        <td><button class=" val thValueDown" onClick="decrement()" > <i class="fas fa-angle-down"></i></button></td>
+                                    
+                                        <td><button class="val smValueDown" ><i class="fas fa-angle-down"></i> </button></td>
+                                    
+                                        <td> <button class="val"  id ="clear"><i class="fas fa-angle-down"></i></button></td>
+                                    </tr>
+
+                                    
+                                </table>   
+                            </div>
+                        </div>
                     </div>
-
                 
                     
-                    <div class="col-md-8">
+                    <!--<div class="col-md-8">
                         <div id="chart-container"><div class="chartjs-size-monitor" style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                             <canvas id="totalIncomeChart" width="209" height="150" class="chartjs-render-monitor" style="display: block; width: 209px; height: 150px;"></canvas>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div>
         </div>
         </div>
     </div>
-
+    <div id="myChartLegend"><ul class="0-legend html-legend"><li><span style="background-color:#0084ff"></span>People</li><li><span style="background-color:#00ff5e"></span>Masks</li><li><span style="background-color:#fd1e00"></span>No Mask</li></ul></div>
+</div>
     </div>
 
 
 
-
+    
 
 
     </div>
@@ -143,10 +165,26 @@
 
 
 
-        <div id="myChartLegend"><ul class="0-legend html-legend"><li><span style="background-color:#0084ff"></span>People</li><li><span style="background-color:#00ff5e"></span>Masks</li><li><span style="background-color:#fd1e00"></span>No Mask</li></ul></div>
-    </div>
+      
 
     <style>
+        table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 0px solid #ddd;
+  
+}
+
+th, tr {
+  text-align: left;
+  padding: 8px;
+}
+td{
+    text-align: center;
+
+}
+
         input::-webkit-outer-spin-button, 
         input::-webkit-inner-spin-button { 
             -webkit-appearance: none; 
@@ -157,15 +195,15 @@
             -moz-appearance: textfield; 
         } 
         input{
-            margin-right :35px;
-            margin-left :35px ;
+            margin-right :40px;
+            margin-left :40px ;
             border:none;
             background: transparent;
             text-align: center; 
             color:rgb(0, 0, 0);
     
         }
-        button.val{
+        button.val {
             margin-right :40px;
             margin-left :40px ;
             border-radius: 50%;
@@ -181,7 +219,31 @@
             padding-bottom: 10px;
             
         }
+        .center{
+            padding-bottom: 300px;
         
+        
+        
+        }
+
+.nav-link{
+    outline: 0;
+  border: 0;
+  background:gray;
+  margin:25px;
+  padding: 10px 35px;
+  font-family: 'Montserrat', sans-serif;
+  font-size:15px;
+  color: #fff;
+  cursor:pointer;
+  border-radius:50px;
+  transition: all 0.3s ease;
+}
+
+
+
+
+
                     </style>
 
 
@@ -195,8 +257,24 @@
 
 <!-- Specific JS goes HERE -->
 {% block javascripts %}
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
 <script>
+var result; 
+var clicked; 
+var clicked1;
+var smooth; 
+var thresholding;
+
+function toggle(e){
+ /* Get the color */
+  e.classList.toggle("active");
+}
+
+
+
     var x = 0.5
     var y = 1
 function increment() {
@@ -391,6 +469,42 @@ error: function(error){
     
   });
 });
+
+$(document).ready(function(){
+    $("#mascara").addClass("rojo");
+    //$("#mascara").checked(true);
+    
+  
+    $.ajax({url: "/detections/show_info/", type: 'POST',data:{
+csrfmiddlewaretoken: '{{csrf_token}}',
+    },
+    datatype:"json",
+    success: function(result){
+        result = $.parseJSON(result)
+        clicked =  result.clicked;
+        clicked1 = result.clicked1;
+        smooth = result.smooth;
+        thresholding = result.threshold;
+        
+        console.log(clicked);
+        if (clicked == true){
+            document.getElementById("iobjetos").checked = true;
+    }
+        if (clicked1==true){
+            document.getElementById("imascara").checked = true;
+        }
+        document.getElementById("demoInput").value = thresholding;
+        document.getElementById("demoInput1").value = smooth;
+
+    },
+error: function(error){
+    console.log(error);
+}
+});
+    
+ 
+});
+
 
 
 </script>

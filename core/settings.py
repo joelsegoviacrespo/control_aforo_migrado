@@ -23,7 +23,6 @@ DEBUG = config('DEBUG', default=True)
 # load production server from .env
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.0.107','5.196.27.225', config('SERVER', default='127.0.0.1'),'mosayk.softwaremediafactory.com']
 
-
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:8081',
@@ -56,7 +55,7 @@ INSTALLED_APPS = [
     'display.apps.DisplayConfig',     
     'uso_red.apps.UsoRedConfig', 
     'usuarios_red.apps.UsuariosRedConfig',
-    'jornada_laboral.apps.JornadaLaboralConfig',         
+    'jornada_laboral.apps.JornadaLaboralConfig',   
     'streaming.apps.StreamingConfig',
     'objectsDetector.apps.ObjectsdetectorConfig',
     'maskDetector.apps.MaskdetectorConfig',
@@ -105,7 +104,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
+#DATABASES = {
     
 #        'default': {
 #             'ENGINE': 'djongo',
@@ -120,8 +119,40 @@ DATABASES = {
 #                 'authMechanism': 'SCRAM-SHA-1'
 #             }
 #        },
-    
-           
+#    
+#           
+#          'default': {
+#             'ENGINE': 'djongo',
+#             'NAME': 'aforo',
+#             'ENFORCE_SCHEMA': False,
+#             'CLIENT': {
+#                 'host': 'mongodb://user_aforo_mongo:Af0r0smfC10uDM0n4O@5.196.27.225:27227',
+#                 'port': 27227,
+#                'username': 'user_aforo_mongo',
+#                 'password': 'Af0r0smfC10uDM0n4O',
+#                 'authSource': 'admin',
+#                 'authMechanism': 'SCRAM-SHA-1'
+#             }
+#        },
+
+#'DBCollection1': {
+#            'ENGINE': 'djongo',
+#            'NAME': 'aforo',
+#            'DB_IP': '5.196.27.225',
+#            'DB_Port': '27227',
+#            'CLIENT': {
+#                 'host': 'mongodb://user_aforo_mongo:Af0r0smfC10uDM0n4O@5.196.27.225:27227',
+#                 'port': 27227,
+#                 'username': 'user_aforo_mongo',
+#                 'password': 'Af0r0smfC10uDM0n4O',
+#                 'authSource': 'admin',
+#                 'authMechanism': 'SCRAM-SHA-1',
+#                 'db_collection1': 'cliente',
+#            }
+#        },    
+#}
+DATABASES = {
+
           'default': {
              'ENGINE': 'djongo',
              'NAME': 'aforo',
@@ -134,10 +165,8 @@ DATABASES = {
                  'authSource': 'admin',
                  'authMechanism': 'SCRAM-SHA-1'
              }
-        }    
+        },
 }
-
-
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
