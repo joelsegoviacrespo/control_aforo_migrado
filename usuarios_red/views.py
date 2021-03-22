@@ -156,7 +156,7 @@ def dispositivosConectados(request,periodo_estadistica):
                 array_red_wifi = result[1]
                 hora_apertura = result[2]
                 hora_cierre = result[3]
-                result_minuto = conteoDispositivoRedMinuto()
+                result_minuto = conteoDispositivoRedHora()
                 nro_usuarios_ethernet = result_minuto[0]
                 fecha = Fecha.getFechaActual().strftime("%d-%m-%Y")    
                 nro_usuarios_wifi = result_minuto[1]
@@ -193,8 +193,9 @@ def get_intervaloPeriodo(periodo_estadistica):
     
     
     if (periodo_estadistica == 1):
-        start_date = Fecha.get_start_day(Fecha.getFechaActual())    
-        end_date =  Fecha.get_end_day(Fecha.getFechaActual())
+        #obtiene el rango de una hora
+        start_date = Fecha.get_start_hora(Fecha.getFechaActual())    
+        end_date =  Fecha.get_end_hora(Fecha.getFechaActual())
     
     elif (periodo_estadistica == 2):
         dia_semana = datetime.today().weekday()
@@ -493,6 +494,85 @@ def conteoDispositivoRedMinuto():
             #print("intentos: ",intentos)
             time.sleep(3)
             query =  getQueryMinuto(start_date,end_date,tiempo_medicion,tiempo_medicion_parametro,array_tiempo)
+            usuariosRed = UsuariosRed.objects.mongo_aggregate(query)
+            intentos += 1 
+            lista = list(usuariosRed)    
+    
+
+
+    for dispositivoConectados in lista:
+        #print("dispositivoConectados")
+        #print(dispositivoConectados)    
+        result: OrderedDict[str, int] = dispositivoConectados
+        #print("RESULTADOS!!!!!!!!!!!!!!!")        
+        #print(result['_id'])
+        result_tiempo: OrderedDict[str, str] = result['_id']
+        result_tiempo: OrderedDict[str, int] = dispositivoConectados
+        nro_usuarios_ethernet = result['nro_usuarios_ethernet']
+        nro_usuarios_wifi = result['nro_usuarios_wifi']
+        result_hora: OrderedDict[str, str] = result['_id']
+        
+        #print("result_hora: ",result_tiempo)
+        #print("tiempo_medicion: ",tiempo_medicion)
+        hora = result_hora[tiempo_medicion]
+        #print("hora: ",hora)
+        #if hora in
+        nro_usuarios_ethernet = int(result_tiempo['nro_usuarios_ethernet'])
+        nro_usuarios_wifi = int(result_tiempo['nro_usuarios_wifi'])
+        result_hora: OrderedDict[str, str] = result['_id']
+        
+        #print("result_hora: ",result_tiempo)
+        #print("tiempo_medicion: ",tiempo_medicion)
+        hora = result_hora[tiempo_medicion]
+        #print("hora: ",hora)
+        #if hora in
+        nro_usuarios_ethernet = int(result_tiempo['nro_usuarios_ethernet'])
+        nro_usuarios_wifi = int(result_tiempo['nro_usuarios_wifi'])
+                
+    return nro_usuarios_ethernet,nro_usuarios_wifi
+
+
+
+def conteoDispositivoRedHora():
+    
+    
+    hoy = Fecha.getFechaActual(); 
+    #print("hoy: ",hoy)                
+    nro_usuarios_ethernet = 0
+    nro_usuarios_wifi = 0
+    start_date = Fecha.get_start_hora(hoy)
+    #print("start_date",start_date)
+    #start_date = datetime(2020, 12, 2, 2, 53, 0)
+    #print("start_date: ",start_date)
+    end_date = Fecha.get_end_hora(hoy)
+    #print("end_date",end_date)
+    #end_date = datetime(2020, 12, 2, 2, 53, 59)
+    #print("end_date: ",end_date)
+        
+    tiempo_medicion = "hour"
+    tiempo_medicion_parametro = "$hour"    
+    hora = int(str(start_date.strftime("%H")))
+    #print("hora: ",hora)
+    array_tiempo = [hora]    
+    #array_tiempo = [2] 
+    query = getQuery(start_date,end_date,tiempo_medicion,tiempo_medicion_parametro,array_tiempo)
+    #print("query")
+    #print(query)    
+    usuariosRed = UsuariosRed.objects.mongo_aggregate(query)
+    lista = list(usuariosRed)
+    #print("len")
+    #print(lista.__len__())
+    #print("usuariosRed")
+    #print(usuariosRed)
+    #print("lista V2")        
+    #print(lista)
+    if (lista.__len__() == 0):
+        intentos = 0
+        maximo_intentos = 10
+        while (intentos <= maximo_intentos) and (lista.__len__() == 0):
+            #print("intentos: ",intentos)
+            time.sleep(3)
+            query =  getQuery(start_date,end_date,tiempo_medicion,tiempo_medicion_parametro,array_tiempo)
             usuariosRed = UsuariosRed.objects.mongo_aggregate(query)
             intentos += 1 
             lista = list(usuariosRed)    
