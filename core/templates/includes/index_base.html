@@ -293,6 +293,8 @@
 			$.ajax({
 				url: request_url,
 				success: function(data){
+                                        console.log("DATA entrada")
+                                        console.log(data)
 					nro_personas = parseInt(data['nro_personas']);
 					aforo_maximo = parseInt(data['aforo_maximo']);
 					color_barra_cabecera = data['color_barra_cabecera'];
@@ -1310,6 +1312,8 @@ function revisar_cambios_red(update,periodo_estadistica){
 	$.ajax({
 		url: request_url,
 		success: function(data){			
+                        console.log("data dispositivo")
+                        console.log(data)
 			array_red_ethernet = data.array_red_ethernet
 			array_red_wifi = data.array_red_wifi
 			hora_apertura = data.hora_apertura
