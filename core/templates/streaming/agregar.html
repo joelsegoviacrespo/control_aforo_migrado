@@ -75,7 +75,7 @@
         
         </div>
         <div class="col-md-4">
-        <div class="card full-height">
+            <div class="card full-height">
             <div class="card-body">
                 <div class="card-title">Manage Values</div>
                     <div class="row py-3" >
@@ -87,11 +87,11 @@
 
                                 <div class="selectgroup selectgroup-pills " style="padding-bottom: 30px;">
                                     <label class="selectgroup-item">
-                                        <input type="checkbox" name="value" value="HTML" class="selectgroup-input" checked="">
+                                        <input type="checkbox" name="value" value="HTML" class="selectgroup-input" id="iobjetos">
                                         <span class="selectgroup-button"  id="objetos" >People</span>
                                     </label>
                                     <label class="selectgroup-item">
-                                        <input type="checkbox" name="value" value="CSS" class="selectgroup-input">
+                                        <input type="checkbox" name="value" value="CSS" class="selectgroup-input" id="imascara"> 
                                         <span class="selectgroup-button"  id="mascara" >Mask</span>
                                     </label>
                                    
@@ -112,9 +112,9 @@
                                     <tr>
                                         <td><input  id=demoInput type=number min=0.3 max=0.9 value=0.5 ></td>
         
-                                        <td><input  id=demoInput type=number min=0.3 max=0.9 value=1 ></td>
+                                        <td><input  id=demoInput1 type=number min=0.3 max=0.9 value=1 ></td>
                                 
-                                        <td><input  id=demoInput type=number min=0.3 max=0.9 value=0 ></td>
+                                        <td><input  id=demoInput2 type=number min=0.3 max=0.9 value=0 ></td>
                                     </tr>
                                     <tr>
                                         <td><button class="val thValueUp" onClick="increment()" ><i class="fas fa-angle-up"></i></button></td>
@@ -239,6 +239,7 @@ td{
   border-radius:50px;
   transition: all 0.3s ease;
 }
+
 
 
 
@@ -470,6 +471,9 @@ error: function(error){
 });
 
 $(document).ready(function(){
+    $("#mascara").addClass("rojo");
+    //$("#mascara").checked(true);
+    
   
     $.ajax({url: "/detections/show_info/", type: 'POST',data:{
 csrfmiddlewaretoken: '{{csrf_token}}',
@@ -483,7 +487,15 @@ csrfmiddlewaretoken: '{{csrf_token}}',
         thresholding = result.threshold;
         
         console.log(clicked);
-    
+        if (clicked == true){
+            document.getElementById("iobjetos").checked = true;
+    }
+        if (clicked1==true){
+            document.getElementById("imascara").checked = true;
+        }
+        document.getElementById("demoInput").value = thresholding;
+        document.getElementById("demoInput1").value = smooth;
+
     },
 error: function(error){
     console.log(error);
