@@ -70,7 +70,7 @@ class LiveWebCam(object):
         while(done == False):
             try:
                 (self.status, self.frame)=self.video.read()
-                resize = cv2.resize(self.frame, (920, 420), interpolation = cv2.INTER_LINEAR)
+                resize = cv2.resize(self.frame, (640, 480), interpolation = cv2.INTER_LINEAR)
                 done = True
             except Exception as e:
                 done = False
