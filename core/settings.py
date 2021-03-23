@@ -21,8 +21,7 @@ SECRET_KEY = config('SECRET_KEY', default='S#perS3crEt_1122')
 DEBUG = config('DEBUG', default=True)
 
 # load production server from .env
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.0.107', config('SERVER', default='127.0.0.1'),'aforo.softwaremediafactory.com']
-#ALLOWED_HOSTS = ['localhost', '127.0.0.1', '5.196.27.225', config('SERVER', default='127.0.0.1'),'aforo.softwaremediafactory.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.0.107','5.196.27.225', config('SERVER', default='127.0.0.1'),'mosayk.softwaremediafactory.com']
 
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
@@ -58,8 +57,8 @@ INSTALLED_APPS = [
     'usuarios_red.apps.UsuariosRedConfig',
     'jornada_laboral.apps.JornadaLaboralConfig',   
     'streaming.apps.StreamingConfig',
-    'objectsDetector',
-    'maskDetector',
+    'objectsDetector.apps.ObjectsdetectorConfig',
+    'maskDetector.apps.MaskdetectorConfig',
 
     
 ]
@@ -153,12 +152,21 @@ WSGI_APPLICATION = 'core.wsgi.application'
 #        },    
 #}
 DATABASES = {
-   'default': {
-      'ENGINE': 'djongo',
-      'NAME': 'mysite',
-   }
-}
 
+          'default': {
+             'ENGINE': 'djongo',
+             'NAME': 'aforo',
+             'ENFORCE_SCHEMA': False,
+             'CLIENT': {
+                 'host': 'mongodb://educaMadrid:S0ftwar4Mf4ac0oryD3v3l0p3r@192.168.0.107:27227',
+                 'port': 27227,
+                 'username': 'educaMadrid',
+                 'password': 'S0ftwar4Mf4ac0oryD3v3l0p3r',
+                 'authSource': 'admin',
+                 'authMechanism': 'SCRAM-SHA-1'
+             }
+        },
+}
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
